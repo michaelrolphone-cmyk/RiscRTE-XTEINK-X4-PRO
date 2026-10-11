@@ -1,0 +1,82 @@
+{
+  "schema": "x4.obd-dashboard.qualification.v1",
+  "version": "0.1.87",
+  "status": "Full image assembled and host-validated; owned-adapter and hardware testing pending",
+  "composition_commit": "cacbe49bb93fd9e9244281d1ca3e252bcfcd7109",
+  "assembler_git_blob": "ea4259215ab6bcc23bf448aa60ef6da661eefe8e",
+  "catalog_test_git_blob": "1d3fbd67397644a069eb8adc6954c48b30736db9",
+  "image": {
+    "bytes": 16777216,
+    "flash_offset": 0,
+    "name": "X4-0.1.87-OBD-Dashboard-Panel-0.1.12-full-0x0.bin",
+    "sha256": "b2700b24e879beb376e55ae94de5f544d55d5a2fa9a4529f0143f5ee10969e0e"
+  },
+  "sd_package": {
+    "name": "X4-0.1.87-OBD-SD-Overlay-Keep-Existing.zip",
+    "sha256": "3b47f43881be66f81637569173d6718699d90f361539c4aa36fc2d8615606ea5"
+  },
+  "evidence": {
+    "name": "X4-0.1.87-OBD-Build-Evidence.zip",
+    "bytes": 199546,
+    "sha256": "10d60269454f8b9b222c0ec72f3a354e40df601dbf447d3170bbab5c9bb39a69"
+  },
+  "app": {
+    "version": "0.1.1",
+    "source": "1320eb2b017182d263c717f1e6b80a0fa08cf0ff",
+    "ci_run": 38149396806,
+    "bytes": 43776,
+    "sha256": "cd6049f094f9e668f2010e16794469f6544e3a2be955d8cc25b815aba0516043",
+    "sd_path": "Apps/obd-dashboard/obd_dashboard.elf",
+    "sd_manifest": "Apps/obd-dashboard/manifest.json"
+  },
+  "ble_serial": {
+    "version": "0.1.0",
+    "source": "8ec572af94ee6e844b1685d8d050471cd58cad87",
+    "ci_run": 38122782755,
+    "bytes": 179308,
+    "sha256": "cc5bf2a38bf655c1cb51cbdaf3eacbffff69b852adbfb57363ee366cc453ef1f",
+    "capability": "bluetooth.serial@1"
+  },
+  "baseline": {
+    "version": "0.1.86",
+    "sha256": "01589483411a8366f9d54bc545e2fe09c797c0b339c548dd9e84323f5d3ca60b",
+    "native_source": "8d713b52edca004e1d53bf30a1c584859fe33d14",
+    "native_sha256": "121db40999321180d03278f6e644487d0d202dcefc5966ec2a89248236bbc099",
+    "native_unchanged": true,
+    "panel_version": "0.1.12",
+    "reader_version": "0.1.8",
+    "scene_version": "0.3.6"
+  },
+  "preservation": {
+    "unchanged_internal_files": 101,
+    "unchanged_sd_files": 66,
+    "changed_internal_files": ["boot.json", "cohort.json"],
+    "added_internal_files": ["ble-serial/driver.elf", "ble-serial/manifest.json", "obd_dashboard.json"],
+    "installation_envelope_unchanged": true,
+    "unchanged_ranges": [
+      {"bytes": 3080192, "offset": 0, "sha256": "46b6033abfae9f80d3d7a19ced294065c93c3b898575091dd869982291d3f293"},
+      {"bytes": 8331264, "offset": 8388608, "sha256": "f054ab36b1d67bfb8e2fa1f451f65d8c2328167de3bee5e2751696d5f8f75338"},
+      {"bytes": 49152, "offset": 16728064, "sha256": "abd8e2a70d51a53287941838446e6ed141005d401faf597fd7c6de0bbc8c329d"}
+    ]
+  },
+  "checks": {
+    "strict_modules_per_mode": 60,
+    "cohort_modules": 43,
+    "modes": ["normal", "ASan+UBSan; leak detection disabled"],
+    "cohorts": ["baseline-to-new", "new-to-new"],
+    "catalog_registration": true,
+    "missing_import_negatives_per_mode": 15,
+    "independent_spiffs_readbacks": true,
+    "deterministic_store": true,
+    "paired_sha_crc": true,
+    "final_bin_readback": true,
+    "sd_zip_readback": true
+  },
+  "hardware_tested": false,
+  "physical_adapter_verified": false,
+  "target_instructions_executed": false,
+  "compatibility": "Open/unpaired ELM-compatible BLE serial. No Classic SPP or pairing/bonding-required BLE.",
+  "full_flash_overwrites_internal_data": true,
+  "preserving_update_delivered": false,
+  "installation": "Full BIN at 0x0 plus SD Apps/Drivers overlay. Back up internal data before full flash; keep existing SD fonts/books/state and old provider images."
+}
