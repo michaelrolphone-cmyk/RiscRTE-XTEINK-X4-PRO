@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "purpose": "Hosted ordinary-driver ABI compatibility check. This is not the selected resident native or a product composition lock.",
+  "runtime": {
+    "repository": "michaelrolphone-cmyk/RiscRTE",
+    "commit": "8d713b52edca004e1d53bf30a1c584859fe33d14",
+    "version": "0.2.18"
+  },
+  "shared": {
+    "repository": "michaelrolphone-cmyk/T5S3-Reader",
+    "commit": "29276b4e1cff7819af065a77cf64805f6d5a12ce"
+  },
+  "drivers": {
+    "repository": "michaelrolphone-cmyk/RiscRTE-Drivers",
+    "commit": "39b9be00528c404af63c8f654d1bd2b29cf73b18"
+  }
+}

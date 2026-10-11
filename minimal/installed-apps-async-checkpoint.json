@@ -1,0 +1,123 @@
+{
+  "status": "development-composition-qualified-not-complete-product",
+  "hardware_run": false,
+  "native_runtime_commit": "91324f41b5a79df21f6bc39a04899eba4d0be351",
+  "runtime_test_commit": "91324f41b5a79df21f6bc39a04899eba4d0be351",
+  "x4_source_commit": "b2f8b26f8e9e4a988d3eaebf2a296f5ba27e0f1a",
+  "system_source_commit": "782fcbb69678a6d722f4a0d0aed127c3fdfe24f9",
+  "native_environment": "esp32s3-16mb-appdata-iq-stage",
+  "native_build_jobs": 1,
+  "native_static_ram_bytes": 80096,
+  "native_application_flash_bytes": 1425453,
+  "native_sha256": "23b34fa8b8cb003d21bce0d16c8cdd18ec441404bc73a1da20fe1f2c43350876",
+  "springboard": {
+    "version": "1.8.0",
+    "sha256": "b54d21fd933418943ba20e1dad695b61775ac8a381d97925dacff3d8122c881d",
+    "size_bytes": 242176,
+    "installed_catalog": {
+      "capability": "software.installed-apps",
+      "api": 1,
+      "volume_instance": 9,
+      "discovery": "copied-async-owner-polls",
+      "cache": "internal-app-data",
+      "status": "experimental-integration"
+    }
+  },
+  "tests": [
+    "copied storage worker: delayed operations, cancellation, stale tokens, repeated operations; normal and UBSan",
+    "scoped CPU SD transport: exact pins, owner/worker exclusion, retained cleanup; normal and UBSan",
+    "async volume adapter: delayed read, media removal, cancellation/drain and retained close; normal and UBSan",
+    "production X4 SD/FatFs: lazy start, unknown manifest, export exclusion, sleep/resume, .80 eight-sector USB batching; normal and UBSan",
+    "installed-app provider: cache-first zero-SD startup, zero owner-side SD scan I/O, unchanged-cache no writes, removal preflight, failed scan transaction; UBSan",
+    "installed catalog client: unknown app, preserved icons, 1000 pending polls, cancellation, retained leases; UBSan",
+    "Runtime async discovery and actual host-mapped SD app launch twice, including resident mode; UBSan",
+    "cohort migration and namespace policy tests with selected 64-app capacity",
+    "single-job full native target build",
+    "clean-source opt-in Springboard target link, ELF structural validator, import/export checks",
+    "Native copied bound-file replacement: 64 KiB copy, 10000 delayed polls, native lease and exact bound-file owner/lifetime checks; UBSan",
+    "Production Springboard controller and adapter: launch, Home, controls dismissal, refused launch, first-frame-before-SD, 0/17/2300 ms panel completion; 12 UBSan cases",
+    "Durable namespace ledger: persist before native policy, removed identities retained, cached restart and reinstall identity; UBSan",
+    "Real Runtime newly discovered app acquires private app-data and writes in both real host module executions; range overlap and reassignment denied",
+    "Complete 26-app/29-provider development store: 39 internal Xtensa modules strict role/import validation plus real Runtime self-admission; zero hardware/storage calls; UBSan",
+    "Cohort rejects namespace range move/removal and cached-ledger namespace relocation",
+    "Private namespace survives an update that removes private storage requirements and the following cached restart; UBSan",
+    "Selected App Store: 38 existing controller cases, cached installed-list interaction, offline rows, 1000 memory-only lookups, release-only begin authority and checked release; UBSan",
+    "Schema-4 removal intent: restart before SD mutation, restart after deletion, missing SD, replacement identity/version, idempotent cleanup; UBSan",
+    "1000 Cancel polls during journal-clear after SD session release retain native write custody until collection; UBSan",
+    "App Store actual controller removal confirmation (scenario 51), stale selection rejection, 1000 pending polls and delayed cancellation; no bank/radio actions; UBSan",
+    "Production X4 async file removal on real FatFs fixture, repeat missing-file removal and directory refusal; .80 USB 8-sector batching and sleep/export barriers retained; UBSan"
+  ],
+  "remaining": [
+    "Staged App Store SD installation/update with install-time image/hash admission",
+    "Preserving migration of legacy firmware-declared SD apps and their private/shared settings authority",
+    "Runtime dependency provisioning and SD-first settings migration",
+    "Complete release/version/inventory composition and hardware qualification; no flash performed"
+  ],
+  "composition": {
+    "status": "development-store-not-a-release",
+    "base_boot_sha256": "5f4981ea3d74bce9aa921cff4f010b3cc4e25a755e5c93b5e3168bee14b9ddbe",
+    "boot_sha256": "846be0643f8a29fd1146fdda290a1883f741f45c03929e730dbecb2e2b2aefd3",
+    "apps": 26,
+    "drivers": 29,
+    "volume_instance": 9,
+    "cache_namespace": 2000,
+    "namespace_range": {
+      "first": 3000,
+      "count": 128
+    },
+    "replaced": {
+      "app_store.elf": {
+        "sha256": "8ded2b8d2dd915de146c23e0cf14e9cc6cafaed74b96823ee2cf39d750983b3a",
+        "bytes": 217760
+      },
+      "app_store.json": {
+        "sha256": "83c531cd0cd98dbb88b4d3f4938b52da4c4e10f2c4acc3bb2af6e9a1380401f5",
+        "bytes": 994
+      },
+      "springboard.elf": {
+        "sha256": "b54d21fd933418943ba20e1dad695b61775ac8a381d97925dacff3d8122c881d",
+        "bytes": 242176
+      },
+      "springboard.json": {
+        "sha256": "b92858237e582a12e9b914199d7e19df9bc1974f303f1e9cfed974240664b65a",
+        "bytes": 866
+      },
+      "sd/driver.elf": {
+        "sha256": "69239393d0cf4044b8cfa859b1c99b1bf0c545441b6fc840131091694ad065cb",
+        "bytes": 100092
+      },
+      "sd/manifest.json": {
+        "sha256": "d5ab5e77e9fdfc0ccc42c601b174d29e001af5709922df11e203aca7223da608",
+        "bytes": 986
+      },
+      "installed-apps/driver.elf": {
+        "sha256": "aa759699146511239abf58c434518d02add82a815c4d87c4c2efea8ab0e6b69d",
+        "bytes": 91448
+      },
+      "installed-apps/manifest.json": {
+        "sha256": "3980267709403ca66aa531a423b40fd4c61876c922be1c2be7dcbe049555576e",
+        "bytes": 309
+      }
+    },
+    "remaining": [
+      "Staged App Store SD installation/update with install-time image/hash admission",
+      "Preserving migration of legacy firmware-declared SD apps and their private/shared settings authority",
+      "Runtime dependency provisioning and SD-first settings migration",
+      "Complete release/version/inventory composition and hardware qualification; no flash performed"
+    ],
+    "hardware_tested": false,
+    "flashable": false
+  },
+  "composition_source_commit": "517e7196e3b0aa1b849ddee0e259f9da7d073cf5",
+  "app_store": {
+    "version": "1.3.1",
+    "installed_inventory": "cached software.installed-apps rows; no SD lookups from list rendering/input",
+    "release_updates": "existing backend and authority preserved",
+    "sha256": "8ded2b8d2dd915de146c23e0cf14e9cc6cafaed74b96823ee2cf39d750983b3a",
+    "size_bytes": 217760,
+    "uninstall": "Explicit confirmation; full identity/generation recheck; async journal before SD mutation; no Wi-Fi/restart"
+  },
+  "catalog_version": "0.3.3",
+  "sd_version": "0.2.19",
+  "async_storage_version": 3
+}

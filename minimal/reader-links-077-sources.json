@@ -1,0 +1,48 @@
+{
+  "schema": "x4.reader-links-sources.v1",
+  "product_version": "0.1.77",
+  "baseline": {
+    "version": "0.1.76",
+    "sha256": "5a00e718132b8381f0e58a8af1f1b40301580ba9d73f164c20561fae98b962c5"
+  },
+  "reader": {
+    "version": "0.1.8",
+    "repository": "michaelrolphone-cmyk/RiscRTE-Productivity",
+    "commit": "06cf3630228e01aef727799d2119b65dbdec4da6",
+    "tree": "4d4f40642f7ff1d2897c7802e034bdc3969f5435",
+    "elf_sha256": "455190996d053b15b79cbad3637386222f3a5286f76016c128f48594801f8bab",
+    "bytes": 1922496,
+    "ci_run": 38114752397,
+    "ci_artifact": 11693456288,
+    "sd_path": "Apps/ebook-reader/ebook_reader.elf"
+  },
+  "scene": {
+    "version": "0.3.6",
+    "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+    "commit": "dea97a70cdcc657c5d2b2730ca2b62715949a10a",
+    "tree": "0f1725e49c6fe1868feb154c30c9f63290dae984",
+    "elf_sha256": "fd8543dcb48d02f08cfcda144b0038d457f59b9cc5bf670caeee746f92af3ff7",
+    "bytes": 302044,
+    "ci_run": 38114521151,
+    "ci_artifact": 11692877209,
+    "internal_path": "ui-scene/driver.elf"
+  },
+  "native": {
+    "version": "0.2.5",
+    "repository": "michaelrolphone-cmyk/RiscRTE",
+    "commit": "7071f0c25e223f24670bed409a5f8b6f291c8042",
+    "tree": "03add2558ecd81dce7029af952115841dcaf3de4",
+    "firmware_sha256": "fc1fe5f1286668136156949932605a792c7dea048dc403f3f04d676ded14ab36",
+    "unchanged": true
+  },
+  "component_sdk_runtime": "536e01a36461d2e66bdfa735186c1d02267b3fb7",
+  "panel": {
+    "version": "0.1.12",
+    "elf_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+    "unchanged": true
+  },
+  "recipe": "minimal/scripts/package_reader_bin_overlay.py",
+  "recipe_version_argument": "0.1.77",
+  "tools_commit": "db5f6c5ba1a71ed3fcc22ff29847397a050b7ee4",
+  "hardware_tested": false
+}

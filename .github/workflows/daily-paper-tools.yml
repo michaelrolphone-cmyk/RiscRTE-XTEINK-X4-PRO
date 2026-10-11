@@ -1,0 +1,41 @@
+name: Daily Paper verification tools
+on:
+  push:
+    branches: [feat/daily-digest]
+    paths: ['.github/workflows/daily-paper-tools.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tools:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: igrr/mkspiffs
+          ref: 112d65368043f01dd86813cb84e41b1159a34f6b
+          submodules: true
+          path: mkspiffs
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: aac8c06d3221139084acd0cfc64f7b0ba194a97a
+          path: ReaderTools
+          persist-credentials: false
+      - name: Compile independent SPIFFS reader and collect interfaces
+        run: |
+          make -C mkspiffs -j2 CPPFLAGS='-DSPIFFS_OBJ_META_LEN=4'
+          mkdir -p output/relocation-tools output/reader-sdk
+          cp mkspiffs/mkspiffs output/
+          cp ReaderTools/scripts/normalize_xtensa_relocations.py output/relocation-tools/
+          cp ReaderTools/sdk/driver/*.h output/reader-sdk/
+          python3 -m pip download --no-deps pyelftools==0.32 -d output/
+          output/mkspiffs --version > output/mkspiffs-version.txt
+          git -C mkspiffs rev-parse HEAD > output/mkspiffs-source.txt
+          git -C mkspiffs submodule status >> output/mkspiffs-source.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: daily-paper-verification-tools
+          path: output/
+          retention-days: 1

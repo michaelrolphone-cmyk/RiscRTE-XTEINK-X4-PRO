@@ -1,0 +1,178 @@
+{
+  "version": "0.1.79",
+  "source_revision": "89ddd3743671265c69589596c504f5763c165bb4",
+  "baseline_sha256": "1d24836ca58c1f6ca841d3d9a41c38a3ad459e95746760de363a32e5ba04e7b5",
+  "image": {
+    "bytes": 16777216,
+    "flash_offset": 0,
+    "name": "X4-0.1.79-WiFi-MSC-Panel-0.1.12-full-0x0.bin",
+    "sha256": "8e42978eb7d7196d80bc6bbb61178ff5169e99e288c84b5f16a78c2c03ed8420"
+  },
+  "sd_package": {
+    "apps": 16,
+    "byte_identical_to_078": true,
+    "bytes": 4584227,
+    "name": "X4-0.1.78-Reader-Daily-Paper-SD.zip",
+    "sha256": "b7e504f16d717df839f974f0dde6e5f33cf9ff303e49fbb7936784447298d2e8"
+  },
+  "sources": {
+    "msc": {
+      "commit": "4c2e2dbe3bf587b51873c65a1a1c3faf4035e884",
+      "files_checked": 17,
+      "tree": "595d461ed08eb972317746267a1e7c8ff07867c4"
+    },
+    "wifi": {
+      "commit": "f5673befd745a744872e4802332e647d64577a5c",
+      "files_checked": 250,
+      "tree": "9f65912907ca09f83ab0d8db74cab0b55cbe4ef0"
+    }
+  },
+  "validation": [
+    {
+      "cohorts": [
+        {
+          "active": "baseline-store",
+          "candidate": "baseline-store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "baseline-store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        }
+      ],
+      "header_sha256": "c8d78356d3c8dee9c938027e62458f0216985fed373edb2dcea1dfc1b8bf7359",
+      "missing_import_rejections": 14,
+      "native_admission_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "original_fixture_sha256": "c80f18414663693cc4fa0155cd816d8fc6558cf57212b70f5d4f7ef8546a3843",
+      "sanitized": false,
+      "sanitizers": null,
+      "selected_fixture_sha256": "6270b0d755d431e8d61afde9fa13e7badb1b37ac90bcf2a1ebc5065e8afb227b",
+      "strict_modules": 54,
+      "unsafe_operation_rejections": 54,
+      "wrong_role_rejections": 54
+    },
+    {
+      "cohorts": [
+        {
+          "active": "baseline-store",
+          "candidate": "baseline-store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "baseline-store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        }
+      ],
+      "header_sha256": "c8d78356d3c8dee9c938027e62458f0216985fed373edb2dcea1dfc1b8bf7359",
+      "missing_import_rejections": 14,
+      "native_admission_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "original_fixture_sha256": "c80f18414663693cc4fa0155cd816d8fc6558cf57212b70f5d4f7ef8546a3843",
+      "sanitized": true,
+      "sanitizers": "undefined",
+      "selected_fixture_sha256": "6270b0d755d431e8d61afde9fa13e7badb1b37ac90bcf2a1ebc5065e8afb227b",
+      "strict_modules": 54,
+      "unsafe_operation_rejections": 54,
+      "wrong_role_rejections": 54
+    }
+  ],
+  "changed_internal_files": [
+    "cohort.json",
+    "usb-msc/driver.elf",
+    "usb-msc/manifest.json",
+    "wifi_settings.elf",
+    "wifi_settings.json"
+  ],
+  "unchanged_internal_files": 90,
+  "native_version": "0.2.5",
+  "native_sha256": "fc1fe5f1286668136156949932605a792c7dea048dc403f3f04d676ded14ab36",
+  "native_unchanged": true,
+  "panel_version": "0.1.12",
+  "panel_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+  "panel_unchanged": true,
+  "wifi_version": "1.1.25",
+  "msc_version": "0.1.6",
+  "independent_readbacks": true,
+  "paired_sha_crc": true,
+  "partition_md5": true,
+  "bootloader_native_esp_checksums_sha256": true,
+  "assembler_sha256": "7c3e224ab309b4078426c174cab9bb2630222f1ddc5fbcaf7e445b02e272fc25",
+  "hardware_tested": false,
+  "target_instructions_executed": false,
+  "full_flash_overwrites_internal_data": true,
+  "preserving_ota_supported": false,
+  "excluded": [
+    "USB throughput batching",
+    "dynamic package discovery"
+  ],
+  "verified_component_versions": {
+    "ebook_reader.json": "0.1.8",
+    "ui-scene/manifest.json": "0.3.6",
+    "daily_digest.json": "0.1.0",
+    "default.json": "0.4.8",
+    "springboard.json": "1.7.31",
+    "hollow_trail.json": "1.2.1",
+    "wifi_settings.json": "1.1.25",
+    "usb-msc/manifest.json": "0.1.6"
+  },
+  "new_target_compilation_performed": false,
+  "target_artifacts": "Exact previously qualified target binaries reused; source hashes, package digests, loader map and production admission rechecked.",
+  "asan": "Not rerun: known Apple ASan initialization failure from .78 qualification; normal and UBSan passes only.",
+  "evidence": {
+    "X4-0.1.79-verification.json": {
+      "bytes": 90409,
+      "sha256": "7c1c500be343672912f1e6c7f420b62bf513579480c2b9e66bece183b1ac49bb"
+    },
+    "X4-0.1.79-Evidence.zip": {
+      "bytes": 97738,
+      "sha256": "e556eff90a2643cef8a042332ba4a91f9b096726da57ae56bb76c360dac380e9"
+    }
+  }
+}
