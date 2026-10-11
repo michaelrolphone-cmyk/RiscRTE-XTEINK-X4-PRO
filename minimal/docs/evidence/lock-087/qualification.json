@@ -1,0 +1,11 @@
+{
+  "x4_build_source": "cd221494c7a1c09378b655eac86fd77701abe3c4",
+  "runtime": "c3d750d113dbc79af87daaad316ab1d63d57dd60",
+  "system_tests": "ea600f225d6435e40f38cdf0be9e42ac00d49def",
+  "retained_wake_bytes": 512,
+  "home_record_bytes": 408,
+  "firmware_bytes": 1452976,
+  "firmware_sha256": "de39b8efbd1fadec05eb4185c8928b1c072076817de7acd410980d8107b61a0e",
+  "hardware_tested": false,
+  "boot_fixes_preserved": true
+}

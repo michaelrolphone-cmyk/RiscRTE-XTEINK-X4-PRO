@@ -24,12 +24,13 @@
     "app_requirement_rows": 24,
     "shared_files_transport": true,
     "usb_phy": true,
-    "app_image_cache": false
+    "app_image_cache": false,
+    "retained_wake_bytes": 512
   },
   "preserved_components": {
     "reader": "0.1.8",
     "daily_paper": "0.1.0",
     "panel": "0.1.12"
   },
-  "scope": "Rebuild native with both boot fixes; preserve complete .86 application/provider and SD bytes; regenerate cohort, migration policy and image records. Original .86 image is not a release candidate. Hardware untested."
+  "scope": "Rebuild native with both boot fixes; preserve complete .86 application/provider and SD bytes; regenerate cohort, migration policy and image records. Original .86 image is not a release candidate. Hardware untested. Lock correction: select 512 retained bytes for unchanged Home schema-3 408-byte snapshot; previous .87 native omitted this required selection."
 }
