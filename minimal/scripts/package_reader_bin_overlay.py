@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble the exact X4 0.1.75 BIN plus the qualified NOVA Reader components.
+"""Assemble a selected exact X4 BIN plus its qualified NOVA Reader components.
 
 This recovery path observes public resolver tables in the original native BIN,
 then runs the unchanged production ELF admission and complete Runtime cohort
@@ -25,6 +25,20 @@ RUNTIME_TREE = '03add2558ecd81dce7029af952115841dcaf3de4'
 ADMISSION_SHA = '1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d'
 IMAGE_NAME = 'X4-0.1.76-Reader-Panel-0.1.12-full-0x0.bin'
 ALLOWED = {'ui-scene/driver.elf', 'ui-scene/manifest.json', 'ebook_reader.json', 'cohort.json'}
+
+# Keep the previously delivered 0.1.76 recipe reproducible. New increments select
+# the exact tested BIN, not the generic driver workflow's older SDK defaults.
+BUILD_SELECTIONS = {
+    '0.1.76': {'baseline_version': '0.1.75', 'baseline_sha256': BASE_SHA,
+               'scene_version': '0.3.5', 'scene_sha256': SCENE_SHA,
+               'reader_version': '0.1.6', 'reader_sha256': READER_SHA},
+    '0.1.77': {'baseline_version': '0.1.76',
+               'baseline_sha256': '5a00e718132b8381f0e58a8af1f1b40301580ba9d73f164c20561fae98b962c5',
+               'scene_version': '0.3.6',
+               'scene_sha256': 'fd8543dcb48d02f08cfcda144b0038d457f59b9cc5bf670caeee746f92af3ff7',
+               'reader_version': '0.1.8',
+               'reader_sha256': '455190996d053b15b79cbad3637386222f3a5286f76016c128f48594801f8bab'},
+}
 
 
 def sha(raw):
@@ -186,6 +200,12 @@ int main(int argc,char**argv){
 
 
 def build(a):
+    version = getattr(a, 'version', '0.1.76')
+    require(version in BUILD_SELECTIONS, 'Unknown Reader firmware selection')
+    selected = BUILD_SELECTIONS[version]
+    base_sha = selected['baseline_sha256']
+    scene_sha, reader_sha = selected['scene_sha256'], selected['reader_sha256']
+    image_name = f'X4-{version}-Reader-Panel-0.1.12-full-0x0.bin'
     require(not a.output.exists(), 'Use a new output directory')
     require(re.fullmatch('[0-9a-f]{40}', a.source_revision), 'Invalid source revision')
     runtime_tree = subprocess.check_output(['git', '-C', str(a.runtime), 'rev-parse', 'HEAD^{tree}'], text=True).strip()
@@ -198,7 +218,7 @@ def build(a):
     from paired_bank_images import initial_bank_state, parse_record
     from native_binary_exports import segments
     raw = a.baseline.read_bytes()
-    require(len(raw) == 0x1000000 and sha(raw) == BASE_SHA, 'Not the exact qualified X4 0.1.75 image')
+    require(len(raw) == 0x1000000 and sha(raw) == base_sha, 'Not the exact qualified X4 ' + selected['baseline_version'] + ' image')
     pair = parse_record(raw[0xff2000:0xff2060], True)
     require(pair[2] == 0, 'Expected active bank zero')
     firmware = raw[0x10000:0x10000 + pair[3]]
@@ -217,15 +237,15 @@ def build(a):
         new['ui-scene/' + name] = (a.scene / name).read_bytes()
     new['ebook_reader.json'] = (a.reader / 'ebook_reader.json').read_bytes()
     app = (a.reader / 'ebook_reader.elf').read_bytes()
-    require(sha(new['ui-scene/driver.elf']) == SCENE_SHA and sha(app) == READER_SHA, 'Wrong qualified component bytes')
-    for name, version in [('ui-scene/manifest.json', '0.3.5'), ('ebook_reader.json', '0.1.6')]:
+    require(sha(new['ui-scene/driver.elf']) == scene_sha and sha(app) == reader_sha, 'Wrong qualified component bytes')
+    for name, component_version in [('ui-scene/manifest.json', selected['scene_version']), ('ebook_reader.json', selected['reader_version'])]:
         before, after = json.loads(old[name]), json.loads(new[name])
-        require(after['version'] == version, 'Incorrect component version')
+        require(after['version'] == component_version, 'Incorrect component version')
         before.pop('version'); after.pop('version')
         require(before == after, 'Existing manifest policy changed')
     cohort = json.loads(old['cohort.json'])
-    require(cohort['version'] == '0.1.75' and cohort['firmware_sha256'] == NATIVE_SHA, 'Wrong cohort identity')
-    cohort.update(version='0.1.76', source_revision=a.source_revision)
+    require(cohort['version'] == selected['baseline_version'] and cohort['firmware_sha256'] == NATIVE_SHA, 'Wrong cohort identity')
+    cohort.update(version=version, source_revision=a.source_revision)
     new['cohort.json'] = encoded(cohort)
     require(new.keys() == old.keys() and {n for n in new if new[n] != old[n]} == ALLOWED, 'Unrelated internal files changed')
     a.output.mkdir(parents=True)
@@ -283,10 +303,10 @@ def build(a):
     require(all(image[lo:hi] == raw[lo:hi] for lo, hi in ranges), 'Unexpected change outside store/paired record')
     require(read_image(bytes(image[0x2f0000:0x800000]), 0x510000) == new, 'Final BIN readback mismatch')
     segments(firmware)
-    (a.output / IMAGE_NAME).write_bytes(image)
-    report = {'schema': 'x4.reader-bin-overlay.v1', 'version': '0.1.76',
-        'image': {'name': IMAGE_NAME, 'bytes': len(image), 'flash_offset': 0, 'sha256': sha(image)},
-        'baseline_sha256': BASE_SHA, 'native_firmware_sha256': NATIVE_SHA, 'native_unchanged': True,
+    (a.output / image_name).write_bytes(image)
+    report = {'schema': 'x4.reader-bin-overlay.v1', 'version': version,
+        'image': {'name': image_name, 'bytes': len(image), 'flash_offset': 0, 'sha256': sha(image)},
+        'baseline_sha256': base_sha, 'baseline_version': selected['baseline_version'], 'native_firmware_sha256': NATIVE_SHA, 'native_unchanged': True,
         'source_revision': a.source_revision, 'assembler_sha256': sha(Path(__file__).read_bytes()),
         'runtime_source_tree': runtime_tree, 'native_bank_source_sha256': ADMISSION_SHA,
         'native_validation_method': 'Exact ESP BIN checksum/SHA and complete source-ordered resolver tables; production source host admission',
@@ -295,8 +315,8 @@ def build(a):
         'unchanged_internal_files': len(new) - len(ALLOWED), 'all_file_inventories': {'before': inventory(old), 'after': inventory(new)},
         'unchanged_ranges': [{'offset': lo, 'bytes': hi-lo, 'sha256': sha(raw[lo:hi])} for lo, hi in ranges],
         'panel_version': '0.1.12', 'panel_sha256': PANEL_SHA, 'panel_unchanged': True,
-        'scene': {'version': '0.3.5', 'bytes': len(new['ui-scene/driver.elf']), 'sha256': SCENE_SHA},
-        'reader': {'version': '0.1.6', 'bytes': len(app), 'sha256': READER_SHA, 'sd_path': 'Apps/ebook-reader/ebook_reader.elf'},
+        'scene': {'version': selected['scene_version'], 'bytes': len(new['ui-scene/driver.elf']), 'sha256': scene_sha},
+        'reader': {'version': selected['reader_version'], 'bytes': len(app), 'sha256': reader_sha, 'sd_path': 'Apps/ebook-reader/ebook_reader.elf'},
         'store_generator': capacity, 'independent_mkspiffs_sha256': sha(a.mkspiffs.read_bytes()),
         'independent_baseline_and_output_readbacks': True, 'paired_sha_crc_verified': True,
         'validation': results, 'hardware_tested': False, 'full_flash_overwrites_internal_data': True}
@@ -310,4 +330,5 @@ if __name__ == '__main__':
     for field in ('baseline', 'runtime', 'tools', 'scene', 'reader', 'mkspiffs', 'output'):
         p.add_argument('--' + field, type=lambda s: Path(s).resolve(), required=True)
     p.add_argument('--source-revision', required=True)
+    p.add_argument('--version', choices=tuple(BUILD_SELECTIONS), default='0.1.76')
     build(p.parse_args())
