@@ -19,12 +19,6 @@ jobs:
           persist-credentials: false
       - uses: actions/checkout@v4
         with:
-          repository: michaelrolphone-cmyk/RiscRTE-Drivers
-          ref: 605a407f5aba0116dad35be123075298eff77e3c
-          path: Drivers
-          persist-credentials: false
-      - uses: actions/checkout@v4
-        with:
           repository: michaelrolphone-cmyk/T5S3-Reader
           ref: aac8c06d3221139084acd0cfc64f7b0ba194a97a
           path: ReaderTools
@@ -32,10 +26,10 @@ jobs:
       - name: Compile independent SPIFFS reader and collect interfaces
         run: |
           make -C mkspiffs -j2 CPPFLAGS='-DSPIFFS_OBJ_META_LEN=4'
-          mkdir -p output/relocation-tools
+          mkdir -p output/relocation-tools output/reader-sdk
           cp mkspiffs/mkspiffs output/
           cp ReaderTools/scripts/normalize_xtensa_relocations.py output/relocation-tools/
-          tar --exclude=.git --exclude='*.ttf' --exclude='*.otf' -czf output/drivers-sdk-source.tar.gz Drivers
+          cp ReaderTools/sdk/driver/*.h output/reader-sdk/
           output/mkspiffs --version > output/mkspiffs-version.txt
           git -C mkspiffs rev-parse HEAD > output/mkspiffs-source.txt
           git -C mkspiffs submodule status >> output/mkspiffs-source.txt
