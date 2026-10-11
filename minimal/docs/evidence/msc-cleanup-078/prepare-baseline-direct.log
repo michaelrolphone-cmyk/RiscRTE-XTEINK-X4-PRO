@@ -1,0 +1,1 @@
+Assertion failed: (!owner_token&&!portable_usb_transfer_owned()&&usb_releases), function app_launch, file usb_prepare_integration_test.c, line 59.

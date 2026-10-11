@@ -1,0 +1,7 @@
+Assertion failed: (risc_msc_transport_stop()), function main, file test.c, line 98.
+Traceback (most recent call last):
+  File "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-3/reader/test/run_usb_msc_transport_test.py", line 27, in <module>
+    subprocess.run([str(exe)],check=True,timeout=20)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/var/folders/4r/rbtpllh96jngnhswvqg0hzw00000gn/T/tmppxe5oyyp/test']' died with <Signals.SIGABRT: 6>.

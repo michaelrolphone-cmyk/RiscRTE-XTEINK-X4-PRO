@@ -1,0 +1,28 @@
+In file included from /Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/usb_phy_test.cpp:1:
+/Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/vendor/HWCDC.cpp:114:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+  114 |     arduino_hw_cdc_event_data_t event = {0};
+      |                                          ^
+      |                                          {}
+1 warning generated.
+Actual pinned HWCDC: checked clock/reset/PHY/pads, repeated absent-host resume with RX/TX, retained allocation/register failures, lease fences and retry PASS
+In file included from /Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/usb_phy_test.cpp:1:
+/Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/vendor/HWCDC.cpp:114:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+  114 |     arduino_hw_cdc_event_data_t event = {0};
+      |                                          ^
+      |                                          {}
+1 warning generated.
+Actual pinned HWCDC: checked clock/reset/PHY/pads, repeated absent-host resume with RX/TX, retained allocation/register failures, lease fences and retry PASS
+In file included from /Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/usb_phy_test.cpp:1:
+/Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/vendor/HWCDC.cpp:114:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+  114 |     arduino_hw_cdc_event_data_t event = {0};
+      |                                          ^
+      |                                          {}
+1 warning generated.
+Actual pinned HWCDC: checked clock/reset/PHY/pads, repeated absent-host resume with RX/TX, retained allocation/register failures, lease fences and retry PASS
+In file included from /Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/usb_phy_test.cpp:1:
+/Users/micahelbyrns/Documents/Codex/2026-10-11/task/runtime/test/hwcdc_pinned/vendor/HWCDC.cpp:114:42: warning: suggest braces around initialization of subobject [-Wmissing-braces]
+  114 |     arduino_hw_cdc_event_data_t event = {0};
+      |                                          ^
+      |                                          {}
+1 warning generated.
+Actual pinned HWCDC: checked clock/reset/PHY/pads, repeated absent-host resume with RX/TX, retained allocation/register failures, lease fences and retry PASS

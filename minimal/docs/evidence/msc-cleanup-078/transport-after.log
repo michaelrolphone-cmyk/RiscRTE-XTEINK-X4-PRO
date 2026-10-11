@@ -1,0 +1,4 @@
+PASS saved 0x05 / observed 0x75: no false retained shutdown
+PASS 1024 control/receive combinations and idempotent stop
+PASS all writable control mismatches retained; retry restores CDC route
+PASS reset, idle, pad, wrap and clock failures retain ownership until successful retry
