@@ -1,5 +1,7 @@
 # X4 .1.78 MSC cleanup source checkpoint
 
+> Historical source-only checkpoint. The later [target qualification](../../MSC_CLEANUP_078_INTEGRATION.md) supersedes the target-build and preparation-fixture blockers below. See also [bulk/eject follow-up](../../MSC_078_BULK_AND_EJECT_FINDINGS.md). Physical qualification remains outstanding.
+
 The selected source and byte-identical MSC artifact are bound in
 [source-binding.json](source-binding.json). The candidate changes only the shared
 MSC transport restore comparison, package version and focused tests/docs.
