@@ -28,9 +28,12 @@ jobs:
           fetch System RiscRTE-System-Apps dea97a70cdcc657c5d2b2730ca2b62715949a10a
           fetch Drivers RiscRTE-Drivers 8ec572af94ee6e844b1685d8d050471cd58cad87
           fetch Utilities RiscRTE-Utilities 866653f3694fa6f0276cd1931df4da3f9ad3be36
+          fetch CurrentX4 RiskRTE-XTEINK-X4-PRO c8188751319887abde6a21234c2af01a78a168a7
+          fetch Runtime086 RiscRTE 8d713b52edca004e1d53bf30a1c584859fe33d14
+          fetch System086 RiscRTE-System-Apps c3d3aad0768e98eed968fc3e6ec87929dd1fd621
           git -C Runtime fetch --depth 1 origin 274bc66f193cbe29018d2a85c9400cb0dce8aacc
           test "$(git -C Runtime rev-parse HEAD)" = 7071f0c25e223f24670bed409a5f8b6f291c8042
-          tar -czf obd-delivery-sources.tar.gz X4 Runtime System Drivers Utilities
+          tar -czf obd-delivery-sources.tar.gz X4 Runtime System Drivers Utilities CurrentX4 Runtime086 System086
       - uses: actions/upload-artifact@v4
         with:
           name: obd-delivery-sources
