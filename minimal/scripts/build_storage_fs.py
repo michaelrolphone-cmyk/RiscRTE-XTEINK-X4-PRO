@@ -43,7 +43,7 @@ if set(imports) - {'strcmp', 'memcpy', 'memmove', 'memset', 'memcmp', 'strlen', 
     raise ValueError('Unexpected storage provider imports: ' + repr(imports))
 manifest=json.loads((source/'manifest.json').read_text())
 if a.async_storage:
-    manifest['version']='0.2.19'
+    manifest['version']='0.2.20'
     manifest['requires'].append({'capability':'platform.storage-worker','api':1})
 (a.output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 receipt = {'bytes': elf.stat().st_size, 'sha256': hashlib.sha256(elf.read_bytes()).hexdigest(),
