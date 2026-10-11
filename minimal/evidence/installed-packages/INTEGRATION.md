@@ -60,3 +60,25 @@ target builds. Initial unadapted entropy testing rejected the extra .dSYM
 directories, then passed with the exact intended fixture inventory.
 
 Final qualification admits all 42 modules. Forward legacy migration from the earlier staged store to the Home migration store admits 39 modules; Home replacement in the already admitted Files-sharing store admits 42. The direct staged-to-Files-sharing policy transition rejects before ELF admission and needs the Files owner’s migration/release procedure; it is not claimed as a passing update path. The optional older Home gesture harness cannot link Darwin weak raster extension symbols; no gesture assertion ran there. The new production Home catalog adapter test passes, including first-frame ordering and 1,000 pending launch/sleep drain polls.
+
+### Exact Files transition rejection
+
+The test calls `Runtime::validateCohort(candidate, root, admit, context)` without
+native delegations. `validateCohortImpl` calls `validateAppDataExportCohort`. For
+`file_browser.json`, the candidate adds `storage.app-data.export@1` and five
+non-export grants: `storage.key-value@1` instance 6, `network.tcp.listener@1`,
+`crypto.entropy@1`, `net.wifi@1` instance 15 and `bluetooth.session-setup@1`.
+The first-map branch rejects these added non-export privileges before selecting
+a delegation. Even after a bridge establishes those grants, the ordinary call
+with no matching `AppDataExportDelegation` would reject the first map.
+
+Production `NativeBankStore::validateStore` uses `validateNativeCohort` with the
+selected `RISC_NATIVE_APP_DATA_EXPORT_POLICY_HEADER`. The missing release inputs
+are an operational-grants bridge preserving existing maps, then exact from/to
+cohort coordinates (product, version, repository, full source revision, Runtime
+version) and the exact consumer/label/owner/namespace/name/path/access delegation.
+The development export is timecard namespace 1, `timecard.json`, exposed at
+`/timecard/timecard.json` read-write under `Saved files`. Both stores still carry
+the old development cohort coordinates, so they are not a ready release pair.
+This is a technical Runtime admission condition, not a tool denial or a request
+for additional user permission. No admission check was weakened.
