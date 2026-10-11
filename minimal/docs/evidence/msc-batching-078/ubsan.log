@@ -1,0 +1,11 @@
+Canonical SDK headers: 81
+{"hardware_timing":false,"host_commands":64,"command_bytes":65536,"read_bytes":2097152,"write_bytes":2097152,"export_read_calls":512,"export_write_calls":512,"max_export_blocks":8,"sdmmc_read_calls":512,"sdmmc_write_calls":512,"data_endpoint_transfers":1024,"direct_8block_sdmmc_calls":1,"card_restored":true,"host_eject_remount":true}
+PASS short-out: no incomplete write, explicit disconnect cleanup
+PASS aligned-short-out: no incomplete write, explicit disconnect cleanup
+PASS failed-out: no incomplete write, explicit disconnect cleanup
+PASS short-in: no incomplete write, explicit disconnect cleanup
+PASS read-error: one native attempt, custody retained, no replay
+PASS write-error: one native attempt, custody retained, no replay
+PASS partial-write-error: one native attempt, custody retained, no replay
+PASS queued-reset: no incomplete write, explicit disconnect cleanup
+PASS deadline: one ten-ms modeled IO returns before queued reset processing; event hook aborts immediately

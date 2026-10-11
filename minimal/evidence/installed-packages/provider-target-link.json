@@ -1,0 +1,109 @@
+{
+  "status": "experimental-target-link-only",
+  "limitations": [
+    "No target runtime or hardware execution claimed.",
+    "Async SD/native lifecycle transport remains required before UI activation."
+  ],
+  "commands": [
+    [
+      "/Users/micahelbyrns/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-g++",
+      "-std=c++17",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-DARDUINOJSON_USE_DOUBLE=0",
+      "-DARDUINOJSON_USE_LONG_LONG=0",
+      "-Os",
+      "-fPIC",
+      "-mtext-section-literals",
+      "-mlongcalls",
+      "-fvisibility=hidden",
+      "-ffreestanding",
+      "-fno-builtin",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/app",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/driver",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/hardware",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/src",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/lib/ArduinoJson/src",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/InstalledCatalog/include",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/PortableApps/include",
+      "-c",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/Services/installed_apps/service.cpp",
+      "-o",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/installed-apps/service.o"
+    ],
+    [
+      "/Users/micahelbyrns/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc",
+      "-std=c11",
+      "-Os",
+      "-fPIC",
+      "-mtext-section-literals",
+      "-mlongcalls",
+      "-fvisibility=hidden",
+      "-ffreestanding",
+      "-fno-builtin",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/app",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/driver",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/hardware",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/src",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/lib/ArduinoJson/src",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/InstalledCatalog/include",
+      "-I/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/PortableApps/include",
+      "-c",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/InstalledCatalog/src/InstalledCatalog.c",
+      "-o",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/installed-apps/catalog.o"
+    ],
+    [
+      "/Users/micahelbyrns/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-g++",
+      "-nostdlib",
+      "-nostartfiles",
+      "-shared",
+      "-Wl,--hash-style=sysv",
+      "-Wl,--version-script=/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/installed-apps/exports.map",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/installed-apps/service.o",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/installed-apps/catalog.o",
+      "-lgcc",
+      "-o",
+      "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/installed-apps/driver.elf"
+    ]
+  ],
+  "imports": [
+    "free",
+    "malloc",
+    "memchr",
+    "memcmp",
+    "memcpy",
+    "memset",
+    "realloc",
+    "snprintf",
+    "strchr",
+    "strcmp",
+    "strcpy",
+    "strlen"
+  ],
+  "sources": {
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/Services/installed_apps/service.cpp": "0bbf72de746379f8fdc396195f19d64c1b7a6ee5ce5ccde1ab4feea21865f8ab",
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/InstalledCatalog/src/InstalledCatalog.c": "60b36f2cdfad6b4a358955c54274bccbbc446adff86cd368e81395a35eae25ab",
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/sdk/driver/RiscInstallationV1.h": "bbdbcce2db68d9261aff03b945f8e1071ee52e0c29c8beaff22efe74d82aa784",
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime/src/runtime/packages/InstalledAppDiscovery.h": "03f50353e32333b9d678d2aa079c29535827db9f9f9b450e4331f3831ee336a0",
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/InstalledCatalog/include/InstalledCatalog.h": "0facbb2ef8ae5cfe9ba4a5d78cdfab585ef56501fbcb72cef7f9e4157d2f9e8b",
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system/lib/PortableApps/include/InstalledAppsV1.h": "96e1bf4d5e12bc2c0b58cfe69d01519a555c3a8029e4d555d0b6bac340e65b5f"
+  },
+  "elf_sha256": "7cad4d0d0ca43cf9436e27a38fc3602653439b5ba85ba67b44e2ddab12ffcb9a",
+  "repositories": {
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/system": {
+      "head": "eda631c7255dcc1f0802fdced68baed838a4f61c",
+      "dirty": false
+    },
+    "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/runtime": {
+      "head": "09b78ca39e19152a3bd1ac3a02a390fcb3a00cbd",
+      "dirty": false
+    }
+  }
+}

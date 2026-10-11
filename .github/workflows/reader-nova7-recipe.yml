@@ -1,0 +1,18 @@
+name: Reader NOVA-7 integration recipe
+on:
+  push:
+    branches: [feat/reader-nova7-gui]
+  pull_request:
+    paths: ['minimal/product.json', 'minimal/reader-*-sources.json', 'minimal/scripts/package_reader*.py', 'minimal/scripts/native_binary_exports.py', 'minimal/scripts/test_reader*recipe.py', '.github/workflows/reader-nova7-recipe.yml']
+permissions:
+  contents: read
+jobs:
+  recipe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: |
+          python minimal/scripts/test_reader_nova7_recipe.py
+          python minimal/scripts/test_reader_links_recipe.py

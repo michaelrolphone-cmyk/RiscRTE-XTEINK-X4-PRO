@@ -1,0 +1,257 @@
+{
+  "version": "0.1.75",
+  "source": {
+    "commit": "f690ebfe62325443abd8b998054c04ae21af13b0",
+    "tree": "ad7e8dbbfba693b2b9a7c275caa1eae9565355e2"
+  },
+  "baseline_sha256": "c597e0fc556299850a7b84f71615ef175e87547f5c0ce5eaa3b493e40c1ba16d",
+  "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+  "native_firmware_sha256": "fc1fe5f1286668136156949932605a792c7dea048dc403f3f04d676ded14ab36",
+  "native_unchanged": true,
+  "changed_internal_files": [
+    "cohort.json",
+    "ebook_reader.json",
+    "ui-scene/driver.elf",
+    "ui-scene/manifest.json"
+  ],
+  "panel_version": "0.1.12",
+  "panel_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+  "panel_unchanged": true,
+  "paired_sha_crc_verified": true,
+  "independent_readback_tool_sha256": "118bd59f1413db7c53d7d9796d5abb194c06a2d6b52360d6399eae079a1af902",
+  "reader": {
+    "bytes": 1856932,
+    "sd_path": "Apps/ebook-reader/ebook_reader.elf",
+    "sha256": "5d5ee95075a3f5ee8bf75aa53ffd3b60e44d3bbcba926304441a55af07927a80",
+    "version": "0.1.5"
+  },
+  "image": {
+    "bytes": 16777216,
+    "flash_offset": 0,
+    "name": "X4-0.1.75-Reader-Panel-0.1.12-full-0x0.bin",
+    "sha256": "bd84004903b2bc6d4c843c89f9c4eb76ab89f2b1894e31644c671297c06c8116"
+  },
+  "strict_admission": [
+    {
+      "all_imports_defined_in_native_candidate": true,
+      "app_elf_sha256": "daefc6af3f4ba151cf904688e8391830d2e2edb6759d7200e2b5d1783e7e241a",
+      "compiled_public_exports": {
+        "free": "0x4038a644",
+        "malloc": "0x42037cf8",
+        "memchr": "0x40001344",
+        "memcmp": "0x4000120c",
+        "memcpy": "0x400011f4",
+        "memset": "0x400011e8",
+        "risc_runtime_get_api": "0x4200bef4",
+        "snprintf": "0x420d7e3c",
+        "strcmp": "0x40001230",
+        "strlen": "0x40001248"
+      },
+      "each_missing_import_rejected": true,
+      "imports": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strlen"
+      ],
+      "native_bank_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "path": "ui-scene/driver.elf",
+      "production_native_admission": true,
+      "provider": true,
+      "target_instructions_executed": false,
+      "target_symbol_resolver_host_executed": false
+    },
+    {
+      "all_imports_defined_in_native_candidate": true,
+      "app_elf_sha256": "5d5ee95075a3f5ee8bf75aa53ffd3b60e44d3bbcba926304441a55af07927a80",
+      "compiled_public_exports": {
+        "__errno": "0x420d5cdc",
+        "calloc": "0x42037cbc",
+        "free": "0x4038a644",
+        "isalpha": "0x40001290",
+        "longjmp": "0x420ec1f0",
+        "malloc": "0x42037cf8",
+        "memchr": "0x40001344",
+        "memcmp": "0x4000120c",
+        "memcpy": "0x400011f4",
+        "memmove": "0x40001200",
+        "memset": "0x400011e8",
+        "qsort": "0x40001488",
+        "realloc": "0x42037d28",
+        "risc_runtime_get_api": "0x4200bef4",
+        "setjmp": "0x4000144c",
+        "snprintf": "0x420d7e3c",
+        "strcat": "0x40001374",
+        "strchr": "0x4000138c",
+        "strcmp": "0x40001230",
+        "strcpy": "0x40001218",
+        "strlen": "0x40001248",
+        "strncasecmp": "0x400013d4",
+        "strncmp": "0x4000123c",
+        "strncpy": "0x40001224",
+        "strrchr": "0x40001404",
+        "strstr": "0x40001254",
+        "strtod": "0x420d9ba8",
+        "strtof": "0x420d9c64",
+        "strtol": "0x400014e8",
+        "tolower": "0x40001320",
+        "vsnprintf": "0x420e0ff0"
+      },
+      "each_missing_import_rejected": true,
+      "imports": [
+        "__errno",
+        "calloc",
+        "free",
+        "isalpha",
+        "longjmp",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "qsort",
+        "realloc",
+        "risc_runtime_get_api",
+        "setjmp",
+        "snprintf",
+        "strcat",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncasecmp",
+        "strncmp",
+        "strncpy",
+        "strrchr",
+        "strstr",
+        "strtod",
+        "strtof",
+        "strtol",
+        "tolower",
+        "vsnprintf"
+      ],
+      "native_bank_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "path": "ebook_reader.elf",
+      "production_native_admission": true,
+      "provider": false,
+      "target_instructions_executed": false,
+      "target_symbol_resolver_host_executed": false
+    }
+  ],
+  "cohort_admission": [
+    {
+      "active_store_sha256": "2317f9e0cfb2e0a8a8b62a18424f21200a858ca6e628696f285cd9a807a13234",
+      "app_policy_rows": 24,
+      "candidate_store_sha256": "2317f9e0cfb2e0a8a8b62a18424f21200a858ca6e628696f285cd9a807a13234",
+      "cohort_validated": true,
+      "cooperative_yields": 147,
+      "elf_count": 37,
+      "error": "",
+      "hardware_calls": 0,
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "prepared": true,
+      "sanitized": false,
+      "storage_calls": 0,
+      "target_instructions_executed": false
+    },
+    {
+      "active_store_sha256": "2317f9e0cfb2e0a8a8b62a18424f21200a858ca6e628696f285cd9a807a13234",
+      "app_policy_rows": 24,
+      "candidate_store_sha256": "2317f9e0cfb2e0a8a8b62a18424f21200a858ca6e628696f285cd9a807a13234",
+      "cohort_validated": true,
+      "cooperative_yields": 147,
+      "elf_count": 37,
+      "error": "",
+      "hardware_calls": 0,
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "prepared": true,
+      "sanitized": true,
+      "storage_calls": 0,
+      "target_instructions_executed": false
+    }
+  ],
+  "hardware_tested": false,
+  "full_flash_overwrites_internal_data": true,
+  "public_sources": {
+    "x4": {
+      "commit": "1b0748408aedce1f9b0b843b8bea53c30b61d89f",
+      "tree": "ad7e8dbbfba693b2b9a7c275caa1eae9565355e2"
+    },
+    "reader": {
+      "commit": "326b37c2b550da6e42fb95ce643fd26a3c334490",
+      "tree": "a49856051e4d910fadad0e9a9f290cd0afe86b47"
+    },
+    "system": {
+      "commit": "9fdbaafb3edad0d72b9ef8fb0b7d34fdf226a49e",
+      "tree": "58f394a57b058f7735c2e8b32aac2025303bfce8"
+    }
+  },
+  "scene": {
+    "id": "scene-host",
+    "version": "0.3.4",
+    "size_bytes": 291792,
+    "sha256": "daefc6af3f4ba151cf904688e8391830d2e2edb6759d7200e2b5d1783e7e241a"
+  },
+  "target_stack_frames": {
+    "Engine::open(": {
+      "bytes": 128,
+      "function": "bool reader::Engine::open(const string&)",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "Engine::removeBookmark(": {
+      "bytes": 144,
+      "function": "bool reader::Engine::removeBookmark(unsigned int)",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "Engine::renameBookmark(": {
+      "bytes": 128,
+      "function": "bool reader::Engine::renameBookmark(unsigned int, const char*)",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "Engine::toggleBookmark(": {
+      "bytes": 144,
+      "function": "bool reader::Engine::toggleBookmark()",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "app_main(": {
+      "bytes": 1136,
+      "function": "void app_main()",
+      "kind": "static",
+      "limit_bytes": 1536
+    }
+  },
+  "root_cause": "Reader 0.1.4 closed/reopened its scene and republished the same page after periodic resident policy checks. Its test counted CLEAN intent only, not all physical submissions. Incomplete cache restoration could also republish a page on completion.",
+  "correction": "Scene pause/resume releases input/display custody but preserves the document, revision and page bitmap. A configuration-only reply does not invalidate pixels. REDRAW requests one repaint. Book/font handles remain closed until a book interaction; periodic checks do not reload or rerender the book.",
+  "validation": {
+    "reader_real_app_32KiB_stack_UBSan": "16 scenarios passed",
+    "old_reader_014": "fails the tightened unchanged-page publication assertion at the first periodic checkpoint",
+    "idle": "EPUB/TXT/Markdown and later saved EPUB page: four policy checks including BUSY, zero new page publications, zero added display submissions, no reopened book/font storage",
+    "visible_changes": "one additional clean submission after explicit REDRAW; shared controls restoration; next/previous page turns including after idle pass",
+    "scene_checkpoint": "static, external repaint, cancelled raster, pending frame, paused close and unsubscribe/subscribe/snapshot/focus/reset retention tests pass",
+    "scene_host_lifecycle": "179 presenter/profile executions passed",
+    "target_builds": "scene-host 0.3.4 and Reader 0.1.5 compile, pass structural validation and stack budgets",
+    "firmware_admission": "both updated modules strict admission; complete 37-module internal cohort normal and sanitized",
+    "filesystem": "deterministic SPIFFS generation and independent ABI2 readback; paired-bank SHA/CRC checks pass",
+    "hardware": "pending"
+  },
+  "test_log_sha256": {
+    "reader-startup-before-015.log": "1a4ba3089f2fb22b181cadbf158870bd7e0ad2fd8deb7715eced8cefc9c159b4",
+    "reader-startup-015-final.log": "d68192eb3773c187deb1c6739567e22554f2135fee48583d35510d640639bd38",
+    "scene-075-tests.log": "66408a6cf0b42b5439070e292c15ccd4ad5e20e617b94848e8f9057de65657cf",
+    "scene-host-075.log": "c81b688c3a138e4b3280bdadf3a5ed8b2233e5af21c6edbb5478a2be500bd2db"
+  },
+  "installation": "Install both firmware 0.1.75 at 0x0 and Reader 0.1.5 at Apps/ebook-reader/ebook_reader.elf. Full flash overwrites internal settings. No SD fonts, book, saved-state or JSON replacement required. Older scene providers retain the prior close/reopen fallback."
+}

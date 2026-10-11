@@ -1,0 +1,87 @@
+{
+  "allocated_sections": {
+    ".dram0.bss": {
+      "address": 1070208296,
+      "bytes": 45912
+    },
+    ".dram0.data": {
+      "address": 1070182576,
+      "bytes": 25720
+    },
+    ".dram0.dummy": {
+      "address": 1070104576,
+      "bytes": 77988
+    },
+    ".flash.appdesc": {
+      "address": 1007681568,
+      "bytes": 256
+    },
+    ".flash.rodata": {
+      "address": 1007681824,
+      "bytes": 315824
+    },
+    ".flash.rodata_noload": {
+      "address": 1007997648,
+      "bytes": 15988
+    },
+    ".flash.text": {
+      "address": 1107296288,
+      "bytes": 1041655
+    },
+    ".flash_rodata_dummy": {
+      "address": 1006632992,
+      "bytes": 1048576
+    },
+    ".iram0.data": {
+      "address": 1077457059,
+      "bytes": 1
+    },
+    ".iram0.text": {
+      "address": 1077363716,
+      "bytes": 93343
+    },
+    ".iram0.vectors": {
+      "address": 1077362688,
+      "bytes": 1027
+    },
+    ".rtc.dummy": {
+      "address": 1611653120,
+      "bytes": 33
+    },
+    ".rtc.force_fast": {
+      "address": 1611653156,
+      "bytes": 8
+    },
+    ".rtc.text": {
+      "address": 1611653120,
+      "bytes": 33
+    },
+    ".rtc_noinit": {
+      "address": 1342177280,
+      "bytes": 2408
+    }
+  },
+  "boot_store_empty_blocks": 271,
+  "heap_start": 1070254208,
+  "iq_bank_base": 1070268416,
+  "iq_bank_bytes": 65536,
+  "iram_gap_before_iq_alias_bytes": 85852,
+  "known_runtime_pair_psram_bytes": 553616,
+  "linker_dram_region_remainder_excluding_iq_bytes": 130688,
+  "live_heap_and_largest_allocation_measured": false,
+  "maximum_two_app_ledger_psram_bytes": 98304,
+  "native_bin_bytes": 1477984,
+  "native_slot_bytes": 2490368,
+  "native_slot_margin_bytes": 1012384,
+  "nominal_psram_after_listed_fixed_allocations_bytes": 7605616,
+  "nominal_psram_bytes": 8388608,
+  "scope": "Linker gaps are address-space bounds, not free heap or contiguous allocation guarantees. PSRAM ledger excludes resident provider/app images, graphics, networking, allocator metadata and transient buffers. Hardware allocation margins remain untested.",
+  "static_dram_bytes": 71632,
+  "static_dram_gap_before_iq_bytes": 14208,
+  "static_dram_sections": {
+    ".dram0.bss": 45912,
+    ".dram0.data": 25720
+  },
+  "x4_diagnostic_psram_bytes": 131072,
+  "x4_early_internal_heap_bytes": 8192
+}

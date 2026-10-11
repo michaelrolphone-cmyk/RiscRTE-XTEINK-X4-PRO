@@ -1,0 +1,247 @@
+{
+  "version": "0.1.74",
+  "source": {
+    "commit": "624462a7bc0e8f87231869aeff89354c61a2fbca",
+    "tree": "9b874dcb57bdd6195f52ff24538319a8c2c095b9"
+  },
+  "baseline_sha256": "01246f28f9672e9c38c240565983b5b35fabb3b6403ed56dc335baf9d10685e4",
+  "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+  "native_firmware_sha256": "fc1fe5f1286668136156949932605a792c7dea048dc403f3f04d676ded14ab36",
+  "native_unchanged": true,
+  "changed_internal_files": [
+    "cohort.json",
+    "ebook_reader.json",
+    "ui-scene/driver.elf",
+    "ui-scene/manifest.json"
+  ],
+  "panel_version": "0.1.12",
+  "panel_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+  "panel_unchanged": true,
+  "paired_sha_crc_verified": true,
+  "independent_readback_tool_sha256": "118bd59f1413db7c53d7d9796d5abb194c06a2d6b52360d6399eae079a1af902",
+  "reader": {
+    "bytes": 1856404,
+    "sd_path": "Apps/ebook-reader/ebook_reader.elf",
+    "sha256": "33f9880fa0e8f5f8d725dd5998f5da2bd67a49795772967e7af064f461ba6a62",
+    "version": "0.1.4"
+  },
+  "image": {
+    "bytes": 16777216,
+    "flash_offset": 0,
+    "name": "X4-0.1.74-Reader-Panel-0.1.12-full-0x0.bin",
+    "sha256": "c597e0fc556299850a7b84f71615ef175e87547f5c0ce5eaa3b493e40c1ba16d"
+  },
+  "strict_admission": [
+    {
+      "all_imports_defined_in_native_candidate": true,
+      "app_elf_sha256": "28d9d490f8c12dffbc38166c853785f74d3b528a886acb180327c3b42dab824c",
+      "compiled_public_exports": {
+        "free": "0x4038a644",
+        "malloc": "0x42037cf8",
+        "memchr": "0x40001344",
+        "memcmp": "0x4000120c",
+        "memcpy": "0x400011f4",
+        "memset": "0x400011e8",
+        "risc_runtime_get_api": "0x4200bef4",
+        "snprintf": "0x420d7e3c",
+        "strcmp": "0x40001230",
+        "strlen": "0x40001248"
+      },
+      "each_missing_import_rejected": true,
+      "imports": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strlen"
+      ],
+      "native_bank_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "path": "ui-scene/driver.elf",
+      "production_native_admission": true,
+      "provider": true,
+      "target_instructions_executed": false,
+      "target_symbol_resolver_host_executed": false
+    },
+    {
+      "all_imports_defined_in_native_candidate": true,
+      "app_elf_sha256": "33f9880fa0e8f5f8d725dd5998f5da2bd67a49795772967e7af064f461ba6a62",
+      "compiled_public_exports": {
+        "__errno": "0x420d5cdc",
+        "calloc": "0x42037cbc",
+        "free": "0x4038a644",
+        "isalpha": "0x40001290",
+        "longjmp": "0x420ec1f0",
+        "malloc": "0x42037cf8",
+        "memchr": "0x40001344",
+        "memcmp": "0x4000120c",
+        "memcpy": "0x400011f4",
+        "memmove": "0x40001200",
+        "memset": "0x400011e8",
+        "qsort": "0x40001488",
+        "realloc": "0x42037d28",
+        "risc_runtime_get_api": "0x4200bef4",
+        "setjmp": "0x4000144c",
+        "snprintf": "0x420d7e3c",
+        "strcat": "0x40001374",
+        "strchr": "0x4000138c",
+        "strcmp": "0x40001230",
+        "strcpy": "0x40001218",
+        "strlen": "0x40001248",
+        "strncasecmp": "0x400013d4",
+        "strncmp": "0x4000123c",
+        "strncpy": "0x40001224",
+        "strrchr": "0x40001404",
+        "strstr": "0x40001254",
+        "strtod": "0x420d9ba8",
+        "strtof": "0x420d9c64",
+        "strtol": "0x400014e8",
+        "tolower": "0x40001320",
+        "vsnprintf": "0x420e0ff0"
+      },
+      "each_missing_import_rejected": true,
+      "imports": [
+        "__errno",
+        "calloc",
+        "free",
+        "isalpha",
+        "longjmp",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "qsort",
+        "realloc",
+        "risc_runtime_get_api",
+        "setjmp",
+        "snprintf",
+        "strcat",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncasecmp",
+        "strncmp",
+        "strncpy",
+        "strrchr",
+        "strstr",
+        "strtod",
+        "strtof",
+        "strtol",
+        "tolower",
+        "vsnprintf"
+      ],
+      "native_bank_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "path": "ebook_reader.elf",
+      "production_native_admission": true,
+      "provider": false,
+      "target_instructions_executed": false,
+      "target_symbol_resolver_host_executed": false
+    }
+  ],
+  "cohort_admission": [
+    {
+      "active_store_sha256": "85de0237a8f8f51f4d69a708d7d84051339d874b22386cff98ab95a5d471d188",
+      "app_policy_rows": 24,
+      "candidate_store_sha256": "85de0237a8f8f51f4d69a708d7d84051339d874b22386cff98ab95a5d471d188",
+      "cohort_validated": true,
+      "cooperative_yields": 147,
+      "elf_count": 37,
+      "error": "",
+      "hardware_calls": 0,
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "prepared": true,
+      "sanitized": false,
+      "storage_calls": 0,
+      "target_instructions_executed": false
+    },
+    {
+      "active_store_sha256": "85de0237a8f8f51f4d69a708d7d84051339d874b22386cff98ab95a5d471d188",
+      "app_policy_rows": 24,
+      "candidate_store_sha256": "85de0237a8f8f51f4d69a708d7d84051339d874b22386cff98ab95a5d471d188",
+      "cohort_validated": true,
+      "cooperative_yields": 147,
+      "elf_count": 37,
+      "error": "",
+      "hardware_calls": 0,
+      "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+      "prepared": true,
+      "sanitized": true,
+      "storage_calls": 0,
+      "target_instructions_executed": false
+    }
+  ],
+  "hardware_tested": false,
+  "full_flash_overwrites_internal_data": true,
+  "public_sources": {
+    "x4": {
+      "commit": "cdfe260a7fe832a532ed582c68b8c45b2737cb45",
+      "tree": "9b874dcb57bdd6195f52ff24538319a8c2c095b9"
+    },
+    "reader": {
+      "commit": "21d8e34b04c89d555ebdf9220d68b950bba9c11b",
+      "tree": "cd3387fa01543acb688de80e65a0055593de7e3b"
+    },
+    "system": {
+      "commit": "101c5d90aebd82b1fd5fe7a81046fdac5b7dd5b0",
+      "tree": "23b7cb8f4732fff1c35d0ec6702d218471371ac2"
+    }
+  },
+  "scene": {
+    "id": "scene-host",
+    "version": "0.3.3",
+    "size_bytes": 290080,
+    "sha256": "28d9d490f8c12dffbc38166c853785f74d3b528a886acb180327c3b42dab824c"
+  },
+  "target_stack_frames": {
+    "Engine::open(": {
+      "bytes": 128,
+      "function": "bool reader::Engine::open(const string&)",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "Engine::removeBookmark(": {
+      "bytes": 144,
+      "function": "bool reader::Engine::removeBookmark(unsigned int)",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "Engine::renameBookmark(": {
+      "bytes": 128,
+      "function": "bool reader::Engine::renameBookmark(unsigned int, const char*)",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "Engine::toggleBookmark(": {
+      "bytes": 144,
+      "function": "bool reader::Engine::toggleBookmark()",
+      "kind": "static",
+      "limit_bytes": 512
+    },
+    "app_main(": {
+      "bytes": 1136,
+      "function": "void app_main()",
+      "kind": "static",
+      "limit_bytes": 1536
+    }
+  },
+  "validation": {
+    "reader_real_app_32KiB_stack_UBSan": "12 scenarios passed: library, EPUB3, EPUB2, TXT, Markdown; absent author/title; failed index read with Browse SD; four policy restores including BUSY on EPUB/TXT/MD; next/previous page turns on EPUB/TXT",
+    "clean_refresh": "one CLEAN/FIFO full-panel submission for each newly published page; cached resident restores use DEFAULT and do not clean-flash",
+    "scene_components_and_page_contract": "passed both profiles, ABI prefix compatibility, invalid request rejection, pending/frozen clean intent, acquire retry, nonsticky default presentation",
+    "scene_host_lifecycle": "179 presenter/profile executions passed",
+    "target_builds": "scene-host 0.3.3 and Reader 0.1.4 passed target compilation and structural validation",
+    "firmware_admission": "updated scene and Reader strict import admission; complete 37-module internal cohort, normal and sanitized",
+    "filesystem": "deterministic generation; independent ABI2 SPIFFS readback; paired-bank SHA/CRC checks passed",
+    "physical_testing": "pending"
+  },
+  "installation": "Flash the full BIN at 0x0 (overwrites internal settings), then replace Apps/ebook-reader/ebook_reader.elf on SD. Existing SD fonts, books and System/State remain. No apps JSON replacement required. Reader fixes also work on 0.1.73, but explicit clean refresh requires this firmware."
+}

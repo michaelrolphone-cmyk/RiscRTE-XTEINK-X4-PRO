@@ -1,0 +1,8 @@
+{
+  "schema": 2,
+  "migration_id": "export-0b02339cd9f1a00de7d2f8d8cbe99e13",
+  "linked_record_bytes": 64,
+  "source_and_target_snapshots_verified": true,
+  "shared_kv": [],
+  "selected_function_present": true
+}

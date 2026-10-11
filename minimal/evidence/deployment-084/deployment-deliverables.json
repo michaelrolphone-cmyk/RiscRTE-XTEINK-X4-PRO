@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/deliverables/X4-0.1.84-FULL-INITIAL-ERASES-DATA.zip",
+    "bytes": 3077623,
+    "sha256": "9c6358c7a1586523e1425163b5a9f2c8396c523aa859ec603198b8b071cd3de6"
+  },
+  {
+    "path": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/deliverables/X4-0.1.84-SD-OVERLAY-KEEP-EXISTING.zip",
+    "bytes": 5234561,
+    "sha256": "c6837c5e6a62f5c8327e63aec71ec5c136fb98db8ac8995093c6011395599ee2"
+  },
+  {
+    "path": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/deliverables/X4-0.1.84-PRESERVING-API-TEST-AND-PUBLICATION-REVIEW.zip",
+    "bytes": 6934662,
+    "sha256": "e4a7a67e6e80b34a1e351c101156e78facb64d7ee2ec5fb3ad752e3e9f630ead"
+  }
+]
