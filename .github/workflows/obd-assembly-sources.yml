@@ -11,16 +11,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: michaelrolphone-cmyk/T5S3-Reader
-          ref: 45cf61ac013fb618e8d7fed63217a35350484d52
-          path: ReaderSDK
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: 7071f0c25e223f24670bed409a5f8b6f291c8042
+          path: Runtime
           persist-credentials: false
-          sparse-checkout: sdk
-      - name: Archive canonical headers
-        run: tar -czf obd-driver-sdk.tar.gz ReaderSDK/sdk
+      - name: Fetch retained toolbar SDK revision
+        run: |
+          git -C Runtime fetch --depth 1 origin 274bc66f193cbe29018d2a85c9400cb0dce8aacc
+          git -C Runtime show 274bc66f193cbe29018d2a85c9400cb0dce8aacc:sdk/app/RiscRuntimeV1.h > /dev/null
+          test "$(git -C Runtime rev-parse HEAD)" = 7071f0c25e223f24670bed409a5f8b6f291c8042
+          tar -czf obd-runtime-sources.tar.gz Runtime
       - uses: actions/upload-artifact@v4
         with:
-          name: obd-driver-sdk
-          path: obd-driver-sdk.tar.gz
+          name: obd-runtime-sources
+          path: obd-runtime-sources.tar.gz
           compression-level: 0
           retention-days: 7
