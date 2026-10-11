@@ -198,6 +198,7 @@ int main(int argc,char**argv){
             '  auto settingsBackend=*runtimePort.keyValue;\n'
             '  settingsBackend.journalRead=[](void*,uint32_t,void*,uint32_t,uint32_t*)->int32_t{++storageCalls;return -1;};\n'
             '  settingsBackend.journalWrite=[](void*,uint32_t,const void*,uint32_t)->int32_t{++storageCalls;return -1;};\n'
+            '  settingsBackend.legacyNamespace=[](void*,uint32_t,bool*)->int32_t{++storageCalls;return -1;};\n'
             '  runtimePort.keyValue=&settingsBackend;\n'+needle)
     if installed_catalog:
         fixture = fixture.replace('  RiscCpu::Hardware h{};',

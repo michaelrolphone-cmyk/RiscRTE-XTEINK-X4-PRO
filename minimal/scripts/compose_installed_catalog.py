@@ -13,12 +13,15 @@ def main():
  for key in ('base-store','springboard','app-store','sd','catalog','output'):p.add_argument('--'+key,type=Path,required=True)
  p.add_argument("--home",type=Path,help="Home profile with first-frame catalog hydration")
  p.add_argument("--migrate-legacy",action="store_true",help="Select dormant legacy SD authority and a matching internal-only Springboard catalog")
+ p.add_argument("--update-installed",action="store_true",help="Update an existing admitted installed-catalog profile, preserving its exact namespace range and envelope")
  p.add_argument("--provider-capacity",type=int,choices=[29,32,40],default=29)
  a=p.parse_args();base=a.base_store.resolve();out=a.output.resolve()
  if out.exists():raise ValueError('Output must be new')
  boot=json.loads((base/'boot.json').read_text())
  if len(boot['drivers'])>=a.provider_capacity:raise ValueError('No provider slot remains')
- if any('installation'==key for key in boot):raise ValueError('Existing installation policy needs explicit review')
+ existing=boot.get('installation')
+ if existing is not None and not a.update_installed:raise ValueError('Existing installation policy requires --update-installed')
+ if a.update_installed and existing is None:raise ValueError('No installed profile to update')
  sd=next(x for x in boot['drivers'] if x['manifest']=='sd/manifest.json')
  if sd.get('instance_id')!=9:raise ValueError('Expected exact X4 SD binding')
  spring=json.loads((a.springboard/'springboard.json').read_text())
@@ -26,7 +29,8 @@ def main():
  if ('software.installed-apps',1) not in needs or ('storage.volume',1) not in needs:raise ValueError('Springboard lacks installed catalog')
  selected=next(x for x in boot['app_capabilities'] if x['manifest']=='springboard.json')
  for cap,instance in (('software.installed-apps',0),('storage.volume',9)):
-  selected['grants'].append(dict(capability=cap,api=1,instance_id=instance))
+  grant=dict(capability=cap,api=1,instance_id=instance)
+  if grant not in selected['grants']:selected['grants'].append(grant)
  app_store=json.loads((a.app_store/'app_store.json').read_text())
  old_store=json.loads((base/'app_store.json').read_text())
  old_needs={(x['capability'],x['api'])for x in old_store['requires']}
@@ -34,7 +38,8 @@ def main():
  if app_store['version']!='1.5.0' or new_needs!=old_needs|{('software.installed-apps',1),('storage.volume',1)}:raise ValueError('App Store capability/version mismatch')
  app_store_policy=next(x for x in boot['app_capabilities'] if x['manifest']=='app_store.json')
  for cap,instance in (('software.installed-apps',0),('storage.volume',9)):
-  app_store_policy['grants'].append(dict(capability=cap,api=1,instance_id=instance))
+  grant=dict(capability=cap,api=1,instance_id=instance)
+  if grant not in app_store_policy['grants']:app_store_policy['grants'].append(grant)
  # Exact owner-selected services; declarations from SD cannot redirect hardware,
  # acquire raw native authority, or select another app's settings namespace.
  envelope=[]
@@ -42,7 +47,8 @@ def main():
   ('board.battery',1,7),('alarm.service',2,0),('storage.volume',1,9),('file.open',1,0),
   ('runtime.realtime',1,0),('storage.key-value',1,0),('storage.app-data',1,0)]:
   envelope.append(dict(capability=cap,api=api,instance_id=instance))
- boot['installation']=dict(volume_instance=9,grants=envelope,namespace_range=dict(first=3000,count=128))
+ if existing is not None and (existing.get('volume_instance')!=9 or existing.get('grants')!=envelope or existing.get('namespace_range')!=dict(first=3000,count=128)):raise ValueError('Installed ownership envelope differs')
+ boot['installation']=dict(existing) if existing is not None else dict(volume_instance=9,grants=envelope,namespace_range=dict(first=3000,count=128))
  if a.provider_capacity==40:
   # Explicit selected authority: dynamic software providers may use these
   # existing services, but never private settings, installation or raw native APIs.
@@ -54,7 +60,8 @@ def main():
   home_record=json.loads((a.home/'build-evidence.json').read_text())
   if home['version']!='0.4.9' or {(x['capability'],x['api'])for x in home['requires']}!={(x['capability'],x['api'])for x in old_home['requires']}|{('software.installed-apps',1)} or home_record.get('installed_catalog',{}).get('volume_instance')!=9:
    raise ValueError('Home must preserve all capabilities and hydrate the exact SD catalog')
-  next(x for x in boot['app_capabilities'] if x['manifest']=='default.json')['grants'].append(dict(capability='software.installed-apps',api=1,instance_id=0))
+  home_grants=next(x for x in boot['app_capabilities'] if x['manifest']=='default.json')['grants'];grant=dict(capability='software.installed-apps',api=1,instance_id=0)
+  if grant not in home_grants:home_grants.append(grant)
  if a.migrate_legacy:
   record=json.loads((a.springboard/'springboard-build-record.json').read_text())
   expected=[]
@@ -66,12 +73,15 @@ def main():
   if spring['version']!='1.8.1' or sorted(record['catalog'].get('sd_authority_files',[]))!=sorted(expected) or record['catalog'].get('authority_boot_sha256')!=digest(base/'boot.json'):
    raise ValueError('Springboard compiled list must exclude exact legacy SD source identities')
 
- boot['drivers'].append(dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')]))
+ catalog_entry=dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')])
+ current_catalog=[x for x in boot['drivers'] if x['manifest']=='installed-apps/manifest.json']
+ if current_catalog and current_catalog!=[catalog_entry]:raise ValueError('Catalog ownership changed')
+ if not current_catalog:boot['drivers'].append(catalog_entry)
  sd_manifest=json.loads((a.sd/'manifest.json').read_text())
  if sd_manifest['version'] not in ('0.2.20','0.2.21'):raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
- if catalog_manifest['version']!='0.7.0':raise ValueError('Durable namespace catalog provider required')
+ if catalog_manifest['version']!='0.7.1':raise ValueError('Durable namespace catalog provider required')
  shutil.copytree(base,out)
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',
