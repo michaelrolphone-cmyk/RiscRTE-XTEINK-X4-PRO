@@ -114,6 +114,11 @@
       "display_name": "Reader",
       "file_name": "ebook_reader.elf",
       "icon": "solid:f15b"
+    },
+    {
+      "display_name": "Daily Paper",
+      "file_name": "daily_digest.elf",
+      "icon": "solid:f1ea"
     }
   ]
 }
