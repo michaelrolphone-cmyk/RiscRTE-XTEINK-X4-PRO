@@ -50,7 +50,7 @@ regressions through the actual production FatFs implementation. Tests cover
 fresh, partial, completed and incomplete caches, reflow and bookmark retention.
 `sd-apps-073-reader-013.json` records the replacement ELF and validation. Copy
 only `Apps/ebook-reader/ebook_reader.elf`; leave saved Reader data in place.
-Use Reader 0.1.4 and Hollow Trail 1.2.1 in subsequent assemblies; firmware static
+Use Reader 0.1.5 and Hollow Trail 1.2.1 in subsequent assemblies; firmware static
 version labels update with the next firmware build. Physical testing remains
 pending; the panel selection is still 0.1.12.
 
@@ -77,6 +77,24 @@ build directories. Supply the X4 ABI2 `mkspiffs` build with metadata length 4
 for independent readback. The script preserves all native bytes and all
 internal files except the scene service, its manifest, Reader metadata and
 cohort identity, and regenerates the paired-bank record.
+
+Firmware **0.1.75** and Reader **0.1.5** correct the remaining repeated idle
+redraw. The 0.1.4 path still republished an unchanged page after every resident
+power check. Scene-host **0.3.4** now retains the document and framebuffer while
+temporarily releasing input/display custody. A normal policy return restores
+input without any display submission; an explicit REDRAW reply restores the
+page once. Book/font handles stay closed until the next book interaction.
+Forward/back page changes still request CLEAN refreshes.
+
+Install both `X4-0.1.75-Reader-Panel-0.1.12-full-0x0.bin` at `0x0` and
+`Apps/ebook-reader/ebook_reader.elf`. This needs the new scene service as well
+as the app; old providers use the earlier fallback. Fonts, books and Reader
+state on SD stay in place. Full flashing overwrites internal settings.
+`reader-static-075-qualification.json` records the zero-submission idle tests,
+post-idle navigation, shared-controls/REDRAW restoration and build/admission
+results. Native firmware and panel 0.1.12 are byte-identical to 0.1.74.
+Use the same focused packager with the qualified 0.1.74 baseline. Physical
+testing is pending.
 
 `sd-apps-073-qualification.json` records exact artifacts, source-tree publication
 mappings, capacity and gate results. Tests cover normal/sanitized runtime
