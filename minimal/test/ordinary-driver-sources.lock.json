@@ -3,7 +3,7 @@
   "purpose": "Hosted ordinary-driver ABI compatibility check. This is not the selected resident native or a product composition lock.",
   "runtime": {
     "repository": "michaelrolphone-cmyk/RiscRTE",
-    "commit": "663b6dbeecbaa8e0f934e496536a9b10cfece8ac",
+    "commit": "5c7c296e703fdf1dcce9a21f166d68f8f2682a2f",
     "version": "0.2.16"
   },
   "shared": {
