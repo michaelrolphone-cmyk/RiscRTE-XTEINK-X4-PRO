@@ -58,7 +58,7 @@ def main():
  if a.home:
   home=json.loads((a.home/'default.json').read_text());old_home=json.loads((base/'default.json').read_text())
   home_record=json.loads((a.home/'build-evidence.json').read_text())
-  if home['version']!='0.4.9' or {(x['capability'],x['api'])for x in home['requires']}!={(x['capability'],x['api'])for x in old_home['requires']}|{('software.installed-apps',1)} or home_record.get('installed_catalog',{}).get('volume_instance')!=9:
+  if home['version']!='0.4.10' or {(x['capability'],x['api'])for x in home['requires']}!={(x['capability'],x['api'])for x in old_home['requires']}|{('software.installed-apps',1)} or home_record.get('installed_catalog',{}).get('volume_instance')!=9:
    raise ValueError('Home must preserve all capabilities and hydrate the exact SD catalog')
   home_grants=next(x for x in boot['app_capabilities'] if x['manifest']=='default.json')['grants'];grant=dict(capability='software.installed-apps',api=1,instance_id=0)
   if grant not in home_grants:home_grants.append(grant)
@@ -70,7 +70,7 @@ def main():
    manifest=json.loads((base/policy['manifest']).read_text());expected.append(manifest['file_name'])
    if policy['image_source']['volume_instance']!=9:raise ValueError('Unexpected legacy SD volume')
    policy['catalog_authority']=True
-  if spring['version']!='1.8.1' or sorted(record['catalog'].get('sd_authority_files',[]))!=sorted(expected) or record['catalog'].get('authority_boot_sha256')!=digest(base/'boot.json'):
+  if spring['version']!='1.8.2' or sorted(record['catalog'].get('sd_authority_files',[]))!=sorted(expected) or record['catalog'].get('authority_boot_sha256')!=digest(base/'boot.json'):
    raise ValueError('Springboard compiled list must exclude exact legacy SD source identities')
 
  catalog_entry=dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')])
