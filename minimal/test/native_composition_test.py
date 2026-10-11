@@ -142,16 +142,23 @@ class CompositionTest(unittest.TestCase):
             composition.verify_composition(self.output)
 
     def test_invalid_options_fail_before_creating_workspace(self):
-        for options in ({'app_policy_rows': 15}, {'app_policy_rows': 18}, {'app_policy_rows': '17'},
+        for options in ({'app_policy_rows': 15}, {'app_policy_rows': 19}, {'app_policy_rows': '17'},
                         {'app_policy_rows': True}, {'app_policy_rows': 17.0},
                         {'app_image_cache': 1}, {'app_image_cache': 'yes'}, {'app_image_cache': None}):
             with self.subTest(options=options), self.assertRaisesRegex(ValueError, 'policy rows|image cache'):
                 self.prepare(**options)
             self.assertFalse(self.output.exists())
 
+    def test_dynamic_provider_capacity_is_explicit_and_bounded(self):
+        for capacity in (32, 40):
+            composition.validate_build_options(dict(app_policy_rows=24, app_image_cache=False, provider_capacity=capacity))
+        for capacity in (0, 29, 39, 41, True, '40'):
+            with self.subTest(capacity=capacity), self.assertRaisesRegex(ValueError, 'Provider capacity'):
+                composition.validate_build_options(dict(app_policy_rows=24, app_image_cache=False, provider_capacity=capacity))
+
     def test_rehashed_invalid_selection_is_rejected(self):
         record = self.prepare()
-        record['build_options']['app_policy_rows'] = 18
+        record['build_options']['app_policy_rows'] = 19
         del record['composition_sha256']
         record['composition_sha256'] = composition.sha(composition.encoded(record))
         (self.output / 'x4-native-composition.json').write_bytes(composition.encoded(record))

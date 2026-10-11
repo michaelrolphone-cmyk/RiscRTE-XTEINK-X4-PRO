@@ -13,7 +13,7 @@ def main():
  for key in ('base-store','springboard','app-store','sd','catalog','output'):p.add_argument('--'+key,type=Path,required=True)
  p.add_argument("--home",type=Path,help="Home profile with first-frame catalog hydration")
  p.add_argument("--migrate-legacy",action="store_true",help="Select dormant legacy SD authority and a matching internal-only Springboard catalog")
- p.add_argument("--provider-capacity",type=int,choices=[29,32],default=29)
+ p.add_argument("--provider-capacity",type=int,choices=[29,32,40],default=29)
  a=p.parse_args();base=a.base_store.resolve();out=a.output.resolve()
  if out.exists():raise ValueError('Output must be new')
  boot=json.loads((base/'boot.json').read_text())
@@ -31,7 +31,7 @@ def main():
  old_store=json.loads((base/'app_store.json').read_text())
  old_needs={(x['capability'],x['api'])for x in old_store['requires']}
  new_needs={(x['capability'],x['api'])for x in app_store['requires']}
- if app_store['version']!='1.4.0' or new_needs!=old_needs|{('software.installed-apps',1),('storage.volume',1)}:raise ValueError('App Store capability/version mismatch')
+ if app_store['version']!='1.5.0' or new_needs!=old_needs|{('software.installed-apps',1),('storage.volume',1)}:raise ValueError('App Store capability/version mismatch')
  app_store_policy=next(x for x in boot['app_capabilities'] if x['manifest']=='app_store.json')
  for cap,instance in (('software.installed-apps',0),('storage.volume',9)):
   app_store_policy['grants'].append(dict(capability=cap,api=1,instance_id=instance))
@@ -43,6 +43,10 @@ def main():
   ('runtime.realtime',1,0),('storage.key-value',1,0),('storage.app-data',1,0)]:
   envelope.append(dict(capability=cap,api=api,instance_id=instance))
  boot['installation']=dict(volume_instance=9,grants=envelope,namespace_range=dict(first=3000,count=128))
+ if a.provider_capacity==40:
+  # Explicit selected authority: dynamic software providers may use these
+  # existing services, but never private settings, installation or raw native APIs.
+  boot['installation']['provider_grants']=[dict(g) for g in envelope if g['capability'] not in ('storage.key-value','storage.app-data')]
  if a.migrate_legacy and not a.home:raise ValueError('Legacy migration requires Home cache hydration for preserved shortcuts')
  if a.home:
   home=json.loads((a.home/'default.json').read_text());old_home=json.loads((base/'default.json').read_text())
@@ -66,7 +70,7 @@ def main():
  if sd_manifest['version'] not in ('0.2.20','0.2.21'):raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
- if catalog_manifest['version']!='0.4.0':raise ValueError('Durable namespace catalog provider required')
+ if catalog_manifest['version']!='0.6.0':raise ValueError('Durable namespace catalog provider required')
  shutil.copytree(base,out)
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',
@@ -78,7 +82,7 @@ def main():
  receipt=dict(status='development-store-not-a-release',base_boot_sha256=digest(base/'boot.json'),boot_sha256=digest(out/'boot.json'),
   apps=len(boot['app_capabilities']),drivers=len(boot['drivers']),volume_instance=9,cache_namespace=2000,namespace_range=boot['installation']['namespace_range'],
   replaced={name:dict(sha256=digest(out/name),bytes=(out/name).stat().st_size)for name in replacements},
-  remaining=['Strict complete store/native admission']+([] if a.migrate_legacy else ['Select preserving migration of legacy SD authority'])+['On-device missing-provider dependency provisioning','Hardware qualification'],
+  remaining=['Strict complete store/native admission']+([] if a.migrate_legacy else ['Select preserving migration of legacy SD authority'])+['Native online catalog publication and board-specific provider selection','SD-first private settings','Hardware qualification'],
   hardware_tested=False,flashable=False)
  (out.parent/(out.name+'-composition.json')).write_text(json.dumps(receipt,indent=2)+'\n')
  print(json.dumps(receipt))

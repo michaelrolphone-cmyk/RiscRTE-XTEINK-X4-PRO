@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE
-          ref: 498e642ba896a7086fb11ad5ab013a063a5ae7ba
+          ref: f8ae0baca706e6be59fe5965946ce47dc0d3d820
           path: .shared/runtime
       - uses: actions/checkout@v4
         with:
@@ -22,12 +22,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE-System-Apps
-          ref: a78723d2eefa9f865049c0e492b62c276d61d1ee
+          ref: 7ba4dee0152735bb3945288c0883a09fc612e800
           path: .shared/apps
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE-Drivers
-          ref: ce31eefe0ebe62d373c9b0fb24d6f7059d2995d9
+          ref: b2419513da200b150192ba46ffe1b396a82171cc
           path: .shared/drivers
       - uses: actions/setup-python@v5
         with:
@@ -41,6 +41,7 @@ jobs:
           RISCRTE_APPS_ROOT: ${{ github.workspace }}/.shared/apps
           RISCRTE_DESK_SDK_ROOT: ${{ github.workspace }}/.shared/reader
           SANITIZE: '1'
+          RUNTIME_REPO: ${{ github.workspace }}/.shared/runtime
         run: |
           bash .shared/reader/test/run_display_power_contract_test.sh
           bash .shared/reader/test/run_touch_power_test.sh
@@ -69,6 +70,12 @@ jobs:
           bash minimal/test/run_desk_clock_typed_app_test.sh
           python3 minimal/test/sleep_profile_test.py
           bash minimal/test/run_profile_test.sh
+          bash .shared/runtime/test/run_staged_app_install_test.sh
+          bash .shared/runtime/test/run_removable_runtime_test.sh
+          bash .shared/apps/scripts/test_installed_apps_service.sh
+          bash .shared/apps/scripts/test_installed_apps_install.sh
+          bash .shared/apps/scripts/test_installed_catalog_client.sh
+          bash .shared/apps/scripts/test_app_store_installed.sh
       - name: Install pinned target compiler
         run: pio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'
       - name: Build and validate ordinary Xtensa providers
@@ -78,7 +85,14 @@ jobs:
           --source-lock minimal/test/ordinary-driver-sources.lock.json
           --cc "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc"
           --output build/minimal-drivers --sleep
+      - name: Build ordinary installed-catalog provider
+        run: >-
+          NATIVE_APP_CC="$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc"
+          python3 .shared/apps/scripts/build_installed_apps.py
+          --runtime-repo .shared/runtime --output-dir build/installed-catalog
       - uses: actions/upload-artifact@v4
         with:
           name: x4-typed-drivers-${{ github.event.pull_request.head.sha || github.sha }}
-          path: build/minimal-drivers
+          path: |
+            build/minimal-drivers
+            build/installed-catalog

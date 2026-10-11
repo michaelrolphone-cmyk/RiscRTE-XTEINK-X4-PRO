@@ -27,8 +27,8 @@ if 'app_requirement_rows' in options and (type(options['app_requirement_rows']) 
     raise ValueError('App requirement rows must be an explicit 17- or 24-row opt-in')
 if options.get('app_requirement_rows', 16) > options['app_policy_rows']:
     raise ValueError('App requirement rows exceed policy rows')
-if 'provider_capacity' in options and (type(options['provider_capacity']) is not int or options['provider_capacity']!=32):
-    raise ValueError('Sharing provider capacity must be 32')
+if 'provider_capacity' in options and (type(options['provider_capacity']) is not int or options['provider_capacity'] not in (32,40)):
+    raise ValueError('Provider capacity must be 32 or 40')
 if 'shared_files_transport' in options and options['shared_files_transport'] is not True:
     raise ValueError('Sharing transport requires explicit true')
 if 'installed_app_capacity' in options and (type(options['installed_app_capacity']) is not int or options['installed_app_capacity']!=64):

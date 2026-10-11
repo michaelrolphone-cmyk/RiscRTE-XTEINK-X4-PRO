@@ -87,7 +87,7 @@ def validate_build_options(options):
     require(options.get('app_requirement_rows', 16) <= options['app_policy_rows'],
             'App requirement rows exceed policy rows')
     require('installed_app_capacity' not in options or (type(options['installed_app_capacity']) is int and options['installed_app_capacity']==64), 'Installed application capacity must be an explicit 64-slot opt-in')
-    require('provider_capacity' not in options or (type(options['provider_capacity']) is int and options['provider_capacity']==32), 'Sharing capacity must be an explicit 32-provider opt-in')
+    require('provider_capacity' not in options or (type(options['provider_capacity']) is int and options['provider_capacity'] in (32,40)), 'Provider capacity must be an explicit 32- or 40-provider opt-in')
     require('shared_files_transport' not in options or options['shared_files_transport'] is True, 'Sharing transport must be an explicit true opt-in')
     require(type(options['app_image_cache']) is bool, 'App image cache must be boolean')
     require('usb_phy' not in options or options['usb_phy'] is True,
@@ -720,7 +720,7 @@ def main():
     prepare.add_argument('--output', type=Path, required=True)
     prepare.add_argument('--runtime-commit')
     prepare.add_argument('--environment', choices=ENVIRONMENTS, default=ENVIRONMENTS[0])
-    prepare.add_argument('--provider-capacity', type=int, choices=(32,))
+    prepare.add_argument('--provider-capacity', type=int, choices=(32,40))
     prepare.add_argument('--shared-files-transport', action='store_true')
     prepare.add_argument('--export-migration-header', type=Path)
     prepare.add_argument('--installed-app-capacity', type=int, choices=(64,))
