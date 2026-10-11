@@ -8,7 +8,7 @@ for name in ('runtime','tools','native-bin','store','output'):p.add_argument('--
 p.add_argument('--provider-capacity',type=int,choices=[29,32,40],default=29)
 p.add_argument('--shared-files',action='store_true')
 p.add_argument('--sd',type=Path,help='Also admit every actually selected SD image')
-p.add_argument('--composition-receipt',type=Path,help='Exact .90 composition receipt paired with --sd')
+p.add_argument('--composition-receipt',type=Path,help='Exact .90 or Files-only .92 composition receipt paired with --sd')
 p.add_argument('--native-elf',type=Path,required=True,help='Exact ELF paired with native-bin, used to derive native USB PHY registration')
 a=p.parse_args()
 if bool(a.sd)!=bool(a.composition_receipt):p.error('--sd and --composition-receipt must be supplied together')
@@ -57,8 +57,18 @@ if a.sd:
  composition=json.loads(a.composition_receipt.read_text())
  if composition['runtime_commit']!=git(a.runtime,'rev-parse','HEAD') or git(a.runtime,'status','--porcelain'):
   raise ValueError('Selected SD admission Runtime differs from clean composition source')
- if composition['product_version']!='0.1.90' or composition['shared_settings_enabled'] is not False:
-  raise ValueError('Selected SD admission requires opt-out .90 composition')
+ if composition['product_version'] not in ('0.1.90','0.1.92') or composition['shared_settings_enabled'] is not False:
+  raise ValueError('Selected SD admission requires opt-out .90 or Files-only .92 composition')
+ if composition['product_version']=='0.1.92':
+  from compose_files_092 import ALLOWED,VERSION
+  from compose_shared_settings_090 import tree
+  if (composition['changed_store_paths']!=sorted(ALLOWED) or composition['sd_overlay_required'] is not False or
+      composition['original_sd_files_preserved']!=81 or composition['added_sd_files']!=[] or
+      composition['native_unchanged'] is not True or composition['boot_authority_unchanged'] is not True or
+      composition['firmware_sha256']!=witness['firmware_sha256'] or
+      composition['store']!=tree(a.store) or composition['sd']!=tree(a.sd.resolve()) or
+      json.loads((a.store/'cohort.json').read_text())['version']!=VERSION):
+   raise ValueError('Files-only .92 composition preservation evidence differs')
  selected=audit_selected_images(json.loads((a.store/'boot.json').read_text()),a.store,a.sd.resolve())
  if selected!=composition['selected_sd_images'] or len(selected)!=46:
   raise ValueError('Selected SD source/hash inventory differs from composition')
