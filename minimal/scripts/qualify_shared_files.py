@@ -5,10 +5,11 @@ from pathlib import Path
 from package_reader_bin_overlay import native_witness,compile_admission,imports,sha
 p=argparse.ArgumentParser(description=__doc__)
 for name in ('runtime','tools','native-bin','store','output'):p.add_argument('--'+name,type=Path,required=True)
+p.add_argument('--provider-capacity',type=int,choices=(32,40),default=32)
 a=p.parse_args();a.runtime=a.runtime.resolve();a.tools=a.tools.resolve();a.native_bin=a.native_bin.resolve();a.store=a.store.resolve();a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=False)
 sys.path.insert(0,str(a.runtime.resolve()/'scripts'));sys.path.insert(0,str(a.tools.resolve()/'scripts'))
 exports,witness=native_witness(a.runtime,a.native_bin.read_bytes())
-info=compile_admission(a.runtime,a.tools,a.output/'ubsan',exports,True,'undefined',installed_catalog=True,shared_files=True)
+info=compile_admission(a.runtime,a.tools,a.output/'ubsan',exports,True,'undefined',installed_catalog=True,shared_files=True,provider_capacity=a.provider_capacity)
 modules=[]
 for path in sorted(a.store.rglob('*.elf')):
  provider=path.name=='driver.elf';needed=imports(path.read_bytes())
@@ -32,11 +33,11 @@ for case in (('range-moved','range-removed','cache-owner-moved') if 'installatio
  if not(row['prepared']and not row['cohort_validated']and row['hardware_calls']==row['storage_calls']==0):raise ValueError((case,row))
  rejections.append(case)
 boot=copy.deepcopy(original)
-while len(boot['drivers'])<=32:boot['drivers'].append(copy.deepcopy(boot['drivers'][0]))
+while len(boot['drivers'])<=a.provider_capacity:boot['drivers'].append(copy.deepcopy(boot['drivers'][0]))
 (negative/'boot.json').write_text(json.dumps(boot))
 result=subprocess.run([str(a.output/'ubsan/cohort'),str(a.store),str(negative)],capture_output=True,text=True,check=True)
 row=json.loads(result.stdout)
-if not(row['prepared'] and not row['cohort_validated'] and row['elf_count']==0 and row['hardware_calls']==row['storage_calls']==0):raise ValueError(('33-provider-overflow',row))
-rejections.append('33-provider-overflow')
-info.update(runtime_commit=subprocess.check_output(['git','-C',str(a.runtime),'rev-parse','HEAD'],text=True).strip(),provider_capacity=32,graph_grants=48,app_capacity=64,boot_sha256=sha((a.store/'boot.json').read_bytes()),store_sha256={str(f.relative_to(a.store)):sha(f.read_bytes()) for f in a.store.rglob('*') if f.is_file()},native=witness,modules=modules,admission=admission,rejected_namespace_changes=rejections,hardware_tested=False,scope='Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.')
+if not(row['prepared'] and not row['cohort_validated'] and row['elf_count']==0 and row['hardware_calls']==row['storage_calls']==0):raise ValueError((str(a.provider_capacity+1)+'-provider-overflow',row))
+rejections.append(str(a.provider_capacity+1)+'-provider-overflow')
+info.update(runtime_commit=subprocess.check_output(['git','-C',str(a.runtime),'rev-parse','HEAD'],text=True).strip(),provider_capacity=a.provider_capacity,graph_grants=48,app_capacity=64,boot_sha256=sha((a.store/'boot.json').read_bytes()),store_sha256={str(f.relative_to(a.store)):sha(f.read_bytes()) for f in a.store.rglob('*') if f.is_file()},native=witness,modules=modules,admission=admission,rejected_namespace_changes=rejections,hardware_tested=False,scope='Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.')
 (a.output/'evidence.json').write_text(json.dumps(info,indent=2)+'\n')
