@@ -22,7 +22,7 @@ PANEL_SHA = '3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4'
 SCENE_SHA = 'f63441c1ab72b24db8598fabffe4eb20df889210ca09cf275bafc78ace458787'
 READER_SHA = '8ac56cf37fc1669bba9bd0292661cf9ff74327db3f90072e8298bbb14e83f3b2'
 RUNTIME_TREE = '03add2558ecd81dce7029af952115841dcaf3de4'
-ADMISSION_SHA = '35a7d0dc055be57e79145991e624f234a2990da6c47b17e1dd956f71d3cf4fc2'
+ADMISSION_SHA = 'c9dafe906f9101b9f3b05a30e2c1a8aa1b61a89348b54770f8309b95114f7d23'
 ADMISSION_HELPER_SHA = 'e10410b569dd4909a82483713871ec3577c8a2be30ee92a63b8ef1ba854824f3'
 IMAGE_NAME = 'X4-0.1.76-Reader-Panel-0.1.12-full-0x0.bin'
 ALLOWED = {'ui-scene/driver.elf', 'ui-scene/manifest.json', 'ebook_reader.json', 'cohort.json'}
@@ -99,7 +99,7 @@ def native_witness(runtime, raw):
     return matches[0]
 
 
-def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False):
+def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False, migration_policy=None):
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
@@ -209,6 +209,12 @@ int main(int argc,char**argv){
             '    [](void*,uint64_t,uint64_t)->int32_t{++hardwareCalls;return -1;},\n'
             '    [](void*,uint64_t){return true;},[](void*){return true;}};\n'
             '  h.tcpListener=&tcp;')
+    if migration_policy:
+        policy = Path(migration_policy).resolve()
+        fixture = fixture.replace('#undef private', '#undef private\n#include "'+str(policy)+'"')
+        fixture = fixture.replace('runtime.validateCohort(candidate,argv[2],CohortElf::file,&admitted)',
+            'runtime.validateNativeCohort(candidate,argv[2],CohortElf::file,&admitted,RiscUpdate::selectedNativeAppDataExportPolicyV2())')
+        require('selectedNativeAppDataExportPolicyV2()' in fixture, 'Native migration fixture substitution failed')
     # These inert callback slots match the qualified .75 source composition.
     # They must never be executed during admission; counters check that explicitly.
     (output / 'runtime_store_admission.cpp').write_text(fixture)

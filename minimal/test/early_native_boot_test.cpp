@@ -108,6 +108,13 @@ static void freshGlobals() {
   attempted=variant=reported=previousValid=false;previous={};startupError="x4-app-main-not-entered";
   X4BootLog::initialized=false;X4BootLog::available=false;X4BootLog::pending=false;
   X4BootLog::current={};
+  using namespace X4BootLog;
+  if(traceAllocation)std::free(traceAllocation);
+  if(earlyText)std::free(earlyText);
+  traceAllocation=nullptr;earlyText=traceText=recoveryText=nullptr;
+  traceCapacity=EarlyBytes;traceBytes=recoveryBytes=persistedBytes=0;
+  traceClosed=traceOverflow=recoveryReady=frameComplete=false;
+  eventSequence=earlyCount=terminalDetails=0;
   step=reports=timeUs=stageStep=0;configured=high=sensing=arduinoStarted=false;
   expectedStop=0;outputEnabled=matrixReady=false;rtcSelected=true;physicalInput=true;calls.clear();lines.clear();
 }

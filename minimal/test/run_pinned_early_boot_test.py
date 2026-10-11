@@ -2,6 +2,8 @@
 """Run the production X4 hook around the actual pinned Arduino startup code."""
 import hashlib
 import os
+import sys
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -66,7 +68,7 @@ int esp_partition_erase_range(const esp_partition_t*,size_t,size_t);
         'freertos/task.h': '#include "Arduino.h"\n',
         'esp_task_wdt.h': '#include "Arduino.h"\n',
         'esp_attr.h': '#define RTC_NOINIT_ATTR\n',
-        'esp_heap_caps.h': '#include <cstdlib>\n#define MALLOC_CAP_SPIRAM 1\n#define MALLOC_CAP_8BIT 2\ninline void* heap_caps_malloc(size_t n,unsigned){return std::malloc(n);}\n',
+        'esp_heap_caps.h': '#include <cstdlib>\n#define MALLOC_CAP_SPIRAM 1\n#define MALLOC_CAP_8BIT 2\n#define MALLOC_CAP_INTERNAL 4\ninline void* heap_caps_malloc(size_t n,unsigned){return std::malloc(n);}\n',
         'nvs.h': '''#pragma once
 #include <cstdint>
 #include <cstddef>
@@ -99,13 +101,24 @@ void nvs_close(nvs_handle_t);
         target = work / path
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content)
+    test_source = ROOT / 'minimal/test/early_native_boot_test.cpp'
+    wrap = ['-Wl,--wrap=app_main']
+    if sys.platform == 'darwin':
+        # Mach-O lacks GNU --wrap. Rename only the entry-point symbols in
+        # temporary copies; the pinned startup body and production hook remain.
+        pinned = work / 'pinned_main.cpp'
+        pinned.write_text(re.sub(r'\bapp_main\b', '__real_app_main', pinned.read_text()))
+        copied = work / 'early_native_boot_test.cpp'
+        copied.write_text(re.sub(r'\bapp_main\b', '__wrap_app_main', test_source.read_text()).replace(
+            '#include "../native/X4EarlyBoot.cpp"', '#include "' + str(ROOT / 'minimal/native/X4EarlyBoot.cpp') + '"'))
+        test_source = copied
+        wrap = []
     for mode in (1, 0):
         binary = work / ('test-' + str(mode))
         args = [os.environ.get('CXX', 'c++'), '-std=c++17', '-Wall', '-Wextra', '-Werror',
                 '-Wno-unused-parameter', '-DARDUINO_USB_MODE=' + str(mode),
                 '-I' + str(work), '-I' + str(ROOT / 'minimal/test/early_native_fake'), '-I' + str(RUNTIME / 'sdk/driver'),
-                str(work / 'pinned_main.cpp'), str(work / 'pinned_init.cpp'), str(ROOT / 'minimal/test/early_native_boot_test.cpp'),
-                '-Wl,--wrap=app_main', '-o', str(binary)]
+                str(work / 'pinned_main.cpp'), str(work / 'pinned_init.cpp'), str(test_source), *wrap, '-o', str(binary)]
         if os.environ.get('SANITIZE') == '1':
             args[1:1] = ['-fsanitize=address,undefined', '-fno-omit-frame-pointer']
         subprocess.run(args, check=True)

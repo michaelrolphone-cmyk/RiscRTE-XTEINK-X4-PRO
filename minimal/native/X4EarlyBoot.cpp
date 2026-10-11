@@ -126,8 +126,10 @@ bool syncClose(FILE* file) {
 // summary. PSRAM allocation occurs only after Arduino initializes it. Before
 // that, native rail events use a fixed RAM prefix. No observer allocates or I/Os.
 constexpr size_t TraceBytes=64*1024, EarlyBytes=8192, TailReserve=2048;
-char earlyText[EarlyBytes]{};
-char* traceText=earlyText;
+// Allocate the unchanged early prefix from the already initialized internal
+// heap. Static DRAM must not grow into the fixed pre-heap IQ reservation.
+char* earlyText=nullptr;
+char* traceText=nullptr;
 char* recoveryText=nullptr;
 void* traceAllocation=nullptr;
 size_t traceCapacity=EarlyBytes,traceBytes=0,recoveryBytes=0,persistedBytes=0;
@@ -149,11 +151,11 @@ void allocateTrace() {
   traceAllocation=heap_caps_malloc(TraceBytes*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
   if(!traceAllocation)return;
   auto* buffer=static_cast<char*>(traceAllocation);
-  std::memcpy(buffer,traceText,traceBytes);
+  if(traceBytes)std::memcpy(buffer,traceText,traceBytes);
   traceText=buffer;traceCapacity=TraceBytes;recoveryText=buffer+TraceBytes;
 }
 void textLine(const char* line,uint64_t nowUs,bool essential=false) {
-  if(!line || !*line || (traceOverflow && !essential))return;
+  if(!traceText || !line || !*line || (traceOverflow && !essential))return;
   char copied[256];size_t length=0;
   while(length+1<sizeof(copied) && line[length]) {
     char c=line[length];copied[length]=(c=='\n'||c=='\r'||uint8_t(c)<32)?' ':c;++length;
@@ -179,6 +181,8 @@ void textLine(const char* line,uint64_t nowUs,bool essential=false) {
   std::memcpy(traceText+traceBytes,row,size_t(n));traceBytes+=size_t(n);++eventSequence;
 }
 void start(const X4Boot::Record& record) {
+  if(!earlyText)earlyText=static_cast<char*>(heap_caps_malloc(EarlyBytes,MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+  traceText=earlyText;
   startFlash(record);
   char line[256];
   std::snprintf(line,sizeof(line),"session begin reset=%lu raw0=%lu raw1=%lu wake=%lu rtc_boot=%lu power_source=unmeasured capture=app-main no-usb-required firmware=%s",
@@ -409,6 +413,7 @@ extern "C" void __wrap_app_main(void) {
     X4Boot::seal(retained);
     prepareRail();
     X4BootLog::start(retained);
+    if(!X4BootLog::earlyText && !startupError)startupError="x4-early-trace-allocation";
   }
   // All original Arduino initialization and task creation is still executed.
   // Failure stays latched for Runtime's existing startup gate; no rail cleanup.

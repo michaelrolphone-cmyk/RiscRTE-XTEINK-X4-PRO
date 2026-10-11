@@ -77,7 +77,7 @@ def snapshot(root, revision):
 def validate_build_options(options):
     required = {'app_policy_rows', 'app_image_cache'}
     require(isinstance(options, dict) and required <= set(options) and
-            set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport'},
+            set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256'},
             'Invalid native build options')
     require(type(options['app_policy_rows']) is int and options['app_policy_rows'] in (16, 17, 18, 24),
             'App policy rows must be 16, 17, 18 or 24')
@@ -97,16 +97,22 @@ def validate_build_options(options):
             'Extended retained wake must be an explicit 512-byte opt-in')
     require('failure_evidence' not in options or options['failure_evidence'] is True,
             'Failure evidence must be an explicit true opt-in')
+    require('export_migration_header_sha256' not in options or
+            re.fullmatch('[a-f0-9]{64}', options['export_migration_header_sha256']), 'Invalid migration header digest')
     return options
 
 
 def compose(runtime, output, runtime_commit=None, environment=ENVIRONMENTS[0], platform_root=ROOT,
             app_policy_rows=16, app_image_cache=False, boot_flash_dio=False, usb_phy=False,
-            retained_wake_bytes=None, failure_evidence=False, app_requirement_rows=None, installed_app_capacity=None, provider_capacity=None, shared_files_transport=False):
+            retained_wake_bytes=None, failure_evidence=False, app_requirement_rows=None, installed_app_capacity=None, provider_capacity=None, shared_files_transport=False, export_migration_header=None):
     runtime, output, platform_root = (Path(p).resolve() for p in (runtime, output, platform_root))
     require(environment in ENVIRONMENTS, 'Unsupported X4 native environment')
     require(type(usb_phy) is bool, 'USB PHY selection must be boolean')
     options = {'app_policy_rows': app_policy_rows, 'app_image_cache': app_image_cache}
+    migration_bytes = Path(export_migration_header).read_bytes() if export_migration_header else None
+    if migration_bytes is not None:
+        require(b'selectedNativeAppDataExportPolicyV2' in migration_bytes and len(migration_bytes)<262144, 'Invalid V2 header')
+        options['export_migration_header_sha256']=sha(migration_bytes)
     if provider_capacity is not None:
         options['provider_capacity']=provider_capacity
     if shared_files_transport:
@@ -163,6 +169,8 @@ def compose(runtime, output, runtime_commit=None, environment=ENVIRONMENTS[0], p
         destination = 'x4-native/' + name
         require(destination not in files, 'Runtime/X4 native path collision')
         files[destination] = (data, 0o644)
+    if migration_bytes is not None:
+        files['x4-native/export-migration.h']=(migration_bytes,0o644)
     composer = 'minimal/scripts/prepare_native_runtime.py'
     sources[composer] = sha((platform_root / composer).read_bytes())
     record = {'schema': SCHEMA, 'schema_version': 1, 'runtime': native, 'platform': platform,
@@ -233,6 +241,8 @@ def verify_source_custody(runtime, record, platform_root=ROOT):
         require(sha(data) == record['platform_source_sha256'][name], 'Committed X4 source differs: ' + name)
         if name.startswith('minimal/native/'):
             expected['x4-native/' + Path(name).name] = sha(data)
+    if 'export_migration_header_sha256' in record['build_options']:
+        expected['x4-native/export-migration.h']=record['build_options']['export_migration_header_sha256']
     require(expected == record['composed_source_sha256'], 'Unapproved Runtime overlay')
 
 
@@ -712,6 +722,7 @@ def main():
     prepare.add_argument('--environment', choices=ENVIRONMENTS, default=ENVIRONMENTS[0])
     prepare.add_argument('--provider-capacity', type=int, choices=(32,))
     prepare.add_argument('--shared-files-transport', action='store_true')
+    prepare.add_argument('--export-migration-header', type=Path)
     prepare.add_argument('--installed-app-capacity', type=int, choices=(64,))
     prepare.add_argument('--app-policy-rows', type=int, choices=(16, 17, 18, 24), default=16,
                          help='Immutable app policy rows; live grants remain 16')
