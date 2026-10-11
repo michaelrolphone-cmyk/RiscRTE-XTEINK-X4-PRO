@@ -98,3 +98,31 @@ shipping it would lose saved-Wi-Fi sharing behavior. A complete preserving Files
 migration needs an explicit source-bound native shared-KV delegation or a shared
 network service retaining credential custody, in addition to the separate exact
 export-map policy. This is Runtime admission, not a tool permission rejection.
+
+## Published .84 source checkpoint: SD settings and complete peer store
+
+Runtime 663b6db (0.2.16), System c4ab8d5 (catalog 0.7.0), and X4 9715c5b
+compile the native development firmware successfully. Runtime 5c7c296 changes
+only a GCC test warning; System 2d4253c recognizes App Store 1.5.0 in the telemetry
+builder. The full peer-store composition admits all 42 target modules against
+the actual native binary's exports under UBSan with zero hardware/storage
+callbacks. See `settings-084.json` for hashes, unchanged peer-file comparison and
+negative namespace/settings tests. Reader, Scene, Daily Paper and Files payloads
+are byte-for-byte retained from the delivered peer store.
+
+The settings model and real Runtime broker pass restore/readiness, scope denial,
+two app launches, journal namespace isolation and existing cohort migrations.
+The real catalog/worker passes 65 settings and 110 provider interrupted persistent
+states, export exclusion, media removal and cache-only startup. App Store,
+Springboard, Home, async SD and catalog target builds pass. The clock sleep fixture
+now emits current raw ordered input events; all 28 local cases pass with UBSan
+and Darwin-only absent weak raster stubs. No production input logic was changed.
+
+Release boundary: direct preserving admission from the delivered peer store to
+this expanded store rejects `missing scoped trusted platform provider`. The
+running old graph lacks the new storage-worker native scope. A product-qualified
+native-first authority bridge and exact Files export-policy composition are still
+required before deployment; self-admission is not an upgrade-path proof. No
+master merge, firmware release, SD content publication or hardware flash occurred.
+Native provider-catalog descriptors support missing-provider downloads; a public
+native package feed is still a deployment input, not the legacy Reader ABI feed.
