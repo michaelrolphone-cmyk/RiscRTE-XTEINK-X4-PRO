@@ -131,7 +131,7 @@ def prepare(a):
 def validate(a,sanitized):
     directory=a.output/('sanitized' if sanitized else 'plain')
     exported=json.loads((a.output/'exports.json').read_text())
-    info=compile_admission(a.runtime,a.tools,directory,exported,sanitized)
+    info=compile_admission(a.runtime,a.tools,directory,exported,sanitized,a.sanitizers)
     modules=[(p,p.name=='driver.elf') for p in sorted((a.output/'store').rglob('*.elf'))]+[(p,False) for p in sorted((a.output/'sd').rglob('*.elf'))]
     require(len(modules)==54,'Module inventory')
     env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
@@ -152,7 +152,7 @@ def validate(a,sanitized):
         (directory/(active+'-to-'+candidate+'.log')).write_text(result.stdout+result.stderr)
         outcomes.append(dict(row,active=active,candidate=candidate,expected_acceptance=accepted))
     info.update(strict_modules=54,wrong_role_rejections=54,unsafe_operation_rejections=54,missing_import_rejections=negatives,cohorts=outcomes)
-    (directory/'validation.json').write_bytes(encoded(info));print(('ASan/UBSan' if sanitized else 'Normal')+': 54 modules, '+str(negatives)+' missing-import negatives and 7 cohort cases PASS',flush=True)
+    (directory/'validation.json').write_bytes(encoded(info));print((a.sanitizers if sanitized else 'Normal')+': 54 modules, '+str(negatives)+' missing-import negatives and 7 cohort cases PASS',flush=True)
 
 def finish(a):
     from current_bootfs import build as pack
@@ -198,6 +198,7 @@ def finish(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('inputs','runtime','tools','mkspiffs','output'):p.add_argument('--'+name,type=lambda s:Path(s).resolve(),required=True)
+    p.add_argument('--sanitizers',choices=['address,undefined','undefined'],default='address,undefined',help='Record actual sanitizer mode; undefined-only is available when host ASan cannot initialize')
     p.add_argument('--source-revision',required=True);p.add_argument('--phase',choices=['all','prepare','plain','sanitized','finish'],default='all')
     a=p.parse_args();sys.path[:0]=[str(a.tools/'scripts'),str(a.runtime/'scripts')]
     if a.phase in ('all','prepare'):prepare(a)

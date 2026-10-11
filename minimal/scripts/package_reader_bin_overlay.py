@@ -98,7 +98,7 @@ def native_witness(runtime, raw):
     return matches[0]
 
 
-def compile_admission(runtime, tools, output, exported, sanitized):
+def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined"):
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
@@ -138,7 +138,7 @@ static bool file(void* context,const char* path,bool provider){
                  'lib/ArduinoJson/src', 'test/drivers/stubs', 'lib/elf_loader/include', 'test/native_bank_stubs')]
     includes += [output, tools / 'tests']
     inc = ['-I' + str(p) for p in includes]
-    sanitize = ['-fsanitize=address,undefined', '-fno-sanitize-recover=all',
+    sanitize = ['-fsanitize='+sanitizers, '-fno-sanitize-recover=all',
                 '-fno-omit-frame-pointer'] if sanitized else []
     if sanitized and sys.platform != 'darwin':
         sanitize.append('-no-pie')
@@ -201,7 +201,8 @@ int main(int argc,char**argv){
                     '-o', str(output / 'cohort')], check=True, timeout=180)
     return {'original_fixture_sha256': sha(fixture_path.read_bytes()),
             'selected_fixture_sha256': sha(fixture.encode()), 'header_sha256': sha(header.encode()),
-            'native_admission_source_sha256': ADMISSION_SHA, 'sanitized': sanitized}
+            'native_admission_source_sha256': ADMISSION_SHA, 'sanitized': sanitized,
+            'sanitizers': sanitizers if sanitized else None}
 
 
 def build(a):

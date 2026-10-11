@@ -42,7 +42,9 @@ The recipe checks all 54 supplied ELF modules against production admission,
 including roles, unsafe operations, and every missing import in seven affected
 modules. It tests four installed cohorts, the Daily-to-combined transition,
 and expected refusal of .76/Reader-to-combined namespace expansion, normally
-and under ASan/UBSan. Passing the Daily transition is an admission check only,
+and under the explicitly selected sanitizer mode. The default is ASan/UBSan;
+`--sanitizers undefined` records UBSan-only verification when host ASan cannot
+initialize. An unavailable ASan run must be reported as a limitation. Passing the Daily transition is an admission check only,
 not an OTA delivery qualification. Independent C SPIFFS unpacking checks all
 four stores. Partition MD5, bootloader/native ESP checksums and appended SHA,
 paired-bank SHA/CRC, exact unchanged ranges, deterministic packing and final
