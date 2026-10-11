@@ -45,7 +45,7 @@ def main():
  if sd_manifest['version']!='0.2.19':raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
- if catalog_manifest['version']!='0.3.2':raise ValueError('Durable namespace catalog provider required')
+ if catalog_manifest['version']!='0.3.3':raise ValueError('Durable namespace catalog provider required')
  shutil.copytree(base,out)
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',
