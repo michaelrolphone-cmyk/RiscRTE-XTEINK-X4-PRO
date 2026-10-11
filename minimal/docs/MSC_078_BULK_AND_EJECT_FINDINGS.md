@@ -1,5 +1,7 @@
 # Combined .078: bulk-transfer and Windows-eject follow-up
 
+> Historical measurement before batching. The requested implementation and qualified package pair are now recorded in [bounded batching](MSC_BOUNDED_BATCHING_078.md). The physical Windows signaling and throughput limitations below remain.
+
 Cleanup target qualification is in `MSC_CLEANUP_078_INTEGRATION.md`. This follow-up
 adds source-bound tests and analysis, not a production performance change. No
 full firmware was built or flashed. No physical transfer rate is asserted.
