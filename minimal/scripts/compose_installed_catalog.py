@@ -28,8 +28,10 @@ def main():
  old_store=json.loads((base/'app_store.json').read_text())
  old_needs={(x['capability'],x['api'])for x in old_store['requires']}
  new_needs={(x['capability'],x['api'])for x in app_store['requires']}
- if app_store['version']!='1.3.0' or new_needs!=old_needs|{('software.installed-apps',1)}:raise ValueError('App Store capability/version mismatch')
- next(x for x in boot['app_capabilities'] if x['manifest']=='app_store.json')['grants'].append(dict(capability='software.installed-apps',api=1,instance_id=0))
+ if app_store['version']!='1.3.1' or new_needs!=old_needs|{('software.installed-apps',1),('storage.volume',1)}:raise ValueError('App Store capability/version mismatch')
+ app_store_policy=next(x for x in boot['app_capabilities'] if x['manifest']=='app_store.json')
+ for cap,instance in (('software.installed-apps',0),('storage.volume',9)):
+  app_store_policy['grants'].append(dict(capability=cap,api=1,instance_id=instance))
  # Exact owner-selected services; declarations from SD cannot redirect hardware,
  # acquire raw native authority, or select another app's settings namespace.
  envelope=[]
@@ -40,9 +42,10 @@ def main():
  boot['installation']=dict(volume_instance=9,grants=envelope,namespace_range=dict(first=3000,count=128))
  boot['drivers'].append(dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')]))
  sd_manifest=json.loads((a.sd/'manifest.json').read_text())
+ if sd_manifest['version']!='0.2.19':raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
- if catalog_manifest['version']!='0.3.1':raise ValueError('Durable namespace catalog provider required')
+ if catalog_manifest['version']!='0.3.2':raise ValueError('Durable namespace catalog provider required')
  shutil.copytree(base,out)
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',
@@ -53,7 +56,7 @@ def main():
  receipt=dict(status='development-store-not-a-release',base_boot_sha256=digest(base/'boot.json'),boot_sha256=digest(out/'boot.json'),
   apps=len(boot['app_capabilities']),drivers=len(boot['drivers']),volume_instance=9,cache_namespace=2000,namespace_range=boot['installation']['namespace_range'],
   replaced={name:dict(sha256=digest(out/name),bytes=(out/name).stat().st_size)for name in replacements},
-  remaining=['Strict complete store/native admission','Preserving migration of legacy explicit SD entries and their shared/private settings','App Store SD installation/uninstall transactions','On-device dependency provisioning','Hardware qualification'],
+  remaining=['Strict complete store/native admission','Preserving migration of legacy explicit SD entries and their shared/private settings','Staged App Store SD installation and update transactions','On-device dependency provisioning','Hardware qualification'],
   hardware_tested=False,flashable=False)
  (out.parent/(out.name+'-composition.json')).write_text(json.dumps(receipt,indent=2)+'\n')
  print(json.dumps(receipt))
