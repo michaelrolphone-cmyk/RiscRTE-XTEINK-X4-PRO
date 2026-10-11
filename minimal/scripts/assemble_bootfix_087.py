@@ -29,6 +29,7 @@ version=versions.pop().decode()
 if a.target=='x4':
  sys.path.insert(0,str(a.x4_source.resolve()/'minimal/scripts'));import prepare_native_runtime as x4
  composition=json.loads((a.native.parents[2]/'x4-native-composition.json').read_text())
+ assert composition['build_options'].get('retained_wake_bytes',128)>=408, 'Selected Home lock schema-3 requires 408 retained bytes; rebuild with --retained-wake-bytes 512'
  proof['x4_startup']=x4.startup_proof(native['firmware.elf'],composition)
  proof['x4_options']=x4.runtime_options_proof(native,composition)
  x4.verify_source_custody(a.runtime,composition,a.x4_source)
