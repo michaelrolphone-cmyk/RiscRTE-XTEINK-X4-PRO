@@ -48,7 +48,7 @@ static bool obtain(const char*n,uint32_t v,uint64_t id,risc_runtime_capability_v
 static bool drop(risc_runtime_capability_v1*g){assert(!terminal);if(g->api==&power)power_releases++;return release(g);}
 static bool healthy(risc_runtime_health_v1*h){assert(!terminal);return health(h);}
 static void wait_ms(uint32_t ms_wait){assert(!terminal);yield_ms(ms_wait);}
-static const risc_runtime_api_v1 runtime={1,sizeof(runtime),healthy,wait_ms,diagnostic,launch_app,obtain,drop};
+static const risc_runtime_api_v1 runtime={.api_version=1,.struct_size=sizeof(runtime),.health=healthy,.yield_ms=wait_ms,.diagnostic=diagnostic,.request_launch=launch_app,.acquire=obtain,.release=drop};
 const risc_runtime_api_v1*risc_runtime_get_api(uint32_t v){return v==1?&runtime:NULL;}
 int main(int argc,char**argv){
  assert(argc==2);case_id=(unsigned)atoi(argv[1]);scenario=0;

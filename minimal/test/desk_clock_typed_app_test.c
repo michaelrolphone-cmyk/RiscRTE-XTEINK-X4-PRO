@@ -90,7 +90,7 @@ static bool obtain(const char*name,uint32_t version,uint64_t id,risc_runtime_cap
  g->api=api;grants++;return true;
 }
 static bool drop(risc_runtime_capability_v1*g){io();assert(!panel_off&&!touch_off&&!sd_off);return release(g);}
-static const risc_runtime_api_v1 runtime={1,sizeof(runtime),healthy,wait_ms,diagnostic,launch_app,obtain,drop};
+static const risc_runtime_api_v1 runtime={.api_version=1,.struct_size=sizeof(runtime),.health=healthy,.yield_ms=wait_ms,.diagnostic=diagnostic,.request_launch=launch_app,.acquire=obtain,.release=drop};
 const risc_runtime_api_v1*risc_runtime_get_api(uint32_t version){return version==1?&runtime:NULL;}
 int main(int argc,char**argv){assert(argc==3);test=argv[1];state_path=argv[2];scenario=0;
  panel.history.base=d;panel.history.base.struct_size=sizeof(panel);panel.history.base.acquire=frame_acquire;panel.history.base.release=frame_release;panel.history.base.submit=frame_submit;panel.history.base.wait_present=frame_wait;panel.history.base.set_brightness=bright;panel.history.extension_tag=RISC_DISPLAY_HISTORY_TAG;panel.history.extension_version=1;panel.history.seed_previous=seed_previous;panel.power_tag=RISC_DISPLAY_POWER_TAG;panel.power_version=1;panel.prepare=panel_prepare;panel.resume=panel_resume;
