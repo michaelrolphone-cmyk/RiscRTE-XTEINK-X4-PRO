@@ -14,3 +14,19 @@ operations through the separately tagged package suffix, keeping async v3 and
 operations 1–7 unchanged. Runtime 0.2.9 supplies worker-only native admission.
 No provider-capacity edits are included; Files/WebDAV integration remains a
 separate composition task. Full install/update qualification is not yet claimed.
+
+### Source checkpoint: Runtime 0.2.16 / catalog 0.7.0
+
+The development .84 lane is distinct from delivered .83/Watch 1.1.4. Runtime
+663b6db and System Apps c4ab8d5 add selected missing-provider closure and explicit
+SD-first private KV checkpoints. The CI pins include the combined canonical SD
+and BLE Drivers 39b9be0. The Files owner's migration remains the only shared
+export-map mechanism; this lane does not change its namespace ownership.
+
+Local UBSan passes: actual dynamically registered SD application/provider launch,
+KV broker readiness and private scope, 65 settings restart cuts, 110 provisioning
+restart cuts, native journal isolation, cohort migration and catalog/App Store
+regressions. The standalone target catalog links. Complete exact .84 native/store
+qualification is still in progress; no hardware, release, master merge or flash
+has occurred. Private KV is limited to 16 keys per installed namespace. AppData,
+shared settings and Wi-Fi storage are unchanged.

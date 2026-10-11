@@ -99,7 +99,7 @@ def native_witness(runtime, raw):
     return matches[0]
 
 
-def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False, migration_policy=None):
+def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False, migration_policy=None, provider_capacity=None):
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
@@ -153,7 +153,10 @@ static bool file(void* context,const char* path,bool provider){
               *sanitize, *inc]
     if installed_catalog:
         common += ['-DRISC_INSTALLED_APP_CAPACITY=64']
-    if shared_files:
+    if provider_capacity is not None:
+        require(provider_capacity in (29, 32, 40), 'Unsupported provider capacity')
+        common += ['-DRISC_PROVIDER_CAPACITY='+str(provider_capacity)]
+    elif shared_files:
         common += ['-DRISC_PROVIDER_CAPACITY=32']
     if sys.platform == 'darwin':
         # Clang diagnoses inactive host-only fields in unchanged production sources.
@@ -190,6 +193,12 @@ int main(int argc,char**argv){
         '  h.usbPhyIdle=[](){++hardwareCalls;return false;};\n'
         '  h.usbPhySuspend=[](){++hardwareCalls;return false;};\n'
         '  h.usbPhyResume=[](){++hardwareCalls;return false;};')
+    if installed_catalog:
+        fixture = fixture.replace(needle,
+            '  auto settingsBackend=*runtimePort.keyValue;\n'
+            '  settingsBackend.journalRead=[](void*,uint32_t,void*,uint32_t,uint32_t*)->int32_t{++storageCalls;return -1;};\n'
+            '  settingsBackend.journalWrite=[](void*,uint32_t,const void*,uint32_t)->int32_t{++storageCalls;return -1;};\n'
+            '  runtimePort.keyValue=&settingsBackend;\n'+needle)
     if installed_catalog:
         fixture = fixture.replace('  RiscCpu::Hardware h{};',
             '  RiscCpu::Hardware h{};\n'

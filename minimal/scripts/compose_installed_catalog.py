@@ -46,6 +46,7 @@ def main():
  if a.provider_capacity==40:
   # Explicit selected authority: dynamic software providers may use these
   # existing services, but never private settings, installation or raw native APIs.
+  boot['installation']['settings_sd']=True
   boot['installation']['provider_grants']=[dict(g) for g in envelope if g['capability'] not in ('storage.key-value','storage.app-data')]
  if a.migrate_legacy and not a.home:raise ValueError('Legacy migration requires Home cache hydration for preserved shortcuts')
  if a.home:
@@ -70,7 +71,7 @@ def main():
  if sd_manifest['version'] not in ('0.2.20','0.2.21'):raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
- if catalog_manifest['version']!='0.6.0':raise ValueError('Durable namespace catalog provider required')
+ if catalog_manifest['version']!='0.7.0':raise ValueError('Durable namespace catalog provider required')
  shutil.copytree(base,out)
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',
@@ -82,7 +83,7 @@ def main():
  receipt=dict(status='development-store-not-a-release',base_boot_sha256=digest(base/'boot.json'),boot_sha256=digest(out/'boot.json'),
   apps=len(boot['app_capabilities']),drivers=len(boot['drivers']),volume_instance=9,cache_namespace=2000,namespace_range=boot['installation']['namespace_range'],
   replaced={name:dict(sha256=digest(out/name),bytes=(out/name).stat().st_size)for name in replacements},
-  remaining=['Strict complete store/native admission']+([] if a.migrate_legacy else ['Select preserving migration of legacy SD authority'])+['Native online catalog publication and board-specific provider selection','SD-first private settings','Hardware qualification'],
+  remaining=['Strict complete store/native admission']+([] if a.migrate_legacy else ['Select preserving migration of legacy SD authority'])+['Native online catalog publication and board-specific provider selection','Hardware qualification'],
   hardware_tested=False,flashable=False)
  (out.parent/(out.name+'-composition.json')).write_text(json.dumps(receipt,indent=2)+'\n')
  print(json.dumps(receipt))
