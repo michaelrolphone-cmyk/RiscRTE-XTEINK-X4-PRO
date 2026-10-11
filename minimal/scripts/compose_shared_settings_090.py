@@ -41,6 +41,18 @@ def read(path):
 def git(root, *args):
     return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
 
+def resolved_grants(requests, policy):
+    # Runtime::acquire resolves selector zero only when the app's own policy
+    # contains one matching capability/API. Never choose the first provider.
+    resolved = []
+    for request in requests:
+        matches = [row for row in policy if row['capability'] == request['capability'] and
+                   row['api'] == request['api'] and
+                   (not request['instance_id'] or row['instance_id'] == request['instance_id'])]
+        require(len(matches) == 1, 'Files 16-grant selector is missing or ambiguous')
+        resolved.append(matches[0])
+    return resolved
+
 def validate_module(name, directory, base, system, runtime):
     manifest_name = 'manifest.json' if name == 'installed-apps' else name + '.json'
     elf_name = 'driver.elf' if name == 'installed-apps' else name + '.elf'
@@ -121,7 +133,7 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
     files_policy['grants'] = [x for x in old_grants if x['capability'] != 'storage.app-data.export']
     files_policy['grants'].append({'capability': 'bluetooth.hci', 'api': 1, 'instance_id': 16})
     keys = lambda rows: sorted((x['capability'], x['api'], x['instance_id']) for x in rows)
-    require(keys(records['file_browser'][2]['required_grants']) == keys(files_policy['grants']) and
+    require(keys(resolved_grants(records['file_browser'][2]['required_grants'], files_policy['grants'])) == keys(files_policy['grants']) and
             len(files_policy['grants']) == 16, 'Files receipt must prove the exact 16-grant substitution')
     catalog = next(x for x in boot['drivers'] if x['manifest'] == 'installed-apps/manifest.json')
     require(catalog.get('image_source', {}).get('internal_fallback') is True and

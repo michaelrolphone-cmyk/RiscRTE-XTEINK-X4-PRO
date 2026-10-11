@@ -81,6 +81,16 @@ class Composition(unittest.TestCase):
     def test_seventeenth_grant_rejected(self):
         self.mutate_receipt('file_browser',lambda x:x['required_grants'].append(dict(capability='storage.app-data.export',api=1,instance_id=0)))
         with self.assertRaisesRegex(ValueError,'16-grant'):self.run_compose()
+    def test_unique_zero_selector_resolves_to_existing_authority(self):
+        self.mutate_receipt('file_browser',lambda x:x['required_grants'][3].update(instance_id=0))
+        self.run_compose()
+    def test_zero_selector_rejects_ambiguous_authority(self):
+        rows=[dict(capability='storage.key-value',api=1,instance_id=n) for n in (1,6)]
+        with self.assertRaisesRegex(ValueError,'ambiguous'):
+            c.resolved_grants([dict(capability='storage.key-value',api=1,instance_id=0)],rows)
+    def test_explicit_selector_cannot_change_authority(self):
+        self.mutate_receipt('file_browser',lambda x:x['required_grants'][3].update(instance_id=999))
+        with self.assertRaisesRegex(ValueError,'16-grant'):self.run_compose()
     def test_wrong_catalog_runtime_rejected(self):
         self.mutate_receipt('installed-apps',lambda x:x['repositories']['runtime'].update(head='c'*40))
         with self.assertRaisesRegex(ValueError,'Runtime source'):self.run_compose()
