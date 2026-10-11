@@ -1,0 +1,36 @@
+{
+  "reader_commit": "4c2e2dbe3bf587b51873c65a1a1c3faf4035e884",
+  "source_dirty": false,
+  "tinyusb_commit": "1eb6ce784ca9b8acbbe43dba9f1d9c26c2e80eb0",
+  "compiler": "xtensa-esp32s3-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+  "elf_bytes": 65172,
+  "elf_sha256": "a737270169330823a4a66aa996d9f027fc1e5645f5528e4de9f7712b44bdd275",
+  "imports": [
+    "memcpy",
+    "memmove",
+    "memset",
+    "strcmp"
+  ],
+  "target_structure_passed": true,
+  "device_tested": false,
+  "source_sha256": {
+    "Drivers/usb_device_msc_esp32s3/LICENSE.TinyUSB": "b171720e8a442e7a3957d83c62cd3299dbb29da3db534cc626f9dded0de2ca44",
+    "Drivers/usb_device_msc_esp32s3/OwnerPump.h": "49b3d5a1e4f9d6cf016aeab7b802bfbf7a59a7d61ea7436105bb3ea639afa5e5",
+    "Drivers/usb_device_msc_esp32s3/README.md": "4145ecd40c427890f4cbe97df8650193df0ba75fff448c3b0c44a142e975ff1a",
+    "Drivers/usb_device_msc_esp32s3/RECOVERY.md": "a3583862187f88b0fddef86e55089255b0399b5cbb7efb92abd6cee618e4c968",
+    "Drivers/usb_device_msc_esp32s3/StackDefaults.c": "2f3c13b1b5204088ddc5353f70348d900c9eae2e6e8ad837337d34ce12661cef",
+    "Drivers/usb_device_msc_esp32s3/Transport.h": "1a04a4bc1c5f2051a9cd501c95b92a4fe3aaee8853ba1fa0f36da60d14af954e",
+    "Drivers/usb_device_msc_esp32s3/driver.c": "edd373f35247711c83fe466fe6a90a997da5e3ebf0de605ffc654ebcf678cfc8",
+    "Drivers/usb_device_msc_esp32s3/dwc2_owner.h": "d1f9966056e872e8c155cd454b05791bb31a39f75775a04abbd0d4c0897ab096",
+    "Drivers/usb_device_msc_esp32s3/manifest.json": "20f06173b611c1eef2f7d2e1b03485efc50119e9d5ff105fd9b0cb6ddf74fc33",
+    "Drivers/usb_device_msc_esp32s3/phy_pads.c": "53a5dfe6b4b2eac03ba6566786e97da785206bb7eebea95c94fc77479f9007c2",
+    "Drivers/usb_device_msc_esp32s3/transport.c": "21cec9ec6bd57ab6db1db9bed124fd1c089fa337bbf04d557c98ed5b7194aba7",
+    "Drivers/usb_device_msc_esp32s3/tusb_config.h": "b0e036172e6b17850f278eec9d4900ec6a93ae6650398440609e8d6882b2b4c5",
+    "sdk/driver/RiscUsbDeviceMscV1.h": "d55a9340c3ff64e8679c4d9332812f073c30b8aa08ae3e3fb04f9010cf517ed6",
+    "sdk/driver/RiscUsbPhyResourceV1.h": "fe668ff8e8f83ea454eafd059c61c633d2213bc2a77504d8794a64c1dc11b016",
+    "sdk/driver/RiscStorageExportV1.h": "74ae82f05a916ca0d2df1bb251bc66cc0ac33dde38757ced7c8e864374d43c8a",
+    "scripts/build_usb_device_msc.py": "8e3d645cae260de2296ab78a9c0771c3be8858680d7b856c742a058e1d118acd",
+    "scripts/prepare_usb_device_stack.py": "327bbc1d630cf119f25596872988078e8701a5038f355a2301e7eb1263839b66"
+  },
+  "framework_version": "3.20017.241212+sha.dcc1105b"
+}
