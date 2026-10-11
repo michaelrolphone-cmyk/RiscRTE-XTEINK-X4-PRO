@@ -30,6 +30,7 @@ jobs:
           cp mkspiffs/mkspiffs output/
           cp ReaderTools/scripts/normalize_xtensa_relocations.py output/relocation-tools/
           cp ReaderTools/sdk/driver/*.h output/reader-sdk/
+          python3 -m pip download --no-deps pyelftools==0.32 -d output/
           output/mkspiffs --version > output/mkspiffs-version.txt
           git -C mkspiffs rev-parse HEAD > output/mkspiffs-source.txt
           git -C mkspiffs submodule status >> output/mkspiffs-source.txt
