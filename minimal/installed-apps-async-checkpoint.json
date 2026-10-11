@@ -4,7 +4,7 @@
   "native_runtime_commit": "3497b8848235b751d7d3c98da11a80520e1e1c45",
   "runtime_test_commit": "3497b8848235b751d7d3c98da11a80520e1e1c45",
   "x4_source_commit": "ce128bc031caf2ceb2ead01c427e46e37c1705c8",
-  "system_source_commit": "12660e0d89875a6e6a9fb8525d0da53043b5e7b3",
+  "system_source_commit": "d500e18d0a16b9252d9737c46c796d4e73c7f3ee",
   "native_environment": "esp32s3-16mb-appdata-iq-stage",
   "native_build_jobs": 1,
   "native_static_ram_bytes": 80096,
@@ -42,7 +42,8 @@
     "Durable namespace ledger: persist before native policy, removed identities retained, cached restart and reinstall identity; UBSan",
     "Real Runtime newly discovered app acquires private app-data and writes in both real host module executions; range overlap and reassignment denied",
     "Complete 26-app/29-provider development store: 39 internal Xtensa modules strict role/import validation plus real Runtime self-admission; zero hardware/storage calls; UBSan",
-    "Cohort rejects namespace range move/removal and cached-ledger namespace relocation"
+    "Cohort rejects namespace range move/removal and cached-ledger namespace relocation",
+    "Private namespace survives an update that removes private storage requirements and the following cached restart; UBSan"
   ],
   "remaining": [
     "App Store SD installation/admission and uninstall user interface",
@@ -80,11 +81,11 @@
         "bytes": 986
       },
       "installed-apps/driver.elf": {
-        "sha256": "5779f5fcbce740261d3b28824a85cdfbc182aae277b833e3e623b2acdaa930e3",
-        "bytes": 82676
+        "sha256": "647055e2617181b10b90b6385b5b650d02207c80815c6e539cf1f832c938f5c3",
+        "bytes": 82556
       },
       "installed-apps/manifest.json": {
-        "sha256": "898868b7e32605e4e39c40c4deb7abd83fbc3f301fa0b2c1d28ea246d1b414e3",
+        "sha256": "fd88f142ba7821e2c9fada594fd11cac470980712232a030cc5d2d533ad9e646",
         "bytes": 309
       }
     },
@@ -96,5 +97,6 @@
     ],
     "hardware_tested": false,
     "flashable": false
-  }
+  },
+  "composition_source_commit": "806a4aadc84c306c012c73b25972b7449db24634"
 }

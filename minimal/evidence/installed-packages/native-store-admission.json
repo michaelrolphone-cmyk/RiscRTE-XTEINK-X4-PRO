@@ -443,7 +443,7 @@
     },
     {
       "path": "installed-apps/driver.elf",
-      "sha256": "5779f5fcbce740261d3b28824a85cdfbc182aae277b833e3e623b2acdaa930e3"
+      "sha256": "647055e2617181b10b90b6385b5b650d02207c80815c6e539cf1f832c938f5c3"
     },
     {
       "path": "iq/driver.elf",
