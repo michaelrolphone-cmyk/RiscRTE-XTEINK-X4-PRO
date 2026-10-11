@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE
-          ref: 5c7c296e703fdf1dcce9a21f166d68f8f2682a2f
+          ref: 8a613d876e377c98f07f3eca1c5f22d674c882ec
           path: .shared/runtime
       - uses: actions/checkout@v4
         with:
