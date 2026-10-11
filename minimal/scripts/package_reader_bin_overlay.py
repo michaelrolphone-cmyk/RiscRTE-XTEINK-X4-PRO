@@ -99,7 +99,7 @@ def native_witness(runtime, raw):
     return matches[0]
 
 
-def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False, migration_policy=None, provider_capacity=None):
+def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False, migration_policy=None, provider_capacity=None, native_usb_phy=None):
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
@@ -188,11 +188,17 @@ int main(int argc,char**argv){
         ' [](void*,uint32_t,char*,uint32_t,uint32_t*,uint64_t*,uint32_t*) -> int32_t {++hardwareCalls;return -1;}\n'
         '};\nbool bind(RiscBoot::Runtime& runtime) {\n'
         ' if(!runtime.registerPlatform(RISC_DIAGNOSTIC_SOURCE_CAPABILITY,1,RiscBoot::Runtime::Scope::Global,0,&diagnosticApi))return false;')
-    fixture = fixture.replace('  RiscCpu::Hardware h{};',
-        '  RiscCpu::Hardware h{};\n'
-        '  h.usbPhyIdle=[](){++hardwareCalls;return false;};\n'
-        '  h.usbPhySuspend=[](){++hardwareCalls;return false;};\n'
-        '  h.usbPhyResume=[](){++hardwareCalls;return false;};')
+    # Match the linked native selector, never assume a capability from the store.
+    # The upstream fixture may already inject these slots; remove both sources.
+    if native_usb_phy is not None:
+        import re
+        fixture = re.sub(r'^.*h\.usbPhy(?:Idle|Suspend|Resume)=.*\n', '', fixture, flags=re.M)
+    if native_usb_phy is not False:
+        fixture = fixture.replace('  RiscCpu::Hardware h{};',
+            '  RiscCpu::Hardware h{};\n'
+            '  h.usbPhyIdle=[](){++hardwareCalls;return false;};\n'
+            '  h.usbPhySuspend=[](){++hardwareCalls;return false;};\n'
+            '  h.usbPhyResume=[](){++hardwareCalls;return false;};')
     if installed_catalog:
         fixture = fixture.replace(needle,
             '  auto settingsBackend=*runtimePort.keyValue;\n'
