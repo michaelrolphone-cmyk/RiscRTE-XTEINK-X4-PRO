@@ -8,7 +8,7 @@ was 0.1.77; this combined build uses 0.1.78.
 The exact delivered Daily Paper image supplies Home 0.4.8, Springboard 1.7.31,
 Daily Paper registration and HTTP provider. The paired Reader delivery supplies
 Reader 0.1.8 and internal Scene 0.3.6. Runtime 0.2.5, panel
-`x4pro-uc8279-fast` 0.1.12 and all other Daily Paper internal files remain
+`x4pro-uc8279-fast` 0.1.12 and all other Daily Paper internal files except the Hollow Trail version manifest remain
 byte-identical. Touch/UI decoupling is retained without reimplementation.
 There are 26 registered apps, 28 providers and 24 launcher entries.
 
@@ -19,9 +19,10 @@ This is a full 16 MiB image. It overwrites internal NVS, settings, Bluetooth
 bonds and AppData; back up needed internal data before flashing.
 There is no preserving OTA package or claim of preserving OTA support.
 
-Merge `Apps/` from `X4-0.1.78-Reader-Daily-Paper-SD.zip` into the existing SD
-root. It contains Reader **0.1.8**, Daily Paper 0.1.0 and their matching
-manifests. Preserve other applications, books, fonts and state. Both firmware
+Merge `Apps/` and `fonts/` from `X4-0.1.78-Reader-Daily-Paper-SD.zip` into the existing SD
+root. It contains all 16 SD apps and matching manifests, including Reader **0.1.8**,
+Daily Paper 0.1.0 and the previously delivered Hollow Trail 1.2.1 correction,
+plus Reader fonts and licenses. Preserve other applications, books, fonts and state. Both firmware
 and SD updates are required for chapter links. Configure Wi-Fi and date/time
 after flashing as needed. Daily Paper downloads the latest edition to
 `/Books/Daily Digest/YYYY-MM-DD.epub` and hands it to Reader.
@@ -37,8 +38,8 @@ must be at their pinned versions; mkspiffs 0.2.3 must be built with
 workflow remains unchanged; this recipe composes already qualified binaries
 and does not rebuild or vendor the native runtime.
 
-The recipe checks all 40 supplied ELF modules against production admission,
-including roles, unsafe operations, and every missing import in six affected
+The recipe checks all 54 supplied ELF modules against production admission,
+including roles, unsafe operations, and every missing import in seven affected
 modules. It tests four installed cohorts, the Daily-to-combined transition,
 and expected refusal of .76/Reader-to-combined namespace expansion, normally
 and under ASan/UBSan. Passing the Daily transition is an admission check only,

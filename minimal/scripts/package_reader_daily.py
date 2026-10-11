@@ -22,12 +22,14 @@ INPUTS = {
  'X4-0.1.77-Daily-Paper-Panel-0.1.12-full-0x0.bin': '3af02355beccb3acaba5c258d9d8e70cc60b5eadb8a57d05cb2f2c88ede4b0f3',
  'X4-0.1.77-Reader-Panel-0.1.12-full-0x0.bin': 'b91e38003fe485c90ad554e956b3f866ddf55a670e4af158669676af20b900de',
  'X4-0.1.77-Daily-Paper-SD.zip': 'bed14d99b13b2ea893161e4e76f6a61ed60a7ad6ec4ad8e9b66791b0b21c5671',
+ 'X4-0.1.73-SD-Apps.zip': '59271bc76abe4ee8aafa360ea4731b25accced2c73ef92683b01139677745469',
+ 'X4-0.1.73-SD-Fixes-Reader-0.1.1-Hollow-Trail-1.2.1.zip': '7cf266081adef4830291b301fbde80788090e41207caf1b068bf0d7410bcbef5',
  'X4-Reader-0.1.8-Chapter-Links-SD.zip': '006fae730f7ce5f074076ace8d9fcf08341837d14f89638d95f99a6fb0159c19',
 }
 READER_SHA = '455190996d053b15b79cbad3637386222f3a5286f76016c128f48594801f8bab'
 SCENE_SHA = 'fd8543dcb48d02f08cfcda144b0038d457f59b9cc5bf670caeee746f92af3ff7'
 DAILY_SHA = '72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa'
-OVERLAY = {'ui-scene/driver.elf', 'ui-scene/manifest.json', 'ebook_reader.json', 'cohort.json'}
+OVERLAY = {'ui-scene/driver.elf', 'ui-scene/manifest.json', 'ebook_reader.json', 'hollow_trail.json', 'cohort.json'}
 
 def layout(raw):
     from native_binary_exports import segments
@@ -75,16 +77,29 @@ def prepare(a):
     base,daily,reader=(stores[k] for k in ('baseline-store','daily-store','reader-store'))
     require(len(base)==len(reader)==92 and len(daily)==95, 'Input inventory')
     new=dict(daily)
-    for name in OVERLAY-{'cohort.json'}: new[name]=reader[name]
+    for name in OVERLAY-{'cohort.json','hollow_trail.json'}: new[name]=reader[name]
     for name,version in [('ebook_reader.json','0.1.8'),('ui-scene/manifest.json','0.3.6')]:
         before,after=json.loads(daily[name]),json.loads(new[name])
         require(after.pop('version')==version,'Component version');before.pop('version')
         require(before==after,'Admission policy changed')
     cohort=json.loads(daily['cohort.json']);require(cohort['version']=='0.1.77' and cohort['firmware_sha256']==NATIVE_SHA,'Input cohort')
     cohort.update(version=VERSION,source_revision=a.source_revision);new['cohort.json']=encoded(cohort)
-    require(new.keys()==daily.keys() and {n for n in new if new[n]!=daily[n]}==OVERLAY,'Unrelated Daily Paper files changed')
     require(sha(new['ui-scene/driver.elf'])==SCENE_SHA,'Scene identity')
-    sd={}
+    with zipfile.ZipFile(a.inputs/'X4-0.1.73-SD-Apps.zip') as z:
+        require(z.testzip() is None,'Full SD ZIP CRC')
+        sd={n:z.read(n) for n in z.namelist() if n.startswith(('Apps/','fonts/'))}
+        recorded=json.loads(z.read('X4-SD-Apps-0.1.73.json'))['files']
+        require(inventory(sd)==recorded,'Full SD source inventory')
+    with zipfile.ZipFile(a.inputs/'X4-0.1.73-SD-Fixes-Reader-0.1.1-Hollow-Trail-1.2.1.zip') as z:
+        require(z.testzip() is None,'SD correction ZIP CRC')
+        for name in z.namelist():
+            if name.startswith('Apps/hollow_trail/'):sd[name]=z.read(name)
+    require(sha(sd['Apps/hollow_trail/hollow_trail.elf'])=='77e1bd9ee703dde60d6a48f67b147ac13281a3ca5720e32f681fdf5198952de7','Hollow Trail correction identity')
+    before=json.loads(new['hollow_trail.json']);after=json.loads(sd['Apps/hollow_trail/manifest.json'])
+    require(after.pop('version')=='1.2.1','Hollow Trail version');before.pop('version')
+    require(before==after,'Hollow Trail policy changed')
+    new['hollow_trail.json']=sd['Apps/hollow_trail/manifest.json']
+    require(new.keys()==daily.keys() and {n for n in new if new[n]!=daily[n]}==OVERLAY,'Unrelated Daily Paper files changed')
     with zipfile.ZipFile(a.inputs/'X4-0.1.77-Daily-Paper-SD.zip') as z:
         require(z.testzip() is None,'Daily ZIP CRC')
         for name in z.namelist():
@@ -93,7 +108,10 @@ def prepare(a):
         require(z.testzip() is None,'Reader ZIP CRC')
         sd['Apps/ebook-reader/ebook_reader.elf']=z.read('Apps/ebook-reader/ebook_reader.elf')
     sd['Apps/ebook-reader/manifest.json']=new['ebook_reader.json']
-    require(set(sd)=={'Apps/ebook-reader/ebook_reader.elf','Apps/ebook-reader/manifest.json','Apps/daily-digest/daily_digest.elf','Apps/daily-digest/manifest.json'},'SD inventory')
+    require(sum(n.endswith('.elf') for n in sd)==16 and sum(n.endswith('manifest.json') for n in sd)==16,'Complete SD inventory')
+    for name,data in sd.items():
+        if name.endswith('manifest.json'):
+            manifest=json.loads(data);require(json.loads(new[manifest['file_name'].replace('.elf','.json')])==manifest,'Internal/SD manifest mismatch: '+name)
     require(sha(sd['Apps/ebook-reader/ebook_reader.elf'])==READER_SHA and sha(sd['Apps/daily-digest/daily_digest.elf'])==DAILY_SHA,'SD executable identity')
     require(sd['Apps/daily-digest/manifest.json']==new['daily_digest.json'],'Internal/SD Daily manifest')
     boot=json.loads(new['boot.json']);catalog=json.loads((ROOT/'minimal/sd-app-catalog.json').read_text())['apps']
@@ -115,14 +133,14 @@ def validate(a,sanitized):
     exported=json.loads((a.output/'exports.json').read_text())
     info=compile_admission(a.runtime,a.tools,directory,exported,sanitized)
     modules=[(p,p.name=='driver.elf') for p in sorted((a.output/'store').rglob('*.elf'))]+[(p,False) for p in sorted((a.output/'sd').rglob('*.elf'))]
-    require(len(modules)==40,'Module inventory')
+    require(len(modules)==54,'Module inventory')
     env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
     negatives=0
     for path,provider in modules:
         names=imports(path.read_bytes());require(set(names)<=set(exported),'Unresolved imports')
         command=[str(directory/'strict'),'driver' if provider else 'app',str(path)]
         subprocess.run(command,check=True,env=env,timeout=30)
-        if path.name in ('default.elf','springboard.elf','ebook_reader.elf','daily_digest.elf') or path.parent.name in ('ui-scene','net-http-client'):
+        if path.name in ('default.elf','springboard.elf','ebook_reader.elf','daily_digest.elf','hollow_trail.elf') or path.parent.name in ('ui-scene','net-http-client'):
             for symbol in names:
                 subprocess.run(command+[symbol],check=True,env=env,timeout=30);negatives+=1
     outcomes=[]
@@ -133,8 +151,8 @@ def validate(a,sanitized):
         if accepted:require(row['elf_count']==count,'Cohort module count')
         (directory/(active+'-to-'+candidate+'.log')).write_text(result.stdout+result.stderr)
         outcomes.append(dict(row,active=active,candidate=candidate,expected_acceptance=accepted))
-    info.update(strict_modules=40,wrong_role_rejections=40,unsafe_operation_rejections=40,missing_import_rejections=negatives,cohorts=outcomes)
-    (directory/'validation.json').write_bytes(encoded(info));print(('ASan/UBSan' if sanitized else 'Normal')+': 40 modules, '+str(negatives)+' missing-import negatives and 7 cohort cases PASS',flush=True)
+    info.update(strict_modules=54,wrong_role_rejections=54,unsafe_operation_rejections=54,missing_import_rejections=negatives,cohorts=outcomes)
+    (directory/'validation.json').write_bytes(encoded(info));print(('ASan/UBSan' if sanitized else 'Normal')+': 54 modules, '+str(negatives)+' missing-import negatives and 7 cohort cases PASS',flush=True)
 
 def finish(a):
     from current_bootfs import build as pack
@@ -160,7 +178,7 @@ def finish(a):
     require(all(raw[lo:hi]==image[lo:hi] for lo,hi in ranges),'Writes outside store and paired record')
     _,partitions=layout(bytes(image));require(read_image(bytes(image[0x2f0000:0x800000]),0x510000)==stores['store'],'Final readback')
     (a.output/IMAGE).write_bytes(image)
-    readme='X4 0.1.78: Reader 0.1.8 + Daily Paper 0.1.0. Flash the matching full BIN at 0x0. Full flashing overwrites internal settings, NVS, bonds and AppData; back up needed internal data first. No preserving OTA support. Merge Apps/ into the existing SD root, replacing matching files. Keep other apps, books, fonts and state. Scene 0.3.6 is internal; both firmware and SD updates are required. Hardware operation remains untested.\n'
+    readme='X4 0.1.78: Reader 0.1.8 + Daily Paper 0.1.0. Flash the matching full BIN at 0x0. Full flashing overwrites internal settings, NVS, bonds and AppData; back up needed internal data first. No preserving OTA support. Merge Apps/ and fonts/ into the existing SD root, replacing matching files. Includes all 16 SD applications, matching manifests, Reader fonts and Hollow Trail 1.2.1. Keep other apps, books, fonts and state. Scene 0.3.6 is internal; both firmware and SD updates are required. Hardware operation remains untested.\n'
     with zipfile.ZipFile(a.output/SD_ZIP,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
         for name,data in sorted(dict(stores['sd'],**{'README.txt':readme.encode()}).items()):
             item=zipfile.ZipInfo(name,(2026,10,11,0,0,0));item.compress_type=zipfile.ZIP_DEFLATED;item.external_attr=0o100644<<16;z.writestr(item,data)
@@ -171,7 +189,7 @@ def finish(a):
         sd_package={'name':SD_ZIP,'bytes':(a.output/SD_ZIP).stat().st_size,'sha256':sha((a.output/SD_ZIP).read_bytes())},
         runtime_version='0.2.5',native_sha256=NATIVE_SHA,native_unchanged=True,panel_version='0.1.12',panel_sha256=PANEL_SHA,panel_unchanged=True,
         reader_version='0.1.8',scene_version='0.3.6',daily_paper_version='0.1.0',home_version='0.4.8',springboard_version='1.7.31',registered_apps=26,provider_instances=28,launcher_entries=24,
-        changed_from_daily=sorted(OVERLAY),unchanged_daily_files=91,partitions=partitions,
+        changed_from_daily=sorted(OVERLAY),unchanged_daily_files=90,sd_apps=16,hollow_trail_version='1.2.1',partitions=partitions,
         partition_md5=True,bootloader_and_native_checksums_sha256=True,paired_sha_crc=True,independent_four_store_readbacks=True,store_generator=capacity,
         unchanged_ranges=[{'offset':lo,'bytes':hi-lo,'sha256':sha(raw[lo:hi])} for lo,hi in ranges],
         hardware_tested=False,target_instructions_executed=False,full_flash_overwrites_internal_data=True,preserving_ota_supported=False)
