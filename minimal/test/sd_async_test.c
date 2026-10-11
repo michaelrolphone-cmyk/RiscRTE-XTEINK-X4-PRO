@@ -54,6 +54,11 @@ int main(void){
  end_session();assert(!has_handles());
  assert(export_begin(NULL,&export,&blocks,&bytes)==RISC_STORAGE_EXPORT_READY);
  unsigned char batch[4096];unsigned before=work_reads;assert(export_read(NULL,export,0,8,batch)==RISC_STORAGE_EXPORT_READY&&work_reads==before+1);assert(export_end(NULL,export)==RISC_STORAGE_EXPORT_READY);
+ assert(async_begin(NULL,&session)==0);
+ request(RISC_STORAGE_ASYNC_REMOVE_FILE,"/Apps/unknown/manifest.json");assert(finish()==0);
+ request(RISC_STORAGE_ASYNC_REMOVE_FILE,"/Apps/unknown/manifest.json");assert(finish()==0); // restart retry
+ request(RISC_STORAGE_ASYNC_REMOVE_FILE,"/Apps/unknown");assert(finish()==RISC_STORAGE_ASYNC_IO); // never recursive
+ end_session();
  assert(prepare_sleep(NULL));assert(commit_sleep(NULL));assert(!work_scope&&pins[0].held);assert(resume_sleep(NULL)==RISC_STORAGE_SLEEP_READY&&work_scope&&!pins[0].held);
  assert(async_begin(NULL,&session)==0);request(RISC_STORAGE_ASYNC_OPEN_DIRECTORY,"/Apps");assert(finish()==0);request(RISC_STORAGE_ASYNC_NEXT_ENTRY,NULL);end_session();assert(!has_handles());
  assert(quiesce());stop();assert(!work_bound&&!work_scope&&!fixture_lock);free(card_image);
