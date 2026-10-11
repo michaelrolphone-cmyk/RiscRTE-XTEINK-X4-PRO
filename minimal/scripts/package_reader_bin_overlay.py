@@ -22,7 +22,8 @@ PANEL_SHA = '3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4'
 SCENE_SHA = 'f63441c1ab72b24db8598fabffe4eb20df889210ca09cf275bafc78ace458787'
 READER_SHA = '8ac56cf37fc1669bba9bd0292661cf9ff74327db3f90072e8298bbb14e83f3b2'
 RUNTIME_TREE = '03add2558ecd81dce7029af952115841dcaf3de4'
-ADMISSION_SHA = '1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d'
+ADMISSION_SHA = '3fb1f7347836e2ee07bec6c971e2513b0de6562de390415014bc1f12d4266efb'
+ADMISSION_HELPER_SHA = 'e10410b569dd4909a82483713871ec3577c8a2be30ee92a63b8ef1ba854824f3'
 IMAGE_NAME = 'X4-0.1.76-Reader-Panel-0.1.12-full-0x0.bin'
 ALLOWED = {'ui-scene/driver.elf', 'ui-scene/manifest.json', 'ebook_reader.json', 'cohort.json'}
 
@@ -102,6 +103,7 @@ def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="a
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
+    require(sha((runtime/'src/runtime/packages/ElfAdmission.h').read_bytes()) == ADMISSION_HELPER_SHA, 'Shared ELF admission audit differs from qualified source')
     roles = admission_source(text)[0]
     prelude = '''#include <cassert>
 #include <cstring>
@@ -111,6 +113,7 @@ def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="a
 #include "private/elf_types.h"
 #include "RiscBankStoreV1.h"
 #include "runtime/drivers/NativeProviderPolicyValidationV1.h"
+#include "runtime/packages/ElfAdmission.h"
 extern "C" bool esp_elf_validate_file(const uint8_t*,size_t);
 namespace CohortElf {
 static uint32_t ticks=0;static bool safe=true;static const char* missing=nullptr;

@@ -542,6 +542,8 @@ static int32_t async_begin(void*c,uint64_t*t){(void)c;
     return risc_storage_async_begin(&async_adapter,t);}
 static int32_t async_submit(void*c,uint64_t s,const risc_storage_async_request_v1*q,uint64_t*t){(void)c;
     return async_owner()?risc_storage_async_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
+static int32_t package_submit(void*c,uint64_t s,const risc_storage_package_request_v1*q,uint64_t*t){(void)c;
+    return async_owner()?risc_storage_package_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
 static int32_t async_collect(void*c,uint64_t s,uint64_t o,risc_storage_async_result_v1*r){(void)c;
     return async_owner()?risc_storage_async_collect(&async_adapter,s,o,r):RISC_STORAGE_ASYNC_BUSY;}
 static int32_t async_end(void*c,uint64_t s){(void)c;
@@ -703,7 +705,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         logging_api.prepared.base.sleep = api;
         logging_api.prepared.base.sleep.terminal.power.volume.base.struct_size =
 #if X4PRO_SD_ASYNC
-            sizeof(asynchronous_api);
+            sizeof(package_api);
 #else
             sizeof(filesystem_api);
 #endif
@@ -729,6 +731,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
     }
 #if X4PRO_SD_ASYNC
     asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=RISC_STORAGE_ASYNC_VERSION;
+    package_api.package_tag=RISC_STORAGE_PACKAGE_TAG;package_api.package_version=1;package_api.submit_package=package_submit;
     asynchronous_api.begin=async_begin;asynchronous_api.submit=async_submit;asynchronous_api.collect=async_collect;asynchronous_api.end=async_end;
 #endif
     return &driver.poll.streams.driver;

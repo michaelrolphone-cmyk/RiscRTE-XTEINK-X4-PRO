@@ -8,3 +8,9 @@ provider 0.3.2 uses this operation only after its protected removal journal is
 durable. The previous composed checkpoint remains 0.2.18 / catalog 0.3.1 until
 new source-bound composition evidence is produced; do not mix these versions
 and claim the old receipt qualifies the new removal transaction.
+
+The in-progress staged-install lane reserves opt-in SD 0.2.20. It appends package
+operations through the separately tagged package suffix, keeping async v3 and
+operations 1–7 unchanged. Runtime 0.2.9 supplies worker-only native admission.
+No provider-capacity edits are included; Files/WebDAV integration remains a
+separate composition task. Full install/update qualification is not yet claimed.
