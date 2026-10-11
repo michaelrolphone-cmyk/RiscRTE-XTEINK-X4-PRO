@@ -383,7 +383,7 @@
     },
     {
       "path": "app_store.elf",
-      "sha256": "be010233a9f758350cfe41696827aa1cf45082ece841e92bd71b079fef6a3cce"
+      "sha256": "47f77a0f816f764255adbafac1ad2aa37552763020cdad3c4be565eb20435b70"
     },
     {
       "path": "battery/driver.elf",
