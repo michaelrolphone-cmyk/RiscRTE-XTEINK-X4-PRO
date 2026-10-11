@@ -127,6 +127,13 @@ static bool export_range(uint64_t lba, uint32_t count, const void *buffer) {
     return buffer && count && count <= RISC_STORAGE_EXPORT_BLOCKS_MAX &&
         lba <= UINT32_MAX && lba < card_block_count && count <= card_block_count - lba;
 }
+/* Charge every sector before starting a multi-sector command. Preserve the
+ * shared filesystem work/deadline/cooperation accounting without splitting IO. */
+static bool export_native_budget(uint32_t count) {
+    if(count>RISC_SDMMC_MAX_SECTORS || !sdmmc_token || sdmmc_fault)return false;
+    for(uint32_t i=0;i<count;++i)if(!disk_budget())return false;
+    return true;
+}
 static int32_t export_read(void *context, risc_storage_export_token_t token,
                            uint64_t lba, uint32_t count, void *buffer) {
     (void)context;
@@ -134,6 +141,15 @@ static int32_t export_read(void *context, risc_storage_export_token_t token,
     const int32_t state = export_check(token);
     if (state != RISC_STORAGE_EXPORT_READY) return export_leave(state);
     if (!export_range(lba, count, buffer)) return export_leave(RISC_STORAGE_EXPORT_REFUSED);
+    /* One bounded native request, not count separate sector commands. The
+     * backend copies through its owned DMA buffer and has a finite command
+     * timeout. A failure is uncertain: retain, never replay or fall back. */
+    if (sdmmc_api) {
+        if (!export_native_budget(count) ||
+            !sdmmc_result(sdmmc_api->read(sdmmc_api->context,sdmmc_token,lba,count,buffer), "sdmmc export read failed"))
+            return export_leave(export_retain("export read uncertain; retained"));
+        return export_leave(RISC_STORAGE_EXPORT_READY);
+    }
     for (uint32_t i = 0; i < count; ++i)
         if (!disk_budget() || !read_sector((uint32_t)(lba + i), (uint8_t *)buffer + i * 512u))
             return export_leave(export_retain("export read/CRC retained"));
@@ -146,6 +162,15 @@ static int32_t export_write(void *context, risc_storage_export_token_t token,
     const int32_t state = export_check(token);
     if (state != RISC_STORAGE_EXPORT_READY) return export_leave(state);
     if (!export_range(lba, count, buffer)) return export_leave(RISC_STORAGE_EXPORT_REFUSED);
+    /* One bounded native request, not count separate sector commands. The
+     * backend copies through its owned DMA buffer and has a finite command
+     * timeout. A failure is uncertain: retain, never replay or fall back. */
+    if (sdmmc_api) {
+        if (!export_native_budget(count) ||
+            !sdmmc_result(sdmmc_api->write(sdmmc_api->context,sdmmc_token,lba,count,buffer), "sdmmc export write failed"))
+            return export_leave(export_retain("export write uncertain; retained"));
+        return export_leave(RISC_STORAGE_EXPORT_READY);
+    }
     for (uint32_t i = 0; i < count; ++i)
         if (!disk_budget() || !write_sector((uint32_t)(lba + i), (const uint8_t *)buffer + i * 512u))
             return export_leave(export_retain("export write uncertain; retained"));

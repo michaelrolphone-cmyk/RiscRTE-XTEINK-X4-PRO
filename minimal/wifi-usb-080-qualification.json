@@ -1,0 +1,196 @@
+{
+  "version": "0.1.80",
+  "source_revision": "3a669127c5629f1545360f99ed9a1986a27a27fa",
+  "baseline_sha256": "8e42978eb7d7196d80bc6bbb61178ff5169e99e288c84b5f16a78c2c03ed8420",
+  "image": {
+    "bytes": 16777216,
+    "flash_offset": 0,
+    "name": "X4-0.1.80-WiFi-USB-Batching-Panel-0.1.12-full-0x0.bin",
+    "sha256": "7df95c429d1391ed6e5e8ebd144a0672101e9096354706804632adf3c07a407f"
+  },
+  "sd_package": {
+    "apps": 16,
+    "byte_identical_to_078": true,
+    "bytes": 4584227,
+    "name": "X4-0.1.78-Reader-Daily-Paper-SD.zip",
+    "sha256": "b7e504f16d717df839f974f0dde6e5f33cf9ff303e49fbb7936784447298d2e8"
+  },
+  "sources": {
+    "msc": {
+      "commit": "5fe5caa4cd7c8ab03d00e5e8e17cbac16053f743",
+      "files_checked": 17,
+      "tree": "15035fdb0444be7ace28cba81e677d9eb9941dda"
+    },
+    "sd": {
+      "commit": "3c23b8bd2a1073bd1e3db48d6e9ae034613372c0",
+      "files_checked": 9,
+      "tree": "f04a6e57a2096e9c4367e6d64871356bffa7d4f7"
+    },
+    "sd_sdk": {
+      "headers_checked": 98,
+      "immutable_blob_bindings": true
+    },
+    "storage_fatfs": {
+      "commit": "ce31eefe0ebe62d373c9b0fb24d6f7059d2995d9",
+      "files_checked": 12,
+      "tree": "3768cffc333eb23fcbc5b12e34d98aa56ebdd42a"
+    },
+    "wifi": {
+      "commit": "600e56bc08962c0473735b2fd5d5d80aa62b77a8",
+      "files_checked": 250,
+      "tree": "1ac707bdf20d2bf7219d5fb570c19b57d2b0aae7"
+    }
+  },
+  "validation": [
+    {
+      "cohorts": [
+        {
+          "active": "baseline-store",
+          "candidate": "baseline-store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "baseline-store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        }
+      ],
+      "header_sha256": "c8d78356d3c8dee9c938027e62458f0216985fed373edb2dcea1dfc1b8bf7359",
+      "missing_import_rejections": 20,
+      "native_admission_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "original_fixture_sha256": "c80f18414663693cc4fa0155cd816d8fc6558cf57212b70f5d4f7ef8546a3843",
+      "sanitized": false,
+      "sanitizers": null,
+      "selected_fixture_sha256": "6270b0d755d431e8d61afde9fa13e7badb1b37ac90bcf2a1ebc5065e8afb227b",
+      "strict_modules": 54,
+      "unsafe_operation_rejections": 54,
+      "wrong_role_rejections": 54
+    },
+    {
+      "cohorts": [
+        {
+          "active": "baseline-store",
+          "candidate": "baseline-store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "baseline-store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        },
+        {
+          "active": "store",
+          "candidate": "store",
+          "cohort_validated": true,
+          "cooperative_yields": 152,
+          "elf_count": 38,
+          "error": "",
+          "hardware_calls": 0,
+          "prepared": true,
+          "storage_calls": 0
+        }
+      ],
+      "header_sha256": "c8d78356d3c8dee9c938027e62458f0216985fed373edb2dcea1dfc1b8bf7359",
+      "missing_import_rejections": 20,
+      "native_admission_source_sha256": "1ae5a6798d0ee019aea1beea9b7f94921d0e9a2cc5e3293fc747b913e370b19d",
+      "original_fixture_sha256": "c80f18414663693cc4fa0155cd816d8fc6558cf57212b70f5d4f7ef8546a3843",
+      "sanitized": true,
+      "sanitizers": "undefined",
+      "selected_fixture_sha256": "6270b0d755d431e8d61afde9fa13e7badb1b37ac90bcf2a1ebc5065e8afb227b",
+      "strict_modules": 54,
+      "unsafe_operation_rejections": 54,
+      "wrong_role_rejections": 54
+    }
+  ],
+  "changed_internal_files": [
+    "cohort.json",
+    "sd/driver.elf",
+    "sd/manifest.json",
+    "usb-msc/driver.elf",
+    "usb-msc/manifest.json",
+    "wifi_settings.elf",
+    "wifi_settings.json"
+  ],
+  "unchanged_internal_files": 88,
+  "native_version": "0.2.5",
+  "native_sha256": "fc1fe5f1286668136156949932605a792c7dea048dc403f3f04d676ded14ab36",
+  "native_unchanged": true,
+  "panel_version": "0.1.12",
+  "panel_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+  "panel_unchanged": true,
+  "wifi_version": "1.1.26",
+  "msc_version": "0.1.7",
+  "sd_provider_version": "0.2.16",
+  "independent_readbacks": true,
+  "paired_sha_crc": true,
+  "partition_md5": true,
+  "bootloader_native_esp_checksums_sha256": true,
+  "assembler_sha256": "43cfc704e850e7297fc039c53f8ec27f633cf7cfa47086eaea342f8a71cc24d9",
+  "hardware_tested": false,
+  "target_instructions_executed": false,
+  "full_flash_overwrites_internal_data": true,
+  "preserving_ota_supported": false,
+  "excluded": [
+    "unfinished icon audit",
+    "dynamic package discovery"
+  ],
+  "verified_component_versions": {
+    "ebook_reader.json": "0.1.8",
+    "ui-scene/manifest.json": "0.3.6",
+    "daily_digest.json": "0.1.0",
+    "default.json": "0.4.8",
+    "springboard.json": "1.7.31",
+    "hollow_trail.json": "1.2.1",
+    "wifi_settings.json": "1.1.26",
+    "usb-msc/manifest.json": "0.1.7",
+    "sd/manifest.json": "0.2.16"
+  },
+  "new_target_compilation_performed": false,
+  "target_artifacts": "Exact previously qualified target binaries reused; source/SDK hashes, package digests, loader maps and production admission rechecked.",
+  "asan": "Not rerun: known Apple ASan initialization failure; normal and full UBSan passes only.",
+  "evidence": {
+    "X4-0.1.80-verification.json": {
+      "bytes": 112646,
+      "sha256": "d1859cfcfa2b128c5b2d998785e55aa13b476e156143d0940427668ea0718a53"
+    },
+    "X4-0.1.80-Evidence.zip": {
+      "bytes": 140255,
+      "sha256": "248970a65d5cc21eec31b330d4a3c33d139bfc7892e4c9b40078f5254fdd0604"
+    }
+  }
+}

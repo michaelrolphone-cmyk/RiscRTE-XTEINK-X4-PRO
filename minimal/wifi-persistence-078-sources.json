@@ -1,0 +1,54 @@
+{
+  "baseline_product": "0.1.78",
+  "baseline_receipt": "8e9e8eb7a2b1f7f860777d0d0e8a89dd2822af87",
+  "system_baseline": "5b28172e979b5f008da19e9a00a3b98e35937974",
+  "system_fix": "600e56bc08962c0473735b2fd5d5d80aa62b77a8",
+  "system_branch": "fix/wifi-profile-persistence-078",
+  "wifi_version": "1.1.26",
+  "resident_sdk": "274bc66f193cbe29018d2a85c9400cb0dce8aacc",
+  "alarm_utilities": "e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d",
+  "native_runtime": "7071f0c25e223f24670bed409a5f8b6f291c8042",
+  "native_version": "0.2.5",
+  "wifi_provider": "a304597bf26491483bb0a567569f0ca0267cdf9c",
+  "provider_version": "0.2.1",
+  "preserve": {
+    "reader": "0.1.8",
+    "daily_paper": "0.1.0",
+    "panel": "0.1.12",
+    "sd_app_split": true,
+    "native_binary_unchanged": true
+  },
+  "replacement_paths": [
+    "wifi_settings.elf",
+    "wifi_settings.json"
+  ],
+  "old_wifi_elf_sha256": "35d9117e6eb6f54576f766eecb289d9f5d5b73776d99db1c6bf574059045cae5",
+  "new_wifi_elf_sha256": "e5df0a788f2f4d1c2d7faff3109110da54a476c416f4b4894248f92ccb1d694b",
+  "new_wifi_manifest_sha256": "cc07014a9a94e37bedc8000893246d1dba1a32d29970d1be2872c3a25a0d618d",
+  "qualification": {
+    "target_compile": true,
+    "target_source_clean": true,
+    "persistence_normal": true,
+    "persistence_ubsan": true,
+    "separate_process_restart": true,
+    "native_nvs_adapter_executed": true,
+    "scan_resident_normal": true,
+    "scan_resident_ubsan": true,
+    "controller_workflows_per_mode": 56,
+    "profile_fault_collection": 50,
+    "hardware_tested": false
+  },
+  "limits": [
+    "Source checkpoint and standalone component only; no new complete X4 image assembled or qualified.",
+    "No hardware confirmation, flash, master merge or release."
+  ],
+  "includes_scan_fix": "f5673befd745a744872e4802332e647d64577a5c",
+  "storage": {
+    "capability": "storage.key-value@1",
+    "namespace": 6,
+    "native_namespace": "rte00000006",
+    "format": "existing independent atomic profile selectors",
+    "backend_changed": false,
+    "sd_migration": false
+  }
+}

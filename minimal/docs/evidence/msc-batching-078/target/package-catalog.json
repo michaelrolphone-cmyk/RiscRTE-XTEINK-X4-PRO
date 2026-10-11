@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "release": "unpublished-msc-sd-batching-078",
+  "packages": [
+    {
+      "kind": "driver",
+      "id": "usb-device-msc-esp32s3",
+      "version": "0.1.7",
+      "artifact": "driver.elf",
+      "architecture": "xtensa-esp32s3",
+      "archive": "driver-usb-device-msc-esp32s3-0.1.7-xtensa-esp32s3.rte.zip",
+      "size_bytes": 36246,
+      "sha256": "ed8dc2c4ae19cb43e16aa865338da421ccf434514c1325f776c8762c1f5513ab"
+    },
+    {
+      "kind": "driver",
+      "id": "x4pro-sd",
+      "version": "0.2.16",
+      "artifact": "driver.elf",
+      "architecture": "xtensa-esp32s3",
+      "archive": "driver-x4pro-sd-0.2.16-xtensa-esp32s3.rte.zip",
+      "size_bytes": 56618,
+      "sha256": "3fa48bbd313d8f2045e19e550f41a42f40ee1393f7af4e7299e0b78731b26c8f"
+    }
+  ]
+}

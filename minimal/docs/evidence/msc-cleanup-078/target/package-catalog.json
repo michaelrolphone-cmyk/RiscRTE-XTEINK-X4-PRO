@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "release": "unpublished-msc-cleanup-078",
+  "packages": [
+    {
+      "kind": "driver",
+      "id": "usb-device-msc-esp32s3",
+      "version": "0.1.6",
+      "artifact": "driver.elf",
+      "architecture": "xtensa-esp32s3",
+      "archive": "driver-usb-device-msc-esp32s3-0.1.6-xtensa-esp32s3.rte.zip",
+      "size_bytes": 36134,
+      "sha256": "c37c880768328a341a3d62ac7ec774e9e2bbfd504467c4a8b83972e46baddbe3"
+    }
+  ]
+}
