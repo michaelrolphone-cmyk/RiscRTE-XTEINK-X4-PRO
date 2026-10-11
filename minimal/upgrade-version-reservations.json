@@ -9,12 +9,9 @@
   "entry_point_blocker": "Both actual .81/.83 updater UIs and providers have compile-time disabled feeds. A catalog alone cannot initiate upgrade. Requires an independently installed feed-enabled updater or a separately qualified preserving bootstrap route.",
   "shared_settings_successor": {
     "version": "0.1.90",
-    "status": "source reservation; no release or hardware qualification yet",
+    "status": "0.1.90 recovery integration; shared settings opt-in disabled pending native fallback/reconciliation",
     "base": "0.1.89",
     "retained_wake_bytes": 512,
-    "shared_settings": [
-      1,
-      6
-    ]
+    "shared_settings": []
   }
 }

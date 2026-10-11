@@ -53,13 +53,13 @@ class Composition(unittest.TestCase):
     def tearDown(self):self.tmp.cleanup()
     def write(self,p,x):p.write_text(json.dumps(x))
     def run_compose(self,namespaces=None):
-        return c.compose(self.base,self.sd,self.modules,self.root/'out',self.system,self.runtime,[1,6] if namespaces is None else namespaces)
+        return c.compose(self.base,self.sd,self.modules,self.root/'out',self.system,self.runtime,[] if namespaces is None else namespaces)
     def mutate_receipt(self,name,fn):
         p=self.modules[name]/c.RECORDS[name];x=c.read(p);fn(x);self.write(p,x)
     def test_preserves_all_old_files_and_grant_bound(self):
         result=self.run_compose();self.assertEqual(result['preserved_sd_files'],1)
         self.assertEqual((self.root/'out/SD/existing.txt').read_bytes(),(self.sd/'existing.txt').read_bytes())
-        b=c.read(self.root/'out/store/boot.json');self.assertEqual(b['installation']['shared_settings'],[1,6]);self.assertEqual(len(b['app_capabilities'][0]['grants']),16)
+        b=c.read(self.root/'out/store/boot.json');self.assertNotIn('shared_settings',b['installation']);self.assertEqual(len(b['app_capabilities'][0]['grants']),16)
         self.assertEqual(c.read(self.root/'out/store/cohort.json')['version'],'0.1.90')
     def test_changed_baseline_rejected(self):
         (self.base/'default.elf').write_bytes(b'missing or changed baseline')
@@ -71,7 +71,7 @@ class Composition(unittest.TestCase):
         self.mutate_receipt('default',lambda x:x.pop('installed_catalog'))
         with self.assertRaisesRegex(ValueError,'maintenance'):self.run_compose()
     def test_unqualified_namespace_rejected(self):
-        with self.assertRaisesRegex(ValueError,'qualified'):self.run_compose([1,6,10])
+        with self.assertRaisesRegex(ValueError,'disabled'):self.run_compose([1,6])
     def test_modified_binary_rejected(self):
         (self.modules['wifi_settings']/'wifi_settings.elf').write_bytes(b'unrecorded')
         with self.assertRaisesRegex(ValueError,'receipt'):self.run_compose()

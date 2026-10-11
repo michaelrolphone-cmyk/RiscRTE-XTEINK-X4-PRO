@@ -99,7 +99,7 @@ def validate_module(name, directory, base, system, runtime):
 
 def compose(base, sd, modules, output, system, runtime, namespaces):
     require(not output.exists(), 'Output must be new')
-    require(namespaces == [1, 6], 'Only the qualified general/Wi-Fi selection is enabled by this recipe')
+    require(namespaces == [], 'Shared settings remain disabled until native fallback and reconciliation qualify')
     expected = read(BASE_RECEIPT)
     require(tree(base) == expected['store'], 'Base is not the exact complete delivered .89 store')
     sd_inventory = tree(sd)
@@ -111,7 +111,9 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
     require(install.get('settings_sd') is True and install.get('volume_instance') == 9 and
             install.get('namespace_range') == {'first': 3000, 'count': 128} and not install.get('shared_settings'),
             'Unexpected installed settings authority')
-    install['shared_settings'] = namespaces
+    # The SD-first candidate is deliberately not opted into this product.
+    # Cold-card absence must not make ordinary preferences/apps unavailable.
+    require('shared_settings' not in install, 'Unexpected active shared settings policy')
     files_policy = next(x for x in boot['app_capabilities'] if x['manifest'] == 'file_browser.json')
     old_grants = files_policy['grants']
     require(len(old_grants) == 16 and sum(x['capability'] == 'storage.app-data.export' for x in old_grants) == 1,
@@ -150,7 +152,8 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
                               for n, (m, e, _) in records.items() for f in (m, e)}
     require(set(actual_store) == set(expected['store']) and changed <= allowed, 'Unexpected store changes')
     result = dict(product_version='0.1.90', runtime_commit=runtime, system_commit=system,
-                  shared_settings=namespaces, native_build_required=True,
+                  shared_settings=namespaces, shared_settings_enabled=False,
+                  persistence_status='unfinished: native fallback and returning-card reconciliation required', native_build_required=True,
                   required_native_options=dict(retained_wake_bytes=512, usb_phy=True, provider_capacity=40,
                                                installed_app_capacity=64, app_policy_rows=24, app_requirement_rows=24,
                                                shared_files_transport=True, app_image_cache=False),
@@ -171,7 +174,7 @@ def main():
     modules = dict(default=args.home, springboard=args.springboard, file_browser=args.files,
                    wifi_settings=args.wifi, **{'installed-apps': args.catalog})
     print(json.dumps(compose(args.base_store, args.base_sd, modules, args.output,
-                             git(args.system_source, 'rev-parse', 'HEAD'), git(args.runtime_source, 'rev-parse', 'HEAD'), [1, 6]), indent=2))
+                             git(args.system_source, 'rev-parse', 'HEAD'), git(args.runtime_source, 'rev-parse', 'HEAD'), []), indent=2))
 
 if __name__ == '__main__':
     main()
