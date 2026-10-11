@@ -19,7 +19,7 @@ if env.subst('$PIOENV') != record['build_environment']:
     raise ValueError('This composed workspace only builds its recorded X4 environment')
 options = record.get('build_options')
 required = {'app_policy_rows', 'app_image_cache'}
-if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport'}:
+if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256'}:
     raise ValueError('Invalid native build options')
 if type(options['app_policy_rows']) is not int or options['app_policy_rows'] not in (16, 17, 18, 24):
     raise ValueError('App policy rows must be 16, 17, 18 or 24')
@@ -45,7 +45,7 @@ if 'failure_evidence' in options and options['failure_evidence'] is not True:
 # definitions and undefines, including command-line/environment overrides,
 # instead of allowing flag order to replace the recorded selection.
 for key in ('BUILD_FLAGS', 'BUILD_UNFLAGS', 'CCFLAGS', 'CFLAGS', 'CXXFLAGS', 'CPPDEFINES'):
-    if re.search(r'(?:\b|-[DU])(?:RISC_APP_(?:POLICY_ROWS|REQUIREMENT_ROWS|IMAGE_CACHE)|RISC_INSTALLED_APP_CAPACITY|RISC_PROVIDER_CAPACITY|RISC_NATIVE_TCP_LISTENER|RISC_NATIVE_ENTROPY|RISC_ENABLE_USB_PHY|RISC_RETAINED_WAKE_BYTES|RISC_NATIVE_FAILURE_EVIDENCE|CONFIG_(?:ESPTOOLPY_FLASH\w*|SPIRAM_(?:MODE|SPEED)_\w*))\b', str(env.get(key, ''))):
+    if re.search(r'(?:\b|-[DU])(?:RISC_APP_(?:POLICY_ROWS|REQUIREMENT_ROWS|IMAGE_CACHE)|RISC_INSTALLED_APP_CAPACITY|RISC_PROVIDER_CAPACITY|RISC_NATIVE_TCP_LISTENER|RISC_NATIVE_ENTROPY|RISC_NATIVE_APP_DATA_EXPORT_POLICY_V2_HEADER|RISC_ENABLE_USB_PHY|RISC_RETAINED_WAKE_BYTES|RISC_NATIVE_FAILURE_EVIDENCE|CONFIG_(?:ESPTOOLPY_FLASH\w*|SPIRAM_(?:MODE|SPEED)_\w*))\b', str(env.get(key, ''))):
         raise ValueError('Native option flags must come only from the composition record: ' + key)
 observed = set()
 for folder, directories, names in os.walk(root):
@@ -81,6 +81,13 @@ env.Append(CPPPATH=[str(build)])
 env.Append(CPPDEFINES=[('RISC_NATIVE_DIAGNOSTIC_OBSERVER',1),
                       ('RISC_APP_POLICY_ROWS', options['app_policy_rows']),
                       ('RISC_APP_IMAGE_CACHE', int(options['app_image_cache']))])
+if 'export_migration_header_sha256' in options:
+    path=root/'x4-native/export-migration.h'
+    if hashlib.sha256(path.read_bytes()).hexdigest()!=options['export_migration_header_sha256']:
+        raise ValueError('Migration authority header differs from composition')
+    env.Append(CPPPATH=[str(root/'x4-native')])
+    env.Append(CPPDEFINES=[('RISC_NATIVE_APP_DATA_EXPORT_POLICY_V2_HEADER', '\\"export-migration.h\\"')])
+    env.Append(LINKFLAGS=['-Wl,-u,risc_native_app_data_export_policy_v2'])
 if 'provider_capacity' in options:
     env.Append(CPPDEFINES=[('RISC_PROVIDER_CAPACITY',options['provider_capacity'])])
 if options.get('shared_files_transport'):
