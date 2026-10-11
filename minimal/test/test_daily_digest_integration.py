@@ -44,6 +44,6 @@ class Integration(unittest.TestCase):
         self.assertEqual(len(names),len(set(names)))
         self.assertIn('ebook_reader.elf',names)
         self.assertEqual([r for r in catalog if r['file_name']=='daily_digest.elf'],[
-            {'display_name':'Daily Paper','file_name':'daily_digest.elf','icon':'solid:f1ea'}])
+            {'display_name':'Daily Paper','file_name':'daily_digest.elf','icon':'solid:f15b'}])
 
 if __name__=='__main__':unittest.main()
