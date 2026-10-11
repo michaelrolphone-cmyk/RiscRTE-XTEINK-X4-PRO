@@ -5,16 +5,16 @@
   "native_admission_source_sha256": "35a7d0dc055be57e79145991e624f234a2990da6c47b17e1dd956f71d3cf4fc2",
   "sanitized": true,
   "sanitizers": "undefined",
-  "runtime_commit": "7238b7d5bf3544c6b8bbba3c6a9eefd343019a52",
+  "runtime_commit": "6c658149de54067d7bcc1f4915906cd51ee42a6d",
   "provider_capacity": 32,
   "graph_grants": 48,
   "app_capacity": 64,
-  "boot_sha256": "e96603b14fcb852b82fc9b7c2f35a6624f78c9b85b9ae2af70f346a3321bd213",
+  "boot_sha256": "47890debe2c0ba334eb0779ab0cb9e34790808470a352d062846ce23fd8aac3a",
   "store_sha256": {
     "points_in_time.json": "4aad7dd39182053abc9cfae251c16a1814ad9e190b57f8ad9a041c72e4965344",
     "wifi_settings.elf": "e5df0a788f2f4d1c2d7faff3109110da54a476c416f4b4894248f92ccb1d694b",
     "timecard.json": "c654a938807858320727c50fa6d7d73434a3bbbc5f3cd5fb2c570d05ccab4a7d",
-    "boot.json": "e96603b14fcb852b82fc9b7c2f35a6624f78c9b85b9ae2af70f346a3321bd213",
+    "boot.json": "47890debe2c0ba334eb0779ab0cb9e34790808470a352d062846ce23fd8aac3a",
     "ota_update.json": "5a04c049f9000787639ebf2e4aa721bbe1b35e91ad71e61d501de2c91a4132ac",
     "hollow_trail.json": "9b92778c33308b81cc224951d9b2d2a4687cee7ec4382bd1f53ab729cccc35ce",
     "settings.json": "2518f483c26b928815b5311e2b3dd1549988ffac4bd2fbd76d06e4da21f29b29",
@@ -24,7 +24,7 @@
     "cohort.json": "e664b6c4d1492569d0a1407c26327525e904484f00ea2572c261c9ae3d94b638",
     "app_store.json": "101386dc8c0817e2c6d5a319634b988ff4a2711f0f8857e835ab3866bb159c1e",
     "board.json": "e718fc23327334f8218162bb476fd1e9f86fc9d8fbf240e5c2db4c4c05acf012",
-    "default.elf": "79e6897de7c4dc68d1600f616d7859a1dd58476b21f63af2ee233a13c4f09fa4",
+    "default.elf": "e222c8c5ea480648603162ee6280134b2c72cde7d08bd62f55955044b2c5d64f",
     "countdown.json": "677900d30b609157e24bafda3230f98fd0b3c06d3225a2868c4855abf34f8a5b",
     "app_store.elf": "2e4e9a323c9679f0aed86d44491f6ee7cf2a522dc195e4d715ef01f9aa2b88c1",
     "ebook_reader.json": "e63d1106a4797e3a9386a402f4d2b2ea4e8c6386718188b7927293e588de2980",
@@ -45,7 +45,7 @@
     "stopwatch.json": "020426df1803c6ae37c03e75378e82b73d9ed874378781eaf680e25f51342345",
     "alarms.json": "6c62c39bab1b4f8586eff9a1543e665d88fd798951d31971b77f58b92fd06879",
     "battery.json": "a0a0ee9ac5490c6007cb5b9cbe826acac2ecd63506d7e99325b99bd5e3811476",
-    "default.json": "bbed5812456218835cf47196ebad67797e6a539cbc6ef3d68f9405db82cc9030",
+    "default.json": "214578b1dd01fa03aa61a76050013ce4c0feea7d351fe526d03fdcfe49b765a0",
     "wifi_settings.json": "cc07014a9a94e37bedc8000893246d1dba1a32d29970d1be2872c3a25a0d618d",
     "usb_sd_transfer.json": "72cfb822a0fa68856d6b1b449b006c48bed5a9ace0060c1e2d9f473fba73863f",
     "model_viewer.json": "89204d530af77e6323d083093a4a1fff904ecdae573f72252de257394b314dd2",
@@ -116,7 +116,7 @@
     "civil-clock-x4/driver.elf": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
   },
   "native": {
-    "firmware_sha256": "70c39d9eecaf2019681c40afc01f6aa73ed3904acdb5517c370dae2ffa19c21f",
+    "firmware_sha256": "c97e2af739d788b10b325d756b535e81b54819f84bd30bc0e127518a23b2bb78",
     "elf_used_for_candidate": false,
     "esp_checksum_and_appended_sha256": true,
     "segments": [
@@ -138,16 +138,16 @@
       {
         "address": 1107296288,
         "offset": 327712,
-        "size": 1025124
+        "size": 1025368
       },
       {
         "address": 1077384600,
-        "offset": 1352844,
+        "offset": 1353088,
         "size": 72460
       },
       {
         "address": 1611653120,
-        "offset": 1425312,
+        "offset": 1425556,
         "size": 44
       }
     ],
@@ -157,17 +157,17 @@
         "address": 1007712764,
         "file_offset": 31228,
         "bytes": 408,
-        "sha256": "5aca3f2d8e65c375ae80cbb1b3783688ef209a0c0a7230fe12413ca59d122db5",
+        "sha256": "31ced3ba50de06e19dffdcd247e4abd5e215d72a008b29d8290bdfd11f62b60e",
         "rows": [
           {
             "name": "strerror",
             "name_address": 1007703655,
-            "address": 1108208844
+            "address": 1108209088
           },
           {
             "name": "strtof",
             "name_address": 1007703773,
-            "address": 1108215564
+            "address": 1108215808
           },
           {
             "name": "strtoul",
@@ -212,7 +212,7 @@
           {
             "name": "vsnprintf",
             "name_address": 1007703848,
-            "address": 1108245144
+            "address": 1108245388
           },
           {
             "name": "setjmp",
@@ -222,7 +222,7 @@
           {
             "name": "longjmp",
             "name_address": 1007703865,
-            "address": 1108291600
+            "address": 1108291844
           },
           {
             "name": "memset",
@@ -292,7 +292,7 @@
           {
             "name": "strtod",
             "name_address": 1007703759,
-            "address": 1108215376
+            "address": 1108215620
           },
           {
             "name": "strtol",
@@ -312,7 +312,7 @@
           {
             "name": "snprintf",
             "name_address": 1007703849,
-            "address": 1108207844
+            "address": 1108208088
           },
           {
             "name": "malloc",
@@ -337,17 +337,17 @@
           {
             "name": "clock_gettime",
             "name_address": 1007703889,
-            "address": 1107757068
+            "address": 1107757312
           },
           {
             "name": "strftime",
             "name_address": 1007703903,
-            "address": 1108211924
+            "address": 1108212168
           },
           {
             "name": "__errno",
             "name_address": 1007703912,
-            "address": 1108199300
+            "address": 1108199544
           },
           {
             "name": "__getreent",
@@ -387,7 +387,7 @@
           {
             "name": "getopt_long",
             "name_address": 1007704010,
-            "address": 1108205680
+            "address": 1108205924
           },
           {
             "name": "optind",
@@ -416,19 +416,19 @@
         "address": 1007701244,
         "file_offset": 19708,
         "bytes": 16,
-        "sha256": "29291c4b452b25e7a20bbddfabbd630052e6829f897351ac4d9504a61d997622",
+        "sha256": "87d20e7a74965e58a5ba6af1356b927a4ae6ae8cb983b6461100926094150a0f",
         "rows": [
           {
             "name": "risc_runtime_get_api",
             "name_address": 1007700728,
-            "address": 1107344964
+            "address": 1107344952
           }
         ]
       }
     ],
     "exports": {
-      "strerror": 1108208844,
-      "strtof": 1108215564,
+      "strerror": 1108209088,
+      "strtof": 1108215808,
       "strtoul": 1073747188,
       "strcat": 1073746804,
       "strncasecmp": 1073746900,
@@ -437,9 +437,9 @@
       "tolower": 1073746720,
       "isalpha": 1073746576,
       "qsort": 1073747080,
-      "vsnprintf": 1108245144,
+      "vsnprintf": 1108245388,
       "setjmp": 1073747020,
-      "longjmp": 1108291600,
+      "longjmp": 1108291844,
       "memset": 1073746408,
       "memcpy": 1073746420,
       "memmove": 1073746432,
@@ -453,18 +453,18 @@
       "strchr": 1073746828,
       "strrchr": 1073746948,
       "strstr": 1073746516,
-      "strtod": 1108215376,
+      "strtod": 1108215620,
       "strtol": 1073747176,
       "strcspn": 1073746840,
       "strncat": 1073746912,
-      "snprintf": 1108207844,
+      "snprintf": 1108208088,
       "malloc": 1077448796,
       "calloc": 1077448920,
       "realloc": 1077448808,
       "free": 1077448828,
-      "clock_gettime": 1107757068,
-      "strftime": 1108211924,
-      "__errno": 1108199300,
+      "clock_gettime": 1107757312,
+      "strftime": 1108212168,
+      "__errno": 1108199544,
       "__getreent": 1077428988,
       "_ctype_": 1007902432,
       "__ltdf2": 1073751004,
@@ -472,12 +472,12 @@
       "__gtdf2": 1073750944,
       "__floatunsidf": 1073750884,
       "__divdf3": 1073750608,
-      "getopt_long": 1108205680,
+      "getopt_long": 1108205924,
       "optind": 1070258456,
       "opterr": 1070258452,
       "optarg": 1070258460,
       "optopt": 1070258448,
-      "risc_runtime_get_api": 1107344964
+      "risc_runtime_get_api": 1107344952
     },
     "resolver_source_sha256": "1d83dbcf8a694c1d22398b1dc9f81ea3d338b072e7ef7e7133194806ccc1bee0",
     "locale_info": 0
@@ -537,7 +537,7 @@
     },
     {
       "path": "default.elf",
-      "sha256": "79e6897de7c4dc68d1600f616d7859a1dd58476b21f63af2ee233a13c4f09fa4"
+      "sha256": "e222c8c5ea480648603162ee6280134b2c72cde7d08bd62f55955044b2c5d64f"
     },
     {
       "path": "file_browser.elf",
@@ -670,11 +670,11 @@
   "hardware_tested": false,
   "scope": "Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.",
   "status": "source-qualified-install-update-and-legacy-migration",
-  "native_source_commit": "18c3909a8f67896378a1f2c33d7a9a5434189a0a",
-  "x4_native_source_commit": "694c6c32fbd3a4d260e90eb4aef664552404aaa9",
-  "native_composition_sha256": "71f7890e1b8a45279bddf994d4da4b0455f43f728bf2edb6a61d73b45b0e7568",
+  "native_source_commit": "885d62f54635d4882e16a188d8438f6fddcf0de8",
+  "x4_native_source_commit": "855def7674a2e72a91c2837257ef350939adce8a",
+  "native_composition_sha256": "7703d3b410494825a6a5015ce802a156b7dcf5ab7f3be7472da32b20c3a79182",
   "native_static_ram_bytes": 78992,
-  "native_flash_bytes": 1424981,
+  "native_flash_bytes": 1425225,
   "legacy_authorities": 16,
   "compiled_springboard_installed_rows": 8,
   "legacy_settings_reassigned": false,
@@ -690,7 +690,10 @@
     "Merged HCI/Wi-Fi coexistence 23 cases; clock scheduler at 100/1000Hz; actual System entropy provider with Runtime; UBSan",
     "Native update health and immutable multi-namespace update admission; UBSan",
     "Springboard metadata-only appearance compatibility and absent style rows not installed",
-    "Clean single-job ESP32-S3 native build, clean Springboard 1.8.1 target link, complete 42-module native admission; no hardware execution"
+    "Clean single-job ESP32-S3 native build, clean Springboard 1.8.1 target link, complete 42-module native admission; no hardware execution",
+    "Home actual production adapter: no catalog/SD before first submitted frame, cached hydration, 1000 pending progress and cancellation polls, launch intent retained, sleep deferred until grants close; UBSan",
+    "Legacy filename resolves only to admitted SD identity: actual host child executed twice; absent and removed identities denied",
+    "Clean Home 0.4.9 target build and final 42-module admission with Runtime 0.2.11 binary"
   ],
   "host_adaptations": [
     "Darwin compiler wrapper drops Linux -no-pie/-rdynamic, uses undefined dynamic_lookup for host fixture modules, substitutes UBSan for unavailable ASan",
@@ -707,9 +710,9 @@
     "No master merge, hardware flash, active workspace mutation or release promotion"
   ],
   "source_branches": {
-    "runtime": "7238b7d5bf3544c6b8bbba3c6a9eefd343019a52",
-    "system": "91e511dc448f42714ffb0cbe7d641a5bf9587c8d",
-    "firmware": "694c6c32fbd3a4d260e90eb4aef664552404aaa9"
+    "runtime": "6c658149de54067d7bcc1f4915906cd51ee42a6d",
+    "system": "c2bed31992fa480d39cbae3cd2da0a610e09f664",
+    "firmware": "0ef4fbe02521c887728a8171350dec6e49f0ef84"
   },
   "clean_files_target": {
     "repository_commit": "91e511dc448f42714ffb0cbe7d641a5bf9587c8d",
@@ -722,5 +725,17 @@
     "working_tree_dirty": false,
     "version": "1.8.1",
     "sha256": "aad5bfd02e7b8a18e718e68f9bd53d4c903988e555245a17d3d1c8f0c0f91b5b"
-  }
+  },
+  "clean_home_target": {
+    "repository_commit": "c2bed31992fa480d39cbae3cd2da0a610e09f664",
+    "working_tree_dirty": false,
+    "version": "0.4.9",
+    "sha256": "e222c8c5ea480648603162ee6280134b2c72cde7d08bd62f55955044b2c5d64f",
+    "size_bytes": 550628
+  },
+  "forward_migration_scope": "Earlier staged store to legacy-migrated Home store: 39 modules. Previously admitted Files-sharing store to final Home-sharing store: 42 modules. Both pass with zero hardware/storage calls.",
+  "additional_check_limits": [
+    "Direct earlier staged store to Files-sharing store rejects before ELF admission; Files persistent policy transition must use its separately qualified migration/release procedure. This check is not claimed passing.",
+    "Optional older home_gestures host harness fails Darwin linking on optional weak raster extension symbols; no gesture assertions run. New actual Home catalog adapter test and target ELF build pass."
+  ]
 }
