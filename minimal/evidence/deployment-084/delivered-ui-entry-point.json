@@ -1,0 +1,73 @@
+{
+  "baselines": [
+    {
+      "version": "0.1.81",
+      "files": {
+        "ota_update.elf": {
+          "sha256": "efcf3c021f4a1cb19ebe81594e65b4e8cead544df6dad10f7bd25fc234e9a9d0",
+          "disabled_feed_message": true,
+          "catalog_url_present": false,
+          "https_strings": []
+        },
+        "upd-fw/driver.elf": {
+          "sha256": "0b8cf4ca9090212407f022f0a43076ab0efe6f90f798a0bd9cba240d366d6548",
+          "disabled_feed_message": false,
+          "catalog_url_present": false,
+          "https_strings": [
+            "https://github.com/%s/releases/download/%s/%s"
+          ]
+        },
+        "app_store.elf": {
+          "sha256": "953e571b8e07c868a507c89362c5943721996db4f7da4351f27394620e990671",
+          "disabled_feed_message": true,
+          "catalog_url_present": false,
+          "https_strings": []
+        },
+        "upd-app/driver.elf": {
+          "sha256": "464b3dd419bfc7d1a0eeb6fdebe160ef5445b77cd7fa07df1a37a5af64f32761",
+          "disabled_feed_message": false,
+          "catalog_url_present": false,
+          "https_strings": [
+            "https://github.com/%s/releases/download/%s/%s"
+          ]
+        }
+      }
+    },
+    {
+      "version": "0.1.83",
+      "files": {
+        "ota_update.elf": {
+          "sha256": "efcf3c021f4a1cb19ebe81594e65b4e8cead544df6dad10f7bd25fc234e9a9d0",
+          "disabled_feed_message": true,
+          "catalog_url_present": false,
+          "https_strings": []
+        },
+        "upd-fw/driver.elf": {
+          "sha256": "0b8cf4ca9090212407f022f0a43076ab0efe6f90f798a0bd9cba240d366d6548",
+          "disabled_feed_message": false,
+          "catalog_url_present": false,
+          "https_strings": [
+            "https://github.com/%s/releases/download/%s/%s"
+          ]
+        },
+        "app_store.elf": {
+          "sha256": "2e4e9a323c9679f0aed86d44491f6ee7cf2a522dc195e4d715ef01f9aa2b88c1",
+          "disabled_feed_message": true,
+          "catalog_url_present": false,
+          "https_strings": []
+        },
+        "upd-app/driver.elf": {
+          "sha256": "464b3dd419bfc7d1a0eeb6fdebe160ef5445b77cd7fa07df1a37a5af64f32761",
+          "disabled_feed_message": false,
+          "catalog_url_present": false,
+          "https_strings": [
+            "https://github.com/%s/releases/download/%s/%s"
+          ]
+        }
+      }
+    }
+  ],
+  "shared_policy_test": "X4 policy: source/product/asset separation, USB rejection and offline empty feed passed",
+  "end_user_sequence_qualified": false,
+  "reason": "Delivered controller and provider disable the feed at compile time; no runtime URL configuration exists."
+}

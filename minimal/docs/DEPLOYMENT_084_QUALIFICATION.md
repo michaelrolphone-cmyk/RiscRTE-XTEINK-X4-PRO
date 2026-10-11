@@ -17,3 +17,17 @@ Compile with RISC_PAIRED_APP_DATA=1, runtime/test, runtime/src and runtime/sdk/d
 Delivered X4 UI rejects runtime-only catalog entries. Native bank API accepts a higher runtime with unchanged cloned store, but this is only an API-qualified bridge. Product cohort versions strictly increase. A usable catalog route therefore needs an approved version allocation (for example .84 bridge then .85 feature image), new builds and hashes, or separately authorized updater work. Do not advertise the included .84 API test as an end-user OTA bridge.
 
 The Library packages include exact unpublished firmware catalog fragment and release asset hashes/destinations. Merge the fragment into the existing release-index preserving app rows only after approval and resolved routing. SD provider install descriptors remain a separate source, not a public catalog published by this work.
+
+## Delivered updater entry point correction
+
+Inspection of BOTH actual archived .81/.83 updater/controller and provider ELFs shows the disabled-feed controller message and no catalog URL. The shared X4 disabled-feed test passes under UBSan: refresh creates an empty list with no HTTP request; begin cannot start a row. This is more restrictive than the runtime-only parser issue above. Merely allocating increasing product versions or publishing a cohort catalog cannot update these delivered binaries. There is no qualified end-user UI sequence in this task.
+
+Reserved product .85 for a future compatible bridge, .86 for its successor, preserving the existing .84 artifact. Existing project bridge .82 retains its old meaning. No new bridge firmware or public catalog has been published. The entry point requires separate preserving bootstrap qualification or installation of feed-enabled updater code; no device action was performed.
+
+### Exact SD settings semantics
+
+Existing native namespaces: reads AND subsequent writes go directly to original NVS. No SD migration, mirror or checkpoint occurs for LegacyNative. This is preservation fallback, not completed SD-first migration.
+
+New installed private namespaces: a successful write first commits a native recovery journal and updates RAM. A later asynchronous owner pass writes `/AppData/<app-id>/settings.kv` on SD, verifies bytes and closes the worker, then replaces native value payload with a small generation anchor. Thus SD is the eventual complete checkpoint, but writes are journal-first, not direct-to-SD. An initialized dirty journal survives unavailable SD; a cold namespace requiring an absent checkpoint does not silently recreate defaults. The new snapshot supports only 16 keys with 64-byte values. Existing native data is not squeezed into that format.
+
+Remaining SD-first gap: unbounded/capacity-compatible migration of all existing keys and values with crash-safe handover and rollback. The .84 preservation fix deliberately does not implement that migration.
