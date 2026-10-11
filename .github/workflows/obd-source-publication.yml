@@ -1,0 +1,38 @@
+name: OBD source publication
+on:
+  push:
+    branches: [feat/obd-nova7-088]
+  pull_request:
+    paths: ['minimal/scripts/package_obd_088.py', 'minimal/scripts/test_obd_nova7_catalog.py', 'minimal/obd-088-source-publication.json', '.github/workflows/obd-source-publication.yml']
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate delivered-source identity
+        run: |
+          python3 - <<'PY'
+          import ast,hashlib,json
+          from pathlib import Path
+          record=json.loads(Path('minimal/obd-088-source-publication.json').read_text())
+          assert record['version']==json.loads(Path('minimal/product.json').read_text())['version']=='0.1.88'
+          for name,expected in record['published_recipe_sha256'].items():
+              raw=Path(name).read_bytes()
+              assert hashlib.sha256(raw).hexdigest()==expected, name
+              ast.parse(raw,filename=name)
+          assert not Path('.source-import/obd-088').exists()
+          print('Delivered OBD 0.1.88 assembler/catalog test bytes and Python syntax PASS')
+          print('Source-only check; historical firmware qualification is not rerun here.')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: obd-088-source-publication
+          path: |
+            minimal/obd-088-source-publication.json
+            minimal/scripts/package_obd_088.py
+            minimal/scripts/test_obd_nova7_catalog.py
+          retention-days: 14
