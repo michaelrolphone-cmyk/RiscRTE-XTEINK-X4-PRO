@@ -10,6 +10,7 @@ from build_test_bundle import cohort_identity
 ROOT=Path(__file__).resolve().parents[2]
 BUILDS={
     '0.1.74':('01246f28f9672e9c38c240565983b5b35fabb3b6403ed56dc335baf9d10685e4','0.3.3','0.1.4'),
+    '0.1.76':('bd84004903b2bc6d4c843c89f9c4eb76ab89f2b1894e31644c671297c06c8116','0.3.5','0.1.6'),
     '0.1.75':('c597e0fc556299850a7b84f71615ef175e87547f5c0ce5eaa3b493e40c1ba16d','0.3.4','0.1.5'),
 }
 NATIVE_ELF_SHA='3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb'

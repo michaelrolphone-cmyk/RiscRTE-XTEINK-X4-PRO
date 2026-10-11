@@ -1,0 +1,35 @@
+{
+  "schema": "x4.reader-gui-sources.v1",
+  "product_version": "0.1.76",
+  "status": "source-integration-ready; full image not assembled or hardware tested",
+  "baseline": {
+    "version": "0.1.75",
+    "x4_commit": "d677e95e3a8e3e351c4ccf03b03cce9996495b59",
+    "image_sha256": "bd84004903b2bc6d4c843c89f9c4eb76ab89f2b1894e31644c671297c06c8116"
+  },
+  "sources": {
+    "productivity": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Productivity",
+      "commit": "1bca06824214bd04f659f863b00e6b93b3bdea9a",
+      "version": "0.1.6",
+      "pull_request": 21
+    },
+    "system": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+      "commit": "8ddd9bcf751cecfcf74a67c50c809b87ec75fcc3",
+      "version": "0.3.5",
+      "pull_request": 97
+    },
+    "runtime": {
+      "repository": "michaelrolphone-cmyk/RiscRTE",
+      "commit": "536e01a36461d2e66bdfa735186c1d02267b3fb7"
+    }
+  },
+  "reader_sd_path": "Apps/ebook-reader/ebook_reader.elf",
+  "scene_internal_path": "ui-scene/driver.elf",
+  "panel_version": "0.1.12",
+  "panel_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+  "native_elf_sha256": "3b0605d518288202c9154ca192acfe638dadd861caf305b970cdd029f46a05cb",
+  "recipe": "minimal/scripts/package_reader_refresh.py",
+  "reference_sha256": "7fb94be2f133507dd0544078d2d500f66b6dd4048905ec52b7a9e15f912abb20"
+}
