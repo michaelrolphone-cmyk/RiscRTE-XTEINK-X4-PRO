@@ -75,7 +75,12 @@ def main():
 
  catalog_entry=dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')])
  current_catalog=[x for x in boot['drivers'] if x['manifest']=='installed-apps/manifest.json']
- if current_catalog and current_catalog!=[catalog_entry]:raise ValueError('Catalog ownership changed')
+ if current_catalog:
+  if len(current_catalog)!=1 or {k:v for k,v in current_catalog[0].items() if k!='image_source'}!=catalog_entry:raise ValueError('Catalog ownership changed')
+  placement=current_catalog[0].get('image_source')
+  if placement:
+   if placement.get('volume_instance')!=9 or placement.get('internal_fallback') is not True:raise ValueError('Unexpected catalog placement')
+   placement['path']='Drivers/installed-apps/image-'+digest(a.catalog/'driver.elf')+'.elf'
  if not current_catalog:boot['drivers'].append(catalog_entry)
  sd_manifest=json.loads((a.sd/'manifest.json').read_text())
  if sd_manifest['version'] not in ('0.2.20','0.2.21'):raise ValueError('Async version-three SD provider required')
