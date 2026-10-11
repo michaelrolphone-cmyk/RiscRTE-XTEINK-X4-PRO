@@ -1,0 +1,167 @@
+Linked native USB PHY registration: False
+ADMISSION platforms=31 drivers=32
+PLAT 0 cap=platform.diagnostic-source api=1 scope=0 id=0
+PLAT 1 cap=platform.clock api=1 scope=0 id=0
+PLAT 2 cap=platform.radio.iq.resource api=1 scope=0 id=0
+PLAT 3 cap=platform.entropy api=1 scope=0 id=0
+PLAT 4 cap=platform.tcp-listener api=1 scope=0 id=0
+PLAT 5 cap=platform.sync api=1 scope=1 id=1
+PLAT 6 cap=platform.gpio api=1 scope=1 id=1
+PLAT 7 cap=platform.sync api=1 scope=1 id=2
+PLAT 8 cap=platform.i2c.controller api=1 scope=1 id=2
+PLAT 9 cap=platform.sync api=1 scope=1 id=3
+PLAT 10 cap=platform.gpio api=1 scope=1 id=3
+PLAT 11 cap=spi.bus api=1 scope=1 id=3
+PLAT 12 cap=platform.sync api=1 scope=1 id=4
+PLAT 13 cap=platform.gpio api=1 scope=1 id=4
+PLAT 14 cap=platform.sync api=1 scope=1 id=5
+PLAT 15 cap=platform.gpio api=1 scope=1 id=5
+PLAT 16 cap=platform.sync api=1 scope=1 id=6
+PLAT 17 cap=platform.gpio api=1 scope=1 id=6
+PLAT 18 cap=platform.sync api=1 scope=1 id=17
+PLAT 19 cap=platform.gpio api=1 scope=1 id=17
+PLAT 20 cap=platform.sync api=1 scope=1 id=7
+PLAT 21 cap=platform.gpio api=1 scope=1 id=7
+PLAT 22 cap=platform.sync api=1 scope=1 id=9
+PLAT 23 cap=platform.gpio api=1 scope=1 id=9
+PLAT 24 cap=platform.storage-worker api=1 scope=1 id=9
+PLAT 25 cap=platform.hci.controller api=1 scope=1 id=16
+PLAT 26 cap=platform.radio api=1 scope=1 id=15
+PLAT 27 cap=platform.http-client api=1 scope=0 id=0
+PLAT 28 cap=platform.bank-store api=1 scope=0 id=0
+PLAT 29 cap=platform.realtime api=1 scope=0 id=0
+PLAT 30 cap=platform.installation api=1 scope=0 id=0
+DRV 0 id=x4pro-board-power inst=1 reqs=3
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe4420 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe33e8 providerInst=0
+DRV 1 id=x4pro-i2c inst=2 reqs=5
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.i2c.controller api=1 trusted=0x16dbe54c0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe3450 providerInst=0
+  REQ cap=board.power.ready api=1 trusted=0x0 providerInst=1
+DRV 2 id=x4pro-uc8279-fast inst=3 reqs=7
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe4518 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe34b8 providerInst=0
+  REQ cap=board.power.ready api=1 trusted=0x0 providerInst=1
+  REQ cap=display.frontlight api=1 trusted=0x0 providerInst=5
+  REQ cap=spi.bus api=1 trusted=0x16dbe55a0 providerInst=0
+DRV 3 id=x4pro-gt911 inst=4 reqs=6
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe4610 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe3520 providerInst=0
+  REQ cap=i2c.bus api=1 trusted=0x0 providerInst=2
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=board.power.ready api=1 trusted=0x0 providerInst=1
+DRV 4 id=x4pro-frontlight inst=5 reqs=3
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe4708 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe3588 providerInst=0
+DRV 5 id=x4pro-power-buttons inst=6 reqs=5
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe4800 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe35f0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=x4.power api=1 trusted=0x0 providerInst=17
+DRV 6 id=x4pro-battery inst=7 reqs=4
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=i2c.bus api=1 trusted=0x0 providerInst=2
+  REQ cap=platform.gpio api=1 trusted=0x16dbe49f0 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe36c0 providerInst=0
+DRV 7 id=x4pro-rtc inst=8 reqs=2
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=i2c.bus api=1 trusted=0x0 providerInst=2
+DRV 8 id=x4pro-sd inst=9 reqs=7
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe4ae8 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe3728 providerInst=0
+  REQ cap=board.power.ready api=1 trusted=0x0 providerInst=1
+  REQ cap=platform.diagnostic-source api=1 trusted=0x10248ca00 providerInst=0
+  REQ cap=platform.storage-worker api=1 trusted=0x16dbe53e0 providerInst=0
+DRV 9 id=x4pro-power inst=17 reqs=5
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.gpio api=1 trusted=0x16dbe48f8 providerInst=0
+  REQ cap=platform.sync api=1 trusted=0x16dbe3658 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=board.power.ready api=1 trusted=0x0 providerInst=1
+DRV 10 id=twatch-ble inst=16 reqs=2
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.hci.controller api=1 trusted=0x16dbe5be8 providerInst=0
+DRV 11 id=ble-sensors inst=0 reqs=2
+  REQ cap=bluetooth.hci api=1 trusted=0x0 providerInst=16
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+DRV 12 id=wifi inst=15 reqs=2
+  REQ cap=hardware.device api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.radio api=1 trusted=0x16dbe5b38 providerInst=0
+DRV 13 id=s3-radio-iq-v1 inst=0 reqs=1
+  REQ cap=platform.radio.iq.resource api=1 trusted=0x16dbe5c38 providerInst=0
+DRV 14 id=contexts-service inst=0 reqs=2
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=radio.iq api=1 trusted=0x0 providerInst=0
+DRV 15 id=ble-hid inst=0 reqs=3
+  REQ cap=bluetooth.hci api=1 trusted=0x0 providerInst=16
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=storage.key-value.bound api=1 trusted=0x16dbb1a20 providerInst=0
+DRV 16 id=alarm-service inst=0 reqs=4
+  REQ cap=storage.key-value.bound api=1 trusted=0x16dbb1c30 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=platform.realtime api=1 trusted=0x16dbb1ca8 providerInst=0
+  REQ cap=storage.app-data.bound api=1 trusted=0x16dbb1c60 providerInst=0
+DRV 17 id=software-update-firmware inst=0 reqs=3
+  REQ cap=platform.http-client api=1 trusted=0x10248ca80 providerInst=0
+  REQ cap=platform.bank-store api=1 trusted=0x10248cad0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+DRV 18 id=software-update-apps inst=0 reqs=3
+  REQ cap=platform.http-client api=1 trusted=0x10248ca80 providerInst=0
+  REQ cap=platform.bank-store api=1 trusted=0x10248cad0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+DRV 19 id=telemetry-battery inst=0 reqs=1
+  REQ cap=board.battery api=1 trusted=0x0 providerInst=7
+DRV 20 id=ble-telemetry inst=0 reqs=3
+  REQ cap=bluetooth.hci api=1 trusted=0x0 providerInst=16
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=sensor.telemetry api=1 trusted=0x0 providerInst=0
+DRV 21 id=telemetry-broadcast inst=0 reqs=2
+  REQ cap=platform.clock api=1 trusted=0x16dbe6458 providerInst=0
+  REQ cap=bluetooth.telemetry api=1 trusted=0x0 providerInst=0
+DRV 22 id=usb-device-msc-esp32s3 inst=0 reqs=3
+  REQ cap=platform.usb.phy.resource api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x0 providerInst=0
+  REQ cap=storage.volume api=1 trusted=0x0 providerInst=0
+DRV 23 id=scene-host inst=0 reqs=5
+  REQ cap=display.output api=1 trusted=0x0 providerInst=0
+  REQ cap=input.touch.raw api=1 trusted=0x0 providerInst=0
+  REQ cap=input.navigation api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x0 providerInst=0
+  REQ cap=ui.presentation-profile api=1 trusted=0x0 providerInst=0
+DRV 24 id=scene-profile-portrait-monochrome inst=0 reqs=0
+DRV 25 id=text-input-host inst=0 reqs=1
+  REQ cap=ui.scene api=1 trusted=0x0 providerInst=0
+DRV 26 id=civil-clock-x4 inst=0 reqs=2
+  REQ cap=platform.realtime api=1 trusted=0x0 providerInst=0
+  REQ cap=storage.key-value.bound api=1 trusted=0x0 providerInst=0
+DRV 27 id=net-http-client inst=0 reqs=1
+  REQ cap=platform.http-client api=1 trusted=0x0 providerInst=0
+DRV 28 id=installed-apps inst=0 reqs=3
+  REQ cap=platform.installation api=1 trusted=0x0 providerInst=0
+  REQ cap=storage.app-data.bound api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.http-client api=1 trusted=0x0 providerInst=0
+DRV 29 id=network-tcp-listener inst=0 reqs=1
+  REQ cap=platform.tcp-listener api=1 trusted=0x0 providerInst=0
+DRV 30 id=crypto-entropy inst=0 reqs=1
+  REQ cap=platform.entropy api=1 trusted=0x0 providerInst=0
+DRV 31 id=ble-session-setup inst=0 reqs=2
+  REQ cap=bluetooth.hci api=1 trusted=0x0 providerInst=0
+  REQ cap=platform.clock api=1 trusted=0x0 providerInst=0
+
+{"prepared":false,"cohort_validated":false,"error":"missing scoped trusted platform provider","hardware_calls":0,"storage_calls":0,"elf_count":0,"cooperative_yields":0}
+
+Traceback (most recent call last):
+  File "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/firmware/minimal/scripts/qualify_installed_catalog.py", line 36, in <module>
+    if not(admission['prepared']and admission['cohort_validated']and admission['elf_count']==len(modules)and admission['hardware_calls']==admission['storage_calls']==0):raise ValueError(admission)
+                                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: {'prepared': False, 'cohort_validated': False, 'error': 'missing scoped trusted platform provider', 'hardware_calls': 0, 'storage_calls': 0, 'elf_count': 0, 'cooperative_yields': 0}
