@@ -12,6 +12,6 @@
   },
   "drivers": {
     "repository": "michaelrolphone-cmyk/RiscRTE-Drivers",
-    "commit": "b2419513da200b150192ba46ffe1b396a82171cc"
+    "commit": "39b9be00528c404af63c8f654d1bd2b29cf73b18"
   }
 }

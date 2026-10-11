@@ -22,12 +22,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE-System-Apps
-          ref: 7ba4dee0152735bb3945288c0883a09fc612e800
+          ref: 770d251c0057a2ce162289d145cd6201d1a2cb28
           path: .shared/apps
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE-Drivers
-          ref: b2419513da200b150192ba46ffe1b396a82171cc
+          ref: 39b9be00528c404af63c8f654d1bd2b29cf73b18
           path: .shared/drivers
       - uses: actions/setup-python@v5
         with:
