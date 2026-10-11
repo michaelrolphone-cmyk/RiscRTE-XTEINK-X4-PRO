@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "product": "xteink-x4-pro",
+  "version": "0.1.87",
+  "product_build_commit": "3174dc663f3423829b09deea6191b5e2df8fea38",
+  "runtime_build_commit": "537af2821b78192e64360f94413113bef9394024",
+  "runtime_version": "0.2.19",
+  "checks": {
+    "integrated-storage-acquire": {
+      "log_sha256": "baa510777d475bc06400781360bffee42ac2f931148c0e86df50c8101e95042e",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-native-appdata": {
+      "log_sha256": "34093edef07b491fd8a54b656d00be5a5dfe20599a87e37acc09f1b25fa35169",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-removable-image": {
+      "log_sha256": "489466e0c1e1b2368076a9f0de87f8c8917d4b2aedd56907f1a95cf6f5d35d4b",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-removable-runtime": {
+      "log_sha256": "2e5ab9f16e6bdca37d8b4d78759610b157cb3d4512525729fc87bc4d483dce60",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-storage-port": {
+      "log_sha256": "40d4e45adbd73eb4a87a09b5b4dbd5cd08989657e19c98e977fed9f7b7186ddc",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-provider-exit": {
+      "log_sha256": "3ff57f8a42eae187b2e433479046dfa2ea8b2275a129baf4530da0058290f666",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-cold-start": {
+      "log_sha256": "a1519418b4ae346d83e152c8b67b6d4a1f6fc299419009570fdc94f549f4b709",
+      "result": "pass",
+      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+    }
+  },
+  "target_native_build": "passed single-job pinned PlatformIO",
+  "actual_native_and_store_admission": "42 target ELFs passed; USB PHY selector derived from linked ELF",
+  "full_image_layout": "verified independently, 16 MiB, initial image at 0x0",
+  "preserved": "26 apps, 32 providers, all 76 SD files byte-identical to .86; 103 store files with cohort.json as sole changed store file",
+  "physical_hardware_tested": false,
+  "limits": [
+    "No physical boot, live heap, UI, network, card-removal or power-cut qualification.",
+    "This full image replaces NVS/AppData. No device-specific preserving flash plan is included.",
+    "The old .85 bootstrap is bound to .86; this release does not claim that old .85 -> .87 OTA admission is qualified. A new baseline-specific bridge qualification is required before live OTA-feed publication.",
+    "Watch crown-exit and five-second reboot recovery remain separate pending work."
+  ]
+}
