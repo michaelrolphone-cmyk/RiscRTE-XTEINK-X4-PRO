@@ -130,6 +130,12 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
     old_grants = files_policy['grants']
     require(len(old_grants) == 16 and sum(x['capability'] == 'storage.app-data.export' for x in old_grants) == 1,
             'Unexpected Files grant baseline')
+    require(files_policy.get('app_data_export') == {'label': 'Saved files', 'files': [
+        {'owner': 'timecard', 'namespace': 1, 'name': 'timecard.json',
+         'path': '/timecard/timecard.json', 'access': 'read-write'}]}, 'Unexpected unused Files export map')
+    # The volume-only client cannot use this projection. Runtime rejects a map
+    # without its corresponding grant, so remove both as one authority change.
+    del files_policy['app_data_export']
     files_policy['grants'] = [x for x in old_grants if x['capability'] != 'storage.app-data.export']
     files_policy['grants'].append({'capability': 'bluetooth.hci', 'api': 1, 'instance_id': 16})
     keys = lambda rows: sorted((x['capability'], x['api'], x['instance_id']) for x in rows)

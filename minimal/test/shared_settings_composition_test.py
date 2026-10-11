@@ -20,6 +20,8 @@ class Composition(unittest.TestCase):
         grants = [dict(capability='test.'+str(i), api=1, instance_id=i) for i in range(15)]
         grants.append(dict(capability='storage.app-data.export', api=1, instance_id=0))
         apps = [dict(manifest='file_browser.json', grants=grants)] + [dict(manifest='a'+str(i)+'.json', grants=[]) for i in range(25)]
+        apps[0]['app_data_export'] = dict(label='Saved files', files=[dict(owner='timecard', namespace=1,
+            name='timecard.json', path='/timecard/timecard.json', access='read-write')])
         drivers = [dict(manifest='installed-apps/manifest.json', image_source=dict(volume_instance=9, internal_fallback=True, path='Drivers/old.elf'))] + [dict(manifest='d'+str(i)+'.json') for i in range(31)]
         self.boot = dict(app_capabilities=apps, drivers=drivers, installation=dict(settings_sd=True, volume_instance=9, namespace_range=dict(first=3000,count=128)))
         self.write(self.base/'boot.json', self.boot); self.write(self.base/'cohort.json', dict(version='0.1.89'))
@@ -60,6 +62,7 @@ class Composition(unittest.TestCase):
         result=self.run_compose();self.assertEqual(result['preserved_sd_files'],1)
         self.assertEqual((self.root/'out/SD/existing.txt').read_bytes(),(self.sd/'existing.txt').read_bytes())
         b=c.read(self.root/'out/store/boot.json');self.assertNotIn('shared_settings',b['installation']);self.assertEqual(len(b['app_capabilities'][0]['grants']),16)
+        self.assertNotIn('app_data_export',b['app_capabilities'][0])
         self.assertEqual(c.read(self.root/'out/store/cohort.json')['version'],'0.1.90')
     def test_changed_baseline_rejected(self):
         (self.base/'default.elf').write_bytes(b'missing or changed baseline')
