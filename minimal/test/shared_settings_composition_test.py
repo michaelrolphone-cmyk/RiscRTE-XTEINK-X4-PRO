@@ -94,6 +94,17 @@ class Composition(unittest.TestCase):
     def test_explicit_selector_cannot_change_authority(self):
         self.mutate_receipt('file_browser',lambda x:x['required_grants'][3].update(instance_id=999))
         with self.assertRaisesRegex(ValueError,'16-grant'):self.run_compose()
+    def test_stale_preferred_provider_is_retargeted_without_deleting_old_image(self):
+        native=self.base/'wifi';native.mkdir();(native/'driver.elf').write_bytes(b'qualified private AP provider')
+        self.write(native/'manifest.json',dict(file_name='driver.elf'))
+        old=self.sd/'Drivers/wifi/image-old.elf';old.parent.mkdir(parents=True);old.write_bytes(b'old station-only provider')
+        boot=c.read(self.base/'boot.json');boot['drivers'][1]=dict(manifest='wifi/manifest.json',image_source=dict(volume_instance=9,internal_fallback=True,path='Drivers/wifi/image-old.elf'))
+        self.write(self.base/'boot.json',boot);self.write(c.BASE_RECEIPT,dict(store=c.tree(self.base)));self.write(c.BASE_SD,dict(files=c.tree(self.sd)))
+        result=self.run_compose();selected=c.read(self.root/'out/store/boot.json')['drivers'][1]['image_source']['path']
+        self.assertNotEqual(selected,'Drivers/wifi/image-old.elf')
+        self.assertEqual((self.root/'out/SD'/selected).read_bytes(),(native/'driver.elf').read_bytes())
+        self.assertEqual((self.root/'out/SD/Drivers/wifi/image-old.elf').read_bytes(),old.read_bytes())
+        self.assertEqual(len(result['repaired_sd_provider_sources']),1)
     def test_wrong_catalog_runtime_rejected(self):
         self.mutate_receipt('installed-apps',lambda x:x['repositories']['runtime'].update(head='c'*40))
         with self.assertRaisesRegex(ValueError,'Runtime source'):self.run_compose()

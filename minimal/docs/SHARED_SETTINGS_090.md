@@ -4,7 +4,11 @@ Source reservation only until exact common Runtime/System targets and the final
 image pass admission. The checked composer starts from the complete delivered
 .89 store and all 76 packaged SD files. It replaces Home, Springboard, Files,
 Wi-Fi Settings, and the installed-app catalog with matching rebuilt clients.
-It preserves all other files and adds the catalog's immutable SD image.
+It preserves all other files and adds the catalog's immutable SD image. It also
+adds matching immutable copies of the delivered internal Wi-Fi and BLE session
+providers and retargets their preferred SD paths: .89 selected older SD images
+for those two providers. All 76 old packaged SD files remain byte-identical.
+The .90 SD overlay is required; the old .89 SD package alone is insufficient.
 
 Shared settings are NOT enabled in .90. General preferences, Wi-Fi profiles and
 other bundled KV namespaces retain their native behavior. The experimental
@@ -18,7 +22,8 @@ Home snapshot, USB PHY ownership, staged GPIO1 startup, private-AP implementatio
 40-provider/64-installed-app capacities, and complete 26-app/32-provider profile.
 Files replaces its unused volume-only AppData-export grant with BLE HCI instance
 16 for entropy startup. This is an exact 16-grant substitution, not a capacity
-increase; mixed/export-root profiles keep their export capability.
+increase; its unused export projection is removed with the grant. Mixed/export-root
+profiles keep their export capability.
 
 In the disabled experimental mode, shared reads/writes are BUSY while cold
 recovery is pending. Home stays runnable

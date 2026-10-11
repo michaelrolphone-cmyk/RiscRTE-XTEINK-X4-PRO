@@ -53,6 +53,50 @@ def resolved_grants(requests, policy):
         resolved.append(matches[0])
     return resolved
 
+def select_provider_images(boot, store, sd):
+    # Delivered .89 had two stale preferred SD images despite updated internal
+    # fallbacks. Preserve those immutable files, but never select them in .90.
+    repaired = []
+    for row in boot['drivers']:
+        source = row.get('image_source')
+        if not source:
+            continue
+        manifest = read(store / row['manifest'])
+        native = store / Path(row['manifest']).parent / manifest['file_name']
+        selected = sd / source['path']
+        require(source.get('internal_fallback') is True and source['volume_instance'] == 9,
+                'Unexpected selected provider source policy')
+        if sha(selected) != sha(native):
+            require(row['manifest'] in ('wifi/manifest.json', 'sharing-ble/manifest.json'),
+                    'Unexpected selected SD provider mismatch')
+            previous = source['path']
+            source['path'] = str(Path(previous).parent / ('image-' + sha(native) + '.elf'))
+            target = sd / source['path']
+            require(not target.exists() or target.read_bytes() == native.read_bytes(),
+                    'Immutable provider image collision')
+            shutil.copyfile(native, target)
+            repaired.append(dict(manifest=row['manifest'], previous=previous, selected=source['path']))
+    return repaired
+
+def audit_selected_images(boot, store, sd):
+    rows = []
+    for kind in ('drivers', 'app_capabilities'):
+        for row in boot[kind]:
+            source = row.get('image_source')
+            if not source:
+                continue
+            manifest = read(store / row['manifest'])
+            selected = sd / source['path']
+            if kind == 'drivers':
+                fallback = store / Path(row['manifest']).parent / manifest['file_name']
+                require(selected.read_bytes() == fallback.read_bytes(), 'Selected provider differs from qualified fallback')
+            else:
+                require(read(selected.parent / 'manifest.json') == manifest, 'Selected SD application manifest differs')
+            rows.append(dict(role='driver' if kind == 'drivers' else 'app', manifest=row['manifest'],
+                             path=source['path'], sha256=sha(selected), size_bytes=selected.stat().st_size,
+                             matches_internal_fallback=kind == 'drivers'))
+    return rows
+
 def validate_module(name, directory, base, system, runtime):
     manifest_name = 'manifest.json' if name == 'installed-apps' else name + '.json'
     elf_name = 'driver.elf' if name == 'installed-apps' else name + '.elf'
@@ -157,6 +201,8 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
     target = output / 'SD' / catalog['image_source']['path']
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(modules['installed-apps'] / 'driver.elf', target)
+    repaired_sources = select_provider_images(boot, output / 'store', output / 'SD')
+    selected_images = audit_selected_images(boot, output / 'store', output / 'SD')
     cohort = read(output / 'store/cohort.json'); cohort['version'] = '0.1.90'
     (output / 'store/cohort.json').write_text(json.dumps(cohort, indent=2) + '\n')
     (output / 'store/boot.json').write_text(json.dumps(boot, indent=2) + '\n')
@@ -170,6 +216,7 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
                               for n, (m, e, _) in records.items() for f in (m, e)}
     require(set(actual_store) == set(expected['store']) and changed <= allowed, 'Unexpected store changes')
     result = dict(product_version='0.1.90', runtime_commit=runtime, system_commit=system,
+                  repaired_sd_provider_sources=repaired_sources, selected_sd_images=selected_images,
                   shared_settings=namespaces, shared_settings_enabled=False,
                   persistence_status='unfinished: native fallback and returning-card reconciliation required', native_build_required=True,
                   required_native_options=dict(retained_wake_bytes=512, usb_phy=True, provider_capacity=40,
