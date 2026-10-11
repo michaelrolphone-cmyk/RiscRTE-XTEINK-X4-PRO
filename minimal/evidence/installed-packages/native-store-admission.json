@@ -6,7 +6,7 @@
   "sanitized": true,
   "sanitizers": "undefined",
   "native": {
-    "firmware_sha256": "86b1c36911c24e1d58c9fdf41cc999a022b3025307860dd67cb72add5751c501",
+    "firmware_sha256": "23b34fa8b8cb003d21bce0d16c8cdd18ec441404bc73a1da20fe1f2c43350876",
     "elf_used_for_candidate": false,
     "esp_checksum_and_appended_sha256": true,
     "segments": [
@@ -383,7 +383,7 @@
     },
     {
       "path": "app_store.elf",
-      "sha256": "47f77a0f816f764255adbafac1ad2aa37552763020cdad3c4be565eb20435b70"
+      "sha256": "8ded2b8d2dd915de146c23e0cf14e9cc6cafaed74b96823ee2cf39d750983b3a"
     },
     {
       "path": "battery/driver.elf",
@@ -443,7 +443,7 @@
     },
     {
       "path": "installed-apps/driver.elf",
-      "sha256": "647055e2617181b10b90b6385b5b650d02207c80815c6e539cf1f832c938f5c3"
+      "sha256": "aa759699146511239abf58c434518d02add82a815c4d87c4c2efea8ab0e6b69d"
     },
     {
       "path": "iq/driver.elf",
@@ -475,7 +475,7 @@
     },
     {
       "path": "sd/driver.elf",
-      "sha256": "baa6a7ba478ac8d509f69474616ac08335e8f1744d14c2051d91da12e59a6668"
+      "sha256": "69239393d0cf4044b8cfa859b1c99b1bf0c545441b6fc840131091694ad065cb"
     },
     {
       "path": "sensors/driver.elf",
