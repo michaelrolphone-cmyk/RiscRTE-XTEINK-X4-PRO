@@ -61,7 +61,8 @@ std::string readFile(const char* name){std::ifstream f(name);return {std::istrea
 void resetRam(bool eraseFlash=false){
  using namespace X4BootLog;
  if(traceAllocation)std::free(traceAllocation);
- traceAllocation=nullptr;traceText=earlyText;recoveryText=nullptr;heap_caps_test_fail=false;
+ if(earlyText)std::free(earlyText);
+ earlyText=nullptr;traceAllocation=nullptr;traceText=nullptr;recoveryText=nullptr;heap_caps_test_fail=false;heap_caps_test_internal_fail=false;
  traceCapacity=EarlyBytes;traceBytes=recoveryBytes=persistedBytes=0;
  eventSequence=earlyCount=terminalDetails=0;
  traceClosed=traceOverflow=recoveryReady=frameComplete=false;
@@ -109,6 +110,9 @@ void productionBoot(unsigned providers){
  emit("APP t_ms=8 stage=transfer-begin result=begin");
 }
 int main(){
+ resetRam(true);heap_caps_test_internal_fail=true;__wrap_app_main();
+ check(risc_native_startup_error() && std::string(risc_native_startup_error())=="x4-early-trace-allocation","early allocation failure gates startup without losing reservation");
+ resetRam(true);
  using namespace X4BootLog;
  resetRam(true);noFiles();stopBeforeVariant=true;__wrap_app_main();
  check(commits==1 && current.sequence==1 && !variant && !traceAllocation && !fs::exists(Internal),"first app_main checkpoint commits before initVariant/PSRAM/app-data");
