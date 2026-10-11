@@ -14,10 +14,10 @@ ROOT = Path(__file__).resolve().parents[2]
 BASE_RECEIPT = ROOT / 'minimal/docs/evidence/integration-089/qualification.json'
 BASE_SD = ROOT / 'minimal/shared-settings-090-sd-baseline.json'
 VERSIONS = {'default': '0.4.11', 'springboard': '1.8.4',
-            'file_browser': '1.5.28', 'wifi_settings': '1.1.27', 'installed-apps': '0.9.0'}
+            'file_browser': '1.5.28', 'wifi_settings': '1.1.27', 'installed-apps': '0.9.0', 'contexts': '0.4.2'}
 RECORDS = {'default': 'build-evidence.json', 'springboard': 'springboard-build-record.json',
            'file_browser': 'file_browser-build-record.json', 'wifi_settings': 'wifi_settings-build-record.json',
-           'installed-apps': 'build.json'}
+           'installed-apps': 'build.json', 'contexts': 'contexts-build-record.json'}
 
 def require(ok, message):
     if not ok:
@@ -97,7 +97,7 @@ def audit_selected_images(boot, store, sd):
                              matches_internal_fallback=kind == 'drivers'))
     return rows
 
-def validate_module(name, directory, base, system, runtime):
+def validate_module(name, directory, base, system, runtime, utilities=None):
     manifest_name = 'manifest.json' if name == 'installed-apps' else name + '.json'
     elf_name = 'driver.elf' if name == 'installed-apps' else name + '.elf'
     old = base / ('installed-apps' if name == 'installed-apps' else '') / manifest_name
@@ -123,6 +123,11 @@ def validate_module(name, directory, base, system, runtime):
                 'Catalog Runtime source missing or dirty')
         require(receipt.get('shared_settings_sd') is True and receipt.get('shared_settings_root') == '/RTECFG',
                 'Catalog cannot restore shared settings')
+    elif name == 'contexts':
+        repos=receipt.get('repositories', {})
+        require(all(repos.get(key)==dict(head=head,dirty=False) for key,head in [('system',system),('runtime',runtime),('utilities',utilities)]), 'Contexts exact source missing or dirty')
+        require(receipt.get('catalog_count') == 26 and receipt.get('catalog_sha256') == sha(ROOT/'minimal/contexts-090-catalog.json') and receipt.get('face_header') is None, 'Contexts complete catalog or face profile differs')
+        require(receipt.get('target_build',{}).get('sha256') == sha(directory / elf_name), 'Contexts target receipt mismatch')
     else:
         require(receipt.get('repository_commit') == system and receipt.get('working_tree_dirty') is False,
                 'Client source missing or dirty: ' + name)
@@ -153,14 +158,14 @@ def validate_module(name, directory, base, system, runtime):
         require('-DPORTABLE_WIFI_PROFILES' in receipt.get('build_defines', []), 'Growing Wi-Fi profiles missing')
     return manifest_name, elf_name, receipt
 
-def compose(base, sd, modules, output, system, runtime, namespaces):
+def compose(base, sd, modules, output, system, runtime, namespaces, utilities=None):
     require(not output.exists(), 'Output must be new')
     require(namespaces == [], 'Shared settings remain disabled until native fallback and reconciliation qualify')
     expected = read(BASE_RECEIPT)
     require(tree(base) == expected['store'], 'Base is not the exact complete delivered .89 store')
     sd_inventory = tree(sd)
     require(sd_inventory == read(BASE_SD)['files'], 'Base is not the exact complete delivered .89 SD set')
-    records = {name: validate_module(name, directory, base, system, runtime) for name, directory in modules.items()}
+    records = {name: validate_module(name, directory, base, system, runtime, utilities) for name, directory in modules.items()}
     boot = read(base / 'boot.json')
     require(len(boot['app_capabilities']) == 26 and len(boot['drivers']) == 32, 'Incomplete base profile')
     install = boot['installation']
@@ -195,12 +200,18 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
     for name, directory in modules.items():
         manifest, elf, receipt = records[name]
         target = output / 'store' / ('installed-apps' if name == 'installed-apps' else '')
-        for filename in (manifest, elf):
+        for filename in ((manifest,) if name == 'contexts' else (manifest, elf)):
             shutil.copyfile(directory / filename, target / filename)
         (output / 'receipts' / (name + '-build.json')).write_text(json.dumps(receipt, indent=2) + '\n')
     target = output / 'SD' / catalog['image_source']['path']
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(modules['installed-apps'] / 'driver.elf', target)
+    contexts=next(x for x in boot['app_capabilities'] if x['manifest']=='contexts.json')
+    require(contexts.get('image_source') == dict(volume_instance=9,path='Apps/contexts/contexts.elf'), 'Unexpected Contexts source policy')
+    contexts['image_source']['path']='Apps/contexts/image-'+sha(modules['contexts']/'contexts.elf')+'/contexts.elf'
+    ctx_target=output/'SD'/contexts['image_source']['path'];ctx_target.parent.mkdir(parents=True)
+    shutil.copyfile(modules['contexts']/'contexts.elf',ctx_target)
+    shutil.copyfile(modules['contexts']/'contexts.json',ctx_target.parent/'manifest.json')
     repaired_sources = select_provider_images(boot, output / 'store', output / 'SD')
     selected_images = audit_selected_images(boot, output / 'store', output / 'SD')
     cohort = read(output / 'store/cohort.json'); cohort['version'] = '0.1.90'
@@ -213,9 +224,9 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
     actual_store = tree(output / 'store')
     changed = {n for n in actual_store if actual_store[n] != expected['store'].get(n)}
     allowed = {'boot.json', 'cohort.json'} | {('installed-apps/' if n == 'installed-apps' else '') + f
-                              for n, (m, e, _) in records.items() for f in (m, e)}
+                              for n, (m, e, _) in records.items() for f in ((m,) if n == 'contexts' else (m, e))}
     require(set(actual_store) == set(expected['store']) and changed <= allowed, 'Unexpected store changes')
-    result = dict(product_version='0.1.90', runtime_commit=runtime, system_commit=system,
+    result = dict(product_version='0.1.90', runtime_commit=runtime, system_commit=system, utilities_commit=utilities,
                   repaired_sd_provider_sources=repaired_sources, selected_sd_images=selected_images,
                   shared_settings=namespaces, shared_settings_enabled=False,
                   persistence_status='unfinished: native fallback and returning-card reconciliation required', native_build_required=True,
@@ -231,15 +242,15 @@ def compose(base, sd, modules, output, system, runtime, namespaces):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('base-store', 'base-sd', 'home', 'springboard', 'files', 'wifi', 'catalog', 'output', 'system-source', 'runtime-source'):
+    for name in ('base-store', 'base-sd', 'home', 'springboard', 'files', 'wifi', 'catalog', 'contexts', 'output', 'system-source', 'runtime-source', 'utilities-source'):
         parser.add_argument('--' + name, type=Path, required=True)
     args = parser.parse_args()
-    for root in (args.system_source, args.runtime_source):
+    for root in (args.system_source, args.runtime_source, args.utilities_source):
         require(not git(root, 'status', '--porcelain', '--untracked-files=normal'), 'Clean committed sources required')
     modules = dict(default=args.home, springboard=args.springboard, file_browser=args.files,
-                   wifi_settings=args.wifi, **{'installed-apps': args.catalog})
+                   wifi_settings=args.wifi, contexts=args.contexts, **{'installed-apps': args.catalog})
     print(json.dumps(compose(args.base_store, args.base_sd, modules, args.output,
-                             git(args.system_source, 'rev-parse', 'HEAD'), git(args.runtime_source, 'rev-parse', 'HEAD'), []), indent=2))
+                             git(args.system_source, 'rev-parse', 'HEAD'), git(args.runtime_source, 'rev-parse', 'HEAD'), [], git(args.utilities_source, 'rev-parse', 'HEAD')), indent=2))
 
 if __name__ == '__main__':
     main()

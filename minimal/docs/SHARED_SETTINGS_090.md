@@ -3,11 +3,12 @@
 Source reservation only until exact common Runtime/System targets and the final
 image pass admission. The checked composer starts from the complete delivered
 .89 store and all 76 packaged SD files. It replaces Home, Springboard, Files,
-Wi-Fi Settings, and the installed-app catalog with matching rebuilt clients.
+Wi-Fi Settings, the installed-app catalog, and Contexts with matching rebuilt clients. Contexts 0.4.2 combines the delivered learning-completion behavior with crown cleanup; its RF-only service stays byte-identical to .89.
 It preserves all other files and adds the catalog's immutable SD image. It also
 adds matching immutable copies of the delivered internal Wi-Fi and BLE session
 providers and retargets their preferred SD paths: .89 selected older SD images
 for those two providers. All 76 old packaged SD files remain byte-identical.
+Contexts uses a new immutable SD directory containing its ELF and matching manifest, while its original files remain intact. The final overlay adds five files.
 The .90 SD overlay is required; the old .89 SD package alone is insufficient.
 
 Shared settings are NOT enabled in .90. General preferences, Wi-Fi profiles and

@@ -8,7 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
-from compose_shared_settings_090 import require, git
+from compose_shared_settings_090 import require, git, sha
 from build_daily_paper_launchers import HEADERS
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -53,6 +53,23 @@ def main():
                              ('installed-apps','build_installed_apps.py',['--runtime-repo',a.runtime])]:
         cmd=list(map(str,[sys.executable,a.system/'scripts'/script,*args,'--output-dir',a.output/name]))
         subprocess.run(cmd,check=True,env=env);commands.append(cmd)
+    contexts_catalog=ROOT/'minimal/contexts-090-catalog.json'
+    context_rows=json.loads(contexts_catalog.read_text())
+    require(len(context_rows)==26 and {r['file_name'] for r in context_rows}==
+            {json.loads((a.baseline_store/r['manifest']).read_text())['file_name'] for r in json.loads((a.baseline_store/'boot.json').read_text())['app_capabilities']},'Contexts catalog differs from complete product authority')
+    ctxcmd=list(map(str,[sys.executable,a.utilities/'scripts/build_contexts_scene.py','--runtime',a.runtime,'--system-apps',a.system,
+                        '--target','x4','--catalog',contexts_catalog,'--output',a.output/'contexts-build']))
+    subprocess.run(ctxcmd,check=True,env=env);commands.append(ctxcmd)
+    ctx=a.output/'contexts-build/contexts';target=a.output/'contexts';target.mkdir()
+    manifest=json.loads((ctx/'contexts.json').read_text())
+    metadata={key:manifest.pop(key) for key in ('category','min_firmware_version','runtime_profile')}
+    previous=json.loads((a.baseline_store/'contexts.json').read_text())
+    require(manifest==dict(previous,version='0.4.2'),'Contexts changed authority or identity')
+    (target/'contexts.json').write_text(json.dumps(manifest,indent=2)+'\n');shutil.copyfile(ctx/'contexts.elf',target/'contexts.elf')
+    record=dict(elf_sha256=sha(target/'contexts.elf'),version='0.4.2',repositories={name:dict(head=git(getattr(a,name),'rev-parse','HEAD'),dirty=False) for name in ('runtime','system','utilities')},
+                catalog_sha256=sha(contexts_catalog),catalog_count=26,face_header=None,catalog_metadata=metadata,
+                target_build=json.loads((ctx/'build.json').read_text()),hardware_tested=False)
+    (target/'contexts-build-record.json').write_text(json.dumps(record,indent=2)+'\n')
     receipt=dict(sources={name:git(getattr(a,name),'rev-parse','HEAD') for name in ('runtime','system','utilities','reader')},
                  product_source=git(ROOT,'rev-parse','HEAD'),commands=commands,hardware_tested=False)
     (a.output/'client-builds.json').write_text(json.dumps(receipt,indent=2)+'\n')
