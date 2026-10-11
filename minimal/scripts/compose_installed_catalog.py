@@ -63,7 +63,7 @@ def main():
 
  boot['drivers'].append(dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')]))
  sd_manifest=json.loads((a.sd/'manifest.json').read_text())
- if sd_manifest['version']!='0.2.20':raise ValueError('Async version-three SD provider required')
+ if sd_manifest['version'] not in ('0.2.20','0.2.21'):raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
  if catalog_manifest['version']!='0.4.0':raise ValueError('Durable namespace catalog provider required')

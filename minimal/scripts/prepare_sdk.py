@@ -12,7 +12,8 @@ def prepare(runtime, reader, output):
     if output.exists():
         raise ValueError('SDK output must be new')
     headers = {}
-    for label, folder in (('runtime/driver', Path(runtime)/'sdk/driver'),
+    for label, folder in (('runtime/app', Path(runtime)/'sdk/app'),
+                          ('runtime/driver', Path(runtime)/'sdk/driver'),
                           ('runtime/hardware', Path(runtime)/'sdk/hardware'),
                           ('reader/driver', Path(reader)/'sdk/driver'),
                           ('x4/interfaces', Path(__file__).resolve().parents[1]/'interfaces')):

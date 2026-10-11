@@ -43,14 +43,13 @@ tests execute the actual catalog, transaction coordinator, copied adapter,
 FatFs replacement and native image admission code. Boundary doubles represent
 media/native results where stated in their fixtures; none is a hardware run.
 
-Remaining: on-device provisioning of a missing provider is not implemented.
-The existing native Profile/Coordinator downloads a complete internal store;
-Runtime installation metadata admits applications against the already admitted
-provider graph. It does not mutate that graph or provision SD driver images.
-The offline dependency planner remains planning-only. Completing this requires
-the owner-selected catalog/core set/provider bindings, then a staged SD/internal
-placement and full-graph activation path with restart/rollback qualification.
-The catalog/core/binding selection has been requested and remains unanswered.
+Remaining: on-device provisioning of a missing provider is not yet wired.
+Runtime 0.2.13 now supports selected SD provider images and copied streamed
+package downloads; X4 derives the internal mount closure from the selected
+board/boot graph. Use the existing repository catalogs and selected bindings;
+no additional owner catalog/core choice is needed. App Store dependency
+resolution, durable graph activation and SD-first settings routing remain
+implementation work. The checkpoints do not constitute a completed installer.
 Physical SD/panel/power-cut qualification and release assembly also remain.
 
 Darwin host wrappers are included solely for reproducing UBSan checks; they
@@ -60,3 +59,42 @@ target builds. Initial unadapted entropy testing rejected the extra .dSYM
 directories, then passed with the exact intended fixture inventory.
 
 Final qualification admits all 42 modules. Forward legacy migration from the earlier staged store to the Home migration store admits 39 modules; Home replacement in the already admitted Files-sharing store admits 42. The direct staged-to-Files-sharing policy transition rejects before ELF admission and needs the Files owner’s migration/release procedure; it is not claimed as a passing update path. The optional older Home gesture harness cannot link Darwin weak raster extension symbols; no gesture assertion ran there. The new production Home catalog adapter test passes, including first-frame ordering and 1,000 pending launch/sleep drain polls.
+
+### Exact Files transition rejection
+
+The test calls `Runtime::validateCohort(candidate, root, admit, context)` without
+native delegations. `validateCohortImpl` calls `validateAppDataExportCohort`. For
+`file_browser.json`, the candidate adds `storage.app-data.export@1` and five
+non-export grants: `storage.key-value@1` instance 6, `network.tcp.listener@1`,
+`crypto.entropy@1`, `net.wifi@1` instance 15 and `bluetooth.session-setup@1`.
+The first-map branch rejects these added non-export privileges before selecting
+a delegation. Even after a bridge establishes those grants, the ordinary call
+with no matching `AppDataExportDelegation` would reject the first map.
+
+Production `NativeBankStore::validateStore` uses `validateNativeCohort` with the
+selected `RISC_NATIVE_APP_DATA_EXPORT_POLICY_HEADER`. The missing release inputs
+are an operational-grants bridge preserving existing maps, then exact from/to
+cohort coordinates (product, version, repository, full source revision, Runtime
+version) and the exact consumer/label/owner/namespace/name/path/access delegation.
+The development export is timecard namespace 1, `timecard.json`, exposed at
+`/timecard/timecard.json` read-write under `Saved files`. Both stores still carry
+the old development cohort coordinates, so they are not a ready release pair.
+This is a technical Runtime admission condition, not a tool denial or a request
+for additional user permission. No admission check was weakened.
+
+### Bridge experiment correction
+
+The operational-grants bridge is insufficient. A diagnostic bridge with the old
+Files ELF, a manifest declaring the added operational capabilities, and no export
+map prepares successfully but rejects before ELF admission. Removing only the
+new Files KV namespace 6 grant admits all 42 ELFs with zero hardware/storage calls.
+This isolates a second boundary in `CohortRuntime.inc`: an existing app cannot
+expand into a persistent namespace already owned by other principals. Namespace 6
+already belongs to Wi-Fi Settings, Update, App Store and Daily Paper. The ordinary
+shared-KV migration path explicitly excludes existing-app expansion.
+
+See `files-bridge-diagnosis.json`. The removed-grant variant is diagnostic only;
+shipping it would lose saved-Wi-Fi sharing behavior. A complete preserving Files
+migration needs an explicit source-bound native shared-KV delegation or a shared
+network service retaining credential custody, in addition to the separate exact
+export-map policy. This is Runtime admission, not a tool permission rejection.

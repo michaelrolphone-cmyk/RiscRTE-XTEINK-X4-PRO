@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
+: "${RISCRTE_DRIVERS_ROOT:?Canonical RiscRTE-Drivers checkout required}"
+shared_volume="$RISCRTE_DRIVERS_ROOT/lib/StorageFatFs"
 root="$(cd "$(dirname "$0")/../.." && pwd)"
 : "${RISCRTE_RUNTIME_ROOT:?Shared Runtime checkout required}"
 : "${RISCRTE_READER_ROOT:?Reader checkout with checked sleep recovery required}"
@@ -9,11 +11,11 @@ build="$(mktemp -d)"; trap 'rm -rf "$build"' EXIT
 "$python" "$root/minimal/scripts/prepare_sdk.py" --runtime "$RISCRTE_RUNTIME_ROOT" --reader "$RISCRTE_READER_ROOT" --output "$build/sdk"
 "$NATIVE_DRIVER_CC" -std=c11 -O2 -fno-ivopts -fPIC -mtext-section-literals -mlongcalls \
   -fvisibility=hidden -fno-builtin -nostdlib -nostartfiles -shared -Wall -Wextra -Werror \
-  -I"$build/sdk" -I"$RISCRTE_READER_ROOT/Drivers/storage_fatfs" \
+  -I"$build/sdk" -I"$shared_volume" \
   -Wl,--hash-style=sysv -Wl,--exclude-libs,ALL -Wl,--no-relax \
   "$root/minimal/drivers/x4pro_sd/driver.c" \
-  "$RISCRTE_READER_ROOT/Drivers/storage_fatfs/fatfs/ff.c" \
-  "$RISCRTE_READER_ROOT/Drivers/storage_fatfs/fatfs/ffunicode.c" -lgcc -o "$build/driver.elf"
+  "$shared_volume/fatfs/ff.c" \
+  "$shared_volume/fatfs/ffunicode.c" -lgcc -o "$build/driver.elf"
 "$python" "$RISCRTE_READER_ROOT/scripts/normalize_xtensa_relocations.py" "$build/driver.elf"
 "$python" "$RISCRTE_READER_ROOT/scripts/validate_xtensa_relative_targets.py" "$build/driver.elf"
 "${NATIVE_DRIVER_CC%gcc}readelf" --dyn-syms --wide "$build/driver.elf" > "$build/symbols.txt"
@@ -29,7 +31,7 @@ rows = [line.split() for line in (root/'symbols.txt').read_text().splitlines()]
 exports = {r[7] for r in rows if len(r) >= 8 and r[4] == 'GLOBAL' and r[6] != 'UND' and r[3] == 'FUNC'}
 imports = {r[7] for r in rows if len(r) >= 8 and r[4] == 'GLOBAL' and r[6] == 'UND'}
 assert exports == {'t5_driver_get'}, exports
-assert imports <= {'strcmp', 'memcpy', 'memmove', 'memset', 'memcmp', 'strlen', 'strchr'}, imports
+assert imports <= {'strcmp', 'memcpy', 'memmove', 'memset', 'memcmp', 'strlen', 'strchr', 'strrchr', 'memchr'}, imports
 assert 's32c1i' not in (root/'disassembly.txt').read_text().lower()
 print('X4 SD Xtensa structure PASS:', len(blob), hashlib.sha256(blob).hexdigest(), 'imports:', ','.join(sorted(imports)))
 PY
