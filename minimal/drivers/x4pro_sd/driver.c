@@ -705,7 +705,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         logging_api.prepared.base.sleep = api;
         logging_api.prepared.base.sleep.terminal.power.volume.base.struct_size =
 #if X4PRO_SD_ASYNC
-            sizeof(package_api);
+            sizeof(download_api);
 #else
             sizeof(filesystem_api);
 #endif
@@ -731,6 +731,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
     }
 #if X4PRO_SD_ASYNC
     asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=RISC_STORAGE_ASYNC_VERSION;
+    download_api.download_tag=RISC_STORAGE_DOWNLOAD_TAG;download_api.download_version=1;
     package_api.package_tag=RISC_STORAGE_PACKAGE_TAG;package_api.package_version=1;package_api.submit_package=package_submit;
     asynchronous_api.begin=async_begin;asynchronous_api.submit=async_submit;asynchronous_api.collect=async_collect;asynchronous_api.end=async_end;
 #endif

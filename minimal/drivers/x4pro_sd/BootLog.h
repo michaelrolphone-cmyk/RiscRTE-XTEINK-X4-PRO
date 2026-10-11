@@ -6,7 +6,8 @@
 #define X4_BOOTLOG_SD_PREVIOUS "/x4-boot.previous.log"
 #define X4_BOOTLOG_SD_MAX_BYTES (512u * 1024u)
 #if X4PRO_SD_ASYNC
-static risc_storage_volume_api_v1_packages package_api;
+static risc_storage_volume_api_v1_download download_api;
+#define package_api download_api.base
 #define asynchronous_api package_api.base
 #define filesystem_api asynchronous_api.fs
 #else

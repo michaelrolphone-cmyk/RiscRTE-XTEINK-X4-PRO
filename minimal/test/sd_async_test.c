@@ -68,6 +68,16 @@ int main(void){
  assert(rename_path(NULL,"/Apps/unknown/manifest.json","/Apps/unknown/manifest.json.risc-replace"));
  assert(async_begin(NULL,&session)==0);pq=(risc_storage_package_request_v1){0};pq.operation=RISC_STORAGE_PACKAGE_RECOVER;strcpy(pq.path,"/Apps/unknown/manifest.json");assert(package_submit(NULL,session,&pq,&operation)==0);assert(finish()==0);
  request(RISC_STORAGE_ASYNC_READ_SMALL_FILE,"/Apps/unknown/manifest.json");assert(finish()==0&&async_result.size==sizeof(manifest)-1);end_session();
+ assert(risc_storage_volume_download(&logging_api.prepared.base.sleep.terminal.power.volume.base));
+ assert(async_begin(NULL,&session)==0);
+ pq=(risc_storage_package_request_v1){0};pq.operation=RISC_STORAGE_PACKAGE_MKDIR;strcpy(pq.path,"/Drivers");assert(package_submit(NULL,session,&pq,&operation)==0);assert(finish()==0);
+ pq.operation=RISC_STORAGE_PACKAGE_OPEN_WRITE;strcpy(pq.path,"/Drivers/chunked.elf");assert(package_submit(NULL,session,&pq,&operation)==0);assert(finish()==0);
+ pq.operation=RISC_STORAGE_PACKAGE_WRITE_CHUNK;pq.size=4096;memset(pq.data,0x37,sizeof(pq.data));assert(package_submit(NULL,session,&pq,&operation)==0);memset(pq.data,0xff,sizeof(pq.data));assert(finish()==0);
+ pq.size=904;memset(pq.data,0x37,sizeof(pq.data));assert(package_submit(NULL,session,&pq,&operation)==0);assert(finish()==0);
+ request(RISC_STORAGE_ASYNC_READ_SMALL_FILE,"/Apps/unknown/manifest.json");assert(finish()==RISC_STORAGE_ASYNC_BUSY);
+ pq.operation=RISC_STORAGE_PACKAGE_CLOSE_WRITE;pq.size=5000;assert(package_submit(NULL,session,&pq,&operation)==0);assert(finish()==0);end_session();
+ uint64_t length=0;uint32_t streamed=file_open_read(NULL,"/Drivers/chunked.elf",&length);assert(streamed&&length==5000);
+ unsigned total=0;while(total<5000){unsigned char data[512];size_t n=file_read(NULL,streamed,data,sizeof(data));assert(n&&n<=sizeof(data));for(size_t j=0;j<n;++j)assert(data[j]==0x37);total+=(unsigned)n;}assert(file_close(NULL,streamed,false));
  assert(prepare_sleep(NULL));assert(commit_sleep(NULL));assert(!work_scope&&pins[0].held);assert(resume_sleep(NULL)==RISC_STORAGE_SLEEP_READY&&work_scope&&!pins[0].held);
  assert(async_begin(NULL,&session)==0);request(RISC_STORAGE_ASYNC_OPEN_DIRECTORY,"/Apps");assert(finish()==0);request(RISC_STORAGE_ASYNC_NEXT_ENTRY,NULL);end_session();assert(!has_handles());
  assert(quiesce());stop();assert(!work_bound&&!work_scope&&!fixture_lock);free(card_image);
