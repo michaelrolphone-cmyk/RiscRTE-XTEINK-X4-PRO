@@ -75,6 +75,8 @@ def validate_module(name, directory, base, system, runtime):
                 'Client lacks continuing checkpoint maintenance: ' + name)
         require(receipt['installed_catalog'].get('volume_instance') == 9, 'Catalog volume changed')
     if name == 'default':
+        require(receipt.get('installed_catalog', {}).get('alarm_reconcile_waits_for_shared_preferences') is True,
+                'Cold alarm reconciliation must wait for restored preferences')
         flags = receipt.get('build_defines', [])
         for flag in ('-DPORTABLE_DESK_LOCK_HOME', '-DPORTABLE_DESK_POINTS_SNAPSHOT',
                      '-DPORTABLE_RESIDENT_SHELL_HOST'):

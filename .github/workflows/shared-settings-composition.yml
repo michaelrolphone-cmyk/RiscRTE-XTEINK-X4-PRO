@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'minimal/scripts/compose_shared_settings_090.py'
+      - 'minimal/scripts/build_shared_settings_clients_090.py'
       - 'minimal/test/shared_settings_composition_test.py'
       - 'minimal/shared-settings-090-sd-baseline.json'
       - '.github/workflows/shared-settings-composition.yml'
@@ -17,4 +18,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - name: Complete profile, source receipts, protected settings, and grant limits
-        run: python3 minimal/test/shared_settings_composition_test.py
+        run: |
+          python3 -m py_compile minimal/scripts/build_shared_settings_clients_090.py
+          python3 minimal/test/shared_settings_composition_test.py

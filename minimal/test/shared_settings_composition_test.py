@@ -41,6 +41,7 @@ class Composition(unittest.TestCase):
             if name in ('default','springboard'):
                 receipt['installed_catalog'] = dict(idle_settings_maintenance='settings_pending-v1',volume_instance=9)
             if name == 'default':
+                receipt['installed_catalog']['alarm_reconcile_waits_for_shared_preferences']=True
                 receipt.update(build_defines=['-DPORTABLE_DESK_LOCK_HOME','-DPORTABLE_DESK_POINTS_SNAPSHOT','-DPORTABLE_RESIDENT_SHELL_HOST'],sparse_start=True,desk_points=dict(retained_bytes=408))
             if name == 'file_browser':
                 receipt.update(protected_settings=dict(root='/RTECFG',listing_open_mutation_copy=True),file_sharing=dict(app_data_export_required=False,protected_settings=dict(direct_recursive_and_peer=True),default_transport='ble-private-wifi',peer_files=True),required_grants=grants[:-1]+[dict(capability='bluetooth.hci',api=1,instance_id=16)])
@@ -83,6 +84,9 @@ class Composition(unittest.TestCase):
     def test_wrong_catalog_runtime_rejected(self):
         self.mutate_receipt('installed-apps',lambda x:x['repositories']['runtime'].update(head='c'*40))
         with self.assertRaisesRegex(ValueError,'Runtime source'):self.run_compose()
+    def test_cold_alarm_cannot_block_restore(self):
+        self.mutate_receipt('default',lambda x:x['installed_catalog'].pop('alarm_reconcile_waits_for_shared_preferences'))
+        with self.assertRaisesRegex(ValueError,'Cold alarm'):self.run_compose()
     def test_lock_profile_cannot_shrink(self):
         self.mutate_receipt('default',lambda x:x['desk_points'].update(retained_bytes=128))
         with self.assertRaisesRegex(ValueError,'retained'):self.run_compose()
