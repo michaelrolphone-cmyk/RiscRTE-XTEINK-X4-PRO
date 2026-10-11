@@ -7,8 +7,12 @@ p=argparse.ArgumentParser(description=__doc__)
 for name in ('runtime','tools','native-bin','store','output'):p.add_argument('--'+name,type=Path,required=True)
 p.add_argument('--provider-capacity',type=int,choices=[29,32,40],default=29)
 p.add_argument('--shared-files',action='store_true')
+p.add_argument('--sd',type=Path,help='Also admit every actually selected SD image')
+p.add_argument('--composition-receipt',type=Path,help='Exact .90 composition receipt paired with --sd')
 p.add_argument('--native-elf',type=Path,required=True,help='Exact ELF paired with native-bin, used to derive native USB PHY registration')
-a=p.parse_args();a.runtime=a.runtime.resolve();a.tools=a.tools.resolve();a.native_bin=a.native_bin.resolve();a.store=a.store.resolve();a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=False)
+a=p.parse_args()
+if bool(a.sd)!=bool(a.composition_receipt):p.error('--sd and --composition-receipt must be supplied together')
+a.runtime=a.runtime.resolve();a.tools=a.tools.resolve();a.native_bin=a.native_bin.resolve();a.store=a.store.resolve();a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=False)
 sys.path.insert(0,str(a.runtime.resolve()/'scripts'));sys.path.insert(0,str(a.tools.resolve()/'scripts'))
 if (a.native_elf.parent/'firmware.bin').read_bytes()!=a.native_bin.read_bytes():raise ValueError('native ELF sibling firmware differs from supplied native-bin')
 from elftools.elf.elffile import ELFFile
@@ -48,4 +52,24 @@ for case in ('range-moved','range-removed','cache-owner-moved','settings-disable
  if not(row['prepared']and not row['cohort_validated']and row['hardware_calls']==row['storage_calls']==0):raise ValueError((case,row))
  rejections.append(case)
 info.update(native_usb_phy=native_usb_phy,native_elf_sha256=sha(a.native_elf.read_bytes()),native=witness,modules=modules,admission=admission,rejected_namespace_changes=rejections,hardware_tested=False,scope='Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.')
+if a.sd:
+ from compose_shared_settings_090 import audit_selected_images,git
+ composition=json.loads(a.composition_receipt.read_text())
+ if composition['runtime_commit']!=git(a.runtime,'rev-parse','HEAD') or git(a.runtime,'status','--porcelain'):
+  raise ValueError('Selected SD admission Runtime differs from clean composition source')
+ if composition['product_version']!='0.1.90' or composition['shared_settings_enabled'] is not False:
+  raise ValueError('Selected SD admission requires opt-out .90 composition')
+ selected=audit_selected_images(json.loads((a.store/'boot.json').read_text()),a.store,a.sd.resolve())
+ if selected!=composition['selected_sd_images'] or len(selected)!=46:
+  raise ValueError('Selected SD source/hash inventory differs from composition')
+ for row in selected:
+  path=a.sd.resolve()/row['path']
+  if set(imports(path.read_bytes()))-set(exports):raise ValueError('Unresolved selected SD imports: '+row['path'])
+  subprocess.run([str(a.output/'ubsan/strict'),row['role'],str(path)],check=True)
+  row['strict_admission_passed']=True
+ sd_info=dict(runtime_commit=composition['runtime_commit'],native_firmware_sha256=witness['firmware_sha256'],
+              strict_validator_sha256=sha((a.output/'ubsan/strict').read_bytes()),selected_images=selected,hardware_tested=False)
+ (a.output/'selected-sd-admission.json').write_text(json.dumps(sd_info,indent=2)+'\n')
+ info['selected_sd_admission_sha256']=sha((a.output/'selected-sd-admission.json').read_bytes())
+ info['selected_sd_images']=len(selected)
 (a.output/'evidence.json').write_text(json.dumps(info,indent=2)+'\n')

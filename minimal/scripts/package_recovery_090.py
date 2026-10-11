@@ -25,6 +25,8 @@ ad=json.loads((a.admission/'evidence.json').read_text());assert ad['admission'][
 assert ad['native']['firmware_sha256']==r['firmware_sha256']
 selected=json.loads(a.selected_admission.read_text())
 assert selected['runtime_commit']==r['runtime_commit'] and len(selected['selected_images'])==46
+assert selected['native_firmware_sha256']==r['firmware_sha256']
+assert ad['selected_sd_admission_sha256']==sha(a.selected_admission)
 expected={(x['manifest'],x['path'],x['sha256']) for x in c['selected_sd_images']}
 actual={(x['manifest'],x['path'],x['sha256']) for x in selected['selected_images']}
 assert expected==actual and all(x['strict_admission_passed'] for x in selected['selected_images'])
