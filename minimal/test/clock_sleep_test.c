@@ -32,12 +32,23 @@ static int32_t prepare(void*c,alarm_sleep_v1*out){(void)c;assert(!terminal&&!sub
 #ifdef TEST_QUICK
 static int32_t preferences(void*c,const char*k,void*out,uint32_t cap,uint32_t*len){if(!strcmp(k,"time_format"))return get(c,k,out,cap,len);*len=0;return RISC_KEY_VALUE_NOT_FOUND;}
 static bool controls_touch(void*c,risc_touch_snapshot_v1*s){(void)c;memset(s,0,sizeof(*s));s->width=480;s->height=800;if(polls==2||polls==3){s->contact_count=1;s->contacts[0]=(risc_touch_contact_v1){.id=1,.x=200,.y=polls==2?20:100};}return true;}
+static uint64_t controls_subscribe(void*c){uint64_t id=subscribe(c);assert(controls_touch(c,&raw_state));return id;}
+static bool controls_poll(void*c,size_t n){
+ (void)c;assert(n==1);polls++;risc_touch_snapshot_v1 next;assert(controls_touch(NULL,&next));
+ for(unsigned i=0;i<raw_state.contact_count;i++)if(raw_find(&next,raw_state.contacts[i].id)<0)raw_emit(RISC_TOUCH_EVENT_UP,raw_state.contacts[i]);
+ for(unsigned i=0;i<next.contact_count;i++){
+  int old=raw_find(&raw_state,next.contacts[i].id);
+  if(old<0)raw_emit(RISC_TOUCH_EVENT_DOWN,next.contacts[i]);
+  else if(raw_state.contacts[old].x!=next.contacts[i].x||raw_state.contacts[old].y!=next.contacts[i].y)raw_emit(RISC_TOUCH_EVENT_MOVE,next.contacts[i]);
+ }
+ next.sequence=raw_state.sequence;next.timestamp_ms=ms;raw_state=next;return true;
+}
 #endif
 static bool obtain(const char*n,uint32_t v,uint64_t id,risc_runtime_capability_v1*g){
  assert(!terminal);
 #ifdef TEST_QUICK
  if(!strcmp(n,"storage.key-value")){static risc_key_value_v1 prefs;prefs=kv;prefs.get=preferences;g->api=&prefs;grants++;return true;}
- if(!strcmp(n,"input.touch.raw")){static risc_touch_api_v1 touch;touch=t;touch.snapshot=controls_touch;g->api=&touch;grants++;return true;}
+ if(!strcmp(n,"input.touch.raw")){static risc_touch_api_v1 touch;touch=t;touch.subscribe=controls_subscribe;touch.poll=controls_poll;g->api=&touch;grants++;return true;}
 #endif
  if(!strcmp(n,X4_POWER_CAPABILITY)){assert(v==1&&id==17);power_grants++;if(case_id==6)return false;g->api=&power;grants++;return true;}
  if(!strcmp(n,"input.navigation")){g->api=&nav;grants++;return true;}
