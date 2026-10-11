@@ -5,7 +5,12 @@
 #define X4_BOOTLOG_SD_PATH "/x4-boot.log"
 #define X4_BOOTLOG_SD_PREVIOUS "/x4-boot.previous.log"
 #define X4_BOOTLOG_SD_MAX_BYTES (512u * 1024u)
+#if X4PRO_SD_ASYNC
+static risc_storage_volume_api_v1_async asynchronous_api;
+#define filesystem_api asynchronous_api.fs
+#else
 static risc_storage_volume_api_v1_fs filesystem_api;
+#endif
 #define logging_api filesystem_api.state
 static struct { uint64_t sequence; uint32_t revision; } bootlog_seen[RISC_DIAGNOSTIC_SOURCE_MAX_SLOTS];
 static unsigned bootlog_next;

@@ -19,7 +19,7 @@ if env.subst('$PIOENV') != record['build_environment']:
     raise ValueError('This composed workspace only builds its recorded X4 environment')
 options = record.get('build_options')
 required = {'app_policy_rows', 'app_image_cache'}
-if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows'}:
+if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity'}:
     raise ValueError('Invalid native build options')
 if type(options['app_policy_rows']) is not int or options['app_policy_rows'] not in (16, 17, 18, 24):
     raise ValueError('App policy rows must be 16, 17, 18 or 24')
@@ -27,6 +27,8 @@ if 'app_requirement_rows' in options and (type(options['app_requirement_rows']) 
     raise ValueError('App requirement rows must be an explicit 17- or 24-row opt-in')
 if options.get('app_requirement_rows', 16) > options['app_policy_rows']:
     raise ValueError('App requirement rows exceed policy rows')
+if 'installed_app_capacity' in options and (type(options['installed_app_capacity']) is not int or options['installed_app_capacity']!=64):
+    raise ValueError('Installed application capacity must be an explicit 64-slot opt-in')
 if type(options['app_image_cache']) is not bool:
     raise ValueError('App image cache must be boolean')
 if 'usb_phy' in options and options['usb_phy'] is not True:
@@ -39,7 +41,7 @@ if 'failure_evidence' in options and options['failure_evidence'] is not True:
 # definitions and undefines, including command-line/environment overrides,
 # instead of allowing flag order to replace the recorded selection.
 for key in ('BUILD_FLAGS', 'BUILD_UNFLAGS', 'CCFLAGS', 'CFLAGS', 'CXXFLAGS', 'CPPDEFINES'):
-    if re.search(r'(?:\b|-[DU])(?:RISC_APP_(?:POLICY_ROWS|REQUIREMENT_ROWS|IMAGE_CACHE)|RISC_ENABLE_USB_PHY|RISC_RETAINED_WAKE_BYTES|RISC_NATIVE_FAILURE_EVIDENCE|CONFIG_(?:ESPTOOLPY_FLASH\w*|SPIRAM_(?:MODE|SPEED)_\w*))\b', str(env.get(key, ''))):
+    if re.search(r'(?:\b|-[DU])(?:RISC_APP_(?:POLICY_ROWS|REQUIREMENT_ROWS|IMAGE_CACHE)|RISC_INSTALLED_APP_CAPACITY|RISC_ENABLE_USB_PHY|RISC_RETAINED_WAKE_BYTES|RISC_NATIVE_FAILURE_EVIDENCE|CONFIG_(?:ESPTOOLPY_FLASH\w*|SPIRAM_(?:MODE|SPEED)_\w*))\b', str(env.get(key, ''))):
         raise ValueError('Native option flags must come only from the composition record: ' + key)
 observed = set()
 for folder, directories, names in os.walk(root):
@@ -75,6 +77,9 @@ env.Append(CPPPATH=[str(build)])
 env.Append(CPPDEFINES=[('RISC_NATIVE_DIAGNOSTIC_OBSERVER',1),
                       ('RISC_APP_POLICY_ROWS', options['app_policy_rows']),
                       ('RISC_APP_IMAGE_CACHE', int(options['app_image_cache']))])
+if 'installed_app_capacity' in options:
+    env.Append(CPPDEFINES=[('RISC_INSTALLED_APP_CAPACITY', options['installed_app_capacity'])])
+    env.Append(LINKFLAGS=['-Wl,-u,risc_installed_app_capacity'])
 if 'app_requirement_rows' in options:
     env.Append(CPPDEFINES=[('RISC_APP_REQUIREMENT_ROWS', options['app_requirement_rows'])])
 if options.get('usb_phy'):

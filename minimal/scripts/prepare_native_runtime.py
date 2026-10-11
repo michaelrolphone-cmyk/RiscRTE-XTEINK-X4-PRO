@@ -77,7 +77,7 @@ def snapshot(root, revision):
 def validate_build_options(options):
     required = {'app_policy_rows', 'app_image_cache'}
     require(isinstance(options, dict) and required <= set(options) and
-            set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows'},
+            set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity'},
             'Invalid native build options')
     require(type(options['app_policy_rows']) is int and options['app_policy_rows'] in (16, 17, 18, 24),
             'App policy rows must be 16, 17, 18 or 24')
@@ -86,6 +86,7 @@ def validate_build_options(options):
             'App requirement rows must be an explicit 17- or 24-row opt-in')
     require(options.get('app_requirement_rows', 16) <= options['app_policy_rows'],
             'App requirement rows exceed policy rows')
+    require('installed_app_capacity' not in options or (type(options['installed_app_capacity']) is int and options['installed_app_capacity']==64), 'Installed application capacity must be an explicit 64-slot opt-in')
     require(type(options['app_image_cache']) is bool, 'App image cache must be boolean')
     require('usb_phy' not in options or options['usb_phy'] is True,
             'USB PHY must be an explicit true opt-in')
@@ -99,11 +100,13 @@ def validate_build_options(options):
 
 def compose(runtime, output, runtime_commit=None, environment=ENVIRONMENTS[0], platform_root=ROOT,
             app_policy_rows=16, app_image_cache=False, boot_flash_dio=False, usb_phy=False,
-            retained_wake_bytes=None, failure_evidence=False, app_requirement_rows=None):
+            retained_wake_bytes=None, failure_evidence=False, app_requirement_rows=None, installed_app_capacity=None):
     runtime, output, platform_root = (Path(p).resolve() for p in (runtime, output, platform_root))
     require(environment in ENVIRONMENTS, 'Unsupported X4 native environment')
     require(type(usb_phy) is bool, 'USB PHY selection must be boolean')
     options = {'app_policy_rows': app_policy_rows, 'app_image_cache': app_image_cache}
+    if installed_app_capacity is not None:
+        options['installed_app_capacity']=installed_app_capacity
     if app_requirement_rows is not None:
         options['app_requirement_rows'] = app_requirement_rows
     if usb_phy:
@@ -701,6 +704,7 @@ def main():
     prepare.add_argument('--output', type=Path, required=True)
     prepare.add_argument('--runtime-commit')
     prepare.add_argument('--environment', choices=ENVIRONMENTS, default=ENVIRONMENTS[0])
+    prepare.add_argument('--installed-app-capacity', type=int, choices=(64,))
     prepare.add_argument('--app-policy-rows', type=int, choices=(16, 17, 18, 24), default=16,
                          help='Immutable app policy rows; live grants remain 16')
     prepare.add_argument('--app-requirement-rows', type=int, choices=(17, 24),

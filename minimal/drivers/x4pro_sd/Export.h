@@ -144,6 +144,12 @@ static int32_t export_read(void *context, risc_storage_export_token_t token,
     /* One bounded native request, not count separate sector commands. The
      * backend copies through its owned DMA buffer and has a finite command
      * timeout. A failure is uncertain: retain, never replay or fall back. */
+#if X4PRO_SD_ASYNC
+    if(storage_worker){
+        if(!export_native_budget(count)||!sdmmc_result(storage_worker->io->read(storage_worker->io->context,lba,count,buffer),"async sd export read failed"))return export_leave(export_retain("export read uncertain; retained"));
+        return export_leave(RISC_STORAGE_EXPORT_READY);
+    }
+#endif
     if (sdmmc_api) {
         if (!export_native_budget(count) ||
             !sdmmc_result(sdmmc_api->read(sdmmc_api->context,sdmmc_token,lba,count,buffer), "sdmmc export read failed"))
@@ -165,6 +171,12 @@ static int32_t export_write(void *context, risc_storage_export_token_t token,
     /* One bounded native request, not count separate sector commands. The
      * backend copies through its owned DMA buffer and has a finite command
      * timeout. A failure is uncertain: retain, never replay or fall back. */
+#if X4PRO_SD_ASYNC
+    if(storage_worker){
+        if(!export_native_budget(count)||!sdmmc_result(storage_worker->io->write(storage_worker->io->context,lba,count,buffer),"async sd export write failed"))return export_leave(export_retain("export write uncertain; retained"));
+        return export_leave(RISC_STORAGE_EXPORT_READY);
+    }
+#endif
     if (sdmmc_api) {
         if (!export_native_budget(count) ||
             !sdmmc_result(sdmmc_api->write(sdmmc_api->context,sdmmc_token,lba,count,buffer), "sdmmc export write failed"))

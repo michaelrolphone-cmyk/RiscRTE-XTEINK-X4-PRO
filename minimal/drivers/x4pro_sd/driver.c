@@ -6,7 +6,19 @@
 #ifndef X4PRO_SD_ALLOW_LEGACY_GPIO
 #define X4PRO_SD_ALLOW_LEGACY_GPIO 0
 #endif
+#ifndef X4PRO_SD_ASYNC
+#define X4PRO_SD_ASYNC 0
+#endif
 #include <RiscPlatformClockV1.h>
+#if X4PRO_SD_ASYNC
+#include <RiscStorageAsyncAdapterV1.h>
+static const risc_storage_worker_v1 *storage_worker;
+static risc_storage_async_adapter_v1 async_adapter;
+static bool worker_guard,worker_scope_claimed;
+static bool async_claim_scope(void);
+static risc_platform_clock_api_v1 worker_clock;
+static const risc_platform_clock_api_v1 *owner_clock;
+#endif
 #include <RiscProviderV2.h>
 #include <RiscProviderSyncV1.h>
 #include <RiscDiagnosticSourceV1.h>
@@ -88,12 +100,31 @@ static void x4pro_pin_hold(uint32_t pin, bool hold) {
     if (result) { gpio_fault = true; if (result == RISC_DEEP_SLEEP_RETAINED) gpio_retained = true; }
     else state->held = hold;
 }
-static bool valid_task(void) { return sync_api && sync_api->is_owner(sync_api->context); }
+static bool valid_task(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker && storage_worker->io->on_worker(storage_worker->io->context))return true;
+    return sync_api && sync_api->is_owner(sync_api->context) && !async_adapter.session;
+#else
+    return sync_api && sync_api->is_owner(sync_api->context);
+#endif
+}
 static bool guard_enter(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker && storage_worker->io->on_worker(storage_worker->io->context)){
+        if(worker_guard || mutex_poisoned || quiescing || gpio_retained)return false;
+        worker_guard=true;return true;
+    }
+#endif
     return valid_task() && operation_mutex && !mutex_poisoned && !quiescing && !gpio_retained &&
         sync_api->try_lock(sync_api->context, operation_mutex);
 }
 static bool guard_leave(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker && storage_worker->io->on_worker(storage_worker->io->context)){
+        if(!worker_guard)return false;
+        worker_guard=false;return !gpio_retained;
+    }
+#endif
     if (valid_task() && !mutex_poisoned) bootlog_drain();
     if (!valid_task() || !sync_api->unlock(sync_api->context, operation_mutex)) {
         mutex_poisoned = true; return false;
@@ -219,6 +250,13 @@ static bool response_for(uint8_t index, const uint8_t response[6]) {
 /* Close the peripheral before remuxing pins or removing card power. A failed
  * close keeps its token, so terminal cleanup can retry without losing custody. */
 static bool close_sdmmc(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker){
+        if(!worker_scope_claimed)return !sdmmc_fault;
+        if(!storage_worker->io->close(storage_worker->io->context)){sdmmc_fault=true;return false;}
+        sdmmc_token=0;sdmmc_fault=false;card_ready=false;return true;
+    }
+#endif
     if (!sdmmc_token) return !sdmmc_fault;
     if (!sdmmc_api || !sdmmc_api->release(sdmmc_api->context, sdmmc_token)) {
         sdmmc_fault = true; fail("sdmmc close retained"); return false;
@@ -231,6 +269,9 @@ static bool sdmmc_result(bool okay, const char *reason) {
     return okay;
 }
 static bool read_sector(uint32_t lba, uint8_t out[512]) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker)return out&&sdmmc_token&&!sdmmc_fault&&(uint64_t)lba<card_block_count&&sdmmc_result(storage_worker->io->read(storage_worker->io->context,lba,1,out),"async sd read failed");
+#endif
     if (sdmmc_api) {
         if (!out || !sdmmc_token || sdmmc_fault || (uint64_t)lba >= card_block_count) return false;
         return sdmmc_result(sdmmc_api->read(sdmmc_api->context, sdmmc_token, lba, 1u, out), "sdmmc read failed");
@@ -285,6 +326,22 @@ static bool decode_csd(const uint8_t response[17], bool block_addressed, uint64_
     return true;
 }
 static bool init_card(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker){
+        if(!worker_scope_claimed && !async_claim_scope())return false;
+        const risc_storage_work_io_v1 *io=storage_worker->io;
+        if(gpio_fault || !close_sdmmc())return false;
+        high_capacity=false;card_block_count=0;
+        if(!io->power(io->context,true))return false;
+        io->delay_ms(io->context,80);
+        if(!io->power(io->context,false))return false;
+        io->delay_ms(io->context,120);
+        risc_sdmmc_card_info_v1 info={0};
+        if(!io->open(io->context,&info)){fail("async sd initialization failed");(void)close_sdmmc();return false;}
+        sdmmc_token=1;card_block_count=info.sector_count;card_ready=true;
+        const bool okay=mount_filesystem();bootlog_mount_pending=okay;return okay;
+    }
+#endif
     uint8_t response[17] = {0};
     if (gpio_fault || !close_sdmmc()) return false;
     high_capacity = false;
@@ -364,6 +421,9 @@ static bool init_card(void) {
 /* A native single-block write: CRC16, accepted data-response, busy release,
  * and card status must all succeed. Never retry an uncertain write. */
 static bool write_sector(uint32_t lba, const uint8_t data[512]) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker)return data&&sdmmc_token&&!sdmmc_fault&&(uint64_t)lba<card_block_count&&sdmmc_result(storage_worker->io->write(storage_worker->io->context,lba,1,data),"async sd write failed");
+#endif
     if (sdmmc_api) {
         if (!data || !sdmmc_token || sdmmc_fault || (uint64_t)lba >= card_block_count) return false;
         return sdmmc_result(sdmmc_api->write(sdmmc_api->context, sdmmc_token, lba, 1u, data), "sdmmc write failed");
@@ -402,6 +462,9 @@ static bool write_sector(uint32_t lba, const uint8_t data[512]) {
 }
 
 static bool sync_card(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker)return sdmmc_token&&!sdmmc_fault&&sdmmc_result(storage_worker->io->sync(storage_worker->io->context),"async sd sync failed");
+#endif
     if (sdmmc_api) return !gpio_fault && sdmmc_token && !sdmmc_fault &&
         sdmmc_result(sdmmc_api->sync(sdmmc_api->context, sdmmc_token), "sdmmc sync failed");
     return !gpio_fault && wait_dat0(true, 262144, 1000);
@@ -410,6 +473,15 @@ static bool sync_card(void) {
  * uncertain transport state and cannot pass a power-down barrier. */
 static bool transport_idle(void) { return !gpio_fault && !gpio_retained && !sdmmc_fault; }
 static bool commit_sleep_rails(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker){
+        if(!close_sdmmc()||!storage_worker->io->power(storage_worker->io->context,true))return false;
+        if(storage_worker->unbind(storage_worker->context)!=RISC_STORAGE_WORK_OK ||
+           storage_worker->release(storage_worker->context)!=RISC_STORAGE_WORK_OK)return false;
+        worker_scope_claimed=false;clock_api=owner_clock;
+        /* Continue through the existing owner GPIO rail/hold transaction. */
+    }
+#endif
     if (!close_sdmmc()) return false;
     x4pro_pin_output(X4PRO_PIN_SD_CLK, false);
     x4pro_pin_input(X4PRO_PIN_SD_CMD, false);
@@ -423,6 +495,9 @@ static bool resume_sleep_media(void) {
      * bounded settle delays, and reopens FatFs. No media is distinct from
      * uncertain rail/hold custody; the helper checks mounted/io_failed too. */
     (void)init_card();
+#if X4PRO_SD_ASYNC
+    if(storage_worker)return !gpio_fault&&!gpio_retained&&!sdmmc_fault;
+#endif
     return !gpio_fault && !gpio_retained && !sdmmc_fault && pins[0].token && !pins[0].held;
 }
 #define STORAGE_VOLUME_TRY_COMMIT_POWER_DOWN commit_sleep_rails
@@ -440,10 +515,45 @@ static uint32_t bootlog_budget_ms=15000,bootlog_sector_limit=2048;
 #include "BootLog.h"
 #include "Export.h"
 
+#if X4PRO_SD_ASYNC
+static uint64_t worker_now(void *c){(void)c;return storage_worker->io->now_ms(storage_worker->io->context);}
+static void worker_delay(void *c,uint32_t ms){(void)c;storage_worker->io->delay_ms(storage_worker->io->context,ms);}
+static bool async_claim_scope(void){
+    if(worker_scope_claimed)return true;
+    if(!sync_api || !sync_api->is_owner(sync_api->context))return false;
+    /* Resume the established held GPIO policy before native SD owns the pins. */
+    for(unsigned i=0;i<4;++i)if(pins[i].token){
+        if(pins[i].held)x4pro_pin_hold(pin_numbers[i],false);
+        if(pins[i].held || !gpio_api->release(gpio_api->context,pins[i].token))return false;
+        pins[i].token=0;
+    }
+    const risc_storage_work_scope_v1 scope={X4PRO_PIN_SD_PWR,X4PRO_PIN_SD_CLK,X4PRO_PIN_SD_CMD,X4PRO_PIN_SD_DAT0,RISC_SDMMC_MAX_HZ,true};
+    if(storage_worker->claim(storage_worker->context,&scope)!=RISC_STORAGE_WORK_OK)return false;
+    worker_scope_claimed=true;
+    async_adapter.worker=storage_worker;async_adapter.volume=&api.terminal.power.volume.base;
+    async_adapter.ext=&api.terminal.power.volume;async_adapter.fs=&filesystem_api;
+    if(storage_worker->bind(storage_worker->context,risc_storage_async_execute,&async_adapter)!=RISC_STORAGE_WORK_OK)return false;
+    worker_clock=(risc_platform_clock_api_v1){1,sizeof(worker_clock),NULL,worker_now,worker_delay};clock_api=&worker_clock;
+    return true;
+}
+static bool async_owner(void){return sync_api && sync_api->is_owner(sync_api->context);}
+static int32_t async_begin(void*c,uint64_t*t){(void)c;
+    if(!async_owner() || !started || quiescing || export_state!=EXPORT_LOCAL || power_down_prepared || sleep_state!=SLEEP_ACTIVE)return RISC_STORAGE_ASYNC_BUSY;
+    return risc_storage_async_begin(&async_adapter,t);}
+static int32_t async_submit(void*c,uint64_t s,const risc_storage_async_request_v1*q,uint64_t*t){(void)c;
+    return async_owner()?risc_storage_async_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
+static int32_t async_collect(void*c,uint64_t s,uint64_t o,risc_storage_async_result_v1*r){(void)c;
+    return async_owner()?risc_storage_async_collect(&async_adapter,s,o,r):RISC_STORAGE_ASYNC_BUSY;}
+static int32_t async_end(void*c,uint64_t s){(void)c;
+    return async_owner()?risc_storage_async_end(&async_adapter,s):RISC_STORAGE_ASYNC_BUSY;}
+#endif
 /* Owner-task snapshot only. In particular, do not call valid_task(), ready(),
  * a guard or boot-log drain here: observation must remain safe after poison. */
 static int32_t observe_state(void *context) {
     (void)context;
+#if X4PRO_SD_ASYNC
+    if(async_adapter.session)return RISC_STORAGE_STATE_UNAVAILABLE;
+#endif
     if (mutex_poisoned || gpio_fault || gpio_retained || sdmmc_fault ||
         bootlog_retained || sleep_state == SLEEP_RETAINED || export_state == EXPORT_RETAINED)
         return RISC_STORAGE_STATE_RETAINED;
@@ -460,7 +570,7 @@ static int32_t observe_state(void *context) {
 
 static bool start(const risc_provider_dependency_v1 *deps, size_t count) {
     if (started || operation_mutex || gpio_api || clock_api || sync_api || mutex_poisoned ||
-        gpio_retained || !deps || count != 6) return false;
+        gpio_retained || !deps || count != (X4PRO_SD_ASYNC?7u:6u)) return false;
     const risc_hardware_device_v1 *hardware = NULL;
     const garden_gpio_v1 *gpio = NULL;
     const risc_platform_clock_api_v1 *clock = NULL;
@@ -475,6 +585,9 @@ static bool start(const risc_provider_dependency_v1 *deps, size_t count) {
         else if (equal(name, "platform.clock") && !clock) clock = deps[i].api;
         else if (equal(name, RISC_PROVIDER_SYNC_CAPABILITY) && !sync) sync = deps[i].api;
         else if (equal(name, RISC_DIAGNOSTIC_SOURCE_CAPABILITY) && !source) source = deps[i].api;
+#if X4PRO_SD_ASYNC
+        else if (equal(name, RISC_STORAGE_WORKER_CAPABILITY) && !storage_worker) storage_worker=deps[i].api;
+#endif
         else if (equal(name, X4_POWER_READY_CAPABILITY) && !power) power = deps[i].api;
         else return false;
     }
@@ -499,24 +612,47 @@ static bool start(const risc_provider_dependency_v1 *deps, size_t count) {
 #if !X4PRO_SD_ALLOW_LEGACY_GPIO
     if (!native_host) { fail("hardware SDMMC host required"); return false; }
 #endif
-    gpio_api = gpio; sdmmc_api = native_host; clock_api = clock; sync_api = sync; diagnostic_source = source;
+    gpio_api = gpio; sdmmc_api = native_host; clock_api = clock;
+#if X4PRO_SD_ASYNC
+    owner_clock=clock;
+#endif
+    sync_api = sync; diagnostic_source = source;
     quiescing = quiesced = gpio_fault = false;
     if (!sync_api->create(sync_api->context, &operation_mutex) || !operation_mutex) {
         gpio_api = NULL; sdmmc_api = NULL; clock_api = NULL; sync_api = NULL; diagnostic_source = NULL; return false;
     }
+#if X4PRO_SD_ASYNC
+    if(!storage_worker || storage_worker->api_version!=1 || storage_worker->struct_size<sizeof(*storage_worker) || !storage_worker->io ||
+       !storage_worker->claim || !storage_worker->bind || !storage_worker->submit || !storage_worker->collect || !storage_worker->cancel || !storage_worker->unbind || !storage_worker->release)return false;
+    if(!async_claim_scope())return false;
+#else
     if (!enter_lifecycle()) return false;
     x4pro_pin_output(X4PRO_PIN_SD_CLK, false);
+#endif
     power_down_prepared = power_down_committed = false;
     sleep_state = SLEEP_ACTIVE;
     started = true;
     mounted = card_ready = io_failed = false;
     error[0] = 0;
+#if X4PRO_SD_ASYNC
+    /* Claim/bind are metadata/pin setup only. First async REFRESH owns all card
+     * delays and mount I/O; the first UI frame never activates storage I/O. */
+    return true;
+#else
     (void)init_card(); /* An absent card preserves refresh capability. */
     if (gpio_fault || sdmmc_fault) { io_failed = true; mounted = false; }
     const bool okay = !gpio_fault && !sdmmc_fault;
     return leave() && okay;
+#endif
 }
 static bool release_pins(void) {
+#if X4PRO_SD_ASYNC
+    if(storage_worker && worker_scope_claimed){
+        if(async_adapter.session || !close_sdmmc())return false;
+        if(storage_worker->unbind(storage_worker->context)!=RISC_STORAGE_WORK_OK || storage_worker->release(storage_worker->context)!=RISC_STORAGE_WORK_OK)return false;
+        worker_scope_claimed=false;return true;
+    }
+#endif
     if (!close_sdmmc()) return false;
     /* Cleanup is allowed after a transport fault. Establish safe static rails
      * before releasing anything; a failed write retains every owned token. */
@@ -565,7 +701,12 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
     if (abi != RISC_PROVIDER_DRIVER_ABI_V2) return NULL;
     if (!logging_api.prepared.base.sleep.terminal.power.volume.base.api_version) {
         logging_api.prepared.base.sleep = api;
-        logging_api.prepared.base.sleep.terminal.power.volume.base.struct_size = sizeof(filesystem_api);
+        logging_api.prepared.base.sleep.terminal.power.volume.base.struct_size =
+#if X4PRO_SD_ASYNC
+            sizeof(asynchronous_api);
+#else
+            sizeof(filesystem_api);
+#endif
         logging_api.prepared.base.sleep.terminal.power.volume.base.last_error = bootlog_last_error;
         logging_api.prepared.base.export_tag = RISC_STORAGE_EXPORT_TAG;
         logging_api.prepared.base.export_version = 1u;
@@ -586,5 +727,9 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         filesystem_api.metadata=fs_metadata;filesystem_api.file_truncate=fs_truncate;
         filesystem_api.replace_file=fs_replace_file;filesystem_api.recover_replace=fs_recover_replace;
     }
+#if X4PRO_SD_ASYNC
+    asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=1;
+    asynchronous_api.begin=async_begin;asynchronous_api.submit=async_submit;asynchronous_api.collect=async_collect;asynchronous_api.end=async_end;
+#endif
     return &driver.poll.streams.driver;
 }

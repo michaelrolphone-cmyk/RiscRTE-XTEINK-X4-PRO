@@ -192,7 +192,11 @@ static const risc_diagnostic_source_api_v1 fixture_diagnostic={1,sizeof(fixture_
 static const x4_power_ready_api_v1 fixture_power={1,sizeof(fixture_power),NULL,power_is_ready};
 static risc_hw_gpio_bank_v1 fixture_config={sizeof(fixture_config),4,1,1,0,{5,41,42,40,0,0,0,0},0,0,0};
 static const risc_hardware_device_v1 fixture_hardware={1,sizeof(fixture_hardware),55,"xteink,x4-pro-sd-native1","unspecified","gpio.bank",1,sizeof(fixture_config),&fixture_config};
-static risc_provider_dependency_v1 deps[]={{"hardware.device",1,&fixture_hardware},{"platform.gpio",1,&fixture_gpio},{"platform.clock",1,&fixture_clock},{"platform.sync",1,&fixture_sync},{"board.power.ready",1,&fixture_power},{RISC_DIAGNOSTIC_SOURCE_CAPABILITY,1,&fixture_diagnostic}};
+static risc_provider_dependency_v1 deps[]={{"hardware.device",1,&fixture_hardware},{"platform.gpio",1,&fixture_gpio},{"platform.clock",1,&fixture_clock},{"platform.sync",1,&fixture_sync},{"board.power.ready",1,&fixture_power},{RISC_DIAGNOSTIC_SOURCE_CAPABILITY,1,&fixture_diagnostic}
+#if X4PRO_SD_ASYNC
+ ,{RISC_STORAGE_WORKER_CAPABILITY,1,&fixture_worker}
+#endif
+};
 #define START() start(deps,sizeof(deps)/sizeof(deps[0]))
 static void put16(uint8_t *p,uint16_t n){p[0]=(uint8_t)n;p[1]=(uint8_t)(n>>8);}
 static void put32(uint8_t *p,uint32_t n){for(unsigned i=0;i<4;++i)p[i]=(uint8_t)(n>>(i*8));}
