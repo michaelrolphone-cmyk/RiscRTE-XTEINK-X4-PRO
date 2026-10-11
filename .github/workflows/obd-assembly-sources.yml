@@ -1,0 +1,38 @@
+name: OBD assembly sources
+on:
+  push:
+    branches: [feat/obd-dashboard]
+    paths: [.github/workflows/obd-assembly-sources.yml]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: X4
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Utilities
+          ref: e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d
+          path: LauncherUtilities
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: 45cf61ac013fb618e8d7fed63217a35350484d52
+          path: ReaderSDK
+          persist-credentials: false
+          sparse-checkout: |
+            src
+            scripts
+      - name: Archive canonical sources
+        run: tar -czf obd-assembly-sources.tar.gz X4 LauncherUtilities ReaderSDK/src ReaderSDK/scripts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: obd-assembly-sources
+          path: obd-assembly-sources.tar.gz
+          compression-level: 0
+          retention-days: 7
