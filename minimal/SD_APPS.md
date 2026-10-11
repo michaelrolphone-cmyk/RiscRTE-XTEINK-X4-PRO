@@ -40,8 +40,19 @@ while Reader is closed. No firmware, font or JSON replacement is needed.
 `sd-apps-073-reader-012.json` records the exact ELF, source, compiler stack
 reports and native admission against 0.1.73. Real app-entry host tests now
 render EPUB3, EPUB2, TXT and Markdown through the file-open handoff. Device
-retesting remains pending. Use Reader 0.1.2 and Hollow Trail 1.2.1 in subsequent
-assemblies; firmware static version labels update with the next firmware build.
+retesting remains pending for that stack correction.
+
+Reader **0.1.3** supersedes 0.1.2 after fixing the storage port's cache-file open
+mode. CrossPoint incrementally reads completed pages through its cache writer,
+which requires read/write access. The port incorrectly requested write-only;
+the host fixture failed to enforce that permission. Both are corrected, with
+regressions through the actual production FatFs implementation. Tests cover
+fresh, partial, completed and incomplete caches, reflow and bookmark retention.
+`sd-apps-073-reader-013.json` records the replacement ELF and validation. Copy
+only `Apps/ebook-reader/ebook_reader.elf`; leave saved Reader data in place.
+Use Reader 0.1.3 and Hollow Trail 1.2.1 in subsequent assemblies; firmware static
+version labels update with the next firmware build. Physical testing remains
+pending; the panel selection is still 0.1.12.
 
 `sd-apps-073-qualification.json` records exact artifacts, source-tree publication
 mappings, capacity and gate results. Tests cover normal/sanitized runtime
