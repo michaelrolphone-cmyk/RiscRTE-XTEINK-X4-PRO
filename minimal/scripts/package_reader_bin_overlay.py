@@ -98,7 +98,7 @@ def native_witness(runtime, raw):
     return matches[0]
 
 
-def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined"):
+def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False):
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
@@ -148,6 +148,8 @@ static bool file(void* context,const char* path,bool provider){
     common = ['c++', '-std=c++17', '-Wall', '-Wextra', '-Werror', '-Wno-missing-field-initializers',
               '-Wno-misleading-indentation', '-DRISC_APP_REQUIREMENT_ROWS=24', '-DRISC_APP_POLICY_ROWS=24',
               *sanitize, *inc]
+    if installed_catalog:
+        common += ['-DRISC_INSTALLED_APP_CAPACITY=64']
     if sys.platform == 'darwin':
         # Clang diagnoses inactive host-only fields in unchanged production sources.
         common += ['-Wno-unused-private-field', '-Wno-unused-but-set-variable']
@@ -183,6 +185,12 @@ int main(int argc,char**argv){
         '  h.usbPhyIdle=[](){++hardwareCalls;return false;};\n'
         '  h.usbPhySuspend=[](){++hardwareCalls;return false;};\n'
         '  h.usbPhyResume=[](){++hardwareCalls;return false;};')
+    if installed_catalog:
+        fixture = fixture.replace('  RiscCpu::Hardware h{};',
+            '  RiscCpu::Hardware h{};\n'
+            '  static RiscStorage::Worker worker;\n'
+            '  static RiscCpu::StorageWorkBackend backend{&worker,[](){return true;},[](){++hardwareCalls;return false;},[](uint32_t){++hardwareCalls;}};\n'
+            '  h.storageWork=&backend;')
     # These inert callback slots match the qualified .75 source composition.
     # They must never be executed during admission; counters check that explicitly.
     (output / 'runtime_store_admission.cpp').write_text(fixture)
