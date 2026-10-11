@@ -11,10 +11,12 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for key in ('base-store','springboard','app-store','sd','catalog','output'):p.add_argument('--'+key,type=Path,required=True)
+ p.add_argument("--migrate-legacy",action="store_true",help="Select dormant legacy SD authority and a matching internal-only Springboard catalog")
+ p.add_argument("--provider-capacity",type=int,choices=[29,32],default=29)
  a=p.parse_args();base=a.base_store.resolve();out=a.output.resolve()
  if out.exists():raise ValueError('Output must be new')
  boot=json.loads((base/'boot.json').read_text())
- if len(boot['drivers'])>=29:raise ValueError('No provider slot remains')
+ if len(boot['drivers'])>=a.provider_capacity:raise ValueError('No provider slot remains')
  if any('installation'==key for key in boot):raise ValueError('Existing installation policy needs explicit review')
  sd=next(x for x in boot['drivers'] if x['manifest']=='sd/manifest.json')
  if sd.get('instance_id')!=9:raise ValueError('Expected exact X4 SD binding')
@@ -40,6 +42,17 @@ def main():
   ('runtime.realtime',1,0),('storage.key-value',1,0),('storage.app-data',1,0)]:
   envelope.append(dict(capability=cap,api=api,instance_id=instance))
  boot['installation']=dict(volume_instance=9,grants=envelope,namespace_range=dict(first=3000,count=128))
+ if a.migrate_legacy:
+  record=json.loads((a.springboard/'springboard-build-record.json').read_text())
+  expected=[]
+  for policy in boot['app_capabilities']:
+   if 'image_source' not in policy:continue
+   manifest=json.loads((base/policy['manifest']).read_text());expected.append(manifest['file_name'])
+   if policy['image_source']['volume_instance']!=9:raise ValueError('Unexpected legacy SD volume')
+   policy['catalog_authority']=True
+  if spring['version']!='1.8.1' or sorted(record['catalog'].get('sd_authority_files',[]))!=sorted(expected) or record['catalog'].get('authority_boot_sha256')!=digest(base/'boot.json'):
+   raise ValueError('Springboard compiled list must exclude exact legacy SD source identities')
+
  boot['drivers'].append(dict(manifest='installed-apps/manifest.json',app_data=[dict(name='installed.apps',namespace=2000,access='read-write')]))
  sd_manifest=json.loads((a.sd/'manifest.json').read_text())
  if sd_manifest['version']!='0.2.20':raise ValueError('Async version-three SD provider required')
