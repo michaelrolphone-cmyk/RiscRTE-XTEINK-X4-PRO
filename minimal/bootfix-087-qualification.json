@@ -51,6 +51,14 @@
     "No physical boot, live heap, UI, network, card-removal or power-cut qualification.",
     "This full image replaces NVS/AppData. No device-specific preserving flash plan is included.",
     "The old .85 bootstrap is bound to .86; this release does not claim that old .85 -> .87 OTA admission is qualified. A new baseline-specific bridge qualification is required before live OTA-feed publication.",
-    "Watch crown-exit and five-second reboot recovery remain separate pending work."
-  ]
+    "Watch crown-exit and five-second reboot recovery remain separate pending work.",
+    "Current peer Files requires the same LAN. Automatic temporary private Wi-Fi negotiation and restoration are unfinished and not included."
+  ],
+  "hardware_report": {
+    "reported_by": "user through parent task",
+    "product": "X4 0.1.83 diagnostic",
+    "runtime_commit": "ef7d68718d4f054447ecd79cf008549723eb532b",
+    "result": "This booted",
+    "scope": "Boot confirmation for that diagnostic only; not combined 0.1.87 or full feature qualification."
+  }
 }
