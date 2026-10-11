@@ -31,7 +31,8 @@ jobs:
         run: |
           set -euo pipefail
           git clone --branch 0.2.3 --depth 1 --recurse-submodules https://github.com/igrr/mkspiffs.git Mkspiffs
-          make -C Mkspiffs -j2 CPPFLAGS='-DSPIFFS_OBJ_META_LEN=4 -DSPIFFS_USE_MAGIC=1 -DSPIFFS_USE_MAGIC_LENGTH=1'
+          test "$(git -C Mkspiffs rev-parse HEAD)" = 112d65368043f01dd86813cb84e41b1159a34f6b
+          make -C Mkspiffs -j2 CPPFLAGS='-DSPIFFS_OBJ_META_LEN=4'
           Mkspiffs/mkspiffs --version | tee mkspiffs-version.txt
           git -C Mkspiffs rev-parse HEAD > mkspiffs-source.txt
           git -C Mkspiffs submodule status >> mkspiffs-source.txt
