@@ -1,0 +1,35 @@
+name: Publish completed OBD X4 0.1.88 source
+on:
+  push:
+    branches: [feat/obd-nova7-088]
+    paths: [.github/workflows/publish-obd-088.yml]
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify and apply the delivered source patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git merge-base --is-ancestor e9a03813bf5a58cc0090cb68097c83b3605f1673 HEAD
+          python3 - <<'PY'
+          import base64,gzip,hashlib,subprocess
+          from pathlib import Path
+          data=''.join(''.join(Path(f'.source-import/obd-088/{i:02}.txt').read_text().split()) for i in range(1,5))
+          patch=gzip.decompress(base64.b64decode(data,validate=True))
+          assert hashlib.sha256(patch).hexdigest()=='a7179a3ddc4ff10a75738535c84f8c1acca7fce5a4f8fe09da7579079f1d45c5'
+          Path('/tmp/obd-088.patch').write_bytes(patch)
+          subprocess.run(['git','apply','--check','/tmp/obd-088.patch'],check=True)
+          subprocess.run(['git','apply','--index','/tmp/obd-088.patch'],check=True)
+          PY
+          git rm -r .source-import/obd-088
+          git rm .github/workflows/publish-obd-088.yml
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Publish completed X4 0.1.88 OBD NOVA-7 assembly and native catalog test'
+          git push origin HEAD:feat/obd-nova7-088
