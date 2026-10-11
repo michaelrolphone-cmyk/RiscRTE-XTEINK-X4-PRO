@@ -14,7 +14,7 @@ assignments = {n.targets[0].id: ast.literal_eval(n.value)
                and isinstance(n.targets[0], ast.Name)
                and n.targets[0].id in ('BUILDS', 'NATIVE_ELF_SHA')}
 assert pins['product_version'] == '0.1.76'
-assert product['version'] in ('0.1.76', '0.1.77', '0.1.78', '0.1.79')
+assert product['version'] in ('0.1.76', '0.1.77', '0.1.78', '0.1.79', '0.1.80')
 assert assignments['BUILDS']['0.1.76'] == (
     prior['image']['sha256'], pins['sources']['system']['version'],
     pins['sources']['productivity']['version'])

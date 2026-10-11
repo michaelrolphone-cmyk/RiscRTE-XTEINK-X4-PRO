@@ -10,7 +10,7 @@ product = json.loads((ROOT / 'minimal/product.json').read_text())
 spec = importlib.util.spec_from_file_location('reader_overlay', ROOT / pins['recipe'])
 recipe = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(recipe)
-assert product['version'] in ('0.1.77', '0.1.78', '0.1.79')
+assert product['version'] in ('0.1.77', '0.1.78', '0.1.79', '0.1.80')
 assert pins['product_version'] == pins['recipe_version_argument'] == '0.1.77'
 selected = recipe.BUILD_SELECTIONS['0.1.77']
 assert selected['baseline_version'] == pins['baseline']['version'] == '0.1.76'
