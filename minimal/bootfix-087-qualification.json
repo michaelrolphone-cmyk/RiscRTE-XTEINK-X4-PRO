@@ -2,44 +2,49 @@
   "schema": 1,
   "product": "xteink-x4-pro",
   "version": "0.1.87",
-  "product_build_commit": "3174dc663f3423829b09deea6191b5e2df8fea38",
-  "runtime_build_commit": "537af2821b78192e64360f94413113bef9394024",
+  "product_build_commit": "24fc5b7e8e7cee9d0150dbca2a4036fc21e2cbc4",
+  "runtime_build_commit": "c3d750d113dbc79af87daaad316ab1d63d57dd60",
   "runtime_version": "0.2.19",
   "checks": {
     "integrated-storage-acquire": {
       "log_sha256": "baa510777d475bc06400781360bffee42ac2f931148c0e86df50c8101e95042e",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     },
     "integrated-native-appdata": {
       "log_sha256": "34093edef07b491fd8a54b656d00be5a5dfe20599a87e37acc09f1b25fa35169",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     },
     "integrated-removable-image": {
       "log_sha256": "489466e0c1e1b2368076a9f0de87f8c8917d4b2aedd56907f1a95cf6f5d35d4b",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     },
     "integrated-removable-runtime": {
       "log_sha256": "2e5ab9f16e6bdca37d8b4d78759610b157cb3d4512525729fc87bc4d483dce60",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     },
     "integrated-storage-port": {
       "log_sha256": "40d4e45adbd73eb4a87a09b5b4dbd5cd08989657e19c98e977fed9f7b7186ddc",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     },
     "integrated-provider-exit": {
       "log_sha256": "3ff57f8a42eae187b2e433479046dfa2ea8b2275a129baf4530da0058290f666",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     },
     "integrated-cold-start": {
       "log_sha256": "a1519418b4ae346d83e152c8b67b6d4a1f6fc299419009570fdc94f549f4b709",
       "result": "pass",
-      "execution": "host production sources with controlled hardware boundaries; UBSan except image parser"
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
+    },
+    "integrated-retained-yield": {
+      "log_sha256": "627bd32f45c8d553b2785a613f5795cdae6041bc5fbadc135a76df13530e6ebb",
+      "result": "pass",
+      "execution": "production sources on host with controlled hardware boundaries; UBSan except image parser"
     }
   },
   "target_native_build": "passed single-job pinned PlatformIO",
@@ -60,5 +65,45 @@
     "runtime_commit": "ef7d68718d4f054447ecd79cf008549723eb532b",
     "result": "This booted",
     "scope": "Boot confirmation for that diagnostic only; not combined 0.1.87 or full feature qualification."
-  }
+  },
+  "supersedes_runtime_candidate": "537af2821b78192e64360f94413113bef9394024",
+  "superseded_reason": "Broader retained-yield test found eager native predicate evaluation after graph retention. Corrected native predicate remains short-circuited.",
+  "artifacts": {
+    "appdata.bin": {
+      "bytes": 524288,
+      "offset": 2555904,
+      "sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+    },
+    "bank_state.bin": {
+      "bytes": 8192,
+      "offset": 16719872,
+      "sha256": "fe7f6f557258ab785dbc164a0cc6288347190f780720b384f50b89493d27abd5"
+    },
+    "bootfs.bin": {
+      "bytes": 5308416,
+      "offset": 3080192,
+      "sha256": "d16629c446e1dd63b36b4432807aacfc533d9cc7db186f879495ad95911422e0"
+    },
+    "bootloader.bin": {
+      "bytes": 15104,
+      "offset": 0,
+      "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363"
+    },
+    "firmware.bin": {
+      "bytes": 1469856,
+      "offset": 65536,
+      "sha256": "14d499a511a034637ad2cec8b5ad916cc6eb177e70d45a30edc6dcf4e9925da5"
+    },
+    "otadata.bin": {
+      "bytes": 8192,
+      "offset": 16711680,
+      "sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "offset": 32768,
+      "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+    }
+  },
+  "full_image_sha256": "e8ae3b0ea3941fb1a3257ff55d45819e6ac1423620de699f382b677bc5c3c18f"
 }
