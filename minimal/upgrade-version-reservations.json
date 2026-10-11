@@ -6,5 +6,15 @@
   "reserved_feature_successor": "0.1.86",
   "status": "reserved only; bridge and successor are not built or delivered",
   "public_catalog_published": false,
-  "entry_point_blocker": "Both actual .81/.83 updater UIs and providers have compile-time disabled feeds. A catalog alone cannot initiate upgrade. Requires an independently installed feed-enabled updater or a separately qualified preserving bootstrap route."
+  "entry_point_blocker": "Both actual .81/.83 updater UIs and providers have compile-time disabled feeds. A catalog alone cannot initiate upgrade. Requires an independently installed feed-enabled updater or a separately qualified preserving bootstrap route.",
+  "shared_settings_successor": {
+    "version": "0.1.90",
+    "status": "source reservation; no release or hardware qualification yet",
+    "base": "0.1.89",
+    "retained_wake_bytes": 512,
+    "shared_settings": [
+      1,
+      6
+    ]
+  }
 }

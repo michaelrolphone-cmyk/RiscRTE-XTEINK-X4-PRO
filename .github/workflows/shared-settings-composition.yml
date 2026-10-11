@@ -1,0 +1,20 @@
+name: Shared settings composition
+on:
+  pull_request:
+    paths:
+      - 'minimal/scripts/compose_shared_settings_090.py'
+      - 'minimal/test/shared_settings_composition_test.py'
+      - 'minimal/shared-settings-090-sd-baseline.json'
+      - '.github/workflows/shared-settings-composition.yml'
+permissions:
+  contents: read
+jobs:
+  composition:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Complete profile, source receipts, protected settings, and grant limits
+        run: python3 minimal/test/shared_settings_composition_test.py
