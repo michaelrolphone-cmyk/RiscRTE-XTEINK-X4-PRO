@@ -1,0 +1,12 @@
+Desk lock terminal direction=0 clean=1 quality=0 fast=1 polls=31 queued_press=0
+Sparse terminal PASS (12 grants max, 5 native reads)
+Actual sparse Home crown: drawer=closed direction=0 desk-clean=1 terminal-entry=1 PASS
+Desk lock terminal direction=1 clean=1 quality=0 fast=1 polls=31 queued_press=0
+Sparse terminal PASS (12 grants max, 5 native reads)
+Actual sparse Home crown: drawer=closed direction=1 desk-clean=1 terminal-entry=1 PASS
+Desk lock terminal direction=0 clean=1 quality=0 fast=1 polls=31 queued_press=0
+Sparse terminal PASS (12 grants max, 5 native reads)
+Actual sparse Home crown: drawer=closed direction=0 desk-clean=1 terminal-entry=1 PASS
+Desk lock terminal direction=1 clean=1 quality=0 fast=1 polls=31 queued_press=0
+Sparse terminal PASS (12 grants max, 5 native reads)
+Actual sparse Home crown: drawer=closed direction=1 desk-clean=1 terminal-entry=1 PASS
