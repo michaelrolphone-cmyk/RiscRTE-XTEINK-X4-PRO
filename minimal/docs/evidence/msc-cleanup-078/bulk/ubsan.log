@@ -1,0 +1,2 @@
+Canonical SDK headers: 81
+{"hardware_timing":false,"host_commands":64,"command_bytes":65536,"read_bytes":2097152,"write_bytes":2097152,"export_read_calls":4096,"export_write_calls":4096,"max_export_blocks":1,"sdmmc_read_calls":4096,"sdmmc_write_calls":4096,"data_endpoint_transfers":8192,"direct_8block_sdmmc_calls":8,"card_restored":true,"host_eject_remount":true}
