@@ -69,7 +69,7 @@ def main():
  receipt=dict(status='development-store-not-a-release',base_boot_sha256=digest(base/'boot.json'),boot_sha256=digest(out/'boot.json'),
   apps=len(boot['app_capabilities']),drivers=len(boot['drivers']),volume_instance=9,cache_namespace=2000,namespace_range=boot['installation']['namespace_range'],
   replaced={name:dict(sha256=digest(out/name),bytes=(out/name).stat().st_size)for name in replacements},
-  remaining=['Strict complete store/native admission','Preserving migration of legacy explicit SD entries and their shared/private settings','Staged App Store SD installation and update transactions','On-device dependency provisioning','Hardware qualification'],
+  remaining=['Strict complete store/native admission']+([] if a.migrate_legacy else ['Select preserving migration of legacy SD authority'])+['On-device missing-provider dependency provisioning','Hardware qualification'],
   hardware_tested=False,flashable=False)
  (out.parent/(out.name+'-composition.json')).write_text(json.dumps(receipt,indent=2)+'\n')
  print(json.dumps(receipt))

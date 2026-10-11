@@ -1,0 +1,726 @@
+{
+  "original_fixture_sha256": "c80f18414663693cc4fa0155cd816d8fc6558cf57212b70f5d4f7ef8546a3843",
+  "selected_fixture_sha256": "722be6fc99834af6da328131e5683ef83a08f7b691a951d54b7409274ce18aac",
+  "header_sha256": "caa733750a21630fa9fd2dcc0888df6ee3a311164e58d8ef27cb2aa2cbb3c60c",
+  "native_admission_source_sha256": "35a7d0dc055be57e79145991e624f234a2990da6c47b17e1dd956f71d3cf4fc2",
+  "sanitized": true,
+  "sanitizers": "undefined",
+  "runtime_commit": "7238b7d5bf3544c6b8bbba3c6a9eefd343019a52",
+  "provider_capacity": 32,
+  "graph_grants": 48,
+  "app_capacity": 64,
+  "boot_sha256": "e96603b14fcb852b82fc9b7c2f35a6624f78c9b85b9ae2af70f346a3321bd213",
+  "store_sha256": {
+    "points_in_time.json": "4aad7dd39182053abc9cfae251c16a1814ad9e190b57f8ad9a041c72e4965344",
+    "wifi_settings.elf": "e5df0a788f2f4d1c2d7faff3109110da54a476c416f4b4894248f92ccb1d694b",
+    "timecard.json": "c654a938807858320727c50fa6d7d73434a3bbbc5f3cd5fb2c570d05ccab4a7d",
+    "boot.json": "e96603b14fcb852b82fc9b7c2f35a6624f78c9b85b9ae2af70f346a3321bd213",
+    "ota_update.json": "5a04c049f9000787639ebf2e4aa721bbe1b35e91ad71e61d501de2c91a4132ac",
+    "hollow_trail.json": "9b92778c33308b81cc224951d9b2d2a4687cee7ec4382bd1f53ab729cccc35ce",
+    "settings.json": "2518f483c26b928815b5311e2b3dd1549988ffac4bd2fbd76d06e4da21f29b29",
+    "springboard.json": "812500e079a1d64e96f7d6bcedc5610d7dcfa5b02e9232d01d2155bbd61dc888",
+    "calculator.json": "1801ca7e3d92a2723cc1e7329799bed7e7c22c009dd1a956eb0400bd64038d81",
+    "ble_touchpad.json": "7c6ec69ad8901c5d949f58d0e79dcc01070830b76b5330950ec9f1d8850170a7",
+    "cohort.json": "e664b6c4d1492569d0a1407c26327525e904484f00ea2572c261c9ae3d94b638",
+    "app_store.json": "101386dc8c0817e2c6d5a319634b988ff4a2711f0f8857e835ab3866bb159c1e",
+    "board.json": "e718fc23327334f8218162bb476fd1e9f86fc9d8fbf240e5c2db4c4c05acf012",
+    "default.elf": "79e6897de7c4dc68d1600f616d7859a1dd58476b21f63af2ee233a13c4f09fa4",
+    "countdown.json": "677900d30b609157e24bafda3230f98fd0b3c06d3225a2868c4855abf34f8a5b",
+    "app_store.elf": "2e4e9a323c9679f0aed86d44491f6ee7cf2a522dc195e4d715ef01f9aa2b88c1",
+    "ebook_reader.json": "e63d1106a4797e3a9386a402f4d2b2ea4e8c6386718188b7927293e588de2980",
+    "ble_buttons.json": "f202427692118326550ba7a877188bf6cfa69064bbb9051cd8fbcbf1bd459370",
+    "file_browser.elf": "a1f899e32afa2f21c3666beec9e561be918028b53b35d15c30dd2c5e7d5f79e7",
+    "alarms.elf": "073379c9c7ad88bdf4e2c7bb2110db69fc46e593940912047809b101e82bb11e",
+    "springboard.elf": "aad5bfd02e7b8a18e718e68f9bd53d4c903988e555245a17d3d1c8f0c0f91b5b",
+    "gameboy.json": "5b0bc21e973e9ee0c2562a9a27db3b6f4dde824cd2f9e53cb4421ce6b36418fd",
+    "ota_update.elf": "efcf3c021f4a1cb19ebe81594e65b4e8cead544df6dad10f7bd25fc234e9a9d0",
+    "lists.json": "be7fbacc6676f5ee44c712394cbca5779be1e12953846cc35cc184e71e7a0b92",
+    "contexts.json": "7e554b3130bfec71c7392cd80f79a87f7f00f7f1a2856f8f656c514aed44e6fb",
+    "usb_sd_transfer.elf": "d678ee89ef13f0e7c8e627947c58e858525fd64921fad56e1671641bc036ea68",
+    "battery.elf": "06c222dd5d5cee4d58b4e1495a6f28cf526506313fa4d5cb1053f77f423af3bf",
+    "daily_digest.json": "ceae583b3a4b4de5d67473d50b51a5ee799f0ede54caf2970f4817dcacce3f11",
+    "settings.elf": "7f533e7bba22f765ef4e85beccde0c637a6935e573b76c3f61fef3dd51765ef8",
+    "ble_scanner.json": "18a21d0fd4de40d11806cb92fab66d04a3c2ae6613e124d25ff0722814001e44",
+    "waterfall.json": "7bbd2433d93b709fcf6105fd32b0fbf010b1b2d6d79659f6499e39f58a153017",
+    "stopwatch.json": "020426df1803c6ae37c03e75378e82b73d9ed874378781eaf680e25f51342345",
+    "alarms.json": "6c62c39bab1b4f8586eff9a1543e665d88fd798951d31971b77f58b92fd06879",
+    "battery.json": "a0a0ee9ac5490c6007cb5b9cbe826acac2ecd63506d7e99325b99bd5e3811476",
+    "default.json": "bbed5812456218835cf47196ebad67797e6a539cbc6ef3d68f9405db82cc9030",
+    "wifi_settings.json": "cc07014a9a94e37bedc8000893246d1dba1a32d29970d1be2872c3a25a0d618d",
+    "usb_sd_transfer.json": "72cfb822a0fa68856d6b1b449b006c48bed5a9ace0060c1e2d9f473fba73863f",
+    "model_viewer.json": "89204d530af77e6323d083093a4a1fff904ecdae573f72252de257394b314dd2",
+    "file_browser.json": "65660c24b8181c369154b5f700e88137dc4faf3cb568e878f84072062fc926e5",
+    "power/manifest.json": "d971a5fe28b141663a75b2f00afda104712a2635acbb690f4afc6e95f98bd465",
+    "power/driver.elf": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b",
+    "wifi/manifest.json": "ae48186eb09a91b5e0b43646774f06f6a4ed925122b6e31187bef4c15f1c3ca1",
+    "wifi/driver.elf": "b966f6020cfd6bac0f990f8232c9b55c37f3dae6a488a608ff58b5f598e3da3e",
+    "upd-fw/manifest.json": "89cba210fd031f36fa0b8b318fc4eba7e5f996ddf19451b0f19dcc37d4367ed7",
+    "upd-fw/driver.elf": "0b8cf4ca9090212407f022f0a43076ab0efe6f90f798a0bd9cba240d366d6548",
+    "sd/manifest.json": "90755c9941abe585acafca24ef5778eb309984fca0cc834fdf1eadf1b72af58d",
+    "sd/driver.elf": "d7d9f8c01747eac8f3b353d974b2f50d72212ce19eb6249a40b32055a267d631",
+    "sensors/manifest.json": "e1cbdd0a2490a88cd8984404e37b6ef059403d31f87f47be9c7756fb0133b0b5",
+    "sensors/driver.elf": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998",
+    "contexts/manifest.json": "3c518e0017199a6d2ee8edb4b3bcb10f3069a154b70d4a6693994c2d38e86073",
+    "contexts/driver.elf": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4",
+    "buttons/manifest.json": "ae647b63e6c411b6ab0f482ce6a87e83e0ef56e92fc2c49684a7c0fc66e3e2fa",
+    "buttons/driver.elf": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9",
+    "ble/manifest.json": "4ee16de2288052aee2ac8b773fde0aadc080ad8e7498f64b46951a95ff48ad64",
+    "ble/driver.elf": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5",
+    "panel/manifest.json": "eafdacde35bbda93f617592b9bd0d7ba7c21204dca22793cc976c5bb9656cade",
+    "panel/driver.elf": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+    "upd-app/manifest.json": "e269c29bffe1061d499e71158e230daca200eeb896c702d726752a56f595020e",
+    "upd-app/driver.elf": "464b3dd419bfc7d1a0eeb6fdebe160ef5445b77cd7fa07df1a37a5af64f32761",
+    "board/manifest.json": "53956ef045217d714cf3ce02dc4eb6d1f83e56ae00d08acd8211fdb4ac1ebbb6",
+    "board/driver.elf": "8fe67d12a2f497978581dfdc5a065b494564f3b1c3982a664751508ffa2310e9",
+    "touch/manifest.json": "6bfa5e918ab18d9b7c4b5d5eef4e6756b65d3f69f44bcdb7d1460f2f0f95ef1e",
+    "touch/driver.elf": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4",
+    "ui-scene/manifest.json": "dfcb9fcb910bc3c46fc934e81bf67ae650c9546b69067c93ca72e3728d7bccba",
+    "ui-scene/driver.elf": "fd8543dcb48d02f08cfcda144b0038d457f59b9cc5bf670caeee746f92af3ff7",
+    "i2c/manifest.json": "fb2e867b265bc00c23686c05b5aaf12d15a07f0ed639eaacc5048a7b3738d2e1",
+    "i2c/driver.elf": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1",
+    "sharing-ble/manifest.json": "97c9d9468f4dd4fc12d40707e0061b7ab657e9088dfbaf16452feb50a185ff91",
+    "sharing-ble/driver.elf": "024300f61de1f1d4cb316280cc41e395f24aed8de52a29f24506fe5954c4c883",
+    "usb-msc/manifest.json": "8d4fe79759116b59dfffd1982900f7c81a873d7664bfa8aa327733666a0859a1",
+    "usb-msc/driver.elf": "a8d5613723101f861f5f866ed5e33e1f2c1ec6d00668e799632461146688461c",
+    "battery-telem/manifest.json": "1f96c3af1e949bf6aff5e554f7a362b02467289f2984338aa7414605a5131335",
+    "battery-telem/driver.elf": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da",
+    "ui-profile/manifest.json": "f85d3c86848887ba49133eeb395825d867e83bdbda469758f98b641baaa2a218",
+    "ui-profile/driver.elf": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341",
+    "net-http-client/manifest.json": "6635d08c24c2770d52f5c1aff5be2073cb8e7d9c0e33b80c5b1d5de3c9e9bfc6",
+    "net-http-client/driver.elf": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507",
+    "rtc/manifest.json": "8a795ce2cb35c86347eb0a3956db16f0e02f4bed0608b92ea23ceeaa438fbf5f",
+    "rtc/driver.elf": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58",
+    "hid/manifest.json": "bf2f68ebfb13aba3d48050813453872885286ef5f0fe73c3fd3cb6faaabd3b49",
+    "hid/driver.elf": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555",
+    "ble-telem/manifest.json": "3a9658800cfdbd7d1111020b198e212d98793f6fb949aafaf45943bd263ca973",
+    "ble-telem/driver.elf": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2",
+    "sharing-tcp/manifest.json": "baecb03d7336a3a26b4905111554bd300b4bd6b0ab3bd9f2660f84b8d08c5a2e",
+    "sharing-tcp/driver.elf": "83bb7000903ad51902480d045ba1217e4fa64e95553004172d6a32d2fdc34d76",
+    "ui-text/manifest.json": "a8de3adc0d08997ceaac2b88c362ce09c13a6b07e9893b5901d99083fffb998f",
+    "ui-text/driver.elf": "23ba53a8bdfa2f76d751744e5a9f79c533cb8abbe8c859bf6f622e945dca8b8a",
+    "light/manifest.json": "a07577b9445c3caf55dec38a2f626b4873fff29f36fd2f75025ce5596d1dedc2",
+    "light/driver.elf": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b",
+    "iq/manifest.json": "6dab7f69b5829426ac88536104e338ed15ab71f60d9476f4e5afdb3fb1de7d3f",
+    "iq/driver.elf": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50",
+    "alarm/manifest.json": "2990b997960533f9083da7d854a50360c6bdbc135ed6374442e14b27af76b777",
+    "alarm/driver.elf": "0aaecfc598711653b2ac59dcba355a89d67c05bbfbeaaa899143e889a2f0c021",
+    "battery/manifest.json": "268db2abbc2ac2c55d184db0a79b0e1cf108e339bf7651bd74cc81a57382d89a",
+    "battery/driver.elf": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe",
+    "sharing-entropy/manifest.json": "614db32f01de81e36a9c45aab03cd356ba8ba888b273e7b31f92f68efcbf7ece",
+    "sharing-entropy/driver.elf": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c",
+    "broadcast/manifest.json": "696951b090d64dd5a7d919055c4061c61b894789c7d6cde0c4fc496f775abeef",
+    "broadcast/driver.elf": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d",
+    "installed-apps/manifest.json": "a4fb97795b0e98011d1590ade4d762ff4df78f5be22ce42282e268a8f9531bbf",
+    "installed-apps/driver.elf": "9ce41233e9d2851382f0be410333d42cd209a66f5637286d1116b3b6d4eb19cd",
+    "civil-clock-x4/manifest.json": "f80cd2713b87f5b74a08d37b0789b78ac375d50f59df2ede306b4e05d456e1bf",
+    "civil-clock-x4/driver.elf": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
+  },
+  "native": {
+    "firmware_sha256": "70c39d9eecaf2019681c40afc01f6aa73ed3904acdb5517c370dae2ffa19c21f",
+    "elf_used_for_candidate": false,
+    "esp_checksum_and_appended_sha256": true,
+    "segments": [
+      {
+        "address": 1007681568,
+        "offset": 32,
+        "size": 280024
+      },
+      {
+        "address": 1070182576,
+        "offset": 280064,
+        "size": 25720
+      },
+      {
+        "address": 1077362688,
+        "offset": 305792,
+        "size": 21912
+      },
+      {
+        "address": 1107296288,
+        "offset": 327712,
+        "size": 1025124
+      },
+      {
+        "address": 1077384600,
+        "offset": 1352844,
+        "size": 72460
+      },
+      {
+        "address": 1611653120,
+        "offset": 1425312,
+        "size": 44
+      }
+    ],
+    "tables": [
+      {
+        "table": "g_esp_libc_elfsyms",
+        "address": 1007712764,
+        "file_offset": 31228,
+        "bytes": 408,
+        "sha256": "5aca3f2d8e65c375ae80cbb1b3783688ef209a0c0a7230fe12413ca59d122db5",
+        "rows": [
+          {
+            "name": "strerror",
+            "name_address": 1007703655,
+            "address": 1108208844
+          },
+          {
+            "name": "strtof",
+            "name_address": 1007703773,
+            "address": 1108215564
+          },
+          {
+            "name": "strtoul",
+            "name_address": 1007703780,
+            "address": 1073747188
+          },
+          {
+            "name": "strcat",
+            "name_address": 1007703788,
+            "address": 1073746804
+          },
+          {
+            "name": "strncasecmp",
+            "name_address": 1007703795,
+            "address": 1073746900
+          },
+          {
+            "name": "strcasecmp",
+            "name_address": 1007703807,
+            "address": 1073746780
+          },
+          {
+            "name": "strnlen",
+            "name_address": 1007703818,
+            "address": 1073746936
+          },
+          {
+            "name": "tolower",
+            "name_address": 1007703826,
+            "address": 1073746720
+          },
+          {
+            "name": "isalpha",
+            "name_address": 1007703834,
+            "address": 1073746576
+          },
+          {
+            "name": "qsort",
+            "name_address": 1007703842,
+            "address": 1073747080
+          },
+          {
+            "name": "vsnprintf",
+            "name_address": 1007703848,
+            "address": 1108245144
+          },
+          {
+            "name": "setjmp",
+            "name_address": 1007703858,
+            "address": 1073747020
+          },
+          {
+            "name": "longjmp",
+            "name_address": 1007703865,
+            "address": 1108291600
+          },
+          {
+            "name": "memset",
+            "name_address": 1007703664,
+            "address": 1073746408
+          },
+          {
+            "name": "memcpy",
+            "name_address": 1007703671,
+            "address": 1073746420
+          },
+          {
+            "name": "memmove",
+            "name_address": 1007703678,
+            "address": 1073746432
+          },
+          {
+            "name": "memcmp",
+            "name_address": 1007703686,
+            "address": 1073746444
+          },
+          {
+            "name": "memchr",
+            "name_address": 1007703693,
+            "address": 1073746756
+          },
+          {
+            "name": "strlen",
+            "name_address": 1007703700,
+            "address": 1073746504
+          },
+          {
+            "name": "strcpy",
+            "name_address": 1007703707,
+            "address": 1073746456
+          },
+          {
+            "name": "strncpy",
+            "name_address": 1007703714,
+            "address": 1073746468
+          },
+          {
+            "name": "strcmp",
+            "name_address": 1007703722,
+            "address": 1073746480
+          },
+          {
+            "name": "strncmp",
+            "name_address": 1007703729,
+            "address": 1073746492
+          },
+          {
+            "name": "strchr",
+            "name_address": 1007703737,
+            "address": 1073746828
+          },
+          {
+            "name": "strrchr",
+            "name_address": 1007703744,
+            "address": 1073746948
+          },
+          {
+            "name": "strstr",
+            "name_address": 1007703752,
+            "address": 1073746516
+          },
+          {
+            "name": "strtod",
+            "name_address": 1007703759,
+            "address": 1108215376
+          },
+          {
+            "name": "strtol",
+            "name_address": 1007703766,
+            "address": 1073747176
+          },
+          {
+            "name": "strcspn",
+            "name_address": 1007703873,
+            "address": 1073746840
+          },
+          {
+            "name": "strncat",
+            "name_address": 1007703881,
+            "address": 1073746912
+          },
+          {
+            "name": "snprintf",
+            "name_address": 1007703849,
+            "address": 1108207844
+          },
+          {
+            "name": "malloc",
+            "name_address": 1007702895,
+            "address": 1077448796
+          },
+          {
+            "name": "calloc",
+            "name_address": 1007712082,
+            "address": 1077448920
+          },
+          {
+            "name": "realloc",
+            "name_address": 1007702877,
+            "address": 1077448808
+          },
+          {
+            "name": "free",
+            "name_address": 1007816503,
+            "address": 1077448828
+          },
+          {
+            "name": "clock_gettime",
+            "name_address": 1007703889,
+            "address": 1107757068
+          },
+          {
+            "name": "strftime",
+            "name_address": 1007703903,
+            "address": 1108211924
+          },
+          {
+            "name": "__errno",
+            "name_address": 1007703912,
+            "address": 1108199300
+          },
+          {
+            "name": "__getreent",
+            "name_address": 1007703920,
+            "address": 1077428988
+          },
+          {
+            "name": "_ctype_",
+            "name_address": 1007703950,
+            "address": 1007902432
+          },
+          {
+            "name": "__ltdf2",
+            "name_address": 1007703958,
+            "address": 1073751004
+          },
+          {
+            "name": "__fixunsdfsi",
+            "name_address": 1007703966,
+            "address": 1073750776
+          },
+          {
+            "name": "__gtdf2",
+            "name_address": 1007703979,
+            "address": 1073750944
+          },
+          {
+            "name": "__floatunsidf",
+            "name_address": 1007703987,
+            "address": 1073750884
+          },
+          {
+            "name": "__divdf3",
+            "name_address": 1007704001,
+            "address": 1073750608
+          },
+          {
+            "name": "getopt_long",
+            "name_address": 1007704010,
+            "address": 1108205680
+          },
+          {
+            "name": "optind",
+            "name_address": 1007704022,
+            "address": 1070258456
+          },
+          {
+            "name": "opterr",
+            "name_address": 1007704029,
+            "address": 1070258452
+          },
+          {
+            "name": "optarg",
+            "name_address": 1007704036,
+            "address": 1070258460
+          },
+          {
+            "name": "optopt",
+            "name_address": 1007704043,
+            "address": 1070258448
+          }
+        ]
+      },
+      {
+        "table": "_ZZN8RiscBoot7Runtime3runEvE7symbols",
+        "address": 1007701244,
+        "file_offset": 19708,
+        "bytes": 16,
+        "sha256": "29291c4b452b25e7a20bbddfabbd630052e6829f897351ac4d9504a61d997622",
+        "rows": [
+          {
+            "name": "risc_runtime_get_api",
+            "name_address": 1007700728,
+            "address": 1107344964
+          }
+        ]
+      }
+    ],
+    "exports": {
+      "strerror": 1108208844,
+      "strtof": 1108215564,
+      "strtoul": 1073747188,
+      "strcat": 1073746804,
+      "strncasecmp": 1073746900,
+      "strcasecmp": 1073746780,
+      "strnlen": 1073746936,
+      "tolower": 1073746720,
+      "isalpha": 1073746576,
+      "qsort": 1073747080,
+      "vsnprintf": 1108245144,
+      "setjmp": 1073747020,
+      "longjmp": 1108291600,
+      "memset": 1073746408,
+      "memcpy": 1073746420,
+      "memmove": 1073746432,
+      "memcmp": 1073746444,
+      "memchr": 1073746756,
+      "strlen": 1073746504,
+      "strcpy": 1073746456,
+      "strncpy": 1073746468,
+      "strcmp": 1073746480,
+      "strncmp": 1073746492,
+      "strchr": 1073746828,
+      "strrchr": 1073746948,
+      "strstr": 1073746516,
+      "strtod": 1108215376,
+      "strtol": 1073747176,
+      "strcspn": 1073746840,
+      "strncat": 1073746912,
+      "snprintf": 1108207844,
+      "malloc": 1077448796,
+      "calloc": 1077448920,
+      "realloc": 1077448808,
+      "free": 1077448828,
+      "clock_gettime": 1107757068,
+      "strftime": 1108211924,
+      "__errno": 1108199300,
+      "__getreent": 1077428988,
+      "_ctype_": 1007902432,
+      "__ltdf2": 1073751004,
+      "__fixunsdfsi": 1073750776,
+      "__gtdf2": 1073750944,
+      "__floatunsidf": 1073750884,
+      "__divdf3": 1073750608,
+      "getopt_long": 1108205680,
+      "optind": 1070258456,
+      "opterr": 1070258452,
+      "optarg": 1070258460,
+      "optopt": 1070258448,
+      "risc_runtime_get_api": 1107344964
+    },
+    "resolver_source_sha256": "1d83dbcf8a694c1d22398b1dc9f81ea3d338b072e7ef7e7133194806ccc1bee0",
+    "locale_info": 0
+  },
+  "modules": [
+    {
+      "path": "alarm/driver.elf",
+      "sha256": "0aaecfc598711653b2ac59dcba355a89d67c05bbfbeaaa899143e889a2f0c021"
+    },
+    {
+      "path": "alarms.elf",
+      "sha256": "073379c9c7ad88bdf4e2c7bb2110db69fc46e593940912047809b101e82bb11e"
+    },
+    {
+      "path": "app_store.elf",
+      "sha256": "2e4e9a323c9679f0aed86d44491f6ee7cf2a522dc195e4d715ef01f9aa2b88c1"
+    },
+    {
+      "path": "battery/driver.elf",
+      "sha256": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe"
+    },
+    {
+      "path": "battery-telem/driver.elf",
+      "sha256": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da"
+    },
+    {
+      "path": "battery.elf",
+      "sha256": "06c222dd5d5cee4d58b4e1495a6f28cf526506313fa4d5cb1053f77f423af3bf"
+    },
+    {
+      "path": "ble/driver.elf",
+      "sha256": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5"
+    },
+    {
+      "path": "ble-telem/driver.elf",
+      "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2"
+    },
+    {
+      "path": "board/driver.elf",
+      "sha256": "8fe67d12a2f497978581dfdc5a065b494564f3b1c3982a664751508ffa2310e9"
+    },
+    {
+      "path": "broadcast/driver.elf",
+      "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d"
+    },
+    {
+      "path": "buttons/driver.elf",
+      "sha256": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9"
+    },
+    {
+      "path": "civil-clock-x4/driver.elf",
+      "sha256": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
+    },
+    {
+      "path": "contexts/driver.elf",
+      "sha256": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4"
+    },
+    {
+      "path": "default.elf",
+      "sha256": "79e6897de7c4dc68d1600f616d7859a1dd58476b21f63af2ee233a13c4f09fa4"
+    },
+    {
+      "path": "file_browser.elf",
+      "sha256": "a1f899e32afa2f21c3666beec9e561be918028b53b35d15c30dd2c5e7d5f79e7"
+    },
+    {
+      "path": "hid/driver.elf",
+      "sha256": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555"
+    },
+    {
+      "path": "i2c/driver.elf",
+      "sha256": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1"
+    },
+    {
+      "path": "installed-apps/driver.elf",
+      "sha256": "9ce41233e9d2851382f0be410333d42cd209a66f5637286d1116b3b6d4eb19cd"
+    },
+    {
+      "path": "iq/driver.elf",
+      "sha256": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50"
+    },
+    {
+      "path": "light/driver.elf",
+      "sha256": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b"
+    },
+    {
+      "path": "net-http-client/driver.elf",
+      "sha256": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507"
+    },
+    {
+      "path": "ota_update.elf",
+      "sha256": "efcf3c021f4a1cb19ebe81594e65b4e8cead544df6dad10f7bd25fc234e9a9d0"
+    },
+    {
+      "path": "panel/driver.elf",
+      "sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4"
+    },
+    {
+      "path": "power/driver.elf",
+      "sha256": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b"
+    },
+    {
+      "path": "rtc/driver.elf",
+      "sha256": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58"
+    },
+    {
+      "path": "sd/driver.elf",
+      "sha256": "d7d9f8c01747eac8f3b353d974b2f50d72212ce19eb6249a40b32055a267d631"
+    },
+    {
+      "path": "sensors/driver.elf",
+      "sha256": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998"
+    },
+    {
+      "path": "settings.elf",
+      "sha256": "7f533e7bba22f765ef4e85beccde0c637a6935e573b76c3f61fef3dd51765ef8"
+    },
+    {
+      "path": "sharing-ble/driver.elf",
+      "sha256": "024300f61de1f1d4cb316280cc41e395f24aed8de52a29f24506fe5954c4c883"
+    },
+    {
+      "path": "sharing-entropy/driver.elf",
+      "sha256": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c"
+    },
+    {
+      "path": "sharing-tcp/driver.elf",
+      "sha256": "83bb7000903ad51902480d045ba1217e4fa64e95553004172d6a32d2fdc34d76"
+    },
+    {
+      "path": "springboard.elf",
+      "sha256": "aad5bfd02e7b8a18e718e68f9bd53d4c903988e555245a17d3d1c8f0c0f91b5b"
+    },
+    {
+      "path": "touch/driver.elf",
+      "sha256": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4"
+    },
+    {
+      "path": "ui-profile/driver.elf",
+      "sha256": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341"
+    },
+    {
+      "path": "ui-scene/driver.elf",
+      "sha256": "fd8543dcb48d02f08cfcda144b0038d457f59b9cc5bf670caeee746f92af3ff7"
+    },
+    {
+      "path": "ui-text/driver.elf",
+      "sha256": "23ba53a8bdfa2f76d751744e5a9f79c533cb8abbe8c859bf6f622e945dca8b8a"
+    },
+    {
+      "path": "upd-app/driver.elf",
+      "sha256": "464b3dd419bfc7d1a0eeb6fdebe160ef5445b77cd7fa07df1a37a5af64f32761"
+    },
+    {
+      "path": "upd-fw/driver.elf",
+      "sha256": "0b8cf4ca9090212407f022f0a43076ab0efe6f90f798a0bd9cba240d366d6548"
+    },
+    {
+      "path": "usb-msc/driver.elf",
+      "sha256": "a8d5613723101f861f5f866ed5e33e1f2c1ec6d00668e799632461146688461c"
+    },
+    {
+      "path": "usb_sd_transfer.elf",
+      "sha256": "d678ee89ef13f0e7c8e627947c58e858525fd64921fad56e1671641bc036ea68"
+    },
+    {
+      "path": "wifi/driver.elf",
+      "sha256": "b966f6020cfd6bac0f990f8232c9b55c37f3dae6a488a608ff58b5f598e3da3e"
+    },
+    {
+      "path": "wifi_settings.elf",
+      "sha256": "e5df0a788f2f4d1c2d7faff3109110da54a476c416f4b4894248f92ccb1d694b"
+    }
+  ],
+  "admission": {
+    "prepared": true,
+    "cohort_validated": true,
+    "error": "",
+    "hardware_calls": 0,
+    "storage_calls": 0,
+    "elf_count": 42,
+    "cooperative_yields": 168
+  },
+  "rejected_namespace_changes": [
+    "range-moved",
+    "range-removed",
+    "cache-owner-moved",
+    "33-provider-overflow"
+  ],
+  "hardware_tested": false,
+  "scope": "Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.",
+  "status": "source-qualified-install-update-and-legacy-migration",
+  "native_source_commit": "18c3909a8f67896378a1f2c33d7a9a5434189a0a",
+  "x4_native_source_commit": "694c6c32fbd3a4d260e90eb4aef664552404aaa9",
+  "native_composition_sha256": "71f7890e1b8a45279bddf994d4da4b0455f43f728bf2edb6a61d73b45b0e7568",
+  "native_static_ram_bytes": 78992,
+  "native_flash_bytes": 1424981,
+  "legacy_authorities": 16,
+  "compiled_springboard_installed_rows": 8,
+  "legacy_settings_reassigned": false,
+  "forward_migration_admitted": true,
+  "changed_legacy_private_namespace_rejected": true,
+  "flashable": false,
+  "tests": [
+    "New after-build SD app registered and executed twice through actual host Runtime/loader/provider handoff, including private settings write",
+    "Dormant legacy authority: no inventory entry before discovery, compact inventory after discovery, original private namespace 77 instead of new-app namespace 1000, wrong managed directory denied",
+    "160 registry churn cycles, full catalog update, rollback, removal/reinsert, retained-close cases; UBSan",
+    "App Store existing 38 scenarios plus cached inventory/removal and staged install confirmation; SD image validation/journal/restart tests",
+    "Actual X4 SD/FatFs and shared WebDAV streamed PUT/GET, atomic overwrite, recursive COPY/DELETE, MOVE, PROPFIND, USB custody, async-install exclusion, absent media",
+    "Merged HCI/Wi-Fi coexistence 23 cases; clock scheduler at 100/1000Hz; actual System entropy provider with Runtime; UBSan",
+    "Native update health and immutable multi-namespace update admission; UBSan",
+    "Springboard metadata-only appearance compatibility and absent style rows not installed",
+    "Clean single-job ESP32-S3 native build, clean Springboard 1.8.1 target link, complete 42-module native admission; no hardware execution"
+  ],
+  "host_adaptations": [
+    "Darwin compiler wrapper drops Linux -no-pie/-rdynamic, uses undefined dynamic_lookup for host fixture modules, substitutes UBSan for unavailable ASan",
+    "Entropy exact-inventory fixture strips host debug -g to avoid .dSYM extra directories; first unadapted run correctly failed whole-store inventory"
+  ],
+  "remaining": [
+    "Configure owner-selected package catalog, core package set and provider bindings for on-device missing-provider provisioning",
+    "Implement missing-provider placement/download/full-graph activation integration; existing profile coordinator currently stages a complete internal store, dynamic registry only admits apps under the existing graph",
+    "Physical device/UI/power-cut qualification and product release assembly"
+  ],
+  "integration_notes": [
+    "Files supplied Runtime 81845e8, System 784f7f3 and X4 b455a10 are merged on isolated feature branches",
+    "Current development Files export map is inherited test input; not a new user export authorization",
+    "No master merge, hardware flash, active workspace mutation or release promotion"
+  ],
+  "source_branches": {
+    "runtime": "7238b7d5bf3544c6b8bbba3c6a9eefd343019a52",
+    "system": "91e511dc448f42714ffb0cbe7d641a5bf9587c8d",
+    "firmware": "694c6c32fbd3a4d260e90eb4aef664552404aaa9"
+  },
+  "clean_files_target": {
+    "repository_commit": "91e511dc448f42714ffb0cbe7d641a5bf9587c8d",
+    "working_tree_dirty": false,
+    "version": "1.5.24",
+    "sha256": "a1f899e32afa2f21c3666beec9e561be918028b53b35d15c30dd2c5e7d5f79e7"
+  },
+  "clean_springboard_target": {
+    "repository_commit": "593b62cc09b4ac1e695cc7e656458fbd13770e18",
+    "working_tree_dirty": false,
+    "version": "1.8.1",
+    "sha256": "aad5bfd02e7b8a18e718e68f9bd53d4c903988e555245a17d3d1c8f0c0f91b5b"
+  }
+}
