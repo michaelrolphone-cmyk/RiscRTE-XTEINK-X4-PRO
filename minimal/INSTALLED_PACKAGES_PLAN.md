@@ -70,3 +70,60 @@ Mach-O shim on this Mac; this is not linked target ELF or hardware qualification
 ASan stalls before main in recursive sanitizer initialization under this macOS
 malloc/dyld combination and is not counted as passed. Product-level provider,
 worker, UI binding, driver activation and installation transactions remain open.
+
+
+## October 11 native/provider checkpoint
+
+Published source on the isolated feature branches:
+
+- Runtime `09b78ca39e19152a3bd1ac3a02a390fcb3a00cbd`: owner-envelope native
+  installation transactions; no app identities in that envelope; stable policy
+  admission/withdrawal; active-target protection; resident-return registration
+  regression; missing/empty/oversized manifest handling.
+- System-Apps `eda631c7255dcc1f0802fdced68baed838a4f61c`: experimental cache-backed
+  provider; zero SD calls on cache startup; complete-scan transaction; protected
+  uninstall preflight; source-bound Xtensa builder and host integration tests.
+
+`evidence/installed-packages/provider-target-link.json` records a clean-source
+build of the provider (53,844-byte ELF). This is target-link qualification only,
+not a runnable X4 image or hardware qualification. The generated ELF and receipt
+are also in the isolated task's `build/installed-apps` directory.
+
+Passed: normal and UBSan native removable launch suite, including existing
+foreground launch/return then newly discovered package admission and two launches;
+metadata scanner failure/retention suite; installed catalog codec/media/fallback
+suite; cache-backed provider integration suite. ASan on this host stalls inside
+its own initialization, so no ASan pass is claimed.
+
+### Explicit nonblocking UI requirement
+
+The panel-settled synchronous Springboard prototype was removed. There are no
+changes to current Springboard/display/input code, no new application-identity
+whitelist, and no firmware rebuild or flash in this checkpoint. The full acceptance
+case (background refresh then visible icon then launch with unchanged firmware)
+is NOT complete.
+
+Required next sequence:
+
+1. Add scoped asynchronous storage operations and lazy SD activation. Current
+   `x4pro_sd/driver.c:start` invokes `init_card`; merely queueing enumeration does
+   not remove that first synchronous stall. Respect existing owner-only native
+   GPIO/SDMMC/sync contracts; no global owner relaxation. Results/cancellation
+   must prove quiescence before release, launch, USB export or sleep.
+2. Bind the completed async provider through the existing shared app adapter.
+   Show cache immediately; copy/publish snapshots at logical lifecycle checkpoints
+   independent of physical panel settling, and preserve touch identity across a
+   catalog generation change. Validate unknown installed package to background
+   catalog to actual launch on the target integration.
+3. Add App Store installation validation/receipts and durable per-app namespace
+   allocation. Current native envelope intentionally rejects namespace-owning
+   storage grants until there is a durable allocation protocol.
+4. Complete core app/driver SD-first provisioning with internal bootstrap closure
+   and atomic graph activation. The published offline planner does not implement
+   on-device driver installation.
+5. Complete shared SD-first settings/AppData with migration, internal fallback,
+   and retained pending writes across SD removal/USB export as a separate milestone.
+
+Do not promote this checkpoint as a discovery-capable release. Compose against
+`.1.78` delivery source `8e9e8eb7a2b1f7f860777d0d0e8a89dd2822af87` after the above
+boundaries are complete; its independent immediate build workspace was untouched.
