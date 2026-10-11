@@ -148,6 +148,9 @@ static bool file(void* context,const char* path,bool provider){
     common = ['c++', '-std=c++17', '-Wall', '-Wextra', '-Werror', '-Wno-missing-field-initializers',
               '-Wno-misleading-indentation', '-DRISC_APP_REQUIREMENT_ROWS=24', '-DRISC_APP_POLICY_ROWS=24',
               *sanitize, *inc]
+    if sys.platform == 'darwin':
+        # Clang diagnoses inactive host-only fields in unchanged production sources.
+        common += ['-Wno-unused-private-field', '-Wno-unused-but-set-variable']
     # Check exact driver/application roles, unsafe-operation refusal and every missing import.
     standalone = '''#include "cohort_elf_admission.h"
 int main(int argc,char**argv){
