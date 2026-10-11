@@ -139,7 +139,9 @@ static bool file(void* context,const char* path,bool provider){
     includes += [output, tools / 'tests']
     inc = ['-I' + str(p) for p in includes]
     sanitize = ['-fsanitize=address,undefined', '-fno-sanitize-recover=all',
-                '-fno-omit-frame-pointer', '-no-pie'] if sanitized else []
+                '-fno-omit-frame-pointer'] if sanitized else []
+    if sanitized and sys.platform != 'darwin':
+        sanitize.append('-no-pie')
     obj = output / 'validate.o'
     subprocess.run(['cc', '-std=c11', *sanitize, *inc, '-c',
                     str(runtime / 'lib/elf_loader/src/esp_elf_validate.c'), '-o', str(obj)], check=True)
@@ -191,7 +193,7 @@ int main(int argc,char**argv){
                'src/bootstrap/Runtime.cpp', 'src/runtime/drivers/ProviderGraphV2.cpp',
                'src/runtime/drivers/ProviderModuleV2.cpp', 'src/ports/esp32s3/CpuPort.cpp',
                'src/runtime/streams/AppStreamSessions.cpp', 'src/runtime/streams/ProviderQueueHost.cpp')]
-    subprocess.run([*common, '-rdynamic', *['-D' + d for d in definitions], *map(str, sources),
+    subprocess.run([*common, *([] if sys.platform == 'darwin' else ['-rdynamic']), *['-D' + d for d in definitions], *map(str, sources),
                     str(output / 'runtime_store_admission.cpp'), str(obj), '-ldl',
                     '-o', str(output / 'cohort')], check=True, timeout=180)
     return {'original_fixture_sha256': sha(fixture_path.read_bytes()),
