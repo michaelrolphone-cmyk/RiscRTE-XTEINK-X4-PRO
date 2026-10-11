@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "product_version": "0.1.88",
-  "scope": "Isolated router-free Files diagnostic, not a release; hardware RF pairing untested",
+  "product_version": "0.1.89",
+  "scope": "Direct Files plus Home retained-wake capacity correction; hardware pairing and sleep remain untested",
   "base_source": "24fc5b7e8e7cee9d0150dbca2a4036fc21e2cbc4",
   "binary_baseline": ".87 full cohort",
   "source_checkpoints": {
     "runtime": "791ecf8ee40bab55e4c36ea28189ff4f218d2cfa",
-    "system": "1bfdfd1b3582d57675138b567ca5ddd7d653011e",
+    "system": "831c34472b0b0670c97fbee7de048efd75fa5f70",
     "drivers": "281609a0d2ae514f107d2ef67b6e8b4d25c72fb8",
     "wifi-provider": "6bc28feae525074a1a5e0030c4b1bf6bebdc48fa"
   },
@@ -22,5 +22,9 @@
   "hardware_tested": false,
   "full_initial_image_erases_internal_data": true,
   "preserving_update_qualified": false,
-  "reservation": "Local diagnostic increment after remote heads checked 2026-10-11; no tag, release or catalog write"
+  "reservation": "Local diagnostic increment after remote heads checked 2026-10-11; no tag, release or catalog write",
+  "retained_wake_bytes": 512,
+  "home_record_bytes": 408,
+  "lock_fix_source": "8ad7e01fc90b040c2f44d01b84955957c527ced0",
+  "system_regression_source": "ea600f225d6435e40f38cdf0be9e42ac00d49def"
 }
