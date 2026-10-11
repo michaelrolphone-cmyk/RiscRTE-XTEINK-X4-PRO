@@ -2,10 +2,11 @@
   "schema": 1,
   "product_version": "0.1.87",
   "runtime_version": "0.2.19",
-  "runtime_commit": "537af2821b78192e64360f94413113bef9394024",
+  "runtime_commit": "c3d750d113dbc79af87daaad316ab1d63d57dd60",
   "runtime_fixes": [
     "ef7d68718d4f054447ecd79cf008549723eb532b",
-    "14a9eb936dfbacbd0919ea17013605eaa8abd789"
+    "14a9eb936dfbacbd0919ea17013605eaa8abd789",
+    "c3d750d113dbc79af87daaad316ab1d63d57dd60"
   ],
   "x4_fixes": [
     "6c0840f149efcc33c966da91b90e78990ce22bb4",
