@@ -99,7 +99,7 @@ def native_witness(runtime, raw):
     return matches[0]
 
 
-def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False):
+def compile_admission(runtime, tools, output, exported, sanitized, sanitizers="address,undefined", installed_catalog=False, shared_files=False):
     from verify_update_elf import extract, admission_source
     text = (runtime / 'src/ports/esp32s3/NativeBankStore.cpp').read_text()
     require(sha(text.encode()) == ADMISSION_SHA, 'Native admission source differs from the qualified baseline')
@@ -153,6 +153,8 @@ static bool file(void* context,const char* path,bool provider){
               *sanitize, *inc]
     if installed_catalog:
         common += ['-DRISC_INSTALLED_APP_CAPACITY=64']
+    if shared_files:
+        common += ['-DRISC_PROVIDER_CAPACITY=32']
     if sys.platform == 'darwin':
         # Clang diagnoses inactive host-only fields in unchanged production sources.
         common += ['-Wno-unused-private-field', '-Wno-unused-but-set-variable']
@@ -194,6 +196,19 @@ int main(int argc,char**argv){
             '  static RiscStorage::Worker worker;\n'
             '  static RiscCpu::StorageWorkBackend backend{&worker,[](){return true;},[](){++hardwareCalls;return false;},[](uint32_t){++hardwareCalls;}};\n'
             '  h.storageWork=&backend;')
+    if shared_files:
+        fixture = fixture.replace('  RiscCpu::Hardware h{};',
+            '  RiscCpu::Hardware h{};\n'
+            '  static RiscBoot::EntropyBackend entropy{nullptr,[](void*,uint64_t,void*,uint32_t)->int32_t{++hardwareCalls;return -1;},[](void*,uint64_t){return true;},[](void*){return true;}};\n'
+            '  h.entropy=&entropy;\n'
+            '  static RiscBoot::TcpListenerBackend tcp{nullptr,\n'
+            '    [](void*,uint64_t,const risc_tcp_listen_v1*,uint64_t*)->int32_t{++hardwareCalls;return -1;},\n'
+            '    [](void*,uint64_t,uint64_t,uint64_t*)->int32_t{++hardwareCalls;return -1;},\n'
+            '    [](void*,uint64_t,uint64_t,void*,uint32_t,uint32_t*)->int32_t{++hardwareCalls;return -1;},\n'
+            '    [](void*,uint64_t,uint64_t,const void*,uint32_t,uint32_t*)->int32_t{++hardwareCalls;return -1;},\n'
+            '    [](void*,uint64_t,uint64_t)->int32_t{++hardwareCalls;return -1;},\n'
+            '    [](void*,uint64_t){return true;},[](void*){return true;}};\n'
+            '  h.tcpListener=&tcp;')
     # These inert callback slots match the qualified .75 source composition.
     # They must never be executed during admission; counters check that explicitly.
     (output / 'runtime_store_admission.cpp').write_text(fixture)
