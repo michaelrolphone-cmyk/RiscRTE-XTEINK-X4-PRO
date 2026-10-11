@@ -82,16 +82,24 @@ def prepare(source, output, internal_packages=()):
             raise ValueError('unselected internal package: ' + package)
         for i in selected:
             pin(i)
+    images = []
+    for row, manifest in zip(rows, manifests):
+        leaf = Path(manifest['file_name'])
+        if len(leaf.parts) != 1 or leaf.suffix != '.elf':
+            raise ValueError('invalid image basename')
+        image = source / Path(row['manifest']).parent / leaf
+        if not image.is_file() or image.is_symlink():
+            raise ValueError('regular selected image required')
+        blob = image.read_bytes()
+        if not blob or len(blob) > 2097152:
+            raise ValueError('selected image size out of bounds')
+        images.append((image, blob, hashlib.sha256(blob).hexdigest()))
     output.mkdir(parents=True)
     shutil.copytree(source, output / 'store')
     packages = []
     for i in order:
         row, manifest = rows[i], manifests[i]
-        leaf = Path(manifest['file_name'])
-        if len(leaf.parts) != 1 or leaf.suffix != '.elf':
-            raise ValueError('invalid image basename')
-        image = source / Path(row['manifest']).parent / leaf
-        blob = image.read_bytes(); digest = hashlib.sha256(blob).hexdigest()
+        image, blob, digest = images[i]
         medium = 'internal' if i in internal else 'sd'
         relative = f'Drivers/{manifest["id"]}/image-{digest}.elf'
         if medium == 'sd':

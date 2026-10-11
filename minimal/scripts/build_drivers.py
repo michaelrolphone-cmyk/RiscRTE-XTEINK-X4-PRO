@@ -19,8 +19,8 @@ def main():
     p.add_argument('--drivers', type=Path, required=True)
     p.add_argument('--cc', required=True)
     p.add_argument('--output', type=Path, required=True)
-    p.add_argument('--source-lock', type=Path, default=ROOT/'minimal/sources.lock.json',
-                   help='Explicit exact shared-source lock; defaults to the selected product lock')
+    p.add_argument('--source-lock', type=Path, default=ROOT/'minimal/test/ordinary-driver-sources.lock.json',
+                   help='Explicit exact shared-source lock; defaults to the ordinary-driver ABI check lock')
     p.add_argument('--sleep', action='store_true', help='Build explicit power and split-navigation packages')
     p.add_argument('--source-fixture', action='store_true', help='Allow non-Git host fixture sources; never production packaging')
     p.add_argument('--panel-driver', choices=['fallback', 'uc8279-fast'], default='fallback')

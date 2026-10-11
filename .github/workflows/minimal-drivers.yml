@@ -48,6 +48,7 @@ jobs:
           bash minimal/test/run_bootlog_test.sh
           python3 minimal/test/boot_logging_profile_test.py
           python3 minimal/test/prepare_sdk_test.py
+          python3 minimal/test/sd_first_placement_test.py
           python3 minimal/test/bundle_identity_test.py
           python3 minimal/test/app_bundle_grants_test.py
           python3 minimal/test/sparse_app_grants_test.py
