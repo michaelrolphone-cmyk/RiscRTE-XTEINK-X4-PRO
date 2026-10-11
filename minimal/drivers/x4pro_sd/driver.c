@@ -728,7 +728,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         filesystem_api.replace_file=fs_replace_file;filesystem_api.recover_replace=fs_recover_replace;
     }
 #if X4PRO_SD_ASYNC
-    asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=1;
+    asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=RISC_STORAGE_ASYNC_VERSION;
     asynchronous_api.begin=async_begin;asynchronous_api.submit=async_submit;asynchronous_api.collect=async_collect;asynchronous_api.end=async_end;
 #endif
     return &driver.poll.streams.driver;
