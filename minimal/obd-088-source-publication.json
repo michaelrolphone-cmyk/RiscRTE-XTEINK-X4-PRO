@@ -1,0 +1,35 @@
+{
+  "schema": "x4.obd-source-publication.v1",
+  "version": "0.1.88",
+  "publication_only": true,
+  "delivered_files_changed": false,
+  "hardware_tested": false,
+  "source_patches": {
+    "RiscRTE-System-Apps": "fb381da0bdd375d66904e8b800b58828893de6711364a2bdc657c463c050180e",
+    "RiscRTE-Utilities": "4401beff47e97b17c5324199c13664cac88e20784c9aa0edd81c601ba74c936a",
+    "RiskRTE-XTEINK-X4-PRO": "a7179a3ddc4ff10a75738535c84f8c1acca7fce5a4f8fe09da7579079f1d45c5"
+  },
+  "published_source": {
+    "system": {"repository": "michaelrolphone-cmyk/RiscRTE-System-Apps", "commit": "3bdd59be0bfb4a6e726616e075ace667bf52cd37", "pull_request": 106, "version": "0.4.0"},
+    "utilities": {"repository": "michaelrolphone-cmyk/RiscRTE-Utilities", "commit": "65d2ccf2c0eb5179a00d87544c519d9daa6a6b6d", "pull_request": 64, "version": "0.2.0"},
+    "x4_implementation": {"repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO", "commit": "b70c5044f3e03e97d8f51fd2662b10d9d4710078", "base": "e9a03813bf5a58cc0090cb68097c83b3605f1673"},
+    "runtime": "8d713b52edca004e1d53bf30a1c584859fe33d14",
+    "ble_serial": "8ec572af94ee6e844b1685d8d050471cd58cad87"
+  },
+  "historical_local_build_commits": {
+    "system": "f97e948d190e71233e20b82e4b8c15dd8734a703",
+    "utilities": "041c511a207c7f8cae39ab67abf09e495b4a65c6",
+    "x4": "0fcd585b8fe2017f70eb1b6f99948ce8cf165fba"
+  },
+  "delivered_sha256": {
+    "scene_elf": "3236d9806b266e7e19d2c50f6f589b034fd231cdc586b1cf433ab83b0e66c173",
+    "app_elf": "879314fa7125c51fa3116903d7007e3f58bc4d0623ccf6bb00df2cb2ba875d1c",
+    "full_firmware": "2eeaf87d1def6b5ff0eefafe56eb6a177910dc45c9d67f5a7c665369a3241c4e",
+    "sd_overlay": "23a79899a35221cdea417ed35ef3a87a1be11869fd935a4ed91fe363b55161b7"
+  },
+  "published_recipe_sha256": {
+    "minimal/scripts/package_obd_088.py": "6f4b06e5ff4c1f31a3cf6e8823e4147517cf51b094779156bb9cc8a721df855b",
+    "minimal/scripts/test_obd_nova7_catalog.py": "d357029e8593f6574a31110e9b1b2553b825553491b0dea79b769fdcd9de7bd6"
+  },
+  "validation_note": "The delivered full-image host qualification remains in the original evidence bundle. New component CI regenerates typography, runs tests and verifies ELF identity. Publication CI checks recipe identity and syntax, not a new full firmware assembly. No device was flashed."
+}
