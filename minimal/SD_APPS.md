@@ -50,9 +50,33 @@ regressions through the actual production FatFs implementation. Tests cover
 fresh, partial, completed and incomplete caches, reflow and bookmark retention.
 `sd-apps-073-reader-013.json` records the replacement ELF and validation. Copy
 only `Apps/ebook-reader/ebook_reader.elf`; leave saved Reader data in place.
-Use Reader 0.1.3 and Hollow Trail 1.2.1 in subsequent assemblies; firmware static
+Use Reader 0.1.4 and Hollow Trail 1.2.1 in subsequent assemblies; firmware static
 version labels update with the next firmware build. Physical testing remains
 pending; the panel selection is still 0.1.12.
+
+Firmware **0.1.74** pairs Reader **0.1.4** with scene-host **0.3.3**. Library
+launch now tolerates missing title/author fields and preserves Browse SD if the
+derived index cannot be read. Resident battery/power checks restore the cached
+page before rebuilding storage handles, avoiding the repeated opening screen.
+Page changes request a full CLEAN/FIFO display refresh; routine restoration of
+the same page retains the normal presentation path. The shared scene service
+owns that intent and the panel remains byte-identical 0.1.12.
+
+Flash `X4-0.1.74-Reader-Panel-0.1.12-full-0x0.bin` at `0x0`, then replace
+`Apps/ebook-reader/ebook_reader.elf` on SD. The full flash overwrites internal
+settings. Leave existing SD fonts, books, apps and `System/State` in place; no
+apps JSON replacement is needed. The app-side fixes also run on 0.1.73, but
+explicit clean page refresh requires the new firmware's scene service.
+`reader-refresh-074-qualification.json` records target builds, real app-entry
+and resident tests, clean page turns, scene lifecycle tests and full internal
+cohort admission. Device testing remains pending.
+
+Reproduce this focused firmware update with `scripts/package_reader_refresh.py`
+using the exact qualified 0.1.73 BIN/native ELF, scene-host 0.3.3 and Reader 0.1.4
+build directories. Supply the X4 ABI2 `mkspiffs` build with metadata length 4
+for independent readback. The script preserves all native bytes and all
+internal files except the scene service, its manifest, Reader metadata and
+cohort identity, and regenerates the paired-bank record.
 
 `sd-apps-073-qualification.json` records exact artifacts, source-tree publication
 mappings, capacity and gate results. Tests cover normal/sanitized runtime
