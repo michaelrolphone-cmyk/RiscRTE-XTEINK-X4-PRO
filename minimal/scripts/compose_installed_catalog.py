@@ -35,7 +35,7 @@ def main():
  old_store=json.loads((base/'app_store.json').read_text())
  old_needs={(x['capability'],x['api'])for x in old_store['requires']}
  new_needs={(x['capability'],x['api'])for x in app_store['requires']}
- if app_store['version']!='1.5.0' or new_needs!=old_needs|{('software.installed-apps',1),('storage.volume',1)}:raise ValueError('App Store capability/version mismatch')
+ if app_store['version'] not in ('1.5.0','1.5.1') or new_needs!=old_needs|{('software.installed-apps',1),('storage.volume',1)}:raise ValueError('App Store capability/version mismatch')
  app_store_policy=next(x for x in boot['app_capabilities'] if x['manifest']=='app_store.json')
  for cap,instance in (('software.installed-apps',0),('storage.volume',9)):
   grant=dict(capability=cap,api=1,instance_id=instance)
@@ -86,7 +86,7 @@ def main():
  if sd_manifest['version'] not in ('0.2.20','0.2.21'):raise ValueError('Async version-three SD provider required')
  if not any(x['capability']=='platform.storage-worker'for x in sd_manifest['requires']):raise ValueError('Async SD provider required')
  catalog_manifest=json.loads((a.catalog/'manifest.json').read_text())
- if catalog_manifest['version']!='0.7.1':raise ValueError('Durable namespace catalog provider required')
+ if catalog_manifest['version']!='0.8.0':raise ValueError('Durable namespace catalog provider required')
  shutil.copytree(base,out)
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',

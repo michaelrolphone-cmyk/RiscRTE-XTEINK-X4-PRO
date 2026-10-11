@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE-System-Apps
-          ref: 4a24bc43afcdfa70a48b5a9ee5dfefc9a109c4a8
+          ref: 6ab98943e2e2afd1b96a0673dc31866bf2b84322
           path: .shared/apps
       - uses: actions/checkout@v4
         with:
