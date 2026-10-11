@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "target": "0.1.87",
+  "compiled_product_source": "24fc5b7e8e7cee9d0150dbca2a4036fc21e2cbc4",
+  "compiled_runtime_source": "c3d750d113dbc79af87daaad316ab1d63d57dd60",
+  "old_native_usb_phy_enabled": false,
+  "old_native_results": [
+    {
+      "source": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/increment-085-from-081-verified/store",
+      "result": {
+        "prepared": false,
+        "cohort_validated": false,
+        "error": "missing scoped trusted platform provider",
+        "hardware_calls": 0,
+        "storage_calls": 0,
+        "elf_count": 0,
+        "cooperative_yields": 0
+      }
+    },
+    {
+      "source": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/increment-085-from-083-verified/store",
+      "result": {
+        "prepared": false,
+        "cohort_validated": false,
+        "error": "missing scoped trusted platform provider",
+        "hardware_calls": 0,
+        "storage_calls": 0,
+        "elf_count": 0,
+        "cooperative_yields": 0
+      }
+    }
+  ],
+  "repaired_native_admission": [
+    {
+      "baseline": "081",
+      "admission": {
+        "prepared": true,
+        "cohort_validated": true,
+        "error": "",
+        "hardware_calls": 0,
+        "storage_calls": 0,
+        "elf_count": 42,
+        "cooperative_yields": 168
+      }
+    },
+    {
+      "baseline": "083",
+      "admission": {
+        "prepared": true,
+        "cohort_validated": true,
+        "error": "",
+        "hardware_calls": 0,
+        "storage_calls": 0,
+        "elf_count": 42,
+        "cooperative_yields": 168
+      }
+    }
+  ],
+  "serial_model": {
+    "hardware_tested": false,
+    "scope": "Offline range/integrity and existing OTA record selection model; no ROM transport or hardware execution",
+    "cases": [
+      {
+        "delivered": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/increment-085-from-081-verified/X4-Shared-Files-FULL-INITIAL-ERASES-DATA.bin",
+        "active_bank": 0,
+        "staged_sector_boundaries": 1656,
+        "selection_byte_cuts": 33,
+        "protected_bytes_unchanged": true,
+        "rollback_selection_model": true
+      },
+      {
+        "delivered": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/increment-085-from-081-verified/X4-Shared-Files-FULL-INITIAL-ERASES-DATA.bin",
+        "active_bank": 1,
+        "staged_sector_boundaries": 1656,
+        "selection_byte_cuts": 33,
+        "protected_bytes_unchanged": true,
+        "rollback_selection_model": true
+      },
+      {
+        "delivered": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/increment-085-from-083-verified/X4-Shared-Files-FULL-INITIAL-ERASES-DATA.bin",
+        "active_bank": 0,
+        "staged_sector_boundaries": 1656,
+        "selection_byte_cuts": 33,
+        "protected_bytes_unchanged": true,
+        "rollback_selection_model": true
+      },
+      {
+        "delivered": "/Users/micahelbyrns/Documents/Codex/2026-10-11/task-2/build/increment-085-from-083-verified/X4-Shared-Files-FULL-INITIAL-ERASES-DATA.bin",
+        "active_bank": 1,
+        "staged_sector_boundaries": 1656,
+        "selection_byte_cuts": 33,
+        "protected_bytes_unchanged": true,
+        "rollback_selection_model": true
+      }
+    ]
+  },
+  "scope": "Offline preserving serial plan only. Existing .85 cannot boot its USB-dependent cohort and is not a qualified OTA source. New native validates all42target modules and preserves namespaces/grants. No hardware readback, write, ROM transport, power-cut execution or OTA service claim. A fresh full readback and per-stage verified readback are required before device use.",
+  "candidate_components": {
+    "firmware.bin": {
+      "bytes": 1469856,
+      "sha256": "14d499a511a034637ad2cec8b5ad916cc6eb177e70d45a30edc6dcf4e9925da5"
+    },
+    "bootfs.bin": {
+      "bytes": 5308416,
+      "sha256": "d16629c446e1dd63b36b4432807aacfc533d9cc7db186f879495ad95911422e0"
+    }
+  }
+}
