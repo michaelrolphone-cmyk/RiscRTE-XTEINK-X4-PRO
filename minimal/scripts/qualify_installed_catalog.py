@@ -7,10 +7,23 @@ p=argparse.ArgumentParser(description=__doc__)
 for name in ('runtime','tools','native-bin','store','output'):p.add_argument('--'+name,type=Path,required=True)
 p.add_argument('--provider-capacity',type=int,choices=[29,32,40],default=29)
 p.add_argument('--shared-files',action='store_true')
+p.add_argument('--native-elf',type=Path,required=True,help='Exact ELF paired with native-bin, used to derive native USB PHY registration')
 a=p.parse_args();a.runtime=a.runtime.resolve();a.tools=a.tools.resolve();a.native_bin=a.native_bin.resolve();a.store=a.store.resolve();a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=False)
 sys.path.insert(0,str(a.runtime.resolve()/'scripts'));sys.path.insert(0,str(a.tools.resolve()/'scripts'))
+if (a.native_elf.parent/'firmware.bin').read_bytes()!=a.native_bin.read_bytes():raise ValueError('native ELF sibling firmware differs from supplied native-bin')
+from elftools.elf.elffile import ELFFile
+with a.native_elf.open('rb') as native_file:
+ elf=ELFFile(native_file);symbols=elf.get_section_by_name('.symtab')
+ rows=symbols.get_symbol_by_name('risc_usb_phy_resource_enabled') or []
+ native_usb_phy=False
+ for row in rows:
+  if row['st_shndx']!='SHN_UNDEF':
+   section=elf.get_section(row['st_shndx']);offset=row['st_value']-section['sh_addr']
+   if section.data()[offset:offset+4] != b'\x01\x00\x00\x00':raise ValueError('Invalid native USB PHY selector')
+   native_usb_phy=True
+print('Linked native USB PHY registration:',native_usb_phy,flush=True)
 exports,witness=native_witness(a.runtime,a.native_bin.read_bytes())
-info=compile_admission(a.runtime,a.tools,a.output/'ubsan',exports,True,'undefined',installed_catalog=True,shared_files=a.shared_files,provider_capacity=a.provider_capacity)
+info=compile_admission(a.runtime,a.tools,a.output/'ubsan',exports,True,'undefined',installed_catalog=True,shared_files=a.shared_files,provider_capacity=a.provider_capacity,native_usb_phy=native_usb_phy)
 modules=[]
 for path in sorted(a.store.rglob('*.elf')):
  provider=path.name=='driver.elf';needed=imports(path.read_bytes())
@@ -34,5 +47,5 @@ for case in ('range-moved','range-removed','cache-owner-moved','settings-disable
  row=json.loads(result.stdout)
  if not(row['prepared']and not row['cohort_validated']and row['hardware_calls']==row['storage_calls']==0):raise ValueError((case,row))
  rejections.append(case)
-info.update(native=witness,modules=modules,admission=admission,rejected_namespace_changes=rejections,hardware_tested=False,scope='Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.')
+info.update(native_usb_phy=native_usb_phy,native_elf_sha256=sha(a.native_elf.read_bytes()),native=witness,modules=modules,admission=admission,rejected_namespace_changes=rejections,hardware_tested=False,scope='Actual native ELF role/import admission and Runtime metadata; provider/application execution is not tested here.')
 (a.output/'evidence.json').write_text(json.dumps(info,indent=2)+'\n')
