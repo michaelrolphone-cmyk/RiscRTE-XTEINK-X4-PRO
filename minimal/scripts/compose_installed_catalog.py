@@ -11,6 +11,7 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for key in ('base-store','springboard','app-store','sd','catalog','output'):p.add_argument('--'+key,type=Path,required=True)
+ p.add_argument("--home",type=Path,help="Home profile with first-frame catalog hydration")
  p.add_argument("--migrate-legacy",action="store_true",help="Select dormant legacy SD authority and a matching internal-only Springboard catalog")
  p.add_argument("--provider-capacity",type=int,choices=[29,32],default=29)
  a=p.parse_args();base=a.base_store.resolve();out=a.output.resolve()
@@ -42,6 +43,13 @@ def main():
   ('runtime.realtime',1,0),('storage.key-value',1,0),('storage.app-data',1,0)]:
   envelope.append(dict(capability=cap,api=api,instance_id=instance))
  boot['installation']=dict(volume_instance=9,grants=envelope,namespace_range=dict(first=3000,count=128))
+ if a.migrate_legacy and not a.home:raise ValueError('Legacy migration requires Home cache hydration for preserved shortcuts')
+ if a.home:
+  home=json.loads((a.home/'default.json').read_text());old_home=json.loads((base/'default.json').read_text())
+  home_record=json.loads((a.home/'build-evidence.json').read_text())
+  if home['version']!='0.4.9' or {(x['capability'],x['api'])for x in home['requires']}!={(x['capability'],x['api'])for x in old_home['requires']}|{('software.installed-apps',1)} or home_record.get('installed_catalog',{}).get('volume_instance')!=9:
+   raise ValueError('Home must preserve all capabilities and hydrate the exact SD catalog')
+  next(x for x in boot['app_capabilities'] if x['manifest']=='default.json')['grants'].append(dict(capability='software.installed-apps',api=1,instance_id=0))
  if a.migrate_legacy:
   record=json.loads((a.springboard/'springboard-build-record.json').read_text())
   expected=[]
@@ -63,6 +71,7 @@ def main():
  replacements={'app_store.elf':a.app_store/'app_store.elf','app_store.json':a.app_store/'app_store.json','springboard.elf':a.springboard/'springboard.elf','springboard.json':a.springboard/'springboard.json',
   'sd/driver.elf':a.sd/'driver.elf','sd/manifest.json':a.sd/'manifest.json',
   'installed-apps/driver.elf':a.catalog/'driver.elf','installed-apps/manifest.json':a.catalog/'manifest.json'}
+ if a.home:replacements.update({"default.elf":a.home/"default.elf","default.json":a.home/"default.json"})
  for name,source in replacements.items():
   target=out/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,target)
  (out/'boot.json').write_text(json.dumps(boot,indent=2)+'\n')
