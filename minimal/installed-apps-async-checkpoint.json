@@ -1,0 +1,53 @@
+{
+  "status": "development-checkpoint-not-complete-product",
+  "hardware_run": false,
+  "native_runtime_commit": "be303223d13b7739d2694d3f047dd61c389612d5",
+  "runtime_test_commit": "fc927bdad4be87152d28812cff9e6d83f36db169",
+  "x4_source_commit": "16065d0",
+  "system_source_commit": "7d4d4c90e7965b0396c6e2cf8e55a37309b59826",
+  "native_environment": "esp32s3-16mb-appdata-iq-stage",
+  "native_build_jobs": 1,
+  "native_static_ram_bytes": 80088,
+  "native_application_flash_bytes": 1421921,
+  "native_sha256": {
+    "firmware.elf": "1b1b08aae5690832b38faa4f03411afc1a95cdb0dcac5020ff3f1ce3303ba52c",
+    "firmware.bin": "237e77a4c8a9fda77b559d882ecce85948292a743881cded1af5f374b37a6554"
+  },
+  "springboard": {
+    "version": "1.8.0",
+    "sha256": "e07b957df40964f6d5682ac231618ca2e15e89cad550e6d00aafc8f528bca93b",
+    "size_bytes": 241824,
+    "installed_catalog": {
+      "capability": "software.installed-apps",
+      "api": 1,
+      "volume_instance": 42,
+      "storage_sdk_sha256": "d477167a06004640b2c07c05d662c103be6e1b9e4a4d866f6fce13e754ef02f5",
+      "discovery": "copied-async-owner-polls",
+      "cache": "internal-app-data",
+      "status": "experimental-integration"
+    }
+  },
+  "tests": [
+    "copied storage worker: delayed operations, cancellation, stale tokens, repeated operations; normal and UBSan",
+    "scoped CPU SD transport: exact pins, owner/worker exclusion, retained cleanup; normal and UBSan",
+    "async volume adapter: delayed read, media removal, cancellation/drain and retained close; normal and UBSan",
+    "production X4 SD/FatFs: lazy start, unknown manifest, export exclusion, sleep/resume, .80 eight-sector USB batching; normal and UBSan",
+    "installed-app provider: cache-first zero-SD startup, zero owner-side SD scan I/O, unchanged-cache no writes, removal preflight, failed scan transaction; UBSan",
+    "installed catalog client: unknown app, preserved icons, 1000 pending polls, cancellation, retained leases; UBSan",
+    "Runtime async discovery and actual host-mapped SD app launch twice, including resident mode; UBSan",
+    "cohort migration and namespace policy tests with selected 64-app capacity",
+    "single-job full native target build",
+    "clean-source opt-in Springboard target link, ELF structural validator, import/export checks"
+  ],
+  "remaining": [
+    "complete source-bound boot/store composition selecting installation provider, envelope and async SD profile",
+    "production Springboard event/lifecycle acceptance tests including scan during delayed physical display, Home, Quick Actions and sleep",
+    "App Store installation/admission and uninstall integration",
+    "durable app namespace allocation",
+    "runtime driver graph provisioning and SD-first settings migration",
+    "asynchronous cache persistence: current internal app-data save is synchronous",
+    "atomic async removal: service remove still uses synchronous rename",
+    "merge exact final icon source once supplied",
+    "hardware qualification; no hardware flashed"
+  ]
+}
