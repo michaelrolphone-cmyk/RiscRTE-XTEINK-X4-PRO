@@ -1,27 +1,26 @@
 {
-  "status": "development-checkpoint-not-complete-product",
+  "status": "development-composition-qualified-not-complete-product",
   "hardware_run": false,
-  "native_runtime_commit": "be303223d13b7739d2694d3f047dd61c389612d5",
-  "runtime_test_commit": "fc927bdad4be87152d28812cff9e6d83f36db169",
-  "x4_source_commit": "16065d0",
-  "system_source_commit": "7d4d4c90e7965b0396c6e2cf8e55a37309b59826",
+  "native_runtime_commit": "3497b8848235b751d7d3c98da11a80520e1e1c45",
+  "runtime_test_commit": "3497b8848235b751d7d3c98da11a80520e1e1c45",
+  "x4_source_commit": "ce128bc031caf2ceb2ead01c427e46e37c1705c8",
+  "system_source_commit": "12660e0d89875a6e6a9fb8525d0da53043b5e7b3",
   "native_environment": "esp32s3-16mb-appdata-iq-stage",
   "native_build_jobs": 1,
-  "native_static_ram_bytes": 80088,
-  "native_application_flash_bytes": 1421921,
+  "native_static_ram_bytes": 80096,
+  "native_application_flash_bytes": 1425453,
   "native_sha256": {
-    "firmware.elf": "1b1b08aae5690832b38faa4f03411afc1a95cdb0dcac5020ff3f1ce3303ba52c",
-    "firmware.bin": "237e77a4c8a9fda77b559d882ecce85948292a743881cded1af5f374b37a6554"
+    "firmware.elf": "d2a530125e97d319fecd0d11e3286f1d211ec87c2cf279ead3df7ee25a9bfd38",
+    "firmware.bin": "86b1c36911c24e1d58c9fdf41cc999a022b3025307860dd67cb72add5751c501"
   },
   "springboard": {
     "version": "1.8.0",
-    "sha256": "e07b957df40964f6d5682ac231618ca2e15e89cad550e6d00aafc8f528bca93b",
-    "size_bytes": 241824,
+    "sha256": "b54d21fd933418943ba20e1dad695b61775ac8a381d97925dacff3d8122c881d",
+    "size_bytes": 242176,
     "installed_catalog": {
       "capability": "software.installed-apps",
       "api": 1,
-      "volume_instance": 42,
-      "storage_sdk_sha256": "d477167a06004640b2c07c05d662c103be6e1b9e4a4d866f6fce13e754ef02f5",
+      "volume_instance": 9,
       "discovery": "copied-async-owner-polls",
       "cache": "internal-app-data",
       "status": "experimental-integration"
@@ -37,17 +36,65 @@
     "Runtime async discovery and actual host-mapped SD app launch twice, including resident mode; UBSan",
     "cohort migration and namespace policy tests with selected 64-app capacity",
     "single-job full native target build",
-    "clean-source opt-in Springboard target link, ELF structural validator, import/export checks"
+    "clean-source opt-in Springboard target link, ELF structural validator, import/export checks",
+    "Native copied bound-file replacement: 64 KiB copy, 10000 delayed polls, native lease and exact bound-file owner/lifetime checks; UBSan",
+    "Production Springboard controller and adapter: launch, Home, controls dismissal, refused launch, first-frame-before-SD, 0/17/2300 ms panel completion; 12 UBSan cases",
+    "Durable namespace ledger: persist before native policy, removed identities retained, cached restart and reinstall identity; UBSan",
+    "Real Runtime newly discovered app acquires private app-data and writes in both real host module executions; range overlap and reassignment denied",
+    "Complete 26-app/29-provider development store: 39 internal Xtensa modules strict role/import validation plus real Runtime self-admission; zero hardware/storage calls; UBSan",
+    "Cohort rejects namespace range move/removal and cached-ledger namespace relocation"
   ],
   "remaining": [
-    "complete source-bound boot/store composition selecting installation provider, envelope and async SD profile",
-    "production Springboard event/lifecycle acceptance tests including scan during delayed physical display, Home, Quick Actions and sleep",
-    "App Store installation/admission and uninstall integration",
-    "durable app namespace allocation",
-    "runtime driver graph provisioning and SD-first settings migration",
-    "asynchronous cache persistence: current internal app-data save is synchronous",
-    "atomic async removal: service remove still uses synchronous rename",
-    "merge exact final icon source once supplied",
-    "hardware qualification; no hardware flashed"
-  ]
+    "App Store SD installation/admission and uninstall user interface",
+    "Preserving migration of legacy firmware-declared SD apps and their private/shared settings authority",
+    "Runtime dependency provisioning and SD-first settings migration",
+    "Complete release/version/inventory composition and hardware qualification; no flash performed"
+  ],
+  "composition": {
+    "status": "development-store-not-a-release",
+    "base_boot_sha256": "5f4981ea3d74bce9aa921cff4f010b3cc4e25a755e5c93b5e3168bee14b9ddbe",
+    "boot_sha256": "f80b5c04b2b1e3abd46c5cdc2478933cd0748862ede975f37cc488d1f72a72df",
+    "apps": 26,
+    "drivers": 29,
+    "volume_instance": 9,
+    "cache_namespace": 2000,
+    "namespace_range": {
+      "first": 3000,
+      "count": 128
+    },
+    "replaced": {
+      "springboard.elf": {
+        "sha256": "b54d21fd933418943ba20e1dad695b61775ac8a381d97925dacff3d8122c881d",
+        "bytes": 242176
+      },
+      "springboard.json": {
+        "sha256": "b92858237e582a12e9b914199d7e19df9bc1974f303f1e9cfed974240664b65a",
+        "bytes": 866
+      },
+      "sd/driver.elf": {
+        "sha256": "baa6a7ba478ac8d509f69474616ac08335e8f1744d14c2051d91da12e59a6668",
+        "bytes": 100020
+      },
+      "sd/manifest.json": {
+        "sha256": "b7956307a127901afb7b0ab58eef91d607ca3d582f304cbafa512ea03aff38f7",
+        "bytes": 986
+      },
+      "installed-apps/driver.elf": {
+        "sha256": "5779f5fcbce740261d3b28824a85cdfbc182aae277b833e3e623b2acdaa930e3",
+        "bytes": 82676
+      },
+      "installed-apps/manifest.json": {
+        "sha256": "898868b7e32605e4e39c40c4deb7abd83fbc3f301fa0b2c1d28ea246d1b414e3",
+        "bytes": 309
+      }
+    },
+    "remaining": [
+      "App Store SD installation/admission and uninstall user interface",
+      "Preserving migration of legacy firmware-declared SD apps and their private/shared settings authority",
+      "Runtime dependency provisioning and SD-first settings migration",
+      "Complete release/version/inventory composition and hardware qualification; no flash performed"
+    ],
+    "hardware_tested": false,
+    "flashable": false
+  }
 }
