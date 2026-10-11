@@ -11,28 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: X4
-          persist-credentials: false
-      - uses: actions/checkout@v4
-        with:
-          repository: michaelrolphone-cmyk/RiscRTE-Utilities
-          ref: e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d
-          path: LauncherUtilities
-          persist-credentials: false
-      - uses: actions/checkout@v4
-        with:
           repository: michaelrolphone-cmyk/T5S3-Reader
           ref: 45cf61ac013fb618e8d7fed63217a35350484d52
           path: ReaderSDK
           persist-credentials: false
-          sparse-checkout: |
-            src
-            scripts
-      - name: Archive canonical sources
-        run: tar -czf obd-assembly-sources.tar.gz X4 LauncherUtilities ReaderSDK/src ReaderSDK/scripts
+          sparse-checkout: sdk
+      - name: Archive canonical headers
+        run: tar -czf obd-driver-sdk.tar.gz ReaderSDK/sdk
       - uses: actions/upload-artifact@v4
         with:
-          name: obd-assembly-sources
-          path: obd-assembly-sources.tar.gz
+          name: obd-driver-sdk
+          path: obd-driver-sdk.tar.gz
           compression-level: 0
           retention-days: 7
