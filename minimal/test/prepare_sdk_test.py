@@ -14,15 +14,18 @@ class SdkTest(unittest.TestCase):
   workflow=(ROOT.parent/'.github/workflows/minimal-drivers.yml').read_text()
   self.assertIn('ref: '+lock['runtime']['commit'],workflow)
   self.assertIn('ref: '+lock['shared']['commit'],workflow)
+  self.assertIn('ref: '+lock['drivers']['commit'],workflow)
  def test_configured_runtime_has_sdmmc_contract(self):
   runtime=os.environ.get('RISCRTE_RUNTIME_ROOT')
   if not runtime:self.skipTest('No external Runtime checkout configured')
+  self.assertTrue((Path(runtime)/'sdk/driver/RiscStorageVolumeFsV1.h').is_file())
   self.assertTrue((Path(runtime)/'sdk/driver/RiscGpioSdmmcV1.h').is_file(),
                   'Current SD provider requires the canonical Runtime SDMMC suffix header')
  def test_unique_shared_header_and_conflict(self):
   with tempfile.TemporaryDirectory() as temporary:
    root=Path(temporary);runtime=root/'runtime';reader=root/'reader'
-   for folder in [runtime/'sdk/driver',runtime/'sdk/hardware',reader/'sdk/driver']:folder.mkdir(parents=True)
+   for folder in [runtime/'sdk/app',runtime/'sdk/driver',runtime/'sdk/hardware',reader/'sdk/driver']:folder.mkdir(parents=True)
+   (runtime/'sdk/app/RiscStorageVolumeFsV1.h').write_text('/* canonical filesystem suffix */\n')
    (runtime/'sdk/driver/Shared.h').write_text('#pragma once\n')
    (reader/'sdk/driver/Shared.h').write_text('#pragma once\n')
    (runtime/'sdk/hardware/Hardware.h').write_text('/* typed hardware */\n')
@@ -36,7 +39,7 @@ class SdkTest(unittest.TestCase):
    self.assertEqual((root/'sdk/RiscDisplayOutputMetricsV1.h').read_bytes(),
                     (ROOT/'interfaces/RiscDisplayOutputMetricsV1.h').read_bytes())
    self.assertEqual({p.name for p in (root/'sdk').glob('*.h')},
-                    {'Shared.h','Hardware.h','RiscGpioSdmmcV1.h','RiscDisplayOutputMetricsV1.h','RiscDisplayOutputSnapshotV1.h',
+                    {'RiscStorageVolumeFsV1.h','Shared.h','Hardware.h','RiscGpioSdmmcV1.h','RiscDisplayOutputMetricsV1.h','RiscDisplayOutputSnapshotV1.h',
                      'RiscFrontlightToneV1.h','RiscDisplayOutputFrontlightV1.h','RiscDisplayOutputSettledV1.h','RiscStorageVolumeStateV1.h'})
    self.assertEqual(result['RiscDisplayOutputSnapshotV1.h']['origins'],['x4/interfaces'])
    self.assertEqual((root/'sdk/RiscDisplayOutputSnapshotV1.h').read_bytes(),
@@ -56,7 +59,7 @@ class SdkTest(unittest.TestCase):
   for name in ['RiscFrontlightToneV1.h','RiscDisplayOutputFrontlightV1.h','RiscDisplayOutputSettledV1.h','RiscStorageVolumeStateV1.h']:
    with tempfile.TemporaryDirectory() as temporary:
     root=Path(temporary);runtime=root/'runtime';reader=root/'reader'
-    for folder in [runtime/'sdk/driver',runtime/'sdk/hardware',reader/'sdk/driver']:folder.mkdir(parents=True)
+    for folder in [runtime/'sdk/app',runtime/'sdk/driver',runtime/'sdk/hardware',reader/'sdk/driver']:folder.mkdir(parents=True)
     (reader/'sdk/driver'/name).write_text('/* divergent tone contract */\n')
     with self.assertRaisesRegex(ValueError,'Shared SDK header differs: '+name):
      module.prepare(runtime,reader,root/'conflict')

@@ -9,13 +9,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = ('board_power', 'i2c', 'panel', 'frontlight', 'buttons', 'rtc', 'sd', 'battery', 'gt911')
-IMPORTS = {'strcmp', 'memcpy', 'memmove', 'memset', 'memcmp', 'strlen', 'strchr'}
+IMPORTS = {'strcmp', 'memcpy', 'memmove', 'memset', 'memcmp', 'strlen', 'strchr', 'strrchr', 'memchr'}
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--runtime', type=Path, required=True)
     p.add_argument('--reader', type=Path, required=True)
+    p.add_argument('--drivers', type=Path, required=True)
     p.add_argument('--cc', required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--source-lock', type=Path, default=ROOT/'minimal/sources.lock.json',
@@ -30,7 +31,7 @@ def main():
     origin = {'source_fixture': args.source_fixture, 'sources': {},
               'source_lock': {'path': str(args.source_lock.resolve()),
                               'sha256': hashlib.sha256(lock_bytes).hexdigest()}}
-    for name, checkout in (('runtime', runtime), ('shared', reader)):
+    for name, checkout in (('runtime', runtime), ('shared', reader), ('drivers', args.drivers.resolve())):
         try:
             revision = subprocess.check_output(['git', '-C', str(checkout), 'rev-parse', 'HEAD'], text=True, stderr=subprocess.DEVNULL).strip()
             dirty = bool(subprocess.check_output(['git', '-C', str(checkout), 'status', '--porcelain', '--untracked-files=no'], text=True))
@@ -39,6 +40,9 @@ def main():
         if not args.source_fixture and (revision != lock[name]['commit'] or dirty):
             raise SystemExit(f'{name}: clean locked source checkout required')
         origin['sources'][name] = {'commit': revision, 'dirty': dirty, 'expected': lock[name]['commit']}
+    volume = args.drivers.resolve()/'lib/StorageFatFs'
+    if not (volume/'fs_extensions.inc').is_file():
+        raise SystemExit('Canonical StorageFatFs filesystem extensions required')
     out.mkdir(parents=True, exist_ok=True)
     (out/'build-origin.json').write_text(json.dumps(origin, indent=2)+'\n')
     subprocess.run([sys.executable, str(ROOT/'minimal/scripts/prepare_sdk.py'), '--runtime', str(runtime), '--reader', str(reader), '--output', str(out/'sdk')], check=True)
@@ -50,9 +54,9 @@ def main():
         manifest = json.loads((source/'manifest.json').read_text())
         target = out/manifest['id']; target.mkdir(exist_ok=True)
         elf = target/'driver.elf'
-        command = [args.cc, '-std=c11', '-O2', '-fno-ivopts', '-fPIC', '-mtext-section-literals', '-mlongcalls', '-fvisibility=hidden', '-fno-builtin', '-nostdlib', '-nostartfiles', '-shared', '-Wall', '-Wextra', '-Werror', '-I'+str(out/'sdk'), '-I'+str(reader/'Drivers/common'), '-I'+str(reader/'Drivers/storage_fatfs'), '-Wl,--hash-style=sysv', '-Wl,--exclude-libs,ALL', '-Wl,--no-relax', str(source/'driver.c')]
+        command = [args.cc, '-std=c11', '-O2', '-fno-ivopts', '-fPIC', '-mtext-section-literals', '-mlongcalls', '-fvisibility=hidden', '-fno-builtin', '-nostdlib', '-nostartfiles', '-shared', '-Wall', '-Wextra', '-Werror', '-I'+str(out/'sdk'), '-I'+str(reader/'Drivers/common'), '-I'+str(volume), '-Wl,--hash-style=sysv', '-Wl,--exclude-libs,ALL', '-Wl,--no-relax', str(source/'driver.c')]
         if name == 'sd':
-            command += [str(reader/'Drivers/storage_fatfs/fatfs/ff.c'), str(reader/'Drivers/storage_fatfs/fatfs/ffunicode.c')]
+            command += [str(volume/'fatfs/ff.c'), str(volume/'fatfs/ffunicode.c')]
         subprocess.run(command+['-lgcc', '-o', str(elf)], check=True)
         for script in ('normalize_xtensa_relocations.py', 'validate_xtensa_relative_targets.py'):
             subprocess.run([sys.executable, str(reader/'scripts'/script), str(elf)], check=True)

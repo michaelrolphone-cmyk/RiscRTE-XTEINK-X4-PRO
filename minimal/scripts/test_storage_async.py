@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from prepare_sdk import prepare
+from prepare_sd_wire_fixture import prepare as prepare_wire_fixture
 
 ROOT = Path(__file__).resolve().parents[2]
 p = argparse.ArgumentParser(description=__doc__)
@@ -23,12 +24,7 @@ for source in (a.runtime / 'sdk/app').glob('*.h'):
         raise ValueError('Conflicting SDK header: ' + source.name)
     shutil.copyfile(source, target)
 storage = a.drivers / 'lib/StorageFatFs'
-# The reference wire model includes x4pro_proto.h. Materialize only its
-# unchanged protocol helpers against the same canonical SD header as production;
-# including the old Reader copy as well would define those helpers twice.
-proto = (ROOT / 'Drivers/x4pro_board/x4pro_proto.h').read_text()
-assert '#include "../storage_fatfs/sd_protocol.h"' in proto
-(sdk / 'x4pro_proto.h').write_text(proto.replace('#include "../storage_fatfs/sd_protocol.h"', '#include "sd_protocol.h"'))
+prepare_wire_fixture(sdk)
 binary = a.output / 'test'
 subprocess.run(['cc', '-std=c11', '-O1', '-g', '-Wall', '-Wextra', '-Werror', '-Wno-overflow',
                 *(['-fsanitize=undefined', '-fno-sanitize-recover=all', '-fno-omit-frame-pointer'] if os.environ.get('SANITIZE')=='1' else []), '-DX4PRO_SD_ALLOW_LEGACY_GPIO=1', '-I' + str(sdk), '-I' + str(storage),
