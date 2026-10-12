@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "conclusion": "success",
+      "id": 114929219466,
+      "name": "host-target",
+      "status": "completed",
+      "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38284412119/job/114929219466"
+    }
+  ],
+  "commit": "2220ffcb4054c6213fdf3b1c68d3c6808b807630",
+  "conclusion": "success",
+  "repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+  "runs": [
+    {
+      "conclusion": "success",
+      "head_sha": "2220ffcb4054c6213fdf3b1c68d3c6808b807630",
+      "id": 38284412119,
+      "name": "Typed minimal X4 drivers",
+      "status": "completed",
+      "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38284412119"
+    }
+  ],
+  "schema": "timecard.compiled-recipe-ci.v1",
+  "status": {
+    "state": "pending",
+    "statuses": [],
+    "total_count": 0
+  },
+  "zero_status_note": "The legacy pending state with total_count 0 is not a pending check."
+}

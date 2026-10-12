@@ -1,0 +1,10 @@
+OBD catalog: exact SD manifest, native reservation, transaction dry-run/commit, foreground lifecycle, selected BLE plus SD-instance-9 grants, idempotent discovery, denied path/grant changes PASS
+
+Hollow 1.2.2 catalog: exact SD manifest/reservation, dry-run/commit, legacy handoff, exact existing grants, idempotence and rejected path/grant changes PASS
+
+normal 43 internal + 48 selected SD + exact OBD/Hollow native catalogs PASS
+OBD catalog: exact SD manifest, native reservation, transaction dry-run/commit, foreground lifecycle, selected BLE plus SD-instance-9 grants, idempotent discovery, denied path/grant changes PASS
+
+Hollow 1.2.2 catalog: exact SD manifest/reservation, dry-run/commit, legacy handoff, exact existing grants, idempotence and rejected path/grant changes PASS
+
+asan-ubsan 43 internal + 48 selected SD + exact OBD/Hollow native catalogs PASS

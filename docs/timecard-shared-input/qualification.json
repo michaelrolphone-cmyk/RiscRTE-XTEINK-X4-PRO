@@ -1,0 +1,103 @@
+{
+  "all_inherited_defines_and_fonts_retained": true,
+  "application_source": "395c48de8fa10b672816c89c02dd9a5d4987a094",
+  "compiled_recipe_commit": "2220ffcb4054c6213fdf3b1c68d3c6808b807630",
+  "compiled_recipe_tree": "c19ee8d6087459d000dfc9761e19526bb40deb44",
+  "counts": {
+    "cumulative_sd_overlay_paths": 16,
+    "internal_elfs": 43,
+    "preserved_sd_paths": 88,
+    "preserved_store_paths": 103,
+    "sd_paths": 90,
+    "selected_sd_elfs": 48,
+    "store_paths": 106
+  },
+  "delivered": false,
+  "delivery_hold_until_utc": "2026-10-12T23:30:00Z",
+  "device": "x4",
+  "exact_obd_and_hollow_catalog_regressions": {
+    "asan-ubsan": "passed",
+    "normal": "passed"
+  },
+  "free_spiffs_blocks": 128,
+  "full_image_bytes": 16777216,
+  "full_image_materialized": false,
+  "full_image_sha256": "7954f4669d3646afa5aa81ea4807ce3e6f6e92d42f03bf3fe188ab622e4ec494",
+  "full_initial_erases_internal_data": true,
+  "grant_delta": [
+    {
+      "grant": {
+        "api": 1,
+        "capability": "ui.text-input",
+        "instance_id": 0
+      },
+      "manifest": "timecard.json"
+    }
+  ],
+  "hardware_verified": false,
+  "local_cohort_sanitizers": "address,undefined; ASAN_OPTIONS=detect_leaks=0",
+  "normal_admission_passed": true,
+  "receipt_commit_changes_build_inputs": false,
+  "receipt_files": {
+    "candidate-custody.json": {
+      "bytes": 32041,
+      "sha256": "32b5cfd2ac6c8c00f3491bf2cfb49f7fe9bae5b877f9354a4735aabf490de26d"
+    },
+    "catalog-regressions.txt": {
+      "bytes": 864,
+      "sha256": "93a2b86264079d2529a8a1e546f1d5c794d9a78054839bbbd3cc45ada767a02a"
+    },
+    "compiled-recipe-ci.json": {
+      "bytes": 956,
+      "sha256": "9fe6e8217258c2287fb59e671f92ef17fdbfd9ecb90d2e6a30917c79e3bd4482"
+    },
+    "independent-public-review.json": {
+      "bytes": 17676,
+      "sha256": "127150da63f218fc0afbb5ed037ccff725ee4ea8be495c11df0e558c7543e775"
+    },
+    "normal-admission.json": {
+      "bytes": 32464,
+      "sha256": "bbdaca379c8e20dad598e855abed2b35bd99f19f29a9c79f011450b7bfbad440"
+    },
+    "packing.json": {
+      "bytes": 3870,
+      "sha256": "0ddeff899dafb9448afafd20736f020bfa1f099a1c13f11441cf1e4bf2b98437"
+    },
+    "productivity-ci.json": {
+      "bytes": 3840,
+      "sha256": "dafec6cfe796c59bc22f65046139b748fef37c0af3ab7a86ed450a04e7ad62d9"
+    },
+    "sanitized-admission.json": {
+      "bytes": 32478,
+      "sha256": "13ee14bb156931bae8c6a0da89fb3718023d5008c59a280c0a16460b9f0fe414"
+    },
+    "target-build.json": {
+      "bytes": 25140,
+      "sha256": "58c680d4ecae5a941c9f3cc5d38e6a0c80543083311fb92ba81dd219cffd9833"
+    },
+    "target-stack.json": {
+      "bytes": 1803,
+      "sha256": "1af40cb42ba87b260584b3f87cf5c32aa3c3066c008068c4ae253ec806c6e514"
+    }
+  },
+  "required_free_spiffs_blocks": 2,
+  "sanitized_admission_passed": true,
+  "schema": "timecard.published-device-qualification.v1",
+  "source_ci_leak_detection": "platform-default; not disabled",
+  "source_note": "Timecard uses System 7fb13b09; inherited apps and provider components retain their recorded earlier sources and bytes.",
+  "source_render_storage_parity_comparisons": 6,
+  "source_workflow_runs": 174,
+  "sources": {
+    "productivity": "395c48de8fa10b672816c89c02dd9a5d4987a094",
+    "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+    "system-apps": "7fb13b09b4dac275a8111b224784f8a472f39264",
+    "utilities": "4beb9778d300ec9f6b18448e1ec86317e063c98c",
+    "watch": "089868395268b696c05651c33816345bfe0425df"
+  },
+  "target_dependency_count": 99,
+  "target_instructions_executed": false,
+  "timecard_elf_bytes": 175412,
+  "timecard_elf_sha256": "5f36916c576249ec96cc47bfc10607e05f81e511b372a7dddc4cf514375ad3c4",
+  "timecard_version": "0.2.16",
+  "unpublished_sd_settings_consumed": false
+}
