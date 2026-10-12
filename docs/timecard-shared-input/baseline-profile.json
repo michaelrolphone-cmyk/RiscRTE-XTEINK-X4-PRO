@@ -1,0 +1,207 @@
+{
+  "schema": "timecard.x4.baseline-profile.v1",
+  "selected_elf": {
+    "path": "/workspace/shared/rf-shared-input-components-20261012/x4/SD/Apps/timecard/timecard.elf",
+    "bytes": 167200,
+    "sha256": "7b74d87f3a568b4b9d968c1695870ab79a06cac2f5f91099885291b40b69cf71"
+  },
+  "byte_identity_proof": {
+    "delivered_product": "0.1.62",
+    "source_filename": "X4-0.1.62-Renderer-Performance-Panel-0.1.15-full-0x0.bin",
+    "full_image_sha256": "87a83ad46156cc9c04ecf214ff873081c166b63b710469ca2f71ff12dd5e7112",
+    "embedded_x4_source_revision": "db8ef830da03f80074eebf387a6b4e4e4d43446c",
+    "embedded_runtime_version": "0.2.2",
+    "read_region": {
+      "offset": 3080192,
+      "bytes": 5308416
+    },
+    "store_path": "timecard.elf",
+    "timecard_manifest_sha256": "c654a938807858320727c50fa6d7d73434a3bbbc5f3cd5fb2c570d05ccab4a7d",
+    "byte_equality_verified": true
+  },
+  "recovered_inherited_receipt": {
+    "archive_member": "x4-clean-source-delivery-055/proof/target-receipts/apps/timecard/timecard/x4-native-app.json",
+    "local_path": "/workspace/scratch/c744abbbbd60/x4-timecard-baseline-helper/x4-timecard-055-receipt.json",
+    "sha256": "76339f9079851d19f9a883bce81f0c99d59f2a30313d61de378322b78b9c7b3d",
+    "original_baseline_source": "b06d2acc7bff43f417cf2b4db0cb2863fc460e1f",
+    "original_custody_sha256": "e5bee9f27d01a13ccb847aeed1d506d4f9ff8f8e1c5436f33d2d84aea32b5d1e"
+  },
+  "application_payload_sha256": {
+    "Apps/productivity_scroll.h": "bc09ee2794bdd410dc74a401ca99376ac6c25ff179c1db8fa758e6e2b43b6452",
+    "Apps/timecard.c": "c17b0fed28eb44d2397c740ef56c8f07bc51c3f707d3080ec9ad5849e25a31a9",
+    "Apps/timecard_appdata_bridge.h": "0adf349d3aba15dd29575d57c14d6ecf8123d304c939f4a32589d91e0c9ba585",
+    "Apps/timecard_native_time.h": "55a6e8a7aba25534056a09957a2f9a6b916753ee1edf15cb8f648e42472a846c",
+    "Apps/timecard_paper.inc": "702f19939beb4b3cf5ba412fa398b7541ea0dd166d069a0ce3dbefc1f8ec6e23",
+    "Apps/timecard_portable.c": "4c9e146ead28bca44ea6f2eb7c4e73189b89e3ade1704a49127fa19b1b9dd9da",
+    "Apps/timecard_portable_validation.h": "6f86fb034b96fa3dc15f902182efd6e4a850699dd9be0e944823d9cddfe429e8",
+    "Apps/timecard_scroll_input.inc": "05d18fdb1ae04a02b025f426fec09764a15c0a4c32e0a1ec601399d8ac58dc73",
+    "Apps/timecard_scroll_model.inc": "eb493ec497d0bb05db7b152e35572b74ca3583e17c675e7ee354575a98d1807d",
+    "lib/NativeApps/include/T5SystemApi.h": "56179941cac6dac7c71c2fe43013015a2d286620172a4d5945425c9cebc6d2d2"
+  },
+  "application_payload_verified_at": [
+    "d6a9657378fedcdb61d1cea83f2108799e57ccae",
+    "bd613ba150f0bbe1fd39eaf342574a664a50c67a"
+  ],
+  "timecard_0215_recipe": {
+    "repository": "michaelrolphone-cmyk/RiscRTE-Productivity",
+    "commit": "d6a9657378fedcdb61d1cea83f2108799e57ccae",
+    "path": "scripts/build_x4_recovered_timecard.py",
+    "sha256": "b01c8672cd6e9fe45a43d9060d7fb8270470326720df54ce232f063229a7f13f",
+    "version": "0.2.15",
+    "inherited_define_list": [
+      "-DPORTABLE_STAGE_LOGS",
+      "-DPORTABLE_NOVA_UI",
+      "-DPORTABLE_ALARM_CLIENT",
+      "-DALARM_SERVICE_TAGGED_V2",
+      "-DPORTABLE_NATIVE_CUSTODY_FENCE",
+      "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+      "-DPORTABLE_INPUT_NAVIGATION",
+      "-DPORTABLE_DISPLAY_ROTATION=90",
+      "-DPORTABLE_HOME_APP=\"default.elf\"",
+      "-DPORTABLE_APP_LAUNCH_GUARD",
+      "-DPORTABLE_BLE_BROADCAST",
+      "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+      "-DPORTABLE_PAPER_PREFERENCES",
+      "-DPORTABLE_UNPADDED_HOURS",
+      "-DTIMECARD_NATIVE_TIME",
+      "-DTIMECARD_APP_DATA",
+      "-DTIMECARD_PAPER",
+      "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+      "-DTIMECARD_RETURN_APP=\"springboard.elf\"",
+      "-DPORTABLE_TOUCH_SCROLL",
+      "-DPORTABLE_APP_TOUCH_SCROLL",
+      "-DPORTABLE_PRODUCTIVITY_SCROLL",
+      "-DPORTABLE_RESIDENT_SHELL_CLIENT",
+      "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+      "-DPORTABLE_RESIDENT_POLICY"
+    ],
+    "explicit_added_define": "-DPORTABLE_RASTER_SNAPSHOT"
+  },
+  "shared_build_helper": {
+    "repository": "michaelrolphone-cmyk/RiscRTE-Utilities",
+    "verified_at": "b7b3e879791ddf61a4e20b1ba123da9a13835045",
+    "path": "scripts/resident_client_build.py",
+    "sha256": "d8be689c466ec52b11b97710af3b3758d489865029b764f57578293b6ee7bfb1"
+  },
+  "features": {
+    "app_source": "Apps/timecard_portable.c",
+    "idle_policy": "resident-host",
+    "native_time": true,
+    "scrolling": "completed-frame paper lists",
+    "storage": "civil timecard.json namespace1",
+    "telemetry_default": "off"
+  },
+  "required_grants": [
+    {
+      "capability": "display.output",
+      "api": 1,
+      "instance_id": 3
+    },
+    {
+      "capability": "input.touch.raw",
+      "api": 1,
+      "instance_id": 4
+    },
+    {
+      "capability": "input.navigation",
+      "api": 1,
+      "instance_id": 6
+    },
+    {
+      "capability": "runtime.realtime",
+      "api": 1,
+      "instance_id": 0
+    },
+    {
+      "capability": "storage.key-value",
+      "api": 1,
+      "instance_id": 1
+    },
+    {
+      "capability": "alarm.service",
+      "api": 2,
+      "instance_id": 0
+    },
+    {
+      "capability": "board.battery",
+      "api": 1,
+      "instance_id": 7
+    },
+    {
+      "capability": "telemetry.broadcast",
+      "api": 1,
+      "instance_id": 0
+    },
+    {
+      "capability": "storage.app-data",
+      "api": 1,
+      "instance_id": 1
+    }
+  ],
+  "translation_units": [
+    "Productivity/Apps/timecard_portable.c",
+    "System/lib/PortableApps/src/adapter.c",
+    "System/lib/PortableApps/src/PortableNativeTimeSource.c",
+    "System/lib/PortableApps/src/PortableRealtimeClient.c",
+    "System/lib/PortableApps/src/PortableTimeZone.c",
+    "System/lib/PortableApps/src/PortableTimeZoneCatalog.c",
+    "System/lib/PortableApps/src/PortableTimeZonePreference.c",
+    "generated empty catalog.c"
+  ],
+  "compiler": "xtensa-esp32s3-elf-gcc 8.4.0, esp-2021r2-patch5",
+  "compaction": {
+    "packaging_source": "minimal/scripts/package_renderer_performance_062.py",
+    "helper": "compact_current_elf.compact",
+    "selected_elf_has_no_xt_lit_or_xt_prop": true
+  },
+  "limits": [
+    "The direct .62 per-app compiler receipt was not recovered. Application payload hashes, inherited flags, .62 versioning recipe and .62/current ELF byte identity are separately evidenced. Exact .62 System/Runtime SDK commit pins have not been established from a compiler receipt.",
+    "Later bd613ba has identical application payload but its recovered-Timecard build script reports 0.2.14 due to a historical merge; use the d6a9657 script for the 0.2.15 recipe identity."
+  ],
+  "defines": [
+    "-DPORTABLE_STAGE_LOGS",
+    "-DPORTABLE_NOVA_UI",
+    "-DPORTABLE_ALARM_CLIENT",
+    "-DALARM_SERVICE_TAGGED_V2",
+    "-DPORTABLE_NATIVE_CUSTODY_FENCE",
+    "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+    "-DPORTABLE_INPUT_NAVIGATION",
+    "-DPORTABLE_DISPLAY_ROTATION=90",
+    "-DPORTABLE_HOME_APP=\"default.elf\"",
+    "-DPORTABLE_APP_LAUNCH_GUARD",
+    "-DPORTABLE_BLE_BROADCAST",
+    "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+    "-DPORTABLE_PAPER_PREFERENCES",
+    "-DPORTABLE_UNPADDED_HOURS",
+    "-DTIMECARD_NATIVE_TIME",
+    "-DTIMECARD_APP_DATA",
+    "-DTIMECARD_PAPER",
+    "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+    "-DTIMECARD_RETURN_APP=\"springboard.elf\"",
+    "-DPORTABLE_TOUCH_SCROLL",
+    "-DPORTABLE_APP_TOUCH_SCROLL",
+    "-DPORTABLE_PRODUCTIVITY_SCROLL",
+    "-DPORTABLE_RESIDENT_SHELL_CLIENT",
+    "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+    "-DPORTABLE_RESIDENT_POLICY",
+    "-DPORTABLE_RASTER_SNAPSHOT"
+  ],
+  "manifest_delta": {
+    "runtime_lifecycle": {
+      "old_062": null,
+      "selected": "foreground"
+    }
+  },
+  "selected_manifest_sha256": "b70916dab9885ee553d8ed4e2d44717c1084cfdf56e9fec3e8d4694011c58974",
+  "extracted_old_source_receipt": "/workspace/shared/timecard-shared-input-profile-evidence-20261012/x4-baseline-old-source-receipt.json",
+  "extracted_old_build_inputs": "/workspace/shared/timecard-shared-input-profile-evidence-20261012/x4-baseline-build-inputs",
+  "extracted_old_build_inputs_inventory": "/workspace/shared/timecard-shared-input-profile-evidence-20261012/x4-baseline-build-inputs-inventory.json",
+  "build_mapping_note": "These staged SDK/header/time/catalog inputs belong to the recovered .55 compiler receipt, not a recovered .62 compiler receipt. The .62 recipe keeps the inherited app profile and adds PORTABLE_RASTER_SNAPSHOT; current shared System inputs must be bound explicitly for a new build.",
+  "extracted_old_build_inputs_note": "Target receipts retained metadata only. Recovered original SDK headers and font payloads by exact receipt hash from nested source archives; see recovered-payloads.json. catalog.c and exports.map were not archived and should be regenerated from the pinned helper.",
+  "recovered_original_payloads": {
+    "sdk_headers": 174,
+    "font_payloads": 4,
+    "missing": [],
+    "inventory": "/workspace/shared/timecard-shared-input-profile-evidence-20261012/x4-baseline-build-inputs/recovered-payloads.json"
+  }
+}
