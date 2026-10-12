@@ -520,6 +520,9 @@ static bool resume_sleep_media(void) {
 static uint32_t bootlog_budget_ms=15000,bootlog_sector_limit=2048;
 #define STORAGE_VOLUME_OPERATION_BUDGET_MS bootlog_budget_ms
 #define STORAGE_VOLUME_OPERATION_SECTOR_LIMIT bootlog_sector_limit
+#if X4PRO_SD_ASYNC
+#define STORAGE_VOLUME_NATIVE_CAPACITY
+#endif
 #include <volume.c>
 #include "BootLog.h"
 #include "Export.h"
@@ -541,6 +544,7 @@ static bool async_claim_scope(void){
     worker_scope_claimed=true;
     async_adapter.worker=storage_worker;async_adapter.volume=&api.terminal.power.volume.base;
     async_adapter.ext=&api.terminal.power.volume;async_adapter.fs=&filesystem_api;
+    async_adapter.native_capacity=fs_native_capacity;
     if(storage_worker->bind(storage_worker->context,risc_storage_async_execute,&async_adapter)!=RISC_STORAGE_WORK_OK)return false;
     worker_clock=(risc_platform_clock_api_v1){1,sizeof(worker_clock),NULL,worker_now,worker_delay};clock_api=&worker_clock;
     return true;
@@ -573,6 +577,16 @@ static int32_t async_submit(void*c,uint64_t s,const risc_storage_async_request_v
     return async_owner()?risc_storage_async_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
 static int32_t package_submit(void*c,uint64_t s,const risc_storage_package_request_v1*q,uint64_t*t){(void)c;
     return async_owner()?risc_storage_package_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
+static int32_t capacity_submit(void*c,uint64_t s,const risc_storage_native_capacity_request_v1*q,uint64_t*t){(void)c;
+    return async_owner()?risc_storage_native_capacity_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
+static int32_t capacity_check(void*c,const risc_storage_native_capacity_result_v1*q){(void)c;
+    if(!async_owner())return RISC_STORAGE_ASYNC_BUSY;
+    if(!q||!q->serial||!q->mount_epoch)return RISC_STORAGE_ASYNC_INVALID;
+    /* No worker-owned fields are touched until the existing end fence. */
+    if(async_adapter.session||async_adapter.operation)return RISC_STORAGE_ASYNC_BUSY;
+    if(async_adapter.retained||mutex_poisoned||gpio_fault||gpio_retained||sdmmc_fault||bootlog_retained||sleep_state==SLEEP_RETAINED||export_state==EXPORT_RETAINED)return RISC_STORAGE_ASYNC_RETAINED;
+    if(!mounted||!card_ready||io_failed||quiescing||quiesced||power_down_prepared||sleep_state!=SLEEP_ACTIVE||export_state!=EXPORT_LOCAL||has_handles()||native_mount_epoch!=q->mount_epoch)return RISC_STORAGE_ASYNC_IO;
+    return !memcmp(q,&async_adapter.capacity_receipt,sizeof(*q))?RISC_STORAGE_ASYNC_OK:RISC_STORAGE_ASYNC_INVALID;}
 static int32_t async_collect(void*c,uint64_t s,uint64_t o,risc_storage_async_result_v1*r){(void)c;
     return async_owner()?risc_storage_async_collect(&async_adapter,s,o,r):RISC_STORAGE_ASYNC_BUSY;}
 static int32_t async_end(void*c,uint64_t s){(void)c;
@@ -734,7 +748,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         logging_api.prepared.base.sleep = api;
         logging_api.prepared.base.sleep.terminal.power.volume.base.struct_size =
 #if X4PRO_SD_ASYNC
-            sizeof(admission_api);
+            sizeof(capacity_api);
 #else
             sizeof(filesystem_api);
 #endif
@@ -759,6 +773,8 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         filesystem_api.replace_file=fs_replace_file;filesystem_api.recover_replace=fs_recover_replace;
     }
 #if X4PRO_SD_ASYNC
+    capacity_api.capacity_tag=RISC_STORAGE_NATIVE_CAPACITY_TAG;capacity_api.capacity_version=1u;
+    capacity_api.submit_capacity=capacity_submit;capacity_api.check_capacity=capacity_check;
     admission_api.admission_tag=RISC_STORAGE_SESSION_ADMISSION_TAG;
     admission_api.admission_version=RISC_STORAGE_SESSION_ADMISSION_VERSION;
     admission_api.begin_checked=async_begin_checked;

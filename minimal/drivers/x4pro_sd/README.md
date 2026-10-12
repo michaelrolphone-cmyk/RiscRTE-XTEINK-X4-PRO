@@ -226,3 +226,13 @@ This corrects the software path where a healthy but slower card crossed the
 old 1-second service or whole-backlog export deadline inside FatFs and retained
 the writable log. Actual transport, hard transaction deadline, write and close
 failures still retain custody and their first media error is preserved.
+
+The default-off async build (0.2.23) appends the explicitly tagged native capacity
+suffix after checked session admission. A copied request runs the canonical
+FatFs fresh lower-bound scan in the selected SD worker, then returns cluster
+geometry, conservative reserve, mount epoch and a one-use latest receipt serial.
+A closed-session owner check verifies the exact receipt and current healthy
+mount without I/O. Native attempts retain writer exclusion across scan, vacancy
+verification, first-export arm and publication. Ordinary volume/export prefixes
+and public UNAVAILABLE observation during owned async sessions are unchanged.
+Host and target checks do not qualify physical card replacement or power loss.
