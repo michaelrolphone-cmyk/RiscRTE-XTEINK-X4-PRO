@@ -118,7 +118,8 @@ static int32_t gpio_hold(void *ctx,uint64_t token,bool hold) {
     if(!hold && fail_unhold)return fail_unhold;
     holds[pin]=hold;wire_pin_hold((uint32_t)pin,hold);return 0;
 }
-static bool sync_owner(void *ctx){(void)ctx;return owner;}
+static unsigned owner_checks;
+static bool sync_owner(void *ctx){(void)ctx;++owner_checks;return owner;}
 static bool sync_create(void *ctx,uint64_t *out){(void)ctx;assert(owner && !fixture_lock);*out=0;if(fail_create)return false;*out=fixture_lock=++next_token;return true;}
 static bool sync_take(void *ctx,uint64_t token){(void)ctx;++locks;assert(token==fixture_lock);if(!owner || locked || fail_take)return false;locked=true;return true;}
 static bool sync_unlock(void *ctx,uint64_t token){(void)ctx;++unlocks;assert(token==fixture_lock);if(!owner || !locked || fail_unlock)return false;locked=false;return true;}
@@ -128,8 +129,9 @@ static bool budget_jump,realistic_latency;
 static unsigned timed_reads,timed_writes;
 static unsigned modeled_read_ms=8,modeled_write_ms=20;
 static uint64_t modeled_sd_ms;
+static unsigned clock_reads;
 static uint64_t monotonic(void *ctx){
- (void)ctx;
+ (void)ctx;++clock_reads;
  if(realistic_latency){const uint64_t cost=(card_reads-timed_reads)*modeled_read_ms+(card_writes-timed_writes)*modeled_write_ms;now_ms+=cost;modeled_sd_ms+=cost;timed_reads=card_reads;timed_writes=card_writes;}
  if(budget_jump && bootlog_servicing)now_ms+=250;
  return now_ms;

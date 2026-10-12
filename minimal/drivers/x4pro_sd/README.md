@@ -1,5 +1,46 @@
 # X4 native one-bit SD ordinary provider
 
+## Opt-in warm native session admission
+
+The asynchronous build (`build_storage_fs.py --async-storage`, package 0.2.22)
+adds `RiscStorageSessionAdmissionV1.h` after the unchanged download suffix.
+`risc_storage_volume_session_admission` requires the complete prefix, SAD1 tag,
+version 1, size and `begin_checked` pointer. Older async/package/download
+consumers keep their exact layouts. The synchronous package and legacy
+`Drivers/x4pro_sd/driver.c` do not advertise warm admission.
+
+The native caller must attach its selected, idle raw mailbox, reject any held
+selected Sync locks, and fence new ordinary native calls before invoking
+`begin_checked` on the provider owner task. The provider performs exactly one
+native Sync owner check, then checks its local owner/worker guard, ordinary
+file/writer/directory slots, async session/operation/cleanup residue, retained
+transport/logger state and export/sleep/lifecycle custody. It never takes or
+releases the ordinary mutex, drains logs, refreshes, closes handles or touches
+the card. Refusal returns a zero session and leaves existing custody unchanged.
+The native attachment and owner-task serialization provide the exclusion; the
+suffix alone does not grant permission to bypass the native admission fence.
+
+Success publishes the existing provider session fence, blocking ordinary
+storage/export/sleep calls until checked async completion returns ownership.
+Public observation remains `UNAVAILABLE` throughout the session, even when no
+request is pending. A consumer may run the ordinary copied REFRESH request to
+establish usable media; admission itself neither implies nor fabricates READY.
+After `end` returns OK, the native caller may release its attachment and allow
+Files/USB again. PENDING/BUSY/RETAINED preserve the session and all dependencies.
+The original `begin` entry is unchanged; consumers must use this new checked
+entry and suffix to rely on warm admission after prior ordinary use.
+
+`minimal/scripts/test_storage_async.py` runs the actual provider with canonical
+shared FatFs against a native-worker sector fixture. It verifies writer,
+reader and directory refusal without changing live FatFs/adapter state; warm
+checkpoints after ordinary close, USB export and sleep recovery; pending/idle
+async refusal; retained media-write and unlock faults; ordinary-call fences;
+truthful observation; one owner check with zero mutex/media/clock work; and
+unchanged file bytes across repeated checkpoints. `--target-cc` additionally
+compiles this same fixture and append-only ABI assertions for Xtensa without
+executing on hardware. Native mailbox/Sync attachment fencing is qualified by
+the separate Runtime tests; this provider test is not hardware qualification.
+
 `x4pro-sd@0.2.8` adapts the X4 native CLK/CMD/DAT0 transport to scoped
 `platform.gpio@1`, `platform.clock@1` and `platform.sync@1`, with explicit
 `board.power.ready@1` admission. It is not SPI and imports no firmware SD,

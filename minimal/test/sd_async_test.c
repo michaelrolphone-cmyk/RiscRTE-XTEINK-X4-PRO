@@ -6,31 +6,31 @@ static const risc_storage_worker_v1 fixture_worker;
 #define main legacy_fixture_main
 #include "sd_test.c"
 #undef main
-static bool work_running,work_bound,work_scope,work_opened;
-static unsigned work_state,work_reads,work_writes,work_opens;
+static bool work_running,work_bound,work_scope,work_opened,work_fail_write;
+static unsigned work_state,work_reads,work_writes,work_opens,work_io_calls,work_control_calls;
 static uint64_t work_serial,work_token;
 static risc_storage_work_execute_v1 work_execute;
 static void*work_context;
 static _Alignas(8) unsigned char work_request[RISC_STORAGE_WORKER_BYTES],work_result[RISC_STORAGE_WORKER_BYTES];
 static uint32_t work_size,work_result_size;
 static int32_t work_result_status;
-static bool work_on_worker(void*c){(void)c;return work_running;}
-static uint64_t work_now(void*c){(void)c;return now_ms;}
-static void work_delay(void*c,uint32_t ms){(void)c;assert(work_scope);now_ms+=ms;}
-static bool work_power(void*c,bool level){(void)c;(void)level;assert(work_scope);return true;}
-static bool work_open(void*c,risc_sdmmc_card_info_v1*out){(void)c;assert(work_scope&&!work_opened);++work_opens;work_opened=true;*out=(risc_sdmmc_card_info_v1){sizeof(*out),512,card_sectors,20000000,0};return true;}
-static bool work_read(void*c,uint64_t lba,uint32_t n,void*out){(void)c;assert(work_scope&&work_opened&&n&&n<=8&&lba+n<=card_sectors);++work_reads;if(absent)return false;memcpy(out,card_image+lba*512,n*512);return true;}
-static bool work_write(void*c,uint64_t lba,uint32_t n,const void*in){(void)c;assert(work_scope&&work_opened&&n&&n<=8&&lba+n<=card_sectors);++work_writes;memcpy(card_image+lba*512,in,n*512);return true;}
-static bool work_sync(void*c){(void)c;return work_scope&&work_opened;}
-static bool work_close(void*c){(void)c;assert(work_scope);work_opened=false;return true;}
+static bool work_on_worker(void*c){++work_io_calls;(void)c;return work_running;}
+static uint64_t work_now(void*c){++work_io_calls;(void)c;return now_ms;}
+static void work_delay(void*c,uint32_t ms){++work_io_calls;(void)c;assert(work_scope);now_ms+=ms;}
+static bool work_power(void*c,bool level){++work_io_calls;(void)c;(void)level;assert(work_scope);return true;}
+static bool work_open(void*c,risc_sdmmc_card_info_v1*out){++work_io_calls;(void)c;assert(work_scope&&!work_opened);++work_opens;work_opened=true;*out=(risc_sdmmc_card_info_v1){sizeof(*out),512,card_sectors,20000000,0};return true;}
+static bool work_read(void*c,uint64_t lba,uint32_t n,void*out){++work_io_calls;(void)c;assert(work_scope&&work_opened&&n&&n<=8&&lba+n<=card_sectors);++work_reads;if(absent)return false;memcpy(out,card_image+lba*512,n*512);return true;}
+static bool work_write(void*c,uint64_t lba,uint32_t n,const void*in){++work_io_calls;(void)c;assert(work_scope&&work_opened&&n&&n<=8&&lba+n<=card_sectors);++work_writes;if(work_fail_write)return false;memcpy(card_image+lba*512,in,n*512);return true;}
+static bool work_sync(void*c){++work_io_calls;(void)c;return work_scope&&work_opened;}
+static bool work_close(void*c){++work_io_calls;(void)c;assert(work_scope);work_opened=false;return true;}
 static const risc_storage_work_io_v1 work_io={NULL,work_on_worker,work_now,work_power,work_delay,work_open,work_read,work_write,work_sync,work_close};
-static int32_t work_bind(void*c,risc_storage_work_execute_v1 fn,void*ctx){(void)c;assert(owner&&work_scope&&!work_bound);work_bound=true;work_execute=fn;work_context=ctx;return 0;}
-static int32_t work_submit(void*c,const void*p,uint32_t n,uint64_t*out){(void)c;assert(owner&&work_bound&&n<=sizeof(work_request));if(work_state)return RISC_STORAGE_WORK_BUSY;memcpy(work_request,p,n);work_size=n;work_state=1;*out=work_token=++work_serial;return 0;}
-static int32_t work_collect(void*c,uint64_t t,void*p,uint32_t n,uint32_t*size,int32_t*status){(void)c;assert(owner&&t==work_token);*size=0;if(work_state!=2)return RISC_STORAGE_WORK_PENDING;assert(n>=work_result_size);memcpy(p,work_result,work_result_size);*size=work_result_size;*status=work_result_status;work_state=0;return 0;}
-static int32_t work_cancel(void*c,uint64_t t){(void)c;assert(owner&&t==work_token);if(work_running)return RISC_STORAGE_WORK_PENDING;work_state=0;return RISC_STORAGE_WORK_CANCELLED;}
-static int32_t work_unbind(void*c){(void)c;assert(owner&&!work_state);work_bound=false;return 0;}
-static int32_t work_claim(void*c,const risc_storage_work_scope_v1*q){(void)c;assert(owner&&!work_scope&&q->power==5&&q->clk==41&&q->cmd==42&&q->dat0==40);work_scope=true;return 0;}
-static int32_t work_release(void*c){(void)c;assert(owner&&!work_bound&&!work_opened);work_scope=false;return 0;}
+static int32_t work_bind(void*c,risc_storage_work_execute_v1 fn,void*ctx){++work_control_calls;(void)c;assert(owner&&work_scope&&!work_bound);work_bound=true;work_execute=fn;work_context=ctx;return 0;}
+static int32_t work_submit(void*c,const void*p,uint32_t n,uint64_t*out){++work_control_calls;(void)c;assert(owner&&work_bound&&n<=sizeof(work_request));if(work_state)return RISC_STORAGE_WORK_BUSY;memcpy(work_request,p,n);work_size=n;work_state=1;*out=work_token=++work_serial;return 0;}
+static int32_t work_collect(void*c,uint64_t t,void*p,uint32_t n,uint32_t*size,int32_t*status){++work_control_calls;(void)c;assert(owner&&t==work_token);*size=0;if(work_state!=2)return RISC_STORAGE_WORK_PENDING;assert(n>=work_result_size);memcpy(p,work_result,work_result_size);*size=work_result_size;*status=work_result_status;work_state=0;return 0;}
+static int32_t work_cancel(void*c,uint64_t t){++work_control_calls;(void)c;assert(owner&&t==work_token);if(work_running)return RISC_STORAGE_WORK_PENDING;work_state=0;return RISC_STORAGE_WORK_CANCELLED;}
+static int32_t work_unbind(void*c){++work_control_calls;(void)c;assert(owner&&!work_state);work_bound=false;return 0;}
+static int32_t work_claim(void*c,const risc_storage_work_scope_v1*q){++work_control_calls;(void)c;assert(owner&&!work_scope&&q->power==5&&q->clk==41&&q->cmd==42&&q->dat0==40);work_scope=true;return 0;}
+static int32_t work_release(void*c){++work_control_calls;(void)c;assert(owner&&!work_bound&&!work_opened);work_scope=false;return 0;}
 static const risc_storage_worker_v1 fixture_worker={1,sizeof(fixture_worker),NULL,work_bind,work_submit,work_collect,work_cancel,work_unbind,work_claim,work_release,&work_io};
 static void work_step(void){assert(owner&&work_state==1);owner=false;work_running=true;work_result_status=work_execute(work_context,work_request,work_size,work_result,sizeof(work_result),&work_result_size);work_running=false;owner=true;work_state=2;}
 static uint64_t session,operation;
@@ -38,6 +38,7 @@ static risc_storage_async_result_v1 async_result;
 static void request(unsigned op,const char*path){risc_storage_async_request_v1 q={0};q.operation=op;if(path)strcpy(q.path,path);assert(async_submit(NULL,session,&q,&operation)==0);}
 static int32_t finish(void){work_step();return async_collect(NULL,session,operation,&async_result);}
 static void end_session(void){int32_t rc=async_end(NULL,session);if(rc==RISC_STORAGE_ASYNC_PENDING){work_step();rc=async_end(NULL,session);}assert(rc==0);}
+#ifndef X4_SD_ASYNC_FIXTURE_ONLY
 int main(void){
  format(false);assert(t5_driver_get(2));assert(START());assert(work_scope&&work_bound&&!work_reads&&!work_opens&&!mounted);
  assert(async_begin(NULL,&session)==0);request(RISC_STORAGE_ASYNC_REFRESH,NULL);
@@ -83,3 +84,4 @@ int main(void){
  assert(quiesce());stop();assert(!work_bound&&!work_scope&&!fixture_lock);free(card_image);
  puts("production async SD: lazy activation, pending UI polls, unknown manifest, export refusal and 8-sector batching, cancel/exit, sleep-resume PASS");
 }
+#endif

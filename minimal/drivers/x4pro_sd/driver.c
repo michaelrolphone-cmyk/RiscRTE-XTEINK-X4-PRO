@@ -12,9 +12,10 @@
 #include <RiscPlatformClockV1.h>
 #if X4PRO_SD_ASYNC
 #include <RiscStorageAsyncAdapterV1.h>
+#include <RiscStorageSessionAdmissionV1.h>
 static const risc_storage_worker_v1 *storage_worker;
 static risc_storage_async_adapter_v1 async_adapter;
-static bool worker_guard,worker_scope_claimed;
+static bool worker_guard,worker_scope_claimed,owner_guard;
 static bool async_claim_scope(void);
 static risc_platform_clock_api_v1 worker_clock;
 static const risc_platform_clock_api_v1 *owner_clock;
@@ -114,9 +115,14 @@ static bool guard_enter(void) {
         if(worker_guard || mutex_poisoned || quiescing || gpio_retained)return false;
         worker_guard=true;return true;
     }
-#endif
+    const bool entered = valid_task() && operation_mutex && !mutex_poisoned && !quiescing && !gpio_retained &&
+        sync_api->try_lock(sync_api->context, operation_mutex);
+    if(entered)owner_guard=true;
+    return entered;
+#else
     return valid_task() && operation_mutex && !mutex_poisoned && !quiescing && !gpio_retained &&
         sync_api->try_lock(sync_api->context, operation_mutex);
+#endif
 }
 static bool guard_leave(void) {
 #if X4PRO_SD_ASYNC
@@ -129,6 +135,9 @@ static bool guard_leave(void) {
     if (!valid_task() || !sync_api->unlock(sync_api->context, operation_mutex)) {
         mutex_poisoned = true; return false;
     }
+#if X4PRO_SD_ASYNC
+    owner_guard=false;
+#endif
     return bootlog_custody_safe();
 }
 static bool started, high_capacity;
@@ -540,6 +549,26 @@ static bool async_owner(void){return sync_api && sync_api->is_owner(sync_api->co
 static int32_t async_begin(void*c,uint64_t*t){(void)c;
     if(!async_owner() || !started || quiescing || export_state!=EXPORT_LOCAL || power_down_prepared || sleep_state!=SLEEP_ACTIVE)return RISC_STORAGE_ASYNC_BUSY;
     return risc_storage_async_begin(&async_adapter,t);}
+static int32_t async_begin_checked(void*c,uint64_t*t){(void)c;
+    if(t)*t=0;
+    /* Exactly one native owner check. Native attachment supplies the idle raw
+     * mailbox/Sync-lock fence; never enter the guarded filesystem here. */
+    if(!async_owner())return RISC_STORAGE_ASYNC_BUSY;
+    if(!t)return RISC_STORAGE_ASYNC_INVALID;
+    /* Do not inspect worker-owned fields until absence of a session proves
+     * the adapter's completion fence has already returned custody. */
+    if(async_adapter.session)return RISC_STORAGE_ASYNC_BUSY;
+    if(mutex_poisoned || gpio_fault || gpio_retained || sdmmc_fault ||
+       bootlog_retained || sleep_state==SLEEP_RETAINED || export_state==EXPORT_RETAINED ||
+       async_adapter.retained)return RISC_STORAGE_ASYNC_RETAINED;
+    if(!started || !operation_mutex || quiescing || quiesced || owner_guard || worker_guard ||
+       !worker_scope_claimed || export_state!=EXPORT_LOCAL || export_token ||
+       power_down_prepared || power_down_committed || sleep_state!=SLEEP_ACTIVE ||
+       bootlog_servicing || bootlog_paused || has_handles() || async_adapter.operation ||
+       async_adapter.file || async_adapter.directory || async_adapter.writing ||
+       async_adapter.written || async_adapter.ending || async_adapter.cleanup)
+        return RISC_STORAGE_ASYNC_BUSY;
+    return risc_storage_async_begin(&async_adapter,t);}
 static int32_t async_submit(void*c,uint64_t s,const risc_storage_async_request_v1*q,uint64_t*t){(void)c;
     return async_owner()?risc_storage_async_submit(&async_adapter,s,q,t):RISC_STORAGE_ASYNC_BUSY;}
 static int32_t package_submit(void*c,uint64_t s,const risc_storage_package_request_v1*q,uint64_t*t){(void)c;
@@ -705,7 +734,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         logging_api.prepared.base.sleep = api;
         logging_api.prepared.base.sleep.terminal.power.volume.base.struct_size =
 #if X4PRO_SD_ASYNC
-            sizeof(download_api);
+            sizeof(admission_api);
 #else
             sizeof(filesystem_api);
 #endif
@@ -730,6 +759,9 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
         filesystem_api.replace_file=fs_replace_file;filesystem_api.recover_replace=fs_recover_replace;
     }
 #if X4PRO_SD_ASYNC
+    admission_api.admission_tag=RISC_STORAGE_SESSION_ADMISSION_TAG;
+    admission_api.admission_version=RISC_STORAGE_SESSION_ADMISSION_VERSION;
+    admission_api.begin_checked=async_begin_checked;
     asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=RISC_STORAGE_ASYNC_VERSION;
     download_api.download_tag=RISC_STORAGE_DOWNLOAD_TAG;download_api.download_version=1;
     package_api.package_tag=RISC_STORAGE_PACKAGE_TAG;package_api.package_version=1;package_api.submit_package=package_submit;

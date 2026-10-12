@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "baseline_x4_commit": "199e231d962c401c5d20617e2f5e4da07bffd780",
+  "dependencies": {
+    "Runtime": "d3f0e7b8450d7f0e5b59c6bbe4cd34ee89e5edbd",
+    "Drivers": "281609a0d2ae514f107d2ef67b6e8b4d25c72fb8",
+    "Reader": "45cf61ac013fb618e8d7fed63217a35350484d52"
+  },
+  "source_sha256": {
+    "minimal/interfaces/RiscStorageSessionAdmissionV1.h": "eccf8e59cba6ec58a2456d00bcbd07131d1e4ec8d5ac36f23b35f793a33284fc",
+    "minimal/drivers/x4pro_sd/driver.c": "c4705513a3204624f67e8a511e87785149457bd75e598dcc88cd9d665a1710eb",
+    "minimal/drivers/x4pro_sd/BootLog.h": "7f3bf4daf7f0f963144e0bd2d7d9fa51ce18152e939422d8e1a9479e7cb67ede",
+    "minimal/scripts/build_storage_fs.py": "4941ab3b409fa2eb16c56953c027d99ccc18f1f4b1abe5dbc81a8048a6ed1279",
+    "minimal/scripts/test_storage_async.py": "e502ff26b02472c04a8cb07315acb7ce9fa2b93c91b25c8d0eb89adcee8efbfb",
+    "minimal/test/sd_async_test.c": "70993b7ece40664b9bf2c2c96cca114491eb852b72afe7c2f8ce101ab0ae4b5c",
+    "minimal/test/sd_session_admission_test.c": "e3a11a47a61b8b5e0143da2d80c5d9b39b30fbe84f1a00accdcd7e387afd63b8",
+    "minimal/test/sd_test.c": "444709018fb962520c378696e2b546629e9462546941b50529da87ceb7b3a6fd"
+  },
+  "qualification": {
+    "actual_provider_fatfs_normal": "passed",
+    "actual_provider_fatfs_ubsan": "passed",
+    "actual_provider_fatfs_asan_ubsan": "passed; ASAN_OPTIONS=detect_leaks=0",
+    "ordinary_sd_regression_scenarios": 102,
+    "ordinary_sd_regressions": "passed",
+    "warm_refusal": "ordinary writer/reader/directory, active and pending async, export, sleep, owner/reentry, retained write/unlock, metadata blockers; custody unchanged",
+    "native_calls": "exactly one is_owner; zero lock/unlock, worker I/O/control, GPIO, clock/delay callbacks",
+    "observation": "UNAVAILABLE for entire owned session; READY after successful end only when real mounted state allows",
+    "data_preservation": "exact ordinary file bytes after repeated warm checkpoints and export/sleep recovery",
+    "xtensa_fixture_compile": "passed; includes append-only layout assertions",
+    "independent_review": "no implementation/ABI findings; callback-count coverage gap corrected"
+  },
+  "target": {
+    "compiler": "xtensa-esp32s3-elf-gcc esp-2021r2-patch5 8.4.0",
+    "async_package_version": "0.2.22",
+    "elf_sha256": "0e0332772d17d1f1cb91bca65febc6aa2305dae4716c07f906b29c0fc880eb65",
+    "elf_bytes": 101284,
+    "imports": [
+      "memchr",
+      "memcmp",
+      "memcpy",
+      "memset",
+      "strchr",
+      "strlen",
+      "strrchr"
+    ],
+    "exports": [
+      "t5_driver_get"
+    ],
+    "mapped_relocations": 838,
+    "fixture_object_sha256": "3a4bcf9356dcc5861c4985fb9655e5184d8842637f1d8bee10828795abb96cfa",
+    "synchronous_elf_byte_identical_to_baseline": true,
+    "synchronous_elf_sha256": "2a27db881b1dc7641645d21b99209e43b91d579e6d6f0449f5c77a061af129a5"
+  },
+  "hardware_tested": false,
+  "production_settings_policy_enabled": false,
+  "published": false,
+  "limits": [
+    "Native Runtime mailbox/Sync attachment fence requires its independent integration qualification.",
+    "Target compile/link and host FatFs tests do not establish physical SD timing or power-loss behavior."
+  ]
+}
