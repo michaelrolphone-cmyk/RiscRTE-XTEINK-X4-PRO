@@ -1,0 +1,246 @@
+{
+  "schema": "timecard.modal-policy.public-qualification.v1",
+  "device": "x4",
+  "component": {
+    "device": "x4",
+    "repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+    "branch": "work/timecard-input-policy-20261012",
+    "compiled_recipe_commit": "a9ca3a8e5a17283a656092884d22771cf1dcfc01",
+    "compiled_recipe_tree": "ee12dc33cfbd4b62931438184187c5961668cda1",
+    "compiled_recipe_checkout": "/workspace/shared/timecard-input-policy-x4-20261012",
+    "compiled_recipe_ci": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4-compiled-ci.json",
+      "bytes": 580,
+      "sha256": "e9beab278e651aa5148bc42533454c75117da8311e1761d873be9fec8a3b3a49"
+    },
+    "candidate_directory": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate",
+    "target_build_directory": "/workspace/shared/timecard-input-policy-components-20261012/x4-target-v2",
+    "target_elf": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4-target-v2/timecard.elf",
+      "bytes": 175412,
+      "sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53"
+    },
+    "target_manifest": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4-target-v2/timecard.json",
+      "bytes": 890,
+      "sha256": "256902f13b5ef54d56fe35aa2f9d5b71b650a47dc11be4d8c122be38ca5d9dce"
+    },
+    "target_build_record": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4-target-v2/timecard-build-record.json",
+      "bytes": 25987,
+      "sha256": "2e1b426e391d766f3a05f6d8a94af0e45cfff20400fe973ca2071a9908baf816"
+    },
+    "timecard_version": "0.2.17",
+    "sources": {
+      "system-apps": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+      "utilities": "4beb9778d300ec9f6b18448e1ec86317e063c98c",
+      "productivity": "164ea8c4f8bace10148bcfd9b9dcdd97e9fc8e75",
+      "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+      "watch": "089868395268b696c05651c33816345bfe0425df"
+    },
+    "source_roots": {
+      "system-apps": "/workspace/shared/timecard-input-policy-system-20261012",
+      "utilities": "/workspace/shared/rf-shared-input-utilities-published-20261012",
+      "productivity": "/workspace/shared/timecard-input-policy-productivity-20261012",
+      "runtime": "/workspace/shared/first-attempt-time-alarm-runtime-28-20261012",
+      "watch": "/workspace/shared/watch-scroll-regression-20261011/watch-profile",
+      "generated": "/workspace/shared/timecard-input-policy-components-20261012/x4-target-v2"
+    },
+    "flags": [
+      "-DPORTABLE_STAGE_LOGS",
+      "-DPORTABLE_NOVA_UI",
+      "-DPORTABLE_ALARM_CLIENT",
+      "-DALARM_SERVICE_TAGGED_V2",
+      "-DPORTABLE_NATIVE_CUSTODY_FENCE",
+      "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+      "-DPORTABLE_INPUT_NAVIGATION",
+      "-DPORTABLE_DISPLAY_ROTATION=90",
+      "-DPORTABLE_HOME_APP=\"default.elf\"",
+      "-DPORTABLE_APP_LAUNCH_GUARD",
+      "-DPORTABLE_BLE_BROADCAST",
+      "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+      "-DPORTABLE_PAPER_PREFERENCES",
+      "-DPORTABLE_UNPADDED_HOURS",
+      "-DTIMECARD_NATIVE_TIME",
+      "-DTIMECARD_APP_DATA",
+      "-DTIMECARD_PAPER",
+      "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+      "-DTIMECARD_RETURN_APP=\"springboard.elf\"",
+      "-DPORTABLE_TOUCH_SCROLL",
+      "-DPORTABLE_APP_TOUCH_SCROLL",
+      "-DPORTABLE_PRODUCTIVITY_SCROLL",
+      "-DPORTABLE_RESIDENT_SHELL_CLIENT",
+      "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+      "-DPORTABLE_RESIDENT_POLICY",
+      "-DPORTABLE_RASTER_SNAPSHOT",
+      "-DPORTABLE_TEXT_INPUT_POLICY",
+      "-DPORTABLE_TIMECARD_SHARED_TEXT_INPUT",
+      "-DPORTABLE_TEXT_INPUT_CLIENT",
+      "-DPORTABLE_CHECKED_STORAGE_RUNTIME",
+      "-DPORTABLE_APP_HOME_GUARD"
+    ],
+    "all_inherited_defines_and_fonts_retained": true,
+    "normal_admission": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/qualification/normal/result.json",
+      "bytes": 32606,
+      "sha256": "9fe15cf3252961be29036900f57a6f406d55a5d3ab2708a5649ada2891c26323"
+    },
+    "sanitized_admission": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/qualification/asan-ubsan/result.json",
+      "bytes": 32620,
+      "sha256": "f8aab2927fd45c7e526238249de72319c367941735493404742003df7d62bd80"
+    },
+    "normal_admission_passed": true,
+    "sanitized_admission_passed": true,
+    "normal_sanitized_admission_identical": true,
+    "packing": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/receipts/packing.json",
+      "bytes": 3870,
+      "sha256": "d28bcc8ef311e8f0664ed08996c32a066b81cc601a0b4558ab046bd9071e62a3"
+    },
+    "free_spiffs_blocks": 126,
+    "required_free_spiffs_blocks": 2,
+    "store_files": 106,
+    "internal_elfs": 43,
+    "selected_sd_elfs": 48,
+    "changed_store_paths": [
+      "boot.json",
+      "cohort.json",
+      "timecard.json"
+    ],
+    "grant_delta": [],
+    "native_unchanged": true,
+    "shared_text_hosts_unchanged": true,
+    "scene_host_unchanged": true,
+    "target_stack": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4-stack.json",
+      "bytes": 1830,
+      "sha256": "8a8810cc51b4c9c833f769c7bee203bbe49e4d173bf53ab0163984581d432ee3"
+    },
+    "flagoff_equivalence": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4-flagoff.json",
+      "bytes": 963,
+      "sha256": "89e5277209c9cbfe07b684f5f41e351150e54531a0532e03e85054a31dae7831"
+    },
+    "full_image_sha256": "7346a810638e51886167640f90eb5a0fc16c2d89fdb9bac308fbbdde3e233076",
+    "full_image_bytes": 16777216,
+    "full_image_materialized": false,
+    "unpublished_sd_settings_consumed": false,
+    "hardware_verified": false,
+    "target_instructions_executed": false,
+    "delivered": false,
+    "receipt_publication": {
+      "status": "pending",
+      "changes_build_inputs": false
+    },
+    "components": {
+      "appdata.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/appdata.bin",
+        "bytes": 524288,
+        "sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+      },
+      "bank_state.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/bank_state.bin",
+        "bytes": 8192,
+        "sha256": "81f1bf75a822e67799ced505e9a60c46555e4c22c12361ffbd6f940652b9d814"
+      },
+      "bootfs.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/bootfs.bin",
+        "bytes": 5308416,
+        "sha256": "90877ece5bc004b8a1bf010943431445e75acf2f179907a283f869147ffc729c"
+      },
+      "bootloader.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/bootloader.bin",
+        "bytes": 15104,
+        "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363"
+      },
+      "firmware.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/firmware.bin",
+        "bytes": 1458576,
+        "sha256": "0cb155e1ff160afadeacea7cbb095234c6a072a4c164983da11c08135a55fbc9"
+      },
+      "otadata.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/otadata.bin",
+        "bytes": 8192,
+        "sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3"
+      },
+      "partitions.bin": {
+        "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/components/partitions.bin",
+        "bytes": 3072,
+        "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+      }
+    },
+    "reproduction_commands": [
+      "/workspace/shared/timecard-input-policy-components-20261012/run-target.sh x4 164ea8c4f8bace10148bcfd9b9dcdd97e9fc8e75 FRESH_TARGET",
+      "/workspace/shared/timecard-input-policy-components-20261012/run-compose.sh x4"
+    ],
+    "composition_receipt": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/receipts/evening-composition.json",
+      "bytes": 812143,
+      "sha256": "b130b000f74c83a8b0f3f19bd0ac12dcaec4ec36d6a90740d5d91934df2f164f"
+    },
+    "complete_qualification": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/qualification/timecard-qualification.json",
+      "bytes": 841,
+      "sha256": "aaefa2e8854bd2e9945a4821c75a243ec9ba9c12078965e8189fa30fbdb4ff17"
+    },
+    "sd_files": 101,
+    "added_sd_files": [
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/manifest.json",
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/timecard.elf"
+    ],
+    "original_sd_files_preserved": 99,
+    "old_timecard_image_preserved": true,
+    "sd_overlay": {
+      "path": "/workspace/shared/timecard-input-policy-components-20261012/x4/candidate/X4-0.1.102-Combined-Changed-SD.zip",
+      "bytes": 2561923,
+      "sha256": "cc3d50d673404f43c51d66c8c5dac33e318814f90f3b9c2977be22a1805bfb00"
+    },
+    "sd_overlay_files": 27,
+    "selected_timecard": {
+      "manifest": "timecard.json",
+      "matches_internal_fallback": false,
+      "path": "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/timecard.elf",
+      "role": "app",
+      "sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53",
+      "size_bytes": 175412
+    },
+    "obd_version_preserved": "0.2.2",
+    "ble_serial_version_preserved": "0.1.1"
+  },
+  "focused_policy_runs": 46,
+  "workflow_regression_runs": 174,
+  "paired_render_storage_checks": 6,
+  "application_ci": "https://github.com/michaelrolphone-cmyk/RiscRTE-Productivity/actions/runs/38305989355",
+  "application_ci_conclusion": "success",
+  "source": {
+    "system": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+      "commit": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+      "path": "/workspace/shared/timecard-input-policy-system-20261012",
+      "published": true
+    },
+    "productivity": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Productivity",
+      "commit": "164ea8c4f8bace10148bcfd9b9dcdd97e9fc8e75",
+      "path": "/workspace/shared/timecard-input-policy-productivity-20261012",
+      "published": true,
+      "ci": "https://github.com/michaelrolphone-cmyk/RiscRTE-Productivity/actions/runs/38305989355",
+      "ci_conclusion": "success"
+    }
+  },
+  "baseline": {
+    "path": "/workspace/shared/obd-test-readiness-components-20261012/handoff-qualified.json",
+    "bytes": 10843,
+    "sha256": "54bc6ec51309cdb1887a61976ef7382ca9873bfc3283b798a96b650aafa57f76"
+  },
+  "independent_review": {
+    "status": "passed_no_blocking_findings",
+    "focused_probes": 30,
+    "result_sha256": "518addb831e38ade6424a9de43a68f6c0af73c1d476b32f45221047f771df849",
+    "packing_sha256": "59c936228e2e37f2ff84cf29a4e897042bedfeebd05c2f0cc5470c537bfe4a26"
+  },
+  "delivered": false,
+  "flashed": false,
+  "hardware_verified": false
+}

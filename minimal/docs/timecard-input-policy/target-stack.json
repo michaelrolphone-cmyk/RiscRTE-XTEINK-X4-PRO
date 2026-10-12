@@ -1,0 +1,53 @@
+{
+  "schema": "timecard.target-stack.v1",
+  "device": "x4",
+  "application_source": "164ea8c4f8bace10148bcfd9b9dcdd97e9fc8e75",
+  "system_source": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+  "target_elf_sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53",
+  "debug_elf_sha256": "d0386b180859f446dafdb6dd36b6068bf7a3cb9efaed68ac9c1a14003d11b349",
+  "method": "Actual target disassembly entry a1 frame operands; no target instructions executed",
+  "entry_frames_bytes": {
+    "portable_text_client_request_result": 32,
+    "tcp_editor_cancel": 32,
+    "portable_text_client_live$constprop$80": 32,
+    "portable_text_client_release$constprop$78": 48,
+    "tcp_text_begin": 176,
+    "tcp_text_retry": 32,
+    "tcp_text_policy": 48,
+    "tcp_editor_done": 48,
+    "portable_app_before_launch": 32,
+    "portable_app_before_home": 32,
+    "app_main": 160,
+    "app_module_fini": 32,
+    "app_module_init": 64
+  },
+  "maximum_modal_frame_bytes": 176,
+  "all_entry_frames_maximum_bytes": 400,
+  "static_modal_storage": {
+    "tcp_entry": {
+      "bytes": 13,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 178708
+    },
+    "tcp_text_client": {
+      "bytes": 48,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 179016
+    },
+    "tcp_text_state": {
+      "bytes": 88,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 178928
+    }
+  },
+  "bounded_time_entry_buffer_bytes": 13,
+  "per_frame_regression_checks_passed": true,
+  "peak_call_chain_stack_usage_proven": false,
+  "limits": [
+    "Inlining folds helper frames into their callers; absent standalone symbols are not separate frame measurements.",
+    "Disassembly frame sizes do not prove dynamic call-chain peak stack use, Runtime stack allocation, or physical execution."
+  ]
+}
