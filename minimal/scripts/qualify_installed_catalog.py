@@ -57,8 +57,8 @@ if a.sd:
  composition=json.loads(a.composition_receipt.read_text())
  if composition['runtime_commit']!=git(a.runtime,'rev-parse','HEAD') or git(a.runtime,'status','--porcelain'):
   raise ValueError('Selected SD admission Runtime differs from clean composition source')
- if composition['product_version'] not in ('0.1.90','0.1.92','0.1.94') or composition['shared_settings_enabled'] is not False:
-  raise ValueError('Selected SD admission requires qualified opt-out .90/.92/.94 composition')
+ if composition['product_version'] not in ('0.1.90','0.1.92','0.1.94','0.1.95') or composition['shared_settings_enabled'] is not False:
+  raise ValueError('Selected SD admission requires qualified opt-out .90/.92/.94/.95 composition')
  if composition['product_version']=='0.1.92':
   from compose_files_092 import ALLOWED,VERSION
   from compose_shared_settings_090 import tree
@@ -69,6 +69,18 @@ if a.sd:
       composition['store']!=tree(a.store) or composition['sd']!=tree(a.sd.resolve()) or
       json.loads((a.store/'cohort.json').read_text())['version']!=VERSION):
    raise ValueError('Files-only .92 composition preservation evidence differs')
+ if composition['product_version']=='0.1.95':
+  from compose_boot_order_095 import ALLOWED,VERSION
+  from compose_shared_settings_090 import tree
+  if (composition['changed_store_paths']!=sorted(ALLOWED) or composition['sd_overlay_required'] is not False or
+      composition['original_sd_files_preserved']!=81 or composition['added_sd_files']!=[] or
+      composition['native_unchanged'] is not True or composition['home_rebuilt'] is not False or
+      composition['boot_authority_unchanged'] is not True or
+      composition['firmware_sha256']!=witness['firmware_sha256'] or
+      composition['firmware_elf_sha256']!=sha(a.native_elf.read_bytes()) or
+      composition['store']!=tree(a.store) or composition['sd']!=tree(a.sd.resolve()) or
+      json.loads((a.store/'cohort.json').read_text())['version']!=VERSION):
+   raise ValueError('Boot-order .95 composition preservation evidence differs')
  if composition['product_version']=='0.1.94':
   from compose_fast_boot_094 import ALLOWED,VERSION
   from compose_shared_settings_090 import tree
