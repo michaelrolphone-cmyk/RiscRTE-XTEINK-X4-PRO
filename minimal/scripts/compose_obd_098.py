@@ -118,6 +118,9 @@ def compose(a):
  receipt['baseline_source_publication']=receipt.pop('source_publication',None)
  receipt['source_publication']={'product':{'repository':'michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO','commit':a.product_revision,'tree':git(ROOT,'rev-parse','HEAD^{tree}')},'components':sources,'verification':'See the separately recorded remote-source verification receipt'}
  receipt['files_1_5_31_unchanged']=True
+ receipt['baseline_files_system']={k:receipt.pop(k) for k in ('system_commit','system_tree','system_qualification_commit')}
+ receipt['system_commit']=sources['system']['commit'];receipt['system_tree']=sources['system']['tree']
+ receipt['baseline_native_candidate_sha256']=receipt.pop('native_candidate_sha256',None)
  for k in ('all_sd_executables_preserved','preserved_store_files','sd_overlay','files_replaced','product_published','system_published','publication_ready','final_published_system_source_pending','final_rebuild_required','local_preflight_only'):receipt.pop(k,None)
  a.output.mkdir(parents=True);write_files(a.output/'store',new);write_files(a.output/'SD',sd);write_files(a.output/'components',parts)
  (a.output/IMAGE).write_bytes(result)
