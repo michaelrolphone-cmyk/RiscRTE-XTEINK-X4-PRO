@@ -25,7 +25,8 @@ def compose(a):
  clean_source(ROOT,a.product_revision,'Product')
  require(git(ROOT,'merge-base',BASE,a.product_revision)==BASE,'Product must descend from .100')
  for name in ('runtime','system','productivity'):
-  root=getattr(a,name+'_source');clean_source(root,lock[name+'_commit'],name)
+  root=getattr(a,name+'_source');actual=git(root,'rev-parse','HEAD')
+  require(actual in {lock[name+'_commit'],lock.get(name+'_published_commit')},'Wrong '+name+' source commit');clean_source(root,actual,name)
   require(git(root,'rev-parse','HEAD^{tree}')==lock[name+'_tree'],'Wrong '+name+' tree')
  raw=(a.baseline/'receipts/keyboard-composition.json').read_bytes()
  require(sha(raw)==BASE_RECEIPT,'Wrong .100 receipt');base=json.loads(raw)

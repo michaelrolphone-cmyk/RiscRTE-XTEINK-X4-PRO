@@ -1,0 +1,53 @@
+{
+  "product_version": "0.1.101",
+  "delivered_product_commit": "4acacd33a04974350a9cd5dcf43df2ea24c73af3",
+  "delivered_product_tree": "b911df530b1086811dcfbdf36693ffd722cd19e2",
+  "published_product_commit": "fe066f8dd29232132f408288da0bd802f2f42218",
+  "files_build_commit": "f0a2f240aceb5e46eb95af9c3a264d9eede6467b",
+  "published_files_commit": "d1bd7d27b75cb1f19219eec4ecb6777b88a52872",
+  "files_build_tree": "6f07fb6a63fe1f251a412380e2034223561eef6d",
+  "reader_commit": "8f04e1bcb26c801e63ca57bf4bd95428c693d514",
+  "publication_note": "GitHub connector created different commit metadata with exactly matching trees. Delivery artifact remains frozen from its recorded local committed sources; restorable bundles retained.",
+  "native_unchanged": true,
+  "boot_authority_unchanged": true,
+  "startup_pack_order_unchanged": true,
+  "changed_store_paths": [
+    "cohort.json",
+    "ebook_reader.json",
+    "file_browser.elf",
+    "file_browser.json"
+  ],
+  "changed_sd_paths": [
+    "Apps/ebook-reader/ebook_reader.elf",
+    "Apps/ebook-reader/manifest.json"
+  ],
+  "files": {
+    "X4-0.1.101-Reader-Files-Changed-SD.zip": {
+      "bytes": 1622933,
+      "sha256": "62c55857940b04429a46390ef4eed0aaf34e0b3a1436c17a5b4bb2d6a0bc8e09"
+    },
+    "X4-0.1.101-FULL-INITIAL-ERASES-DATA.bin": {
+      "bytes": 16777216,
+      "sha256": "3480a69cc468986b460c0deed3142d884097da599ddf2891fad189f677b7811f"
+    }
+  },
+  "qualification": {
+    "normal": {
+      "internal": 43,
+      "selected_sd": 48,
+      "obd_and_hollow_catalog": "PASS"
+    },
+    "asan_ubsan": {
+      "internal": 43,
+      "selected_sd": 48,
+      "obd_and_hollow_catalog": "PASS"
+    },
+    "log_sha256": "93a2b86264079d2529a8a1e546f1d5c794d9a78054839bbbd3cc45ada767a02a",
+    "physical_hardware_tested": false
+  },
+  "library_files": {
+    "bin": "libfile_0006b83b2e5c8191a22f410ed57e9b73",
+    "sd": "libfile_438c8b9ced04819192d5a3dd0879074d"
+  },
+  "delivered_at": "2026-10-12T11:16:58Z"
+}
