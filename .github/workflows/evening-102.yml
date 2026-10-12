@@ -1,0 +1,22 @@
+name: X4 combined increment boundary
+on:
+  push:
+    branches: [integrate/x4-evening-102]
+    paths: ['minimal/scripts/compose_evening_102.py', 'minimal/scripts/qualify_evening_102.py', 'minimal/test/evening_102_composition_test.py', 'minimal/evening-102-inputs.json', '.github/workflows/evening-102.yml']
+  pull_request:
+    paths: ['minimal/scripts/compose_evening_102.py', 'minimal/scripts/qualify_evening_102.py', 'minimal/test/evening_102_composition_test.py', 'minimal/evening-102-inputs.json', '.github/workflows/evening-102.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python3 minimal/test/evening_102_composition_test.py
+      - run: python3 -m py_compile minimal/scripts/compose_evening_102.py minimal/scripts/qualify_evening_102.py

@@ -13,5 +13,11 @@
     "base": "0.1.89",
     "retained_wake_bytes": 512,
     "shared_settings": []
+  },
+  "evening_increment": {
+    "version": "0.1.102",
+    "base": "0.1.101",
+    "status": "RF and first-attempt alarm baseline candidate; delivery held for combined evening qualification",
+    "shared_settings_enabled": false
   }
 }
