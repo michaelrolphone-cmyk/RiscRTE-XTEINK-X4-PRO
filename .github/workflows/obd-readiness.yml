@@ -1,0 +1,21 @@
+name: OBD readiness recipe
+on:
+  push:
+    branches: [audit/obd-test-readiness-20261012]
+  pull_request:
+    paths: ['**/*obd*readiness*', 'docs/obd-readiness/**', '.github/workflows/obd-readiness.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  boundaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python3 minimal/scripts/test_obd_readiness_recipe.py
+      - run: python3 -m py_compile minimal/scripts/compose_obd_readiness.py

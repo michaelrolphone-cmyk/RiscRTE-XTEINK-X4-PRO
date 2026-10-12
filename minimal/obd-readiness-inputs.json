@@ -1,0 +1,19 @@
+{
+  "schema": "x4.obd-readiness-inputs.v1",
+  "baseline_product_source": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+  "baseline_full_image_sha256": "881b88c40097989ff0d8a65758bb21d54bdb0a957b990ce40cca684bea6c5167",
+  "baseline_receipt_sha256": "304c34995b94c345d94ccf401e232e072a88dcac5d31f4e65284f2f33a252f12",
+  "prior_obd_sha256": "b2ca8861412e3b79fb6cad14516c574cc2f4479107eaa0bb35165a8059c27f20",
+  "prior_serial_sha256": "cc5bf2a38bf655c1cb51cbdaf3eacbffff69b852adbfb57363ee366cc453ef1f",
+  "obd_sources": {
+    "utilities": "b70252c9755a0dcf2775c61ac5595d8b19e107e5",
+    "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+    "system": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "drivers": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c"
+  },
+  "serial_source": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c",
+  "obd_sha256": "a8912ce65022ad618ac19d458f58ef01094d34f4d642e89d3c1aeaf361a5a22e",
+  "serial_sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7",
+  "unpublished_sd_settings_consumed": false,
+  "hardware_tested": false
+}
