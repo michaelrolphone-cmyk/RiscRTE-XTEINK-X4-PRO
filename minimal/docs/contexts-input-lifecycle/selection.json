@@ -1,0 +1,31 @@
+{
+  "schema": "contexts.lifecycle-device-selection.v1",
+  "finalized": true,
+  "device": "x4",
+  "version": "0.4.4",
+  "sources": {
+    "system-apps": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "utilities": "d068784cb5d581f1e81b5021f5d96d2917e03ec3"
+  },
+  "baseline": {
+    "compiled_recipe_commit": "e9adf95603d18b3a0c9f55c4c9276afe18a29d40",
+    "combined_handoff_sha256": "b174cba70ab88df294a48e53611bf0fecb2f0e2c8976bd6ab56e7f5e22cf3065",
+    "receipt_sha256": "a7c091c54f3ba9af43198bf795208758c3a65697cd8c7c28c03f30c5a63fd20e",
+    "full_image_sha256": "7bfe1c065344a3657467887cbc9d169853596f39942f028fb0c3445c8f2cdcaa",
+    "candidate_store_sha256": null,
+    "free_spiffs_blocks": 126,
+    "sd_file_count": 96,
+    "handoff_file": "handoff-qualified-published-20261012T200947Z.json",
+    "normal_admission": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/normal/result.json",
+      "bytes": 32535,
+      "sha256": "4942eebe812bf311bbae11c950ce406523336bf3ec7103d91bac4f32db45cfde"
+    },
+    "sanitized_admission": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/asan-ubsan/result.json",
+      "bytes": 32549,
+      "sha256": "ab2d83e6c0ce33fdf9df3bc0d320d0db4746aeebc4a59ed00378b273e9e0bced"
+    }
+  },
+  "status": "Final published-source qualified Lists union selected; Contexts successor target qualification follows"
+}

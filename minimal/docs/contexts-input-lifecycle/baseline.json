@@ -1,0 +1,55 @@
+{
+  "schema": "contexts.selected-profile.v2",
+  "device": "x4",
+  "version": "0.4.3",
+  "elf_sha256": "d5651d73c790806b59e27e8637550f0280e7acb4dffd684e79bed533de02c739",
+  "elf_bytes": 84060,
+  "source_utilities": "2a06ff127e6f7c7d687b1361bed05da97aa05b2d",
+  "source_system": "7fb13b09b4dac275a8111b224784f8a472f39264",
+  "source_inputs": {
+    "utilities:Apps/contexts.c": {
+      "sha256": "986d194064dd499c9196a95d3c18337968a2f69d9bffdefa99e3619f29ba0f60",
+      "bytes": 20995
+    },
+    "utilities:Apps/contexts_controller.inc": {
+      "sha256": "60a6537ae7d9ea8866a2f45d57ac85211e09a3b126a7baa10e4459c7fc77368f",
+      "bytes": 25081
+    },
+    "utilities:Apps/contexts_scene_view.inc": {
+      "sha256": "e786ac025ea34777cab22b4c4b56419e096a3435c67f862f3ac7aca9303e062e",
+      "bytes": 21140
+    },
+    "utilities:Apps/contexts_text_input.inc": {
+      "sha256": "fbf679d60fa223d0697edabfc349631d9ae05743fa18461f3b04764534ae7528",
+      "bytes": 4356
+    }
+  },
+  "defines": [
+    "-DCONTEXTS_ALARM_API=2",
+    "-DCONTEXTS_SETTING_MASK=0x274u",
+    "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+    "-DPORTABLE_CONTEXTS_SOURCE_MASK=CONTEXTS_RADIO"
+  ],
+  "existing_optin_flags": [
+    "-DPORTABLE_CONTEXTS_SHARED_TEXT_INPUT"
+  ],
+  "exports": [
+    "app_main",
+    "risc_resident_app_descriptor_v1"
+  ],
+  "imports": [
+    "memchr",
+    "memcmp",
+    "memcpy",
+    "memset",
+    "risc_runtime_get_api",
+    "snprintf",
+    "strcmp",
+    "strlen"
+  ],
+  "catalog_sha256": "983741daab471f92ddbc614fd129c52da30a64b3b7770163273f0d181ef0f3f2",
+  "catalog_origin_version": "0.4.2",
+  "catalog_inherited_unchanged": true,
+  "font_ownership": "Unchanged selected scene host; no font compiled into Contexts",
+  "historical_build_record_sha256": "cd176a9488be82a3d4c9fad578dd677d6955f8d7a70fe84e2dea4ae2d9318a4d"
+}
