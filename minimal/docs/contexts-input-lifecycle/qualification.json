@@ -1,0 +1,326 @@
+{
+  "device": "x4",
+  "repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+  "branch": "work/contexts-input-lifecycle-20261012",
+  "compiled_recipe_commit": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+  "compiled_recipe_tree": "9bfd6db5d566a0a9794f6cea9ed484fd87465636",
+  "compiled_recipe_checkout": "/workspace/shared/contexts-input-lifecycle-x4-published-20261012",
+  "compiled_recipe_url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/commit/bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+  "compiled_recipe_ci": {
+    "path": "/workspace/shared/contexts-input-lifecycle-profile-evidence-20261012/x4-compiled-recipe-ci-final.json",
+    "bytes": 893,
+    "sha256": "3925ae5aac0821de88849ff622c54501cc8b19d12d315e930cd59dd796d339dc"
+  },
+  "compiled_recipe_ci_conclusion": "success",
+  "sources": {
+    "system-apps": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "utilities": "d068784cb5d581f1e81b5021f5d96d2917e03ec3",
+    "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+    "watch": "089868395268b696c05651c33816345bfe0425df"
+  },
+  "source_roots": {
+    "system-apps": "/workspace/shared/lists-shared-input-system-published-20261012",
+    "utilities": "/workspace/shared/contexts-input-lifecycle-utilities-20261012",
+    "runtime": "/workspace/shared/first-attempt-time-alarm-runtime-28-20261012",
+    "watch": "/workspace/shared/watch-scroll-regression-20261011/watch-profile",
+    "generated": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/contexts"
+  },
+  "candidate_directory": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate",
+  "target_build_directory": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/contexts",
+  "target_elf": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/contexts/contexts.elf",
+    "bytes": 89436,
+    "sha256": "a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa"
+  },
+  "target_manifest": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/contexts/contexts.json",
+    "bytes": 864,
+    "sha256": "6ca3a1cf38e0b87a528354e85336defc20ad1405cf8b5270832d024e4b6a3819"
+  },
+  "target_build_record": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/contexts/contexts-build-record.json",
+    "bytes": 32792,
+    "sha256": "393621e829c67c860c8899ab60fb79b07b25be0fa6627571eaf6b0de8b8bbbf9"
+  },
+  "contexts_version": "0.4.4",
+  "contexts_elf_bytes": 89436,
+  "contexts_elf_sha256": "a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa",
+  "inherited_flags": [
+    "-DCONTEXTS_ALARM_API=2",
+    "-DCONTEXTS_SETTING_MASK=0x274u",
+    "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+    "-DPORTABLE_CONTEXTS_SOURCE_MASK=CONTEXTS_RADIO"
+  ],
+  "flags": [
+    "-DCONTEXTS_ALARM_API=2",
+    "-DCONTEXTS_SETTING_MASK=0x274u",
+    "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+    "-DPORTABLE_CONTEXTS_SOURCE_MASK=CONTEXTS_RADIO",
+    "-DPORTABLE_CONTEXTS_SHARED_TEXT_INPUT"
+  ],
+  "catalog_sha256": "983741daab471f92ddbc614fd129c52da30a64b3b7770163273f0d181ef0f3f2",
+  "all_inherited_defines_and_fonts_retained": true,
+  "fonts_owned_by_unchanged_scene_host": true,
+  "shared_text_hosts_unchanged": true,
+  "native_resident_owner_unchanged": true,
+  "native_unchanged": true,
+  "native_elf": {
+    "sha256": "f6cadeca79d04ebf9c26505358f7a5105a408a6e9f88359be5f9d9cab6b810d4",
+    "native_component_bytes_unchanged": true
+  },
+  "normal_admission": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/qualification/normal/result.json",
+    "bytes": 32535,
+    "sha256": "b27984a9672a8d78c3ab2527403fe45812e6625f6fd740c22e595fca71649230"
+  },
+  "sanitized_admission": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/qualification/asan-ubsan/result.json",
+    "bytes": 32549,
+    "sha256": "bf96f541dbe345bcdb696fb13e13f9642bc5f8e6e8c27386570b60e9f34b3058"
+  },
+  "normal_admission_passed": true,
+  "sanitized_admission_passed": true,
+  "normal_sanitized_admission_identical": true,
+  "packing": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/receipts/packing.json",
+    "bytes": 3870,
+    "sha256": "9ccb6d4376af38ea61c370ff191839de893f769a7b7add8cd102e490bd058bdc"
+  },
+  "free_spiffs_blocks": 126,
+  "required_free_spiffs_blocks": 2,
+  "target_stack": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/target-stack.json",
+    "bytes": 2464,
+    "sha256": "4fad8242f600195a9522fbce90abc972fe38f7b039409edfb6372cbf4a82bed1"
+  },
+  "flagoff_equivalence": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/flagoff-target.json",
+    "bytes": 3679,
+    "sha256": "cd573295612f2b6cf74c3fa2157d3b48447f1edc6b24519fe044f26408c2eb3b"
+  },
+  "preservation": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/preservation.json",
+    "bytes": 67397,
+    "sha256": "b626b8b7344d93f552cf6469f0b0056a7392bba26b790c63fd1146a49e9c9b6a"
+  },
+  "preserved_store_paths": 103,
+  "changed_store_paths": [
+    "boot.json",
+    "cohort.json",
+    "contexts.json"
+  ],
+  "grant_delta": [],
+  "components": {
+    "appdata.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/appdata.bin",
+      "bytes": 524288,
+      "sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0",
+      "offset": 2555904
+    },
+    "bank_state.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/bank_state.bin",
+      "bytes": 8192,
+      "sha256": "2934ae1938c3bb3801f843b5cf303144f41e40a01bc8f9f781a8504c06df9a6c",
+      "offset": 16719872
+    },
+    "bootfs.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/bootfs.bin",
+      "bytes": 5308416,
+      "sha256": "7977c4d6191ba575501f7d6bf54c3228b39d175b716dd9c72f742e7f73457135",
+      "offset": 3080192
+    },
+    "bootloader.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/bootloader.bin",
+      "bytes": 15104,
+      "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363",
+      "offset": 0
+    },
+    "firmware.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/firmware.bin",
+      "bytes": 1458576,
+      "sha256": "0cb155e1ff160afadeacea7cbb095234c6a072a4c164983da11c08135a55fbc9",
+      "offset": 65536
+    },
+    "otadata.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/otadata.bin",
+      "bytes": 8192,
+      "sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3",
+      "offset": 16711680
+    },
+    "partitions.bin": {
+      "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/components/partitions.bin",
+      "bytes": 3072,
+      "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9",
+      "offset": 32768
+    }
+  },
+  "counts": {
+    "store_files": 106,
+    "internal_elfs": 43,
+    "selected_sd_elfs": 48,
+    "sd_files": 98,
+    "original_sd_files_preserved": 96,
+    "added_sd_files": 2
+  },
+  "full_image_sha256": "881b88c40097989ff0d8a65758bb21d54bdb0a957b990ce40cca684bea6c5167",
+  "full_image_bytes": 16777216,
+  "full_image_materialized": false,
+  "full_initial_erases_internal_data": true,
+  "unpublished_sd_settings_consumed": false,
+  "hardware_verified": false,
+  "target_instructions_executed": false,
+  "delivered": false,
+  "delivery_hold_until_utc": "2026-10-12T23:30:00Z",
+  "local_cohort_sanitizers": "ASan+UBSan with ASAN_OPTIONS=detect_leaks=0 for ptrace environment",
+  "reproduction_script_validated": "Entire run_contexts_input_lifecycle.py executed against exact clean public recipe and source commits",
+  "lifecycle_correction_qualified_by_source_tests": true,
+  "selected_contexts": {
+    "manifest": "contexts.json",
+    "matches_internal_fallback": false,
+    "path": "Apps/contexts/image-a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa/contexts.elf",
+    "role": "app",
+    "sha256": "a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa",
+    "size_bytes": 89436
+  },
+  "selected_immutable_contexts_path": "Apps/contexts/image-a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa/contexts.elf",
+  "composition_receipt": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/receipts/evening-composition.json",
+    "bytes": 810792,
+    "sha256": "304c34995b94c345d94ccf401e232e072a88dcac5d31f4e65284f2f33a252f12"
+  },
+  "contexts_qualification": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/qualification/contexts-qualification.json",
+    "bytes": 840,
+    "sha256": "c3ca253764657e8d67c373f28a5b22203c36c246f2fa59e9792f1aeaf71e5bc0"
+  },
+  "added_sd_files": [
+    "Apps/contexts/image-a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa/contexts.elf",
+    "Apps/contexts/image-a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa/manifest.json"
+  ],
+  "changed_sd_paths": [],
+  "old_immutable_contexts_image_preserved": true,
+  "sd_overlay": {
+    "path": "/workspace/shared/contexts-input-lifecycle-components-20261012/x4/candidate/X4-0.1.102-Combined-Changed-SD.zip",
+    "bytes": 2398464,
+    "sha256": "5004f32dd87b451b8fd83c8aec3898743c6f1e283d16628942441bfa2f967e6f"
+  },
+  "sd_overlay_files": 24,
+  "sd_overlay_requires_delivered_096_baseline": true,
+  "exact_obd_and_hollow_catalog_regressions": true,
+  "preflight_and_public_target_elf_identical": true,
+  "reproduction_command": "bash /workspace/shared/contexts-input-lifecycle-components-20261012/run-published-integration.sh x4 <fresh-output-root>",
+  "schema": "contexts.lifecycle-public-qualification.v1",
+  "status": "All exact-public target and source qualification passed; receipt publication metadata tracked separately",
+  "baseline": {
+    "path": "/workspace/shared/lists-shared-input-components-20261012/handoff-qualified-published-20261012T200947Z.json",
+    "bytes": 28853,
+    "sha256": "b174cba70ab88df294a48e53611bf0fecb2f0e2c8976bd6ab56e7f5e22cf3065"
+  },
+  "baseline_final_receipt_metadata": {
+    "path": "/workspace/shared/lists-shared-input-components-20261012/handoff-published.json",
+    "bytes": 36435,
+    "sha256": "a22f60edc9e83c913f72462c2639192589a78eca5b6111ca5559e4d1369631d7"
+  },
+  "source_qualification": {
+    "normal_sanitized_scenarios": 788,
+    "predecessor_render_storage_comparisons": 152,
+    "inventory_build_tests": 86,
+    "pipeline_regressions_passed": true,
+    "source_ci_passed": true
+  },
+  "source_evidence": {
+    "results": {
+      "path": "/workspace/shared/contexts-input-lifecycle-evidence-20261012/full-integrated/results.json",
+      "bytes": 149892,
+      "sha256": "f9086e9ecbadaaf5b86c8038700bd78ca551633a4d45bba1e8988025bc2515e2"
+    },
+    "source_equivalence": {
+      "path": "/workspace/shared/contexts-input-lifecycle-evidence-20261012/published-source-equivalence.json",
+      "bytes": 645,
+      "sha256": "fe6e1e0797bebe59d0aff379b74e6724f5a4c0364d206c245634c774c7bffb49"
+    },
+    "source_ci": {
+      "path": "/workspace/shared/contexts-input-lifecycle-evidence-20261012/utilities-ci.json",
+      "bytes": 565,
+      "sha256": "08c08a65b4c9bce0c9e444cf4e4163988d50274d55bc3f96a795626314d8e980"
+    },
+    "pipeline_regressions": {
+      "path": "/workspace/shared/contexts-input-lifecycle-evidence-20261012/pipeline-regressions.json",
+      "bytes": 787,
+      "sha256": "6873a29c4c5175355932ec8018b4f57b11111721b6e80a8495fc1cc4b24c9166"
+    },
+    "application_independent_review": {
+      "path": "/workspace/shared/contexts-input-lifecycle-evidence-20261012/independent-review.json",
+      "bytes": 865,
+      "sha256": "7edd121548dbe542845b6ff7850e6a436a85099208bbd03bb2f30a6008b0ad82"
+    }
+  },
+  "receipt_commit_changes_build_inputs": false,
+  "receipt_files": {
+    "application-review.json": {
+      "bytes": 865,
+      "sha256": "7edd121548dbe542845b6ff7850e6a436a85099208bbd03bb2f30a6008b0ad82"
+    },
+    "compiled-recipe-ci.json": {
+      "bytes": 893,
+      "sha256": "3925ae5aac0821de88849ff622c54501cc8b19d12d315e930cd59dd796d339dc"
+    },
+    "contexts-qualification.json": {
+      "bytes": 840,
+      "sha256": "c3ca253764657e8d67c373f28a5b22203c36c246f2fa59e9792f1aeaf71e5bc0"
+    },
+    "flagoff-target.json": {
+      "bytes": 3679,
+      "sha256": "cd573295612f2b6cf74c3fa2157d3b48447f1edc6b24519fe044f26408c2eb3b"
+    },
+    "normal-admission.json": {
+      "bytes": 32535,
+      "sha256": "b27984a9672a8d78c3ab2527403fe45812e6625f6fd740c22e595fca71649230"
+    },
+    "packing.json": {
+      "bytes": 3870,
+      "sha256": "9ccb6d4376af38ea61c370ff191839de893f769a7b7add8cd102e490bd058bdc"
+    },
+    "pipeline-regressions.json": {
+      "bytes": 787,
+      "sha256": "6873a29c4c5175355932ec8018b4f57b11111721b6e80a8495fc1cc4b24c9166"
+    },
+    "preservation.json": {
+      "bytes": 67397,
+      "sha256": "b626b8b7344d93f552cf6469f0b0056a7392bba26b790c63fd1146a49e9c9b6a"
+    },
+    "product-review.json": {
+      "bytes": 1826,
+      "sha256": "853a581f634d5f9462a98bf73bc2eac271eb4ca2aea0c0b99c2326bc8c2c030d"
+    },
+    "sanitized-admission.json": {
+      "bytes": 32549,
+      "sha256": "bf96f541dbe345bcdb696fb13e13f9642bc5f8e6e8c27386570b60e9f34b3058"
+    },
+    "source-equivalence.json": {
+      "bytes": 645,
+      "sha256": "fe6e1e0797bebe59d0aff379b74e6724f5a4c0364d206c245634c774c7bffb49"
+    },
+    "source-results.json": {
+      "bytes": 149892,
+      "sha256": "f9086e9ecbadaaf5b86c8038700bd78ca551633a4d45bba1e8988025bc2515e2"
+    },
+    "target-build.json": {
+      "bytes": 32792,
+      "sha256": "393621e829c67c860c8899ab60fb79b07b25be0fa6627571eaf6b0de8b8bbbf9"
+    },
+    "target-manifest.json": {
+      "bytes": 864,
+      "sha256": "6ca3a1cf38e0b87a528354e85336defc20ad1405cf8b5270832d024e4b6a3819"
+    },
+    "target-stack.json": {
+      "bytes": 2464,
+      "sha256": "4fad8242f600195a9522fbce90abc972fe38f7b039409edfb6372cbf4a82bed1"
+    },
+    "utilities-ci.json": {
+      "bytes": 565,
+      "sha256": "08c08a65b4c9bce0c9e444cf4e4163988d50274d55bc3f96a795626314d8e980"
+    }
+  },
+  "final_product_independent_review": "passed"
+}

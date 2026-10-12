@@ -1,0 +1,22 @@
+{
+  "schema": "contexts.lifecycle-complete-cohort-qualification.v1",
+  "source": "d068784cb5d581f1e81b5021f5d96d2917e03ec3",
+  "product_source": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+  "normal_sanitized_admission_identical": true,
+  "internal_elfs": 43,
+  "selected_sd_elfs": 48,
+  "selected_contexts": {
+    "manifest": "contexts.json",
+    "matches_internal_fallback": false,
+    "path": "Apps/contexts/image-a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa/contexts.elf",
+    "role": "app",
+    "sha256": "a3b89f4604ddba50a9bd74d157871b2113033f30bcef3bb9c4becb6708da52aa",
+    "size_bytes": 89436
+  },
+  "all_existing_sd_files_preserved": 96,
+  "immutable_files_added": 2,
+  "exact_obd_hollow_catalogs_passed": true,
+  "native_unchanged": true,
+  "hardware_tested": false,
+  "target_instructions_executed": false
+}

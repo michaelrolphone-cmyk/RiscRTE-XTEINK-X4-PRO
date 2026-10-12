@@ -1,0 +1,62 @@
+{
+  "schema": "contexts.flagoff-target-equivalence.v1",
+  "device": "x4",
+  "passed": true,
+  "system_commit": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+  "runtime_commit": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+  "watch_profile_commit": "089868395268b696c05651c33816345bfe0425df",
+  "compiler": "xtensa-esp32s3-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+  "inherited_defines": [
+    "-DCONTEXTS_ALARM_API=2",
+    "-DCONTEXTS_SETTING_MASK=0x274u",
+    "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+    "-DPORTABLE_CONTEXTS_SOURCE_MASK=CONTEXTS_RADIO"
+  ],
+  "catalog_sha256": "983741daab471f92ddbc614fd129c52da30a64b3b7770163273f0d181ef0f3f2",
+  "targets": {
+    "baseline": {
+      "utilities_commit": "4beb9778d300ec9f6b18448e1ec86317e063c98c",
+      "elf_sha256": "1658d69607f600b7bf913d08e121b9089739eba0846c573ece6f2b4e96e84226",
+      "elf_bytes": 77180,
+      "manifest_sha256": "fa39bef3691d01d81231e66a2c6b7c8b532a51656655677b10ff30f86aec86e0",
+      "loadable_sections": {
+        ".hash": "0d477e4a218c9a7e7685afa1519e3dec66b89b3ae30304995d34d2d2115d6269",
+        ".dynsym": "4ff3f5f9a0cd36f6e1c2d469cc8a253394e742bbdaae224c8295990d0262c11b",
+        ".dynstr": "9b23ac5985fcf50c9bb37a012c26f4222cc2b5a0be15a6b1ecbed6095e72da84",
+        ".rela.dyn": "de36ed508c3cfa21d8c79cfa258720b77125dc92e43e0f9b878e7fe8537f3347",
+        ".rela.plt": "9880765becfa93bcc43530e823f89df6f5d3a27c30cbe5171e7932b72c6faa1f",
+        ".text": "635ccaa9a0519c70abd749f44ba655e472c59002cd61889839cf0bcbc70849ec",
+        ".rodata": "ba2bf3168dc2838fcfdaff94eb3dabe3977e46b86ad26c4af643d6f672d3a045",
+        ".got.loc": "a138ac27c1ef424c00ac17ba81d497f666b75652665ec4254659273d35cbc15e",
+        ".data.rel.ro": "3e09fcae975b8c068ac1f5038aee640090a1a05a80b9e22ed54cb67bf714f5a6",
+        ".dynamic": "0ca304bd37f7707269c76efb12ae98897f5b722777cac0c0c313df498230dc90",
+        ".got": "7168e53116a62fc9ae81a380e2e1d75598402ae49032592e04bb820fbae06b4e",
+        ".data": "5923b57ec9703eda7b770d9a9860d39d6fcc158ab244acae8aa601f69fc42d8a",
+        ".bss": "c178854d0b2a52bc6f6ad2c77f1f38b815dd6a298d7da32dfe1eece1d5371553"
+      }
+    },
+    "candidate": {
+      "utilities_commit": "d068784cb5d581f1e81b5021f5d96d2917e03ec3",
+      "elf_sha256": "1658d69607f600b7bf913d08e121b9089739eba0846c573ece6f2b4e96e84226",
+      "elf_bytes": 77180,
+      "manifest_sha256": "fa39bef3691d01d81231e66a2c6b7c8b532a51656655677b10ff30f86aec86e0",
+      "loadable_sections": {
+        ".hash": "0d477e4a218c9a7e7685afa1519e3dec66b89b3ae30304995d34d2d2115d6269",
+        ".dynsym": "4ff3f5f9a0cd36f6e1c2d469cc8a253394e742bbdaae224c8295990d0262c11b",
+        ".dynstr": "9b23ac5985fcf50c9bb37a012c26f4222cc2b5a0be15a6b1ecbed6095e72da84",
+        ".rela.dyn": "de36ed508c3cfa21d8c79cfa258720b77125dc92e43e0f9b878e7fe8537f3347",
+        ".rela.plt": "9880765becfa93bcc43530e823f89df6f5d3a27c30cbe5171e7932b72c6faa1f",
+        ".text": "635ccaa9a0519c70abd749f44ba655e472c59002cd61889839cf0bcbc70849ec",
+        ".rodata": "ba2bf3168dc2838fcfdaff94eb3dabe3977e46b86ad26c4af643d6f672d3a045",
+        ".got.loc": "a138ac27c1ef424c00ac17ba81d497f666b75652665ec4254659273d35cbc15e",
+        ".data.rel.ro": "3e09fcae975b8c068ac1f5038aee640090a1a05a80b9e22ed54cb67bf714f5a6",
+        ".dynamic": "0ca304bd37f7707269c76efb12ae98897f5b722777cac0c0c313df498230dc90",
+        ".got": "7168e53116a62fc9ae81a380e2e1d75598402ae49032592e04bb820fbae06b4e",
+        ".data": "5923b57ec9703eda7b770d9a9860d39d6fcc158ab244acae8aa601f69fc42d8a",
+        ".bss": "c178854d0b2a52bc6f6ad2c77f1f38b815dd6a298d7da32dfe1eece1d5371553"
+      }
+    }
+  },
+  "temporary_builds_removed": true,
+  "target_instructions_executed": false
+}

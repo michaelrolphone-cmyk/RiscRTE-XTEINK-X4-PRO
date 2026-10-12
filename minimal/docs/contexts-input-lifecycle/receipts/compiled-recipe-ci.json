@@ -1,0 +1,25 @@
+{
+  "schema": "contexts.lifecycle-device-ci.v1",
+  "repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+  "commit": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+  "all_applicable_workflows_succeeded": true,
+  "runs": [
+    {
+      "id": 38303085499,
+      "name": "Contexts lifecycle recipe",
+      "head_sha": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38303085499"
+    },
+    {
+      "id": 38303085315,
+      "name": "Typed minimal X4 drivers",
+      "head_sha": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38303085315"
+    }
+  ],
+  "check_time_utc": "2026-10-12T20:20:26Z"
+}
