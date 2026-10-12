@@ -1,0 +1,85 @@
+{
+  "delivered_096_files_byte_identical_to_delivered_092": true,
+  "delivered_096_files_version": "1.5.30",
+  "delivered_096_files_source": "1aaf53e23ca9651a5cf9d1debe44941c9d7d0e58",
+  "elf_sha256": "38723f807d8fc5c61fcd393542041a3dff36a71e4b578ea5215dd7f683e1af42",
+  "manifest_sha256": "7605a9d4b397e1c7392f1915434bca37a54ff9d4f98ce5f1dd569f4075365f61",
+  "build_record_sha256": "a8ed07b3b88002c625d667febece438980cc013328d81ac52b2df7ee7bf3791c",
+  "baseline_1530_source_is_mounted_build_ancestor": true,
+  "later_files_specific_source_changes_in_delivered_096": false,
+  "mounted_build_source": "cbf8c5d50b70068db8bd47f331ac7167c79c6ed0",
+  "changed_compiled_source_paths": {
+    "Apps/file_browser_operations.inc": {
+      "baseline_1530": "8451b6c97e599027443f509762b2ff1a037eb6f21f811eb0d0ab161bbae5a535",
+      "mounted_1531": "ed2290bc6eb630a94209b3abcf430918342e6359968392e5b9cd79cbafda9bec"
+    },
+    "Apps/file_browser_paper.inc": {
+      "baseline_1530": "13cbfb01cbec008c900b9f82528f95f6fec56f260b15d95eaba15128fe4b57b7",
+      "mounted_1531": "622954bd2f6fe00834a77710e4e46a762004c001161f725f25f5af4abab487cc"
+    },
+    "Apps/file_browser_peer.inc": {
+      "baseline_1530": "a3e56fc43b43ae309aae0d0ddbd409a5a6f2618033898a3f301289315d37912c",
+      "mounted_1531": "c5349528ffcc574e0de4aefa20f1844e80b636b1df7faa01d30a883494911afb"
+    },
+    "Apps/file_browser_portable.inc": {
+      "baseline_1530": "c296bd46560cfe10d4566db781864fd18ce50685eddca5afac4d63ba03abaaef",
+      "mounted_1531": "9506952cd1731ac928f259639d23cb60abffe5e2e8b21040620b1b8302294476"
+    },
+    "Apps/file_browser_rgb_operations.inc": {
+      "baseline_1530": "f428031869e4cefefa1209f7ef9713cc3376309fcf298df8d9466a08270c02f9",
+      "mounted_1531": "909ccfdb0b277daad1983df95531acd3407dfacdde90c403f7fd58b91e323ae1"
+    },
+    "Apps/file_browser_scroll_model.inc": {
+      "baseline_1530": "ec2396454b7964a2e5be048b0a3502144777a4adbb6e6007cc3d337c4c3c5dca",
+      "mounted_1531": "c496c0c8940951a27540cacf8604b025af6787fe54ba23ed4ece2b72e38c2353"
+    },
+    "Apps/file_browser_scroll_view.inc": {
+      "baseline_1530": "7f62ca95d2929160a6ec827283d6438279b538e351dc05145a24bb896e5b5241",
+      "mounted_1531": "29e5cfb62cafd6468a028215e12fa683363c1c5da819ef720f470339e8893ec0"
+    },
+    "Apps/file_browser_sharing.inc": {
+      "baseline_1530": "c92bd4e11b6466915ed9797ccc5c3e390508468edf4858ce17a185164f828b38",
+      "mounted_1531": "8a987b67380841fd43b4ddf678936e465cd7200334f07b208f0195612cca515a"
+    },
+    "lib/PortableApps/include/PortablePeerFiles.h": {
+      "baseline_1530": "d49d1e061a7a5d7a71a0138a33fa23502ae1ea89b3a56306acae89383aa1dddc",
+      "mounted_1531": "7498674fe9cb2cf6f139c501d46307296927c4978d01867146d46258a6935ee6"
+    },
+    "lib/RemoteFiles/PortablePeerFiles.cpp": {
+      "baseline_1530": "b9fcca2ae2dc85f92873d20491dd22ec7c6e8e0c000fd5d054fce9eb962d0806",
+      "mounted_1531": "f7026caebe6bccd9bec2f97cf85fb46e50be329d647b04b7769cc2ab64fc6c51"
+    },
+    "lib/RemoteFiles/WebDavClient.cpp": {
+      "baseline_1530": "eb946df73e01f9918b8c30a36b9de5dea99b8a079e5905af51d8fa87708db6b7",
+      "mounted_1531": "13592b7df467259135e1739f87843e64021fd2487d9f59dee2f76c75bda3bb45"
+    },
+    "lib/RemoteFiles/WebDavClient.h": {
+      "baseline_1530": "db4e9670d95b7385e3a4a819c458fe53d98890165785e494fed90d4dc7e5603d",
+      "mounted_1531": "a66f0e44232be01b9582ac1b03f03b304f3fa21c0a26605aa6eb2b310ef9264a"
+    },
+    "lib/RemoteFiles/WebDavCore.cpp": {
+      "baseline_1530": "83b89fcdec8c96860caee315e73683fe1582f927a2f896a57cae84460d5c99f3",
+      "mounted_1531": "f179416932f2935f380fe920e5fb53712b47a55f299829a0e24b95cc773c3a9a"
+    },
+    "lib/RemoteFiles/WebDavRemoteVolume.cpp": {
+      "baseline_1530": "58cc0491af0be80d6ec1ab06e5a655cd4e6778a2ca930c58a44538bd3adf476f",
+      "mounted_1531": "ed6fa095087252251495e19c119fda3ff6619b37323f598286fc6000726a3b74"
+    },
+    "lib/RemoteFiles/WebDavRemoteVolume.h": {
+      "baseline_1530": "a65e413bfeece7ebd6eb542604b51ceb2b135f9a12ad900d7fc641b06ca226cb",
+      "mounted_1531": "ad020538a5f5be239b8d552f019f708b938e3eb219e2cad3bb3b52af41496a36"
+    },
+    "lib/RemoteFiles/WebDavVolume.cpp": {
+      "baseline_1530": "2e539a7f3749187247809b115a1b01d180c85f9acb44f517b44cd995fe848765",
+      "mounted_1531": "2bcbd0ad9ad673a4f22eed3382340a17a3f5dca4b0cd8aea4e4a8be37da43e3c"
+    },
+    "lib/RemoteFiles/WebDavVolume.h": {
+      "baseline_1530": "0cfafa50eb1298e474850072bb9674c16a851ff5654e91edf4bddf20b92b355c",
+      "mounted_1531": "42bcff9b6b6f8b783881928aa1c8e03b6b8c804feeaafca7d3acb5a20cdf3d26"
+    },
+    "scripts/portable_file_sharing_build.py": {
+      "baseline_1530": "061e33bf983cd1f115b60bdd71ff41dba2256d3e8c169c324d613f6a2eaebfa6",
+      "mounted_1531": "d64b3430ff7674b585ab4888b8f12908270c8f44730075ce6753e475fc489b5f"
+    }
+  }
+}

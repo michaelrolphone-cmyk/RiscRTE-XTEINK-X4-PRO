@@ -57,8 +57,39 @@ if a.sd:
  composition=json.loads(a.composition_receipt.read_text())
  if composition['runtime_commit']!=git(a.runtime,'rev-parse','HEAD') or git(a.runtime,'status','--porcelain'):
   raise ValueError('Selected SD admission Runtime differs from clean composition source')
- if composition['product_version'] not in ('0.1.90','0.1.92','0.1.94','0.1.95','0.1.96') or composition['shared_settings_enabled'] is not False:
-  raise ValueError('Selected SD admission requires qualified opt-out .90/.92/.94/.95/.96 composition')
+ if composition['product_version'] not in ('0.1.90','0.1.92','0.1.94','0.1.95','0.1.96','0.1.97') or composition['shared_settings_enabled'] is not False:
+  raise ValueError('Selected SD admission requires supported qualified opt-out composition')
+ if composition['product_version']=='0.1.97':
+  final_system=composition.get('final_published_system_source_pending') is False
+  if final_system:
+   from compose_mounted_files_097_final import ALLOWED,VERSION,LOCK_PATH,load_lock
+  else:
+   from compose_mounted_files_097 import ALLOWED,VERSION,LOCK_PATH,load_lock
+  from sd_resident_lifecycle import validate
+  from compose_desk_wake_093 import read_tree
+  from compose_shared_settings_090 import tree
+  lock=load_lock();rows=validate(read_tree(a.store),read_tree(a.sd.resolve()))
+  if (composition['changed_store_paths']!=sorted(ALLOWED) or composition['changed_sd_paths']!=[] or
+      composition['sd_lifecycle']!=rows or composition['sd_overlay_required'] is not False or
+      composition['sd_deliverable_created'] is not False or composition['original_sd_files_preserved']!=81 or
+      composition['added_sd_files']!=[] or composition['native_unchanged'] is not True or
+      composition['home_rebuilt'] is not False or composition['boot_authority_unchanged'] is not True or
+      composition['files_lock_sha256']!=sha(LOCK_PATH.read_bytes()) or
+      composition['files_client']['artifacts']!=lock['files_artifacts'] or
+      composition['system_commit']!=lock['system_build_commit'] or
+      composition['local_preflight_only']!=(not composition['publication_ready']) or
+      composition['product_published']!=composition['publication_ready'] or
+      composition['system_published']!=final_system or composition['final_rebuild_required']!= (not final_system) or
+      composition['firmware_sha256']!=witness['firmware_sha256'] or
+      composition['firmware_elf_sha256']!=sha(a.native_elf.read_bytes()) or
+      composition['store']!=tree(a.store) or composition['sd']!=tree(a.sd.resolve()) or
+      json.loads((a.store/'cohort.json').read_text())['version']!=VERSION):
+   raise ValueError('Mounted Files .97 preservation evidence differs')
+  if composition['publication_ready']:
+   proof=composition.get('source_publication',{}).get('product') or {}
+   if (not final_system or proof.get('readback_verified') is not True or
+       proof.get('commit')!=composition['product_source'] or proof.get('tree')!=composition['product_tree']):
+    raise ValueError('Mounted Files .97 published product evidence differs')
  if composition['product_version']=='0.1.92':
   from compose_files_092 import ALLOWED,VERSION
   from compose_shared_settings_090 import tree

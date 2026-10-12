@@ -1,0 +1,81 @@
+{
+  "status": "local preflight passed; final System publication, source pins and rebuild blocked/pending",
+  "product": "X4",
+  "version": "0.1.97",
+  "recipe_source": "a327b4e320f40ece1c1b3852e55b21882f04ca16",
+  "recipe_tree": "52026dc8288e5e9d03159ff4889a4a87bfdcde24",
+  "files_version": "1.5.31",
+  "system_build_commit": "cbf8c5d50b70068db8bd47f331ac7167c79c6ed0",
+  "system_qualification_commit": "d793eb6ee54ed293fd4d19b452dd66202082c448",
+  "files_elf_sha256": "65351dea1e1310f97ccfdd0e4a72782e5f69ef8cd34262453dde4d02d3d00011",
+  "local_test_image_name": "X4-0.1.97-LOCAL-PREFLIGHT-NOT-FOR-DELIVERY.bin",
+  "local_test_image_sha256": "4d6787ab710d5d5d7ba96f839f7751070c97c0bcb30923f0892ec1391ff24c57",
+  "local_test_image_bytes": 16777216,
+  "native_firmware_sha256": "0fd7903acde4201f244dfd37854c40b66e5784d15f2d2730ca3db6ae2c2329f6",
+  "native_elf_sha256": "67db2fd9cbbb80f7a0f137e3df27d7b903beb66e8172596fbc84427b047f2bf4",
+  "complete_image": {
+    "passed": true,
+    "full_image_sha256": "4d6787ab710d5d5d7ba96f839f7751070c97c0bcb30923f0892ec1391ff24c57",
+    "changed_store_paths": [
+      "cohort.json",
+      "file_browser.elf",
+      "file_browser.json"
+    ],
+    "preserved_store_files": 100,
+    "preserved_sd_files": 81,
+    "selected_sd_images": 46,
+    "native_unchanged": true,
+    "home_unchanged": true,
+    "boot_authority_unchanged": true,
+    "sd_lifecycle_unchanged": true,
+    "local_preflight_only": true,
+    "hardware_tested": false
+  },
+  "admission": {
+    "prepared": true,
+    "cohort_validated": true,
+    "error": "",
+    "hardware_calls": 0,
+    "storage_calls": 0,
+    "elf_count": 42,
+    "cooperative_yields": 168
+  },
+  "strict_selected_sd_images": 46,
+  "namespace_rejections": [
+    "range-moved",
+    "range-removed",
+    "cache-owner-moved",
+    "settings-disabled"
+  ],
+  "negative_probes": 207,
+  "source_hashes_verified": 312,
+  "files_grants": 16,
+  "free_blocks": 225,
+  "occupied_blocks": 1071,
+  "boot_replay": {
+    "normal_and_asan_ubsan": true,
+    "seven_plans": true,
+    "metadata_name_reads": 193,
+    "healthy_sd_name_reads": 205,
+    "cold_sd_name_reads": 1688,
+    "cold_sd_difference_from_096": 1,
+    "timer_fallback_name_reads": 225,
+    "fallback_name_reads": 320
+  },
+  "validators": {
+    "cohort_sha256": "2aee453caa05ce20a87895a1bac433ce3c99ed2b180f95f8e9d535c12aa9dd96",
+    "strict_sha256": "6a873ed0de5f2ff1183d12517babef7e9b3b11a1f96cd2a49e6924ec3f1b73d9"
+  },
+  "evidence_sha256": {
+    "invariant-tests.json": "4c6c5650c0a319ed4420a5b33e5dd865ed7db5485ef3fd7c34ddce6b66e4808e",
+    "independent-verification.json": "2cfe54971ed2ce3f314d4f6de357329ac5df7ad4f8dbe4f2609c2d25e347e8b6",
+    "packing-replay.json": "51c4070bfe853c678a90c36196433b609c34694108b2cf0dae904352a4b11b39",
+    "admission-evidence.json": "b3547b3621b114361f01eab783fe44c8b1ec71b6092f09b9abf7849e63fbe2d8",
+    "selected-sd-admission.json": "108af0e09613485cca8b89582bb7550e6f83f07f308a651cc00670811d4305f1",
+    "composition.json": "8f6e536d60bb3d33316b32c020a2ef55a05a0b6e4d40185c97620561791a4a62"
+  },
+  "source_published": false,
+  "image_delivered": false,
+  "device_accessed": false,
+  "hardware_tested": false
+}

@@ -1,0 +1,355 @@
+{
+  "passed": true,
+  "plans": {
+    "metadata": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        193,
+        36574
+      ],
+      "read": [
+        411,
+        105216
+      ],
+      "close": [
+        0,
+        0
+      ]
+    },
+    "fallback": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        320,
+        61427
+      ],
+      "read": [
+        5323,
+        1362688
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "cold-sd": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        1688,
+        374375
+      ],
+      "read": [
+        3448,
+        882688
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "healthy-sd": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        205,
+        38818
+      ],
+      "read": [
+        3448,
+        882688
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "all-files": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        476,
+        92876
+      ],
+      "read": [
+        17979,
+        4602624
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "timer-fallback": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        225,
+        42696
+      ],
+      "read": [
+        3878,
+        992768
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "random-all-files": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        74489,
+        16842692
+      ],
+      "read": [
+        17979,
+        4602624
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    }
+  },
+  "baseline_096": {
+    "metadata": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        193,
+        36574
+      ],
+      "read": [
+        411,
+        105216
+      ],
+      "close": [
+        0,
+        0
+      ]
+    },
+    "fallback": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        320,
+        61427
+      ],
+      "read": [
+        5323,
+        1362688
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "cold-sd": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        1687,
+        374326
+      ],
+      "read": [
+        3448,
+        882688
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "healthy-sd": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        205,
+        38818
+      ],
+      "read": [
+        3448,
+        882688
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "all-files": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        479,
+        93437
+      ],
+      "read": [
+        17858,
+        4571648
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "timer-fallback": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        225,
+        42696
+      ],
+      "read": [
+        3878,
+        992768
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    },
+    "random-all-files": {
+      "mount": [
+        3888,
+        336960
+      ],
+      "open": [
+        74444,
+        16841108
+      ],
+      "read": [
+        17858,
+        4571648
+      ],
+      "close": [
+        0,
+        0
+      ],
+      "fstat": [
+        0,
+        0
+      ]
+    }
+  },
+  "metadata_healthy_sd_timer_fallback_counts_unchanged": true,
+  "cold_sd_extra_name_lookup_reads": 1,
+  "all_read_bytes_verified": true,
+  "normal_and_asan_ubsan_identical": true,
+  "sanitizer_exceptions": [
+    "alignment excluded for unchanged packed SPIFFS index tables",
+    "leak detection disabled under ptrace"
+  ],
+  "source_sha256": {
+    "src/spiffs.h": "d75856e317eebfe38486e82877ec42aaf815fcfc583e8f92fe6e26d38ca21309",
+    "src/spiffs_cache.c": "49c51189c57523d8c0735eec2dae88a92ad787da3166c1b632e2afcc6ed17c16",
+    "src/spiffs_check.c": "c6b6b53b94b766edcef1b98ec705a326773bd22ad44a1ea8dac0af54ef7859cb",
+    "src/spiffs_gc.c": "39ccc3983dbc3cf3c352efeb506448af147e0f84d188123fd59a6c2e72e49b70",
+    "src/spiffs_hydrogen.c": "55c0438310f6efd16d26a302bafda62ea6379dc1677b7a2b3a1f985af1519ba2",
+    "src/spiffs_nucleus.c": "fb0e70ce39e889f95c99402e0d255a3472fe6efd3ed1084a70323cd8b0bffc2a",
+    "src/spiffs_nucleus.h": "b6495416bb24dfd69dbd79fdea80a0a10f9c233048a6a108b7899dc5bc354ce6",
+    "shim/esp_assert.h": "8f821d485f8dec1f80ae7e9a94ca6f3c63ebb20c1d50a10311b01e515f6067af",
+    "shim/esp_log.h": "cd4c82120b47f2a6401e150674cb7bdd20461cb41aaf8be4d543e351c3f748ea",
+    "shim/sdkconfig.h": "639952d797a34940ae80501568687296e99b8c48c93fca7643e4d6515d817782",
+    "shim/spiffs_config.h": "a32725ddcd9c77bada76bb997c7960a74cfb7bfdb2b586a6a88fe38b89e92c6e"
+  },
+  "fixture_sha256": "e6b16da7ac1fbe467ca53b38f699692b78174fe052235b3f20d86aec88b21af1",
+  "plans_sha256": {
+    "metadata": "e736f1ad9e9ec71a4ebc70a9e1f001113989decbf664adacbbaa719f5c95b773",
+    "fallback": "95f52234603a10d0e2a65dd3e9e2f6fd77ab911923be030aff85046d6a64d6ea",
+    "cold-sd": "b907e20ecc631510ce5fffdda3e292ae0a59b3e65155a4e375ddddc1f897cff5",
+    "healthy-sd": "7629421fddf6e4cc06e3b1912c4176d8a85d876d17ffdde01ffba42f53a476dd",
+    "all-files": "4b88e9a3f57e5dfefcada17f37823e1da4e4b0e0da3af31d70dd363a2f66c248",
+    "timer-fallback": "5b6b334d64760c7e63dadf66ffd6fd4293a47b20f1be3937d1ddc33ade2fc93a",
+    "random-all-files": "4e9878cc00ae6f6562befde7bc22f397fc8e8a901c974ec7fb6c3a244950c5b7"
+  },
+  "replay_sha256": {
+    "all-files-asan.csv": "c8cf614a443ba4bca8ecf6e774ef9b8fed0c08814b8c4423778afa1f25338f2b",
+    "all-files.csv": "c8cf614a443ba4bca8ecf6e774ef9b8fed0c08814b8c4423778afa1f25338f2b",
+    "cold-sd-asan.csv": "7813be06a6eace7d0ea4f0c1b211ef519c936d34748f01b04d281ced69581614",
+    "cold-sd.csv": "7813be06a6eace7d0ea4f0c1b211ef519c936d34748f01b04d281ced69581614",
+    "fallback-asan.csv": "bf788aa359ab22ac0352fe2179b2ee304f2f2f071c29a0780d473129aca2ee2b",
+    "fallback.csv": "bf788aa359ab22ac0352fe2179b2ee304f2f2f071c29a0780d473129aca2ee2b",
+    "healthy-sd-asan.csv": "0481e8cee746588861f0943ba598fbe990c9cffcd4cad566894edcf65e6d5c59",
+    "healthy-sd.csv": "0481e8cee746588861f0943ba598fbe990c9cffcd4cad566894edcf65e6d5c59",
+    "metadata-asan.csv": "562998336bf928ef14cdee9082cbfd2bf854d0d5baa8758144740ba1d9499412",
+    "metadata.csv": "562998336bf928ef14cdee9082cbfd2bf854d0d5baa8758144740ba1d9499412",
+    "random-all-files-asan.csv": "8666ada76aa4e14258afeeccb59bf5cc13a5102c13c766ad0df50b319080148d",
+    "random-all-files.csv": "8666ada76aa4e14258afeeccb59bf5cc13a5102c13c766ad0df50b319080148d",
+    "timer-fallback-asan.csv": "445cfd8c3e72bcaf09730955b3b3814f3a80f26a28a3d8ff2bda59c18b48a267",
+    "timer-fallback.csv": "445cfd8c3e72bcaf09730955b3b3814f3a80f26a28a3d8ff2bda59c18b48a267"
+  },
+  "hardware_tested": false
+}
