@@ -1,0 +1,85 @@
+name: X4 mounted Files .97 recipe
+on:
+  push:
+    branches: [feat/x4-mounted-files-097-20261012]
+    paths:
+      - '.github/workflows/mounted-files-097.yml'
+      - 'minimal/scripts/*mounted_files_097*.py'
+      - 'minimal/test/mounted_files_097*.py'
+      - 'minimal/files-mounted-097*.json'
+      - 'minimal/docs/evidence/mounted-files-097-final/**'
+      - 'minimal/scripts/test_reader*recipe.py'
+permissions:
+  contents: read
+jobs:
+  standalone-recipe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact recipe locks and fail-closed publication gates
+        run: python3 minimal/test/mounted_files_097_source_test.py
+      - name: Preserve historical Reader provenance and composition guards
+        run: |
+          python3 minimal/scripts/test_reader_nova7_recipe.py
+          python3 minimal/scripts/test_reader_links_recipe.py
+          python3 minimal/test/shared_settings_composition_test.py
+          python3 -m py_compile minimal/scripts/compose_mounted_files_097_final.py minimal/scripts/verify_mounted_files_097_final.py minimal/scripts/qualify_installed_catalog.py
+      - name: Record qualification boundary
+        run: |
+          echo 'Standalone source/recipe checks only. Full .97 image admission requires the delivered .96 BIN and SD inputs and is recorded separately.' >> "$GITHUB_STEP_SUMMARY"
+  published-files-target:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: X4
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+          ref: 0accd8905b5a64bf5e9269fe92a6e47c9fd1cc90
+          path: System
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: 3b90cd11cf0ff4e8116bb54d2d9eb9c7c67a148b
+          path: Runtime
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Utilities
+          ref: e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d
+          path: Utilities
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install exact compiler and resolve historical native SDK
+        run: |
+          python3 -m pip install platformio==6.1.19 pyelftools==0.32
+          pio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'
+          git -C Runtime fetch --depth 1 origin 274bc66f193cbe29018d2a85c9400cb0dce8aacc
+      - name: Rebuild the exact published Files component
+        run: |
+          export NATIVE_APP_CC="$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc"
+          python3 System/scripts/build_portable_file_browser.py \
+            --output-dir "$PWD/built-files" --storage-capability storage.volume --storage-instance 9 \
+            --touch-scrolling --file-handlers --alarm-client --navigation --time-profile x4-native-time \
+            --native-time-runtime-repo "$PWD/Runtime" --tagged-alarm-utilities "$PWD/Utilities" \
+            --resident-shell-client --resident-policy --resident-runtime-sdk "$PWD/Runtime/sdk/app" \
+            --raster-snapshot --stage-logs --home-app default.elf --peer-files --webdav-sharing \
+            --sharing-setup-instance 0 --sharing-export-instance 0 --sharing-tcp-instance 0 \
+            --sharing-entropy-instance 0 --ble-broadcast
+          python3 X4/minimal/test/mounted_files_097_source_test.py --built-files "$PWD/built-files" --system-source "$PWD/System"
+      - name: Record qualification boundary
+        run: |
+          echo 'Files 1.5.31 component rebuild and 312 compiled-source hashes verified. This job neither rebuilds native .96 nor performs full-image or hardware execution qualification.' >> "$GITHUB_STEP_SUMMARY"
