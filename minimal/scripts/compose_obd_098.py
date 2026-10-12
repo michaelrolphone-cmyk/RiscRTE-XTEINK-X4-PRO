@@ -115,7 +115,10 @@ def compose(a):
   full_image_bytes=len(result),full_image_sha256=sha(result),hardware_tested=False,physical_adapter_verified=False,
   obd_build=app_build,scene_build=scene_build,serial_build=driver_build,obd_component_sources=sources)
  # Remove .96-only claims whose exact values no longer describe this composition.
- for k in ('all_sd_executables_preserved','preserved_store_files','sd_overlay'):receipt.pop(k,None)
+ receipt['baseline_source_publication']=receipt.pop('source_publication',None)
+ receipt['source_publication']={'product':{'repository':'michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO','commit':a.product_revision,'tree':git(ROOT,'rev-parse','HEAD^{tree}')},'components':sources,'verification':'See the separately recorded remote-source verification receipt'}
+ receipt['files_1_5_31_unchanged']=True
+ for k in ('all_sd_executables_preserved','preserved_store_files','sd_overlay','files_replaced','product_published','system_published','publication_ready','final_published_system_source_pending','final_rebuild_required','local_preflight_only'):receipt.pop(k,None)
  a.output.mkdir(parents=True);write_files(a.output/'store',new);write_files(a.output/'SD',sd);write_files(a.output/'components',parts)
  (a.output/IMAGE).write_bytes(result)
  with zipfile.ZipFile(a.output/ZIP,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
