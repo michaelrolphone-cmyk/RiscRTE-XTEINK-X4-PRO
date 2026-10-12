@@ -1,0 +1,62 @@
+{
+  "app-asan-ubsan.log": {
+    "bytes": 11529,
+    "sha256": "284c473fd1aa0516e44a8bcf6b02f9f4b31517ae96d712164147fffa6425a0f8"
+  },
+  "app-normal.log": {
+    "bytes": 11529,
+    "sha256": "284c473fd1aa0516e44a8bcf6b02f9f4b31517ae96d712164147fffa6425a0f8"
+  },
+  "asan-ubsan-cohort.json": {
+    "bytes": 32549,
+    "sha256": "5c1c017b9749ed44ada88bd48fedc1e5fa692cc653bc99ee4596c00db89dd912"
+  },
+  "catalog-and-cohort.log": {
+    "bytes": 864,
+    "sha256": "93a2b86264079d2529a8a1e546f1d5c794d9a78054839bbbd3cc45ada767a02a"
+  },
+  "hosted-local-build-parity.json": {
+    "bytes": 5192,
+    "sha256": "dc937ec1f0da09025499c5852335aaedca14fbd29ef52bfd8d4006e5a0c40236"
+  },
+  "independent-overlay.json": {
+    "bytes": 1376,
+    "sha256": "a2b8d2e8cb049b7aa26cde3a6862fa94f7894b066fcdf8c1c34c5f1ae4cac235"
+  },
+  "independent-review.json": {
+    "bytes": 2607,
+    "sha256": "a97c1381ea64483d725289212483b73ad089944b956e0de4bfd9fbc84ebd21d7"
+  },
+  "normal-cohort.json": {
+    "bytes": 32535,
+    "sha256": "4fe0f0f53834890dbb246d1bb72bde74ab48d6d3f6adc3e8b743cc2cb080f417"
+  },
+  "packing.json": {
+    "bytes": 3870,
+    "sha256": "eee8c51b5f6a35294824114a71deda38812786a75de7ce27daacf625701dd35f"
+  },
+  "provider-asan-ubsan.log": {
+    "bytes": 698,
+    "sha256": "0ceb2caaae0a441a0c809107ec6a64ba0c22816080b33f4c5b75c8c46c0709a4"
+  },
+  "provider-normal.log": {
+    "bytes": 699,
+    "sha256": "530991355a6724e58314417d4d1602ccb9847da2e7f698795fc8d326bacba321"
+  },
+  "qualification.json": {
+    "bytes": 5684,
+    "sha256": "bb003f2e5a7f13cb491a6c63056d3b65c2cb34503d3c090edd863e02a07f897b"
+  },
+  "source-ci.json": {
+    "bytes": 2068,
+    "sha256": "a54e23fde23a8fe5a04c7c50b4a22b465609cb676f6e0b55100f33eb6e4d7d02"
+  },
+  "target-memory.json": {
+    "bytes": 762,
+    "sha256": "b793f4d63e5ed9361832e0af70a5a30be32f23b3edb5daefc9f29e7b543adf48"
+  },
+  "ui-and-storage-parity.json": {
+    "bytes": 11778,
+    "sha256": "852f33331c4e2474abb506de623e94571cde16ef8113284498f482e0767698fb"
+  }
+}

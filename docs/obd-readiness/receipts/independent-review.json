@@ -1,0 +1,44 @@
+{
+  "result": "PASS; no unresolved source or composition blocker found in reviewed scope",
+  "candidate": "/workspace/shared/obd-test-readiness-components-20261012/x4-final",
+  "source_checks": {
+    "utilities": {
+      "commit": "a9c6dfea6800676bc272c118cab80c6c41e45c9a",
+      "clean": true
+    },
+    "drivers": {
+      "commit": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c",
+      "clean": true
+    },
+    "recipe": {
+      "commit": "2357ddc6f4a6e2e5d59f4eb89e45e26e4c7f7ffe",
+      "clean": true
+    }
+  },
+  "source_review": [
+    "Receive-before-tick deadline rejection uses existing wrap-safe timeout path.",
+    "Broadcast discovery ignores unrelated negative replies before a positive ECU selection; subsequent reads remain ECU-bound.",
+    "CAN single-frame payload is bounded to eight bytes without rejecting allowed padding.",
+    "Five-second zero-write backpressure closes cleanly; full writes reset the timer and partial writes fail closed.",
+    "RX notification choice is now independent of TX Extended Properties; write properties remain intact.",
+    "Manual-channel row places both handles first; actual native frame visibly distinguishes RX 0015 and RX 0018."
+  ],
+  "resolved_finding": {
+    "location": "Apps/obd_dashboard/ui.inc:204",
+    "original_commit": "b70252c9755a0dcf2775c61ac5595d8b19e107e5",
+    "description": "Long TX UUID could push the distinguishing RX handle digit past the 370px X4 text boundary, despite different unrendered strings.",
+    "fixed_commit": "a9c6dfea6800676bc272c118cab80c6c41e45c9a",
+    "proof": "channel_clipping.json; channel-fixed-native.pbm"
+  },
+  "independent_tests": [
+    "Final recipe boundary test, including cross-device hard-link copy fallback, passes.",
+    "verify_overlay.py reconstructs and hashes the whole 16MiB image in memory, checks every input/output file inventory, all selected image/fallback pairs, exact boot authority/manifest deltas, cumulative ZIP content, and source/ELF custody."
+  ],
+  "preservation": "Exact hash comparison covers unrelated applications, fonts, native firmware, old immutable provider image, installation policy, and all unrelated SD content. No unpublished SD-settings work is included.",
+  "reporting_note": "Parity record has 87 preserved artifacts: 82 PBM frames and five settings/log files.",
+  "limits": [
+    "No physical adapter, vehicle, RF, target-instruction, or hardware test.",
+    "Complete normal/sanitized candidate cohort execution is owned by the parent and not claimed by this independent read-only review.",
+    "Review makes no publication, delivery, or flash action."
+  ]
+}

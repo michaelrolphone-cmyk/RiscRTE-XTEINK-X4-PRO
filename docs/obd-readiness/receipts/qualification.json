@@ -1,0 +1,159 @@
+{
+  "schema": "obd.test-readiness-public-qualification.v1",
+  "qualified_at_utc": "2026-10-12T20:39:00Z",
+  "source": {
+    "utilities": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Utilities",
+      "compiled_commit": "a9c6dfea6800676bc272c118cab80c6c41e45c9a",
+      "documentation_commit": "b9eb53f88f28e8fa90716a5a2e75e099b464fb22"
+    },
+    "drivers": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Drivers",
+      "commit": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c"
+    },
+    "x4": {
+      "repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+      "compiled_recipe_commit": "2357ddc6f4a6e2e5d59f4eb89e45e26e4c7f7ffe"
+    },
+    "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+    "system": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "branch": "audit/obd-test-readiness-20261012"
+  },
+  "baseline_product_commit": "bb5919fef91cc27eb34570c9ffd45c904bc32bb7",
+  "baseline_composition": {
+    "bytes": 810792,
+    "sha256": "304c34995b94c345d94ccf401e232e072a88dcac5d31f4e65284f2f33a252f12"
+  },
+  "fixes": [
+    "Reject expired replies before RX parsing, including clock wrap",
+    "Ignore unrelated ECU negatives only during positive ECU discovery",
+    "Reject oversized CAN frames",
+    "Bound persistent zero-write backpressure to five seconds",
+    "Keep distinct TX/RX channel handles visible before long UUIDs",
+    "Separate indication subscription mode from transmitter extended properties"
+  ],
+  "application": {
+    "id": "obd-dashboard",
+    "version": "0.2.2",
+    "elf": {
+      "bytes": 77504,
+      "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c"
+    },
+    "manifest": {
+      "bytes": 625,
+      "sha256": "49204843673f745458102d9f74a60a1a0a155c1db3b133240a93b5b69010831e"
+    },
+    "build": {
+      "bytes": 3827,
+      "sha256": "aa078f41bc8e96fcc6b6ff4faafae9ae3228dc2880a736ac65928a0dd546daee"
+    },
+    "host_scenarios_per_mode": 25,
+    "focused_lifecycle_channel_groups": 5
+  },
+  "provider": {
+    "id": "ble-serial",
+    "version": "0.1.1",
+    "elf": {
+      "bytes": 179308,
+      "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7"
+    },
+    "manifest": {
+      "bytes": 456,
+      "sha256": "81e55467acce8340c615b8879e8ed013c4774799ddba39accb62e70ca61f7662"
+    },
+    "build": {
+      "bytes": 472,
+      "sha256": "b75be5a1e3a859d860040689bf31ccccc6c8b064d25d891e096b19cb4e49b961"
+    },
+    "real_nimble_cases_per_mode": 11
+  },
+  "counts": {
+    "internal_elfs": 43,
+    "selected_sd_elfs": 48,
+    "store_files": 106,
+    "sd_files": 99,
+    "cumulative_sd_overlay_files": 25,
+    "unchanged_store_files": 101,
+    "unchanged_prior_sd_files": 96
+  },
+  "integration": {
+    "changed_store_paths": [
+      "ble-serial/driver.elf",
+      "ble-serial/manifest.json",
+      "boot.json",
+      "cohort.json",
+      "obd_dashboard.json"
+    ],
+    "changed_sd_paths": [
+      "Apps/obd-dashboard/manifest.json",
+      "Apps/obd-dashboard/obd_dashboard.elf"
+    ],
+    "added_sd_paths": [
+      "Drivers/ble-serial/image-643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7.elf"
+    ],
+    "authority_unchanged": true,
+    "native_firmware_unchanged": true,
+    "unpublished_sd_settings_consumed": false,
+    "all_unrelated_apps_fonts_and_sd_preserved": true,
+    "apply_only_this_component_delta_to_latest_authorized_union": true,
+    "rerun_complete_cohorts_after_independent_changes": true,
+    "candidate_and_baseline_may_share_immutable_hardlinks": true,
+    "selected_paths_only_authoritative": true
+  },
+  "full_image_sha256": "c0010125507da7ef048c26f5c131fbf045345e07e313219db832f519afe0232b",
+  "full_image_bytes": 16777216,
+  "sparse_components": {
+    "appdata.bin": {
+      "bytes": 524288,
+      "sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+    },
+    "bank_state.bin": {
+      "bytes": 8192,
+      "sha256": "42eea4456ec679e601ecca1c18d7de43b583108e111de6d82bca04fe7feb8d79"
+    },
+    "bootfs.bin": {
+      "bytes": 5308416,
+      "sha256": "fa0b788bd99e31e899ce740ce9b21746aab07d981e0e46bdcd6f7d70cf4ffaa4"
+    },
+    "bootloader.bin": {
+      "bytes": 15104,
+      "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363"
+    },
+    "firmware.bin": {
+      "bytes": 1458576,
+      "sha256": "0cb155e1ff160afadeacea7cbb095234c6a072a4c164983da11c08135a55fbc9"
+    },
+    "otadata.bin": {
+      "bytes": 8192,
+      "sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+    }
+  },
+  "sd_overlay": {
+    "bytes": 2471013,
+    "sha256": "1e9b5848b9d2b0d7d817f5b8885c2c047a811b0adf4f92f8d94882dc0ddb7b43"
+  },
+  "free_spiffs_blocks": 126,
+  "required_free_blocks": 2,
+  "complete_normal_and_asan_ubsan_cohorts_passed": true,
+  "all_compiled_source_and_recipe_ci_passed": true,
+  "sanitizers": "AddressSanitizer, UndefinedBehaviorSanitizer; LeakSanitizer disabled",
+  "preserved_pbm_frames": 82,
+  "preserved_settings_and_log_files": 5,
+  "physical_hardware_tested": false,
+  "full_image_materialized": false,
+  "flashed": false,
+  "delivered": false,
+  "hold_until_utc": "2026-10-12T23:30:00Z",
+  "limits": [
+    "Software fixtures only; no physical BLE adapter, vehicle, RF or target instructions tested",
+    "Classic SPP and pairing/bonding-required adapters remain unsupported",
+    "Compiler frame sizes do not measure dynamic peak stack",
+    "Full-initial flashing erases internal saved data",
+    "Use paired firmware components and cumulative SD overlay",
+    "No binary delivery before the explicit hold time"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "result": "PASS",
+  "product_source": "2357ddc6f4a6e2e5d59f4eb89e45e26e4c7f7ffe",
+  "full_image_sha256": "c0010125507da7ef048c26f5c131fbf045345e07e313219db832f519afe0232b",
+  "changed": {
+    "store": [
+      "ble-serial/driver.elf",
+      "ble-serial/manifest.json",
+      "boot.json",
+      "cohort.json",
+      "obd_dashboard.json"
+    ],
+    "SD": [
+      "Apps/obd-dashboard/manifest.json",
+      "Apps/obd-dashboard/obd_dashboard.elf"
+    ],
+    "components": [
+      "bank_state.bin",
+      "bootfs.bin"
+    ]
+  },
+  "added": {
+    "store": [],
+    "SD": [
+      "Drivers/ble-serial/image-643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7.elf"
+    ],
+    "components": []
+  },
+  "preserved_file_counts": {
+    "store": 101,
+    "SD": 96,
+    "components": 5
+  },
+  "selected_images": 48,
+  "selected_providers": 31,
+  "sd_overlay_files": 25,
+  "free_spiffs_blocks": 126,
+  "authority_delta": "Only BLE serial image path; grants, manifests except versions, installation policy unchanged",
+  "source_pins": {
+    "utilities": "a9c6dfea6800676bc272c118cab80c6c41e45c9a",
+    "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+    "system": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "drivers": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c"
+  },
+  "native_unchanged": true,
+  "unpublished_sd_settings_consumed": false,
+  "hardware_tested": false
+}

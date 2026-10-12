@@ -1,0 +1,179 @@
+PIC division: boundary values and 100000 signed/unsigned reference comparisons PASS
+ELM init/fragmentation/multi-ECU/header/protocol/16-PID math/units/malformed/timeout-wrap/stale/read-only schedule PASS
+Diagnostics: VIN CAN11/CAN29/legacy, DTC lists, owned freeze frame, malformed transport, real log, confirmed/expired/moving/ECU-bound clear, extra PIDs PASS
+Model: 10-minute timestamped ring, gaps, frozen graph, statistics, new-sample threshold debounce, mute, configuration bounds and CRC PASS
+Receive-before-tick late setup/PID replies and clock wrap rejected PASS
+Mixed ECU discovery, no-continuation mask and CAN frame bounds PASS
+Failed open and rejected connect each stop after exactly three clean attempts PASS
+Cancel during reconnect closes once and prevents reopening PASS
+Reload-required close suppresses retries PASS
+Failed-open cleanup uncertainty retains invocation and lease after three close attempts PASS
+Channel 0 visible: [6e400001-b5a3-f393-e0a9-e50e24dcca9e] [TX 0012 / RX 0015 | 6e400002-b5a3-f393-e / 12345678-1234-1234-1]; RX: 12345678-1234-1234-1234-123456789000
+Channel 1 visible: [6e400001-b5a3-f393-e0a9-e50e24dcca9e] [TX 0012 / RX 0018 | 6e400002-b5a3-f393-e / 12345678-1234-1234-1]; RX: 12345678-1234-1234-1234-123456789001
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=3 action=302 value=0 x=131 y=366 screen=3
+TAP step=4 action=16 value=1 x=426 y=674 screen=6
+TAP step=5 action=18 value=31 x=426 y=448 screen=6
+TAP step=6 action=1 value=0 x=240 y=750 screen=6
+TAP step=7 action=7 value=1 x=180 y=764 screen=3
+TAP step=8 action=14 value=0 x=424 y=54 screen=5
+TAP step=9 action=13 value=0 x=354 y=54 screen=5
+TAP step=10 action=503 value=0 x=240 y=398 screen=15
+TAP step=11 action=501 value=1 x=240 y=230 screen=15
+TAP step=12 action=1 value=0 x=240 y=750 screen=15
+TAP step=13 action=15 value=1 x=426 y=626 screen=5
+TAP step=14 action=7 value=2 x=300 y=764 screen=5
+TAP step=15 action=600 value=0 x=240 y=378 screen=8
+TAP step=17 action=1 value=0 x=240 y=750 screen=9
+TAP step=18 action=1020 value=1 x=240 y=286 screen=8
+TAP step=19 action=21 value=0 x=240 y=478 screen=8
+TAP step=20 action=1 value=0 x=240 y=750 screen=10
+TAP step=21 action=28 value=0 x=240 y=570 screen=8
+TAP step=22 action=30 value=0 x=151 y=488 screen=16
+TAP step=23 action=7 value=3 x=420 y=764 screen=8
+TAP step=24 action=22 value=0 x=240 y=626 screen=11
+TAP step=25 action=1 value=0 x=240 y=750 screen=12
+TAP step=26 action=11 value=0 x=424 y=54 screen=11
+TAP step=27 action=6 value=1 x=343 y=146 screen=13
+TAP step=28 action=24 value=1 x=426 y=222 screen=13
+TAP step=29 action=27 value=1 x=416 y=558 screen=13
+TAP step=30 action=27 value=0 x=360 y=558 screen=13
+TAP step=31 action=1 value=0 x=240 y=750 screen=13
+TAP step=32 action=7 value=0 x=60 y=764 screen=11
+TAP step=33 action=12 value=0 x=354 y=54 screen=3
+TAP step=34 action=407 value=0 x=240 y=566 screen=7
+TAP step=35 action=1 value=0 x=240 y=750 screen=7
+TAP step=36 action=11 value=0 x=424 y=54 screen=3
+TAP step=37 action=36 value=0 x=240 y=284 screen=13
+TAP step=38 action=36 value=0 x=240 y=284 screen=13
+TAP step=39 action=31 value=0 x=240 y=376 screen=13
+TAP step=40 action=4 value=0 x=329 y=488 screen=16
+END scenario=0 step=42 screen=0 time=130450 rev=1 frames=58 tx=3518 rx=12814 msg=Closed
+actual app + native scene physical-touch simulation scenario=0 actions=42 frames=58 radio-polls=6441 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=1 step=3 screen=4 time=29460 rev=6 frames=6 tx=35 rx=33 msg=Closed
+actual app + native scene physical-touch simulation scenario=1 actions=3 frames=6 radio-polls=1549 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+uncertain BLE close retains entire invocation PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+native custody lost during serial read: no cleanup I/O PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+END scenario=4 step=1 screen=4 time=4225 rev=2 frames=2 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=4 actions=1 frames=2 radio-polls=0 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=5 step=4 screen=0 time=12690 rev=6 frames=6 tx=130 rx=489 msg=Closed
+actual app + native scene physical-touch simulation scenario=5 actions=4 frames=6 radio-polls=431 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=4 action=34 value=0 x=239 y=488 screen=17
+TAP step=5 action=11 value=0 x=424 y=54 screen=3
+TAP step=6 action=23 value=0 x=240 y=474 screen=13
+TAP step=7 action=800 value=0 x=240 y=146 screen=14
+END scenario=6 step=8 screen=6 time=33790 rev=14 frames=14 tx=845 rx=3094 msg=Closed
+actual app + native scene physical-touch simulation scenario=6 actions=8 frames=14 radio-polls=1678 PASS
+TAP step=0 action=3 value=0 x=240 y=450 screen=0
+END scenario=7 step=1 screen=0 time=2110 rev=1 frames=1 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=7 actions=1 frames=1 radio-polls=0 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=3 action=7 value=2 x=300 y=764 screen=3
+TAP step=4 action=28 value=0 x=240 y=686 screen=8
+TAP step=5 action=29 value=0 x=329 y=488 screen=16
+END scenario=8 step=6 screen=8 time=28470 rev=12 frames=12 tx=667 rx=2474 msg=Closed
+actual app + native scene physical-touch simulation scenario=8 actions=6 frames=12 radio-polls=1390 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=3 action=11 value=0 x=424 y=54 screen=3
+TAP step=4 action=6 value=1 x=343 y=146 screen=13
+TAP step=5 action=24 value=1 x=426 y=222 screen=13
+TAP step=6 action=27 value=1 x=416 y=558 screen=13
+END scenario=9 step=8 screen=13 time=30695 rev=13 frames=13 tx=745 rx=2730 msg=Closed
+actual app + native scene physical-touch simulation scenario=9 actions=8 frames=13 radio-polls=1505 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=3 action=11 value=0 x=424 y=54 screen=3
+TAP step=4 action=6 value=1 x=343 y=146 screen=13
+SD custody lost during write: retain without further I/O PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=11 step=4 screen=3 time=27235 rev=11 frames=11 tx=550 rx=2036 msg=Closed
+actual app + native scene physical-touch simulation scenario=11 actions=4 frames=11 radio-polls=1175 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=12 step=4 screen=3 time=35560 rev=14 frames=14 tx=560 rx=2056 msg=Closed
+actual app + native scene physical-touch simulation scenario=12 actions=4 frames=14 radio-polls=1630 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=13 step=4 screen=3 time=31030 rev=12 frames=11 tx=420 rx=1547 msg=Closed
+actual app + native scene physical-touch simulation scenario=13 actions=4 frames=11 radio-polls=1399 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=4 action=3 value=0 x=240 y=546 screen=4
+END scenario=14 step=5 screen=4 time=28130 rev=9 frames=9 tx=420 rx=1547 msg=Closed
+actual app + native scene physical-touch simulation scenario=14 actions=5 frames=9 radio-polls=960 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+reload-required failed close retains invocation and BLE custody PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=16 step=3 screen=4 time=13500 rev=6 frames=6 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=16 actions=3 frames=6 radio-polls=485 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+END scenario=17 step=2 screen=1 time=4230 rev=2 frames=2 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=17 actions=2 frames=2 radio-polls=108 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=18 step=4 screen=19 time=8470 rev=4 frames=4 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=18 actions=4 frames=4 radio-polls=324 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=19 step=4 screen=19 time=10575 rev=5 frames=5 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=19 actions=4 frames=5 radio-polls=431 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+TAP step=3 action=201 value=0 x=240 y=230 screen=2
+END scenario=20 step=4 screen=3 time=14795 rev=7 frames=7 tx=130 rx=489 msg=Closed
+actual app + native scene physical-touch simulation scenario=20 actions=4 frames=7 radio-polls=645 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=21 step=3 screen=3 time=10570 rev=5 frames=5 tx=130 rx=382 msg=Closed
+actual app + native scene physical-touch simulation scenario=21 actions=3 frames=5 radio-polls=430 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=22 step=4 screen=4 time=40670 rev=16 frames=16 tx=130 rx=489 msg=Closed
+actual app + native scene physical-touch simulation scenario=22 actions=4 frames=16 radio-polls=1750 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=23 step=3 screen=3 time=10570 rev=5 frames=5 tx=125 rx=472 msg=Closed
+actual app + native scene physical-touch simulation scenario=23 actions=3 frames=5 radio-polls=430 PASS
+TAP step=0 action=2 value=0 x=240 y=686 screen=0
+TAP step=1 action=100 value=0 x=240 y=322 screen=1
+TAP step=2 action=10 value=0 x=240 y=238 screen=18
+END scenario=24 step=3 screen=4 time=10570 rev=5 frames=5 tx=0 rx=0 msg=Closed
+actual app + native scene physical-touch simulation scenario=24 actions=3 frames=5 radio-polls=218 PASS

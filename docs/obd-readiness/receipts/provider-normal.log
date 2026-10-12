@@ -1,0 +1,13 @@
+central scan/discovery/CCC/credits/fragmented RX/writes/retained close PASS
+RX overflow fails closed PASS
+disconnect stale data excluded PASS
+scan bounded timeout PASS
+authentication required is explicit, not a false connected state PASS
+ten close/reopen host cycles PASS
+ffe0 discovered UART / write-without-response / RX / close PASS
+nus discovered UART / write-without-response / RX / close PASS
+non-vendor service is not probed as serial PASS
+missing write acknowledgement fails closed PASS
+CCC write: 0200 expected: 0200; state: 8 message: BLE serial ready (unpaired)
+Extended-properties transmitter with indication-only receiver PASS
+BLE serial: 11 real-stack host cases PASS; sanitized=False

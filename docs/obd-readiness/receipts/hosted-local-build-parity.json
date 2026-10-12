@@ -1,0 +1,148 @@
+{
+  "schema": "obd.hosted-target-parity.v1",
+  "app": {
+    "run": "https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities/actions/runs/38304812301",
+    "build": {
+      "schema": 1,
+      "id": "obd-dashboard",
+      "version": "0.2.2",
+      "bytes": 77504,
+      "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c",
+      "imports": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcspn",
+        "strlen",
+        "strncmp",
+        "strstr"
+      ],
+      "exports": [
+        "app_main",
+        "risc_resident_app_descriptor_v1"
+      ],
+      "stack_frames": {
+        "math.c:5:10:__udivdi3": 48,
+        "math.c:16:9:__divdi3": 32,
+        "elm.c:73:16:decode": 32,
+        "diagnostics.inc:50:13:vin_char": 32,
+        "diagnostics.inc:3:13:log_line": 32,
+        "diagnostics.inc:51:13:diag_payload": 64,
+        "elm.c:71:12:hex": 32,
+        "elm.c:72:17:number": 32,
+        "elm.c:24:13:copy$part$1": 32,
+        "elm.c:24:13:copy": 32,
+        "elm.c:25:13:fault": 32,
+        "elm.c:26:6:obd_init": 32,
+        "elm.c:27:6:obd_stop": 32,
+        "elm.c:64:6:obd_sent": 48,
+        "elm.c:176:6:obd_tick": 32,
+        "elm.c:177:6:obd_fresh": 32,
+        "diagnostics.inc:16:13:clear_conditions": 32,
+        "elm.c:40:8:obd_next": 32,
+        "elm.c:178:13:obd_protocol_name": 32,
+        "elm.c:181:13:obd_unit": 32,
+        "elm.c:186:9:obd_convert": 32,
+        "elm.c:192:6:obd_value": 32,
+        "elm.c:199:6:obd_format": 48,
+        "diagnostics.inc:8:6:obd_code_text": 32,
+        "diagnostics.inc:9:6:obd_request_faults": 32,
+        "elm.c:160:6:obd_receive": 352,
+        "diagnostics.inc:10:6:obd_request_info": 32,
+        "diagnostics.inc:11:6:obd_request_freeze": 32,
+        "diagnostics.inc:21:6:obd_confirm_clear": 32,
+        "ui.inc:26:19:diag_state": 32,
+        "app.c:54:13:authority$isra$2": 32,
+        "app.c:59:13:copy$part$5": 32,
+        "ui.inc:6:13:back_screen.constprop": 32,
+        "ui.inc:5:13:go.constprop": 32,
+        "app.c:61:13:notice.constprop": 32,
+        "ui.inc:9:13:title.constprop": 32,
+        "app.c:62:28:node.constprop": 48,
+        "ui.inc:11:13:button.constprop": 32,
+        "app.c:66:13:row.constprop": 32,
+        "ui.inc:14:13:stepper.constprop": 32,
+        "app.c:67:13:segments.constprop": 32,
+        "ui.inc:18:13:tabs.constprop": 32,
+        "ui.inc:10:13:header_button.constprop": 32,
+        "ui.inc:23:13:metric_value.constprop": 32,
+        "ui.inc:7:13:feedback.constprop": 32,
+        "storage.inc:15:13:storage_message.constprop": 32,
+        "app.c:55:13:retain_app.constprop": 32,
+        "app.c:86:13:close_scene$part$4.constprop": 32,
+        "storage.inc:10:13:storage_alive.constprop": 32,
+        "storage.inc:16:13:volume_close.constprop": 32,
+        "storage.inc:32:13:save_settings$part$6.constprop": 608,
+        "storage.inc:32:13:save_settings.constprop": 32,
+        "storage.inc:48:13:log_close.constprop": 32,
+        "app.c:94:13:read_status.constprop": 32,
+        "app.c:58:13:scene_ok.constprop": 32,
+        "app.c:73:13:stop_link.constprop": 112,
+        "ui.inc:32:17:plot.constprop": 128,
+        "ui.inc:172:13:declare.constprop": 400,
+        "app.c:111:13:publish.constprop": 32,
+        "app.c:130:13:shared.constprop": 64,
+        "app.c:208:45:app_main": 752,
+        "dashboard.c:62:22:history": 32,
+        "dashboard.c:13:6:db_init": 64,
+        "dashboard.c:22:6:db_config_valid": 32,
+        "dashboard.c:32:6:db_warning": 32,
+        "dashboard.c:37:6:db_tick": 64,
+        "dashboard.c:57:6:db_ack": 32,
+        "dashboard.c:58:6:db_freeze": 32,
+        "dashboard.c:65:6:db_last": 32,
+        "dashboard.c:70:6:db_stats": 48,
+        "dashboard.c:76:6:db_series": 64,
+        "dashboard.c:91:10:db_poll_mask": 32,
+        "dashboard.c:97:10:db_crc": 32
+      },
+      "sources": {
+        "utilities": {
+          "commit": "a9c6dfea6800676bc272c118cab80c6c41e45c9a",
+          "dirty": false
+        },
+        "runtime": {
+          "commit": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+          "dirty": false
+        },
+        "system": {
+          "commit": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+          "dirty": false
+        },
+        "drivers": {
+          "commit": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c",
+          "dirty": false
+        }
+      },
+      "hardware_tested": false
+    }
+  },
+  "driver": {
+    "run": "https://github.com/michaelrolphone-cmyk/RiscRTE-Drivers/actions/runs/38303786495",
+    "build": {
+      "schema": 1,
+      "id": "ble-serial",
+      "version": "0.1.1",
+      "source_revision": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c",
+      "source_dirty": false,
+      "nimble_commit": "da7e3256da3ba80b232df880f40d8359311cc62e",
+      "bytes": 179308,
+      "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7",
+      "imports": [
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp"
+      ],
+      "exports": [
+        "t5_driver_get"
+      ],
+      "hardware_tested": false
+    }
+  },
+  "exact_hosted_local_build_records_match": true
+}

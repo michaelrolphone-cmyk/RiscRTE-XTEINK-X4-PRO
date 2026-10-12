@@ -1,0 +1,360 @@
+{
+  "schema": "obd.existing-ui-frame-parity.v1",
+  "all_equal": true,
+  "baseline": "checkpoint 09e9efb current f4b30f8 scene",
+  "selected_source": "a9c6dfea6800676bc272c118cab80c6c41e45c9a",
+  "hardware_verified": false,
+  "artifacts_matched": 87,
+  "frame_count": 82,
+  "data_file_count": 5,
+  "artifacts": [
+    {
+      "frame": "0/adapter-log.pbm",
+      "sha256": "b8d2cfe88de2761a658b79fbf3e6c67a78debaaed38f74fd2c49ceaa05604a15"
+    },
+    {
+      "frame": "0/clear-confirmation.pbm",
+      "sha256": "a1c3633da74ad942213e4ba04127b29b174fa03ece96e093ec49c9255514232c"
+    },
+    {
+      "frame": "0/customize.pbm",
+      "sha256": "2d73e7e1c49431d1cf5aedd286005f879520d526753f6190f1b1eb9a643b51de"
+    },
+    {
+      "frame": "0/detail-2min.pbm",
+      "sha256": "ead9f545f86a22c90fe6b817c61062c9b1f4e5a27751a2a1293b969307cda2e0"
+    },
+    {
+      "frame": "0/detail.pbm",
+      "sha256": "466e5493a21ad88435b9bc4dac4cd27bdb5e27b592b1566aa4a83b63bfaff660"
+    },
+    {
+      "frame": "0/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "0/disconnect-confirmation.pbm",
+      "sha256": "91359f04b538b2038b92192756a8136298a12f4585a541794180596f8855d958"
+    },
+    {
+      "frame": "0/disconnected.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "0/dtc.pbm",
+      "sha256": "9a930831a51f570fcc93af9f981d757353e62dd398aac349702d6b48675f7937"
+    },
+    {
+      "frame": "0/faults.pbm",
+      "sha256": "13ee537aad8df1d7d122f7cde79038ba5339357b400ddd244ca04b46ce422b4e"
+    },
+    {
+      "frame": "0/freeze-frame.pbm",
+      "sha256": "afed838e6f968e6081624da934555d448cb81c0be8f2c4a316d98ff8344338ff"
+    },
+    {
+      "frame": "0/graph-frozen.pbm",
+      "sha256": "3b857d717e43e9eb2dc8af9e098d21e575f0be85e5b78473005a3f358fcb95b1"
+    },
+    {
+      "frame": "0/graph-picker.pbm",
+      "sha256": "b0a520f883278bd39680fa2cbcd842fd976e226c2b4482baa1843cb9a7f8f43a"
+    },
+    {
+      "frame": "0/graph-selected.pbm",
+      "sha256": "c0cdcb90511a38edc2f0c4044bbf92cdb416b3bf6b204b1203ca769c0e1c277d"
+    },
+    {
+      "frame": "0/graph.pbm",
+      "sha256": "c261ed897d57bc5f104e797a271c659085a4dc77cebfa0f62e21b57f51589a0b"
+    },
+    {
+      "frame": "0/imperial-live.pbm",
+      "sha256": "d4f22c3df8efbfc00c39c960c9293b205afb79276fe5b666f2b8edc4802c9dcf"
+    },
+    {
+      "frame": "0/info.pbm",
+      "sha256": "15f8cf75eb906b2d8b554b0f84ea56b3cd0b9ffac8f908e03b2f0efc941b7cf2"
+    },
+    {
+      "frame": "0/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "0/live.pbm",
+      "sha256": "0bf120b5a4fd0ce60451c9556b2c30362f2d9c6b10a12278ca5f217f9b7326a5"
+    },
+    {
+      "frame": "0/paused.pbm",
+      "sha256": "cbc88ecf41144af61ffb9665beb998fa8c463c2122793bff909dd5b9b811ac0b"
+    },
+    {
+      "frame": "0/pending-codes.pbm",
+      "sha256": "47765c608ae14d13955cb7a3af7bc4eaf68a7d81529b254ce61ea6f090256fd6"
+    },
+    {
+      "frame": "0/readiness.pbm",
+      "sha256": "06f07017514661e78456d47caede5c244907a67e34061e66e6874b0fb2a2a3d1"
+    },
+    {
+      "frame": "0/recording.pbm",
+      "sha256": "0a75394cc216c75d4f5f2681cad786e0c1c52ed036d0c5f3d91318c2dcc60a33"
+    },
+    {
+      "frame": "0/restored-settings.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "0/sd/Apps/obd-dashboard/settings.v1",
+      "sha256": "0bb6410e21c5b255e1564d25d478d51350f14d275276e3c5013754f216bbe6e9"
+    },
+    {
+      "frame": "0/sd/OBD/trip-00000001.csv",
+      "sha256": "57daf44ae2e1a15925b3d0d7d41464085a38481e4f6fd2084e8dd78cac291a80"
+    },
+    {
+      "frame": "0/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "0/settings.pbm",
+      "sha256": "49ca6222a185acd4e730388ccf301d3a974256b9a6e23d2968ef8ebed6e65494"
+    },
+    {
+      "frame": "0/seven-tiles.pbm",
+      "sha256": "ca9062d1036052da541111c201e47447f911d30894b8d243b3719d4eecfd442f"
+    },
+    {
+      "frame": "1/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "1/ecu-timeout.pbm",
+      "sha256": "47735e8c83a8f35168f7de080934891cb2f0e8e041a01d42177490a305037a8d"
+    },
+    {
+      "frame": "1/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "1/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "10/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "10/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "10/sd/Apps/obd-dashboard/settings.tmp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "frame": "10/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "11/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "11/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "11/reconnected-selected-peer.pbm",
+      "sha256": "cccb6d140a03913f79854d0632c4aff919f8290e87312953fb968b72abdaff67"
+    },
+    {
+      "frame": "11/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "12/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "12/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "12/reconnected-after-scan-done.pbm",
+      "sha256": "dc13ad5f536062bc48fa48cc1b74484a2163bd5919ef87891541aac21d077038"
+    },
+    {
+      "frame": "12/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "13/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "13/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "13/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "14/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "14/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "14/reload-required-clean-close.pbm",
+      "sha256": "d830f3a98c9ef82066c8c6b8c0d0bf1901cd31e04884b9f069edee6722778a62"
+    },
+    {
+      "frame": "14/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "15/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "15/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "15/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "2/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "2/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "2/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "3/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "3/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "3/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "4/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "4/missing-provider.pbm",
+      "sha256": "386c3539d61342b316876186f94787d556c59e782939b01fc89a3534f3e021e4"
+    },
+    {
+      "frame": "5/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "5/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "5/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "5/shared-return.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "6/alert-graph.pbm",
+      "sha256": "031cd5f6aaa8d1bd2df64f1dc95deb36ff264fed2592b83f4630e70e0757d5b7"
+    },
+    {
+      "frame": "6/alert-history.pbm",
+      "sha256": "50b19e0ffbabb6ee98f4abad99f4e90d359908a4b174fa395235bf7f40a8a21e"
+    },
+    {
+      "frame": "6/alert-hot.pbm",
+      "sha256": "1cd6ae8ca3ae626806e3eac78a936649a381331bb2dcf6c090de911dac97faa6"
+    },
+    {
+      "frame": "6/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "6/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "6/muted-hot-tiles.pbm",
+      "sha256": "3ebf81c25d09c484c8c433e381726f240be622bdb57fab4103f169344fd81c5e"
+    },
+    {
+      "frame": "6/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "7/update-firmware.pbm",
+      "sha256": "ab6c2135125da61d27eb6407e41e8ea7a007a3e3fec6ad9439035a37c357d637"
+    },
+    {
+      "frame": "8/clear-acknowledged.pbm",
+      "sha256": "ac9001529ba02471ae2b08772210f9a3508a521f5e581437e7e03fcdebfc6aae"
+    },
+    {
+      "frame": "8/clear-confirmed.pbm",
+      "sha256": "a1c3633da74ad942213e4ba04127b29b174fa03ece96e093ec49c9255514232c"
+    },
+    {
+      "frame": "8/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "8/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "8/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "9/devices.pbm",
+      "sha256": "9bf30262648751b1c3207d4bf0decc0d0d561e89e6e333052d2c644d869b882e"
+    },
+    {
+      "frame": "9/intro.pbm",
+      "sha256": "7322183c9e4e6daf35fbf53ce2a3810a3905ee9b9fd211b050ed7e29d0483bce"
+    },
+    {
+      "frame": "9/sd/Apps/obd-dashboard/settings.v1",
+      "sha256": "ac1ed2d12e6d1910682a606b334e846005e48e03e3b792bbf2e3cc4dcc7a26a2"
+    },
+    {
+      "frame": "9/sd/OBD/trip-00000001.csv",
+      "sha256": "46474a1435ee9d05b9441d6369c2b38dfb99dc65d2df91e3721728cf468a08ed"
+    },
+    {
+      "frame": "9/selected.pbm",
+      "sha256": "c3efb61f9958309b7aad050dbad7fb61d924b96c326bb3e096d15c51bba7f4ee"
+    },
+    {
+      "frame": "9/settings-short-write.pbm",
+      "sha256": "6e278e04989ecb40d437706c2c228320fa78560271a723a10f8869736a8985e7"
+    },
+    {
+      "frame": "9/trip-write-error.pbm",
+      "sha256": "d03e326af26857131f38387bdc58f2fcb3cce9243f2d6a89b59dd32cb05920b3"
+    }
+  ]
+}

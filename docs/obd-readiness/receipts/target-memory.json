@@ -1,0 +1,29 @@
+{
+  "app-before": {
+    "text": 51706,
+    "data": 1412,
+    "bss": 132928,
+    "sha256": "b2ca8861412e3b79fb6cad14516c574cc2f4479107eaa0bb35165a8059c27f20"
+  },
+  "app-after": {
+    "text": 52050,
+    "data": 1412,
+    "bss": 132936,
+    "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c"
+  },
+  "provider-before": {
+    "text": 87985,
+    "data": 1154,
+    "bss": 47056,
+    "sha256": "cc5bf2a38bf655c1cb51cbdaf3eacbffff69b852adbfb57363ee366cc453ef1f"
+  },
+  "provider-after": {
+    "text": 87981,
+    "data": 1154,
+    "bss": 47056,
+    "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7"
+  },
+  "app_maximum_compiler_frame_bytes": 752,
+  "dynamic_peak_stack_measured": false,
+  "hardware_verified": false
+}
