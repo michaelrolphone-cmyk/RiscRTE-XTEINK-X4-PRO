@@ -75,7 +75,7 @@ def cohort_identity(product,native,firmware,revision):
             'source_repo':product['source_repo'],'source_revision':revision,'runtime_version':native['firmware_version'],
             'layout':native['layout'],'store_abi':2,'firmware_size':len(firmware),'firmware_sha256':sha(firmware)}
 
-def validate_native_composition(folder,candidate,runtime,platform_root=ROOT,native_source_root=None):
+def validate_native_composition(folder,candidate,runtime,platform_root=ROOT,native_source_root=None,expected_runtime=None):
     """Require the exact platform boot hook, not just the shared Runtime version."""
     folder=Path(folder).resolve();platform_root=Path(platform_root)
     require=native_composition.require
@@ -99,7 +99,7 @@ def validate_native_composition(folder,candidate,runtime,platform_root=ROOT,nati
     payload={key:value for key,value in record.items() if key!='composition_sha256'}
     require(sha(native_composition.encoded(payload))==record.get('composition_sha256'),
             'Staged X4 composition digest mismatch')
-    lock=json.loads((platform_root/'minimal/sources.lock.json').read_text())['runtime']
+    lock=expected_runtime if expected_runtime is not None else json.loads((platform_root/'minimal/sources.lock.json').read_text())['runtime']
     require(candidate.get('source_sha')==lock['commit'] and candidate.get('firmware_version')==lock['version'] and
             record['runtime']['commit']==lock['commit'] and record['runtime']['version']==lock['version'] and
             record['runtime']['repository']==lock['repository'],'Composed Runtime differs from the product lock')
