@@ -1,6 +1,7 @@
 /* Actual X4 client with deterministic shared-loop and provider/Runtime fixtures.
  * These are not real providers or hardware qualification. All I/O is poisoned
- * after ambiguous custody. Storage/yield/release are forbidden under holds. */
+ * after ambiguous custody. Only the checked storage sleep transaction may run
+ * under panel holds; ordinary storage/yield/release remain forbidden. */
 #include <assert.h>
 #include <setjmp.h>
 #include <stdio.h>
@@ -13,16 +14,22 @@
 #include "../drivers/x4pro_power/X4PowerDeepV1.h"
 #include <RiscDisplayOutputPowerV1.h>
 #include <RiscRetainedWakeV1.h>
+#include <RiscStorageVolumeV1.h>
 static const char *scenario;
 static bool terminal,pending,panel_off,dark,boot,cancelled,frame,foreground;
-static unsigned slots[3];
+static unsigned slots[4];
+static bool sd_prepared,sd_committed,sd_closed,sd_media,sd_uncertain;
+static unsigned sd_prepares,sd_commits,sd_resumes;
+static int sd_resume_rc;
 static unsigned obtains,grants,releases,keys,paints,prepares,steps,stages,clears,resumes,entries,notices,brightnesses;
+static unsigned diagnostics;
 static unsigned missing,release_fail,alarm_pending,cancel_phase;
 static int panel_rc,stage_rc,clear_rc,resume_rc,native_rc,read_rc,alarm_rc,step_rc,status_rc;
 static uint32_t uptime,deadline,duration,stage_cost,panel_cost,alarm_cost,entry_cost;
 static struct {uint32_t size;uint8_t payload[PORTABLE_DESK_CLOCK_RECORD_BYTES];} staged;
 static jmp_buf entry;
 static risc_display_output_api_v1_power display,other_display;
+static risc_storage_volume_api_v1_sleep storage;
 static x4_power_deep_v1 power;
 #ifdef PORTABLE_DESK_POINTS_SNAPSHOT
 static risc_retained_wake_api_v1_extended extended_wake;
@@ -35,7 +42,25 @@ static risc_key_value_v1 prefs;
 static const risc_runtime_api_v1 runtime;
 static bool is(const char *s){return !strcmp(scenario,s);}
 static void io(void){assert(!terminal);}
-static void safe(void){io();assert(!panel_off&&!frame);}
+static void safe(void){io();assert(!panel_off&&!frame&&!sd_prepared&&!sd_committed&&!sd_uncertain);}
+#ifdef PORTABLE_STAGE_LOGS
+static bool diagnostic(const char *line){
+ safe();assert(!grants);diagnostics++;
+ if(boot){assert(strstr(line,"SPARSE_CLOCK wake cause=")&&strstr(line," read=")&&strstr(line," record=")&&strstr(line," schema="));}
+ else {
+  assert(!foreground&&!pending&&strstr(line,"SPARSE_CLOCK timer-exit stage="));
+  if(!strncmp(scenario,"native-",7)||is("refused")||is("repeat"))assert(strstr(line,"stage=native-entry"));
+  if(is("alarm-due")||is("alarm-past"))assert(strstr(line,"stage=alarm-due"));
+  if(is("held"))assert(strstr(line,"stage=key-neutral"));
+  if(is("record-changed"))assert(strstr(line,"stage=record-changed"));
+  if(is("alarm-expired"))assert(strstr(line,"stage=alarm-expired"));
+  if(is("entry-expired"))assert(strstr(line,"stage=minute-expired"));
+  if(is("sd-prepare-refused"))assert(strstr(line,"stage=storage-prepare"));
+  if(is("sd-commit-refused"))assert(strstr(line,"stage=storage-commit"));
+ }
+ return true;
+}
+#endif
 static void point(unsigned n){io();if(cancel_phase==n)cancelled=true;}
 static portable_desk_record record(void){
  portable_desk_record r={0};r.config.rtc_reference_epoch=1700000000;strcpy(r.config.time_zone,"UTC0");r.displayed_minute=120;r.has_image=true;r.refresh_modulo=4;
@@ -49,9 +74,9 @@ static portable_desk_record record(void){
 }
 static bool health(risc_runtime_health_v1 *h){io();if(is("health-initial") || (is("health-stage")&&stages))return false;h->uptime_ms=uptime;return true;}
 static void yield_ms(uint32_t ms){safe();uptime+=ms;if(is("clock-backwards"))uptime-=ms*2;}
-static bool key(void*c,bool*down){(void)c;io();keys++;if(is("key-failure") || (is("key-paint")&&frame) || (is("key-prepared")&&panel_off)){terminal=true;return false;}*down=is("held")||cancelled;return true;}
+static bool key(void*c,bool*down){(void)c;io();keys++;if(is("key-failure") || (is("key-paint")&&frame) || (is("key-prepared")&&panel_off) || (is("key-storage-prepared")&&sd_prepared) || (is("key-storage-committed")&&sd_committed)){terminal=true;return false;}*down=is("held")||cancelled;return true;}
 static int32_t light(void*c,uint32_t n,risc_light_sleep_result_v1*out){(void)c;(void)n;(void)out;safe();assert(foreground&&dark);return RISC_LIGHT_SLEEP_BUSY;}
-static int32_t deep(void*c,uint32_t ms){(void)c;io();assert(panel_off&&dark&&pending&&!frame&&grants==3);assert(staged.size==PORTABLE_DESK_CLOCK_RECORD_BYTES);entries++;duration=ms;
+static int32_t deep(void*c,uint32_t ms){(void)c;io();assert(panel_off&&dark&&pending&&!frame&&grants==4);assert(sd_prepared&&sd_committed&&sd_closed&&!sd_uncertain);assert(staged.size==PORTABLE_DESK_CLOCK_RECORD_BYTES);entries++;duration=ms;
  if(is("terminal")){terminal=true;longjmp(entry,1);}
  if(native_rc==RISC_DEEP_SLEEP_RETAINED || native_rc>=0 || native_rc<RISC_DEEP_SLEEP_UNSUPPORTED)terminal=true;
  return native_rc;
@@ -62,7 +87,28 @@ unsigned portable_quick_brightness(void){io();assert(foreground);return 73;}
 #endif
 static bool seed(void*c,risc_display_frame_v1 f){(void)c;(void)f;assert(0);return false;}
 static int32_t panel_prepare(void*c,uint32_t ms){(void)c;safe();assert(dark&&pending&&ms==RISC_DISPLAY_POWER_MAX_BUDGET_MS);panel_off=true;uptime+=panel_cost;point(3);if(panel_rc==RISC_DISPLAY_POWER_RETAINED || panel_rc>0 || panel_rc<RISC_DISPLAY_POWER_PLATFORM)terminal=true;return panel_rc;}
-static int32_t panel_resume(void*c,uint32_t ms){(void)c;io();assert(panel_off&&ms==RISC_DISPLAY_POWER_MAX_BUDGET_MS);resumes++;if(resume_rc!=RISC_DISPLAY_POWER_OK){terminal=true;return resume_rc;}panel_off=false;point(4);return RISC_DISPLAY_POWER_OK;}
+static int32_t panel_resume(void*c,uint32_t ms){(void)c;io();assert(panel_off&&ms==RISC_DISPLAY_POWER_MAX_BUDGET_MS&&!sd_prepared&&!sd_committed&&!sd_uncertain);resumes++;if(resume_rc!=RISC_DISPLAY_POWER_OK){terminal=true;return resume_rc;}panel_off=false;point(4);return RISC_DISPLAY_POWER_OK;}
+static bool storage_prepare(void*c){
+ io();assert(c==&storage&&panel_off&&pending&&dark&&!frame&&grants==4&&!sd_prepared&&!sd_committed);sd_prepares++;
+ if(is("sd-prepare-refused"))return false;
+ sd_prepared=true;point(8);
+ if(is("sd-prepare-retained")){sd_uncertain=true;return false;}
+ return true;
+}
+static bool storage_commit(void*c){
+ io();assert(c==&storage&&panel_off&&pending&&sd_prepared&&!sd_committed&&!sd_uncertain);sd_commits++;
+ if(is("sd-commit-refused"))return false;
+ sd_closed=true;sd_committed=true;point(9);
+ if(is("sd-commit-retained")){sd_uncertain=true;return false;}
+ return true;
+}
+static int32_t storage_resume(void*c){
+ io();assert(c==&storage&&panel_off&&pending&&sd_prepares==sd_resumes+1);sd_resumes++;
+ int32_t rc=sd_uncertain?RISC_STORAGE_SLEEP_RETAINED:sd_resume_rc;
+ if(rc!=RISC_STORAGE_SLEEP_READY&&rc!=RISC_STORAGE_SLEEP_MEDIA_UNAVAILABLE){terminal=true;return rc;}
+ sd_prepared=sd_committed=false;sd_media=rc==RISC_STORAGE_SLEEP_READY;sd_closed=!sd_media;return rc;
+}
+static bool storage_legacy(void*c){(void)c;assert(0);return false;}
 static int32_t read_bytes(void*c,uint32_t type,uint32_t schema,void*payload,uint32_t capacity,uint32_t*size,uint32_t*cause){
  (void)c;safe();assert(boot&&grants==1&&type==PORTABLE_DESK_CLOCK_RECORD_TYPE&&schema==PORTABLE_DESK_CLOCK_RECORD_SCHEMA);
  *cause=is("boot-cold")?RISC_BOOT_POWER_ON:is("boot-reset")?RISC_BOOT_RESET:is("boot-other")?RISC_BOOT_DEEP_OTHER:is("boot-gpio")?RISC_BOOT_DEEP_GPIO:RISC_BOOT_DEEP_TIMER;
@@ -74,7 +120,7 @@ static int32_t read_wake(void*c,uint32_t type,uint32_t schema,risc_retained_wake
  uint32_t size=0;int32_t result=read_bytes(c,type,schema,out->payload,sizeof(out->payload),&size,cause);if(result==0){out->type=type;out->schema_version=schema;out->size=size;}return result;
 }
 static int32_t stage_bytes(void*c,uint32_t type,uint32_t schema,const void*payload,uint32_t size){
- (void)c;safe();assert(grants==3);portable_desk_record decoded;assert(type==PORTABLE_DESK_CLOCK_RECORD_TYPE&&schema==PORTABLE_DESK_CLOCK_RECORD_SCHEMA&&size==sizeof(staged.payload)&&portable_desk_decode(payload,size,&decoded));assert(decoded.displayed_minute==120);staged.size=size;memcpy(staged.payload,payload,size);pending=true;stages++;uptime+=stage_cost;point(1);if(stage_rc!=RISC_RETAINED_WAKE_OK&&stage_rc!=RISC_RETAINED_WAKE_INVALID)terminal=true;return stage_rc;
+ (void)c;safe();assert(grants==4);portable_desk_record decoded;assert(type==PORTABLE_DESK_CLOCK_RECORD_TYPE&&schema==PORTABLE_DESK_CLOCK_RECORD_SCHEMA&&size==sizeof(staged.payload)&&portable_desk_decode(payload,size,&decoded));assert(decoded.displayed_minute==120);staged.size=size;memcpy(staged.payload,payload,size);pending=true;stages++;uptime+=stage_cost;point(1);if(stage_rc!=RISC_RETAINED_WAKE_OK&&stage_rc!=RISC_RETAINED_WAKE_INVALID)terminal=true;return stage_rc;
 }
 static int32_t stage(void*c,const risc_retained_wake_record_v1*value){return stage_bytes(c,value->type,value->schema_version,value->payload,value->size);}
 
@@ -89,16 +135,21 @@ static bool acquire(const char *name,uint32_t version,uint64_t instance,risc_run
  else if(obtains==1){assert(!strcmp(name,X4_POWER_CAPABILITY)&&instance==17);api=&power;}
  else if(obtains==2){assert(!strcmp(name,RISC_DISPLAY_OUTPUT_CAPABILITY)&&instance==3);api=is("display-identity")?&other_display:&display;}
  else if(obtains==3){assert(!strcmp(name,RISC_RETAINED_WAKE_CAPABILITY)&&!instance);api=&wake;}
- else assert(0); /* KV, touch, SD, Wi-Fi, HCI, navigation, battery forbidden. */
- if(missing==obtains){terminal=true;if(is("acquire-output")){g->api=api;g->slot=obtains;slots[grants++]=obtains;}else assert(!g->api);return false;}
+ else if(obtains==4){assert(!strcmp(name,"storage.volume")&&instance==9);api=is("null-storage-api")?NULL:&storage;}
+ else assert(0); /* KV, touch, Wi-Fi, HCI, navigation, battery forbidden. */
+ if(missing==obtains){terminal=true;if(is("acquire-output")||is("acquire-storage-output")){g->api=api;g->slot=obtains;slots[grants++]=obtains;}else assert(!g->api);return false;}
  g->api=api;g->slot=obtains;slots[grants++]=obtains;return true;
 }
 static bool release_grant(risc_runtime_capability_v1 *g){safe();assert(grants&&g->slot==slots[grants-1]);releases++;if(g->slot==release_fail){terminal=true;return false;}grants--;g->api=NULL;return true;}
-static const risc_runtime_api_v1 runtime={.api_version=1,.struct_size=sizeof(runtime),.health=health,.yield_ms=yield_ms,.acquire=acquire,.release=release_grant};
+static const risc_runtime_api_v1 runtime={.api_version=1,.struct_size=sizeof(runtime),.health=health,.yield_ms=yield_ms,.acquire=acquire,.release=release_grant,
+#ifdef PORTABLE_STAGE_LOGS
+ .diagnostic=diagnostic,
+#endif
+};
 bool portable_desk_adapter_timer_only(void){io();return !foreground;}
 void portable_desk_clock_refused(void){safe();notices++;}
 void portable_desk_clock_radios_off(void){assert(0);}
-int portable_desk_clock_run(const risc_runtime_api_v1 *rt,const portable_desk_sleep_ops *ops){assert(rt==&runtime&&grants==3);paints++;frame=true;int rc=ops->cancelled(ops->context);if(rc==-2)return -2;frame=false;if(rc)return 0;
+int portable_desk_clock_run(const risc_runtime_api_v1 *rt,const portable_desk_sleep_ops *ops){assert(rt==&runtime&&grants==4);paints++;frame=true;int rc=ops->cancelled(ops->context);if(rc==-2)return -2;frame=false;if(rc)return 0;
  portable_desk_record r=record();unsigned rounds=is("catchup")?2:1;
  for(unsigned n=0;n<rounds;++n){rc=ops->stage(ops->context,&r);if(rc!=1)return rc;rc=ops->prepare(ops->context);if(rc!=1)return rc;if(n+1<rounds){assert(ops->resume(ops->context)==1);paints++;}}
  uint32_t sampled=uptime;uptime+=entry_cost;if(is("record-changed"))r.refresh_modulo++;
@@ -110,6 +161,16 @@ static int32_t put(void*c,const char*k,const void*data,uint32_t size){(void)c;(v
 static void setup(void){
  terminal=pending=panel_off=dark=boot=cancelled=frame=false;foreground=!strncmp(scenario,"foreground-",11);
  obtains=grants=releases=keys=paints=prepares=steps=stages=clears=resumes=entries=notices=brightnesses=0;
+ diagnostics=0;
+ sd_prepares=sd_commits=sd_resumes=0;
+ sd_prepared=sd_committed=sd_uncertain=false;
+ sd_media=!is("sd-absent");sd_closed=!sd_media;
+ sd_resume_rc=sd_media?RISC_STORAGE_SLEEP_READY:RISC_STORAGE_SLEEP_MEDIA_UNAVAILABLE;
+ storage=(risc_storage_volume_api_v1_sleep){0};
+ storage.terminal.power.volume.base=(risc_storage_volume_api_v1){.api_version=1,.struct_size=sizeof(storage),.context=&storage};
+ storage.terminal.extension_tag=RISC_STORAGE_POWER_COMMIT_TAG;storage.terminal.extension_version=1;storage.terminal.commit_power_down=storage_legacy;
+ storage.sleep_tag=RISC_STORAGE_SLEEP_TAG;storage.sleep_version=1;
+ storage.prepare_sleep=storage_prepare;storage.commit_sleep=storage_commit;storage.resume_sleep=storage_resume;
  missing=release_fail=alarm_pending=cancel_phase=0;
  panel_rc=stage_rc=clear_rc=resume_rc=read_rc=alarm_rc=step_rc=status_rc=0;native_rc=RISC_DEEP_SLEEP_BUSY;
  uptime=deadline=duration=stage_cost=panel_cost=alarm_cost=entry_cost=0;
@@ -123,10 +184,11 @@ static void setup(void){
  if(is("foreground-acquire-power"))missing=2;
  if(is("foreground-release-prefs"))release_fail=1;
  if(is("foreground-release-power"))release_fail=2;
- if(!strncmp(scenario,"acquire-",8))missing=is("acquire-output")?2:(unsigned)atoi(scenario+8);
+ if(!strncmp(scenario,"acquire-",8))missing=is("acquire-output")?2:is("acquire-storage-output")?4:(unsigned)atoi(scenario+8);
  if(!strncmp(scenario,"release-",8))release_fail=(unsigned)atoi(scenario+8);
  if(!strncmp(scenario,"panel-",6))panel_rc=atoi(scenario+6);
  if(!strncmp(scenario,"resume-",7))resume_rc=atoi(scenario+7);
+ if(!strncmp(scenario,"sd-resume-",10))sd_resume_rc=atoi(scenario+10);
  if(!strncmp(scenario,"stage-",6))stage_rc=atoi(scenario+6);
  if(!strncmp(scenario,"clear-",6))clear_rc=atoi(scenario+6);
  if(!strncmp(scenario,"native-",7))native_rc=atoi(scenario+7);
@@ -160,15 +222,40 @@ static void setup(void){
  if(is("bad-wake"))wake.struct_size=sizeof(risc_retained_wake_api_v1)-1;
  if(is("null-wake"))wake.clear=NULL;
  if(is("null-alarm"))alarms.step=NULL;
+ if(is("bad-storage-api"))storage.terminal.power.volume.base.api_version=2;
+ if(is("short-storage"))storage.terminal.power.volume.base.struct_size=sizeof(storage)-1;
+ if(is("bad-storage-prefix"))storage.terminal.extension_tag=0;
+ if(is("bad-storage-prefix-version"))storage.terminal.extension_version=2;
+ if(is("null-storage-prefix"))storage.terminal.commit_power_down=NULL;
+ if(is("bad-storage-tag"))storage.sleep_tag=0;
+ if(is("bad-storage-version"))storage.sleep_version=2;
+ if(is("null-storage-prepare"))storage.prepare_sleep=NULL;
+ if(is("null-storage-commit"))storage.commit_sleep=NULL;
+ if(is("null-storage-resume"))storage.resume_sleep=NULL;
 }
 static void check(void){
- if(is("terminal")){assert(terminal&&entries==1&&grants==3&&pending&&panel_off);return;}
- if(terminal){assert(obtains<=3);if(missing)assert(releases==(foreground&&missing==2?1u:0u)&&!stages&&obtains==missing);if(stages&&stage_rc!=RISC_RETAINED_WAKE_OK)assert(pending&&!clears&&!resumes&&!releases);if(is("key-paint"))assert(frame);return;}
- assert(!grants&&!pending&&!panel_off&&!frame&&releases==obtains);
+#ifdef PORTABLE_STAGE_LOGS
+ assert(diagnostics==((!terminal&&!foreground&&!is("null-alarm"))?1u:0u));
+#else
+ assert(!diagnostics);
+#endif
+ if(is("terminal")){assert(terminal&&entries==1&&grants==4&&pending&&panel_off&&sd_closed&&sd_committed&&sd_prepares==1&&sd_commits==1&&!sd_resumes);return;}
+ if(terminal&&(is("sd-prepare-retained")||is("sd-commit-retained")||!strncmp(scenario,"sd-resume-",10)))
+  assert(sd_prepares==1&&sd_resumes==1&&panel_off&&pending&&grants==4&&!resumes&&!clears&&!releases);
+ if(terminal&&is("key-storage-prepared"))assert(sd_prepares==1&&!sd_commits&&!sd_resumes&&sd_prepared&&panel_off&&pending&&grants==4&&!releases);
+ if(terminal&&is("key-storage-committed"))assert(sd_commits==1&&!sd_resumes&&sd_committed&&sd_closed&&panel_off&&pending&&grants==4&&!releases);
+ if(terminal){assert(obtains<=4);if(missing)assert(releases==(foreground&&missing==2?1u:0u)&&!stages&&obtains==missing);if(stages&&stage_rc!=RISC_RETAINED_WAKE_OK)assert(pending&&!clears&&!resumes&&!releases);if(is("key-paint"))assert(frame);return;}
+ assert(!grants&&!pending&&!panel_off&&!frame&&!sd_prepared&&!sd_committed&&!sd_uncertain&&releases==obtains);
+ assert(sd_prepares==sd_resumes);
  if(boot){assert(!stages&&!keys&&!prepares);return;}
  if(foreground){assert(obtains==2&&!paints&&!stages&&!notices&&!dark);return;}
  if(is("null-alarm")){assert(!obtains&&notices==1);return;}
- assert(obtains==3);if(!paints)assert(notices==1);
+ assert(obtains==4);if(!paints)assert(notices==1&&!sd_prepares&&!sd_commits&&!entries);
+ if(entries)assert(sd_prepares==sd_commits&&sd_commits>=1);
+ if(is("sd-absent")){assert(entries==1&&sd_prepares==1&&sd_commits==1&&sd_resumes==1&&!sd_media&&sd_closed&&resumes==1&&clears==1);}
+ if(is("sd-prepare-refused"))assert(sd_prepares==1&&!sd_commits&&sd_resumes==1&&!entries&&resumes==1&&clears==1&&!sd_closed);
+ if(is("sd-commit-refused"))assert(sd_prepares==1&&sd_commits==1&&sd_resumes==1&&!entries&&resumes==1&&clears==1&&!sd_closed);
+ if(!strncmp(scenario,"sd-resume-",10))assert(entries==1&&sd_resumes==1&&resumes==1&&clears==1&&sd_closed==(sd_resume_rc==RISC_STORAGE_SLEEP_MEDIA_UNAVAILABLE));
  if(is("refused")||is("repeat")||is("alarm-near")||is("alarm-future")||is("alarm-pending")||is("catchup")||is("stage-delay"))assert(entries==1);
  if(is("refused")||is("repeat"))assert(resumes==1&&clears==1&&brightnesses==2&&dark);
  if(is("alarm-near"))assert(duration==1);
@@ -178,6 +265,9 @@ static void check(void){
  if(is("alarm-pending"))assert(steps==2&&prepares==3);
  if(is("alarm-stuck"))assert(steps==64&&prepares==64);
  if(is("catchup"))assert(paints==2&&resumes==2&&clears==2&&stages==2);
+ if(is("catchup"))assert(sd_prepares==2&&sd_commits==2&&sd_resumes==2);
+ if(cancel_phase==8)assert(sd_prepares==1&&!sd_commits&&sd_resumes==1&&!entries);
+ if(cancel_phase==9)assert(sd_prepares==1&&sd_commits==1&&sd_resumes==1&&!entries);
  if(is("held"))assert(keys==80&&!paints);
  if(is("record-changed")||is("alarm-due")||is("alarm-past")||is("alarm-expired")||is("entry-expired")||is("alarm-busy")||is("alarm-step-busy")||is("alarm-stuck"))assert(!entries);
  if(panel_rc!=RISC_DISPLAY_POWER_OK)assert(resumes==1&&!entries);

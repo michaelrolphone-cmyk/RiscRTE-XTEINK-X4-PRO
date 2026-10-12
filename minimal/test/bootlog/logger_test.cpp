@@ -19,15 +19,16 @@ static int64_t now=1000;
 static bool observing=false;
 static std::string emitted;
 static int level=0;
+static int resetReason=1,wakeCause=0;
 int rtc_gpio_deinit(gpio_num_t){return 0;}
 int gpio_set_level(gpio_num_t,int v){level=v;return 0;}
 int gpio_config(const gpio_config_t*){return 0;}
 int gpio_hold_dis(gpio_num_t){return 0;}
 int gpio_hold_en(gpio_num_t){return 0;}
 int gpio_get_level(gpio_num_t){return level;}
-int esp_reset_reason(){return 1;}
+int esp_reset_reason(){return resetReason;}
 int rtc_get_reset_reason(int c){return 1+c;}
-int esp_sleep_get_wakeup_cause(){return 0;}
+int esp_sleep_get_wakeup_cause(){return wakeCause;}
 int64_t esp_timer_get_time(){return ++now;}
 int nvs_flash_init(){assert(!observing);return initResult;}
 int nvs_open(const char* name,int,nvs_handle_t* h){assert(!std::strcmp(name,"x4_bootlog"));*h=1;return 0;}
@@ -70,6 +71,7 @@ void resetRam(bool eraseFlash=false){
  if(eraseFlash){flash.clear();}
  staged.clear();commits=reads=realMainCalls=0;emitted.clear();
  initResult=readResult=commitResult=0;now=1000;level=0;
+ resetReason=1;wakeCause=0;
  available=initialized=pending=insideDrain=fileReady=historyExported=fileUncertain=false;
  fileAttemptRevision=fileAttempts=0;failSync=false;
  writtenRevision=fileRevision=0;
@@ -173,6 +175,31 @@ int main(){
  check(true,"saved text verifies monotonic event order and timestamp/reset boundaries");
  check(risc_native_diagnostic_read_after(1,out,sizeof(out),&written,&next)==-1 && !written && !next && !out[0],"unaligned cursor rejected without source mutation");
  check(risc_native_diagnostic_read_after(0,out,2,&written,&next)==-1 && !out[0],"insufficient capacity cannot split a line");
+ // The device has no live serial while asleep. Replay consecutive native
+ // timer resets through the production buffered logger and read-only SD source.
+ resetRam(true);noFiles();
+ for(unsigned minute=0;minute<3;++minute) {
+  resetRam();resetReason=8;wakeCause=4;boot();mounted();
+  emit("SPARSE_CLOCK wake cause=2 read=0 record=1 schema=3");
+  emit("SPARSE_CLOCK stage=classification status=1 elapsed_ms=1");
+  emit("SPARSE_CLOCK stage=native-sample status=0 elapsed_ms=2");
+  emit("SPARSE_CLOCK stage=timer-ready status=1 elapsed_ms=3");
+  emit("APP t_ms=8 stage=display-complete result=complete");
+  check(readFile(Internal).find("SPARSE_CLOCK wake cause=2 read=0 record=1 schema=3")!=std::string::npos,
+        "minute wake classification persists without a serial connection");
+ }
+ before=commits;attempts=fileAttempts;
+ observing=true;risc_native_diagnostic_observer("SPARSE_CLOCK timer-exit stage=native-entry status=-4");observing=false;
+ check(commits==before && fileAttempts==attempts,"timer-exit observer does no flash or file I/O");
+ now+=2000001;risc_native_diagnostic_drain();
+ check(readFile(Internal).find("timer-exit stage=native-entry status=-4")!=std::string::npos,
+       "timer refusal persists through the existing bounded drain");
+ const auto lastMinute=readFile(Internal);
+ resetRam();resetReason=8;wakeCause=3;boot();mounted();
+ const auto wakeExport=sourceText();
+ check(readFile(Previous)==lastMinute && wakeExport.find("timer-exit stage=native-entry status=-4")!=std::string::npos &&
+       wakeExport.find("wake=3")!=std::string::npos,
+       "next button wake exposes the previous minute refusal through the SD trace source");
  resetRam();noFiles();boot();mounted();
  emit("RTE_STAGE us=4 provider wifi password=do-not-log-this");
  now+=2000001;risc_native_diagnostic_drain();

@@ -112,6 +112,9 @@ done:
 #include <RiscTouchPowerV1.h>
 #include <RiscStorageVolumeV1.h>
 #include <RiscRetainedWakeV1.h>
+#ifdef PORTABLE_STAGE_LOGS
+#include <stdio.h>
+#endif
 
 /* This is app policy, not a new Runtime or navigation interface. Every grant
  * remains owned throughout paint, reversible preparation and terminal entry.
@@ -132,10 +135,24 @@ typedef struct {
     uint32_t alarm_duration_ms, alarm_sampled_at;
 #ifdef PORTABLE_DESK_CLOCK_SPARSE_START
     bool timer_only;
+#ifdef PORTABLE_STAGE_LOGS
+    const char *timer_exit_stage;
+    int32_t timer_exit_status;
+#endif
 #endif
     bool record_staged;
     uint8_t staged_value[PORTABLE_DESK_CLOCK_RECORD_BYTES];
 } x4_desk_sleep;
+
+/* Copy only while the operation runs; emit after confirmed restoration and
+ * grant release. Logging must never perform I/O under prepared pad holds. */
+static void desk_exit_stage(x4_desk_sleep *s,const char *stage,int32_t status) {
+#if defined(PORTABLE_DESK_CLOCK_SPARSE_START) && defined(PORTABLE_STAGE_LOGS)
+    s->timer_exit_stage=stage;s->timer_exit_status=status;
+#else
+    (void)s;(void)stage;(void)status;
+#endif
+}
 
 static bool desk_runtime_valid(const risc_runtime_api_v1 *rt) {
     return rt && rt->api_version==RISC_RUNTIME_API_V1 &&
@@ -166,6 +183,9 @@ int portable_desk_clock_boot_read(const risc_runtime_api_v1 *rt,portable_desk_re
 #endif
     const risc_retained_wake_api_v1 *wake=grant.api;
     portable_desk_record record={0};int valid=0;
+#if defined(PORTABLE_DESK_CLOCK_SPARSE_START) && defined(PORTABLE_STAGE_LOGS)
+    int32_t read_status=RISC_RETAINED_WAKE_INVALID;uint32_t boot_cause=UINT32_MAX;
+#endif
     if(desk_wake_valid(wake)) {
         uint8_t bytes[PORTABLE_DESK_CLOCK_RECORD_BYTES]={0};
         uint32_t used=0,cause=UINT32_MAX;
@@ -203,8 +223,19 @@ int portable_desk_clock_boot_read(const risc_runtime_api_v1 *rt,portable_desk_re
 #endif
         valid=rc==RISC_RETAINED_WAKE_OK && cause==RISC_BOOT_DEEP_TIMER &&
             portable_desk_decode(bytes,used,&record);
+#if defined(PORTABLE_DESK_CLOCK_SPARSE_START) && defined(PORTABLE_STAGE_LOGS)
+        read_status=rc;boot_cause=cause;
+#endif
     }
     if(!rt->release(&grant))return -2;
+#if defined(PORTABLE_DESK_CLOCK_SPARSE_START) && defined(PORTABLE_STAGE_LOGS)
+    if(rt->diagnostic) {
+        char line[112];
+        snprintf(line,sizeof(line),"SPARSE_CLOCK wake cause=%lu read=%ld record=%d schema=%u",
+            (unsigned long)boot_cause,(long)read_status,valid,PORTABLE_DESK_CLOCK_RECORD_SCHEMA);
+        (void)rt->diagnostic(line);
+    }
+#endif
     if(valid)*out=record;
     return valid;
 }
@@ -218,6 +249,7 @@ static int desk_cancelled(void *context) {
     if(!s->power->power.read_key(s->power->power.context,&down)) {
         return desk_retain(s);
     }
+    if(down)desk_exit_stage(s,"key-active",1);
     return down?1:0;
 }
 static int desk_resume(void *context) {
@@ -274,7 +306,9 @@ static int desk_alarm_state(x4_desk_sleep *s,int32_t rc) {
     if(got==ALARM_RETAINED || status.error==ALARM_RETAINED)return desk_retain(s);
 #endif
     if(got==ALARM_OUTPUT || status.output_uncertain)return desk_retain(s);
-    if(got!=ALARM_OK || (rc!=ALARM_OK && rc!=ALARM_PENDING))return 0;
+    if(got!=ALARM_OK || (rc!=ALARM_OK && rc!=ALARM_PENDING)) {
+        desk_exit_stage(s,"alarm-state",got!=ALARM_OK?got:rc);return 0;
+    }
     return 1;
 }
 static int desk_alarm_prepare(x4_desk_sleep *s) {
@@ -286,6 +320,7 @@ static int desk_alarm_prepare(x4_desk_sleep *s) {
         if(!s->rt->health(&sampled))return 0;
         decision=(alarm_sleep_v1){.struct_size=sizeof(decision)};
         ready=s->alarms->prepare_sleep(s->alarms->context,&decision);
+        desk_exit_stage(s,"alarm-prepare",ready);
         /* No further alarm-service/writer calls after OK. Only reversible
          * peripheral work and clock/key reads follow on the serialized owner. */
         if(ready==ALARM_OK)break;
@@ -297,7 +332,9 @@ static int desk_alarm_prepare(x4_desk_sleep *s) {
         }
     }
     if(ready!=ALARM_OK)return 0;
-    if(decision.deadline && decision.deadline<=decision.rtc_seconds)return 0;
+    if(decision.deadline && decision.deadline<=decision.rtc_seconds) {
+        desk_exit_stage(s,"alarm-due",0);return 0;
+    }
     /* Timestamp precedes the final reconciliation: any service-call latency
      * is charged to the alarm bound, never added back as a fresh deadline. */
     s->alarm_sampled_at=sampled.uptime_ms;
@@ -312,20 +349,31 @@ static int desk_alarm_prepare(x4_desk_sleep *s) {
     return 1;
 }
 #ifdef PORTABLE_DESK_CLOCK_SPARSE_START
-/* Timer reconstruction never starts optional providers in order to stop them.
- * The already-borrowed alarm service, existing panel and owned key suffice. */
+/* Provider loading can mount SD even on a timer boot. Native deep entry
+ * requires that transport closed, so use the same checked storage transaction
+ * as foreground sleep. Touch, navigation and radios remain unstarted. */
 static int desk_prepare_timer(void *context) {
     x4_desk_sleep *s=context;
     int alarm=desk_alarm_prepare(s);
     if(alarm!=1)return alarm==-2?-2:desk_refuse(s);
     if(desk_cancelled(s))return desk_refuse(s);
     s->dark=true;
-    if(!s->display->set_brightness(s->display->context,0,100))return desk_refuse(s);
+    if(!s->display->set_brightness(s->display->context,0,100)) {
+        desk_exit_stage(s,"frontlight-off",0);return desk_refuse(s);
+    }
     if(desk_cancelled(s))return desk_refuse(s);
     s->panel_touched=true;
     int32_t rc=s->panel->prepare(s->display->context,RISC_DISPLAY_POWER_MAX_BUDGET_MS);
+    desk_exit_stage(s,"panel-prepare",rc);
     if(rc==RISC_DISPLAY_POWER_RETAINED || rc>0 || rc<RISC_DISPLAY_POWER_PLATFORM)return desk_retain(s);
     if(rc!=RISC_DISPLAY_POWER_OK || desk_cancelled(s))return desk_refuse(s);
+    s->storage_touched=true;
+    desk_exit_stage(s,"storage-prepare",0);
+    if(!s->storage->prepare_sleep(s->storage->terminal.power.volume.base.context) ||
+       desk_cancelled(s))return desk_refuse(s);
+    desk_exit_stage(s,"storage-commit",0);
+    if(!s->storage->commit_sleep(s->storage->terminal.power.volume.base.context) ||
+       desk_cancelled(s))return desk_refuse(s);
     return 1;
 }
 #endif
@@ -403,18 +451,23 @@ static int desk_stage_enter(void *context,const portable_desk_record *record,
     if(!duration || duration>RISC_TIMED_SLEEP_MAX_MS || desk_cancelled(s))return s->retained?-2:0;
     uint8_t encoded[PORTABLE_DESK_CLOCK_RECORD_BYTES];
     if(!s->record_staged || !portable_desk_encode(record,encoded,sizeof(encoded)) ||
-       memcmp(encoded,s->staged_value,sizeof(encoded)))return 0;
+       memcmp(encoded,s->staged_value,sizeof(encoded))) {
+        desk_exit_stage(s,"record-changed",0);return 0;
+    }
     risc_runtime_health_v1 now={.struct_size=sizeof(now)};
     if(!s->rt->health(&now))return 0;
     uint32_t elapsed=now.uptime_ms-sampled_at;
     uint32_t alarm_elapsed=now.uptime_ms-s->alarm_sampled_at;
     uint32_t alarm_ms=s->alarm_duration_ms;
-    if(elapsed>=duration || alarm_elapsed>=alarm_ms)return 0;
+    if(elapsed>=duration || alarm_elapsed>=alarm_ms) {
+        desk_exit_stage(s,elapsed>=duration?"minute-expired":"alarm-expired",0);return 0;
+    }
     duration-=elapsed;alarm_ms-=alarm_elapsed;
     if(alarm_ms<duration)duration=alarm_ms;
     /* Entry's owned GPIO3 check consumes established neutrality. Do not call
      * Runtime stage/clear with prepared resources: the storage gate is closed. */
     int32_t rc=s->power->deep_sleep_for(s->power->power.context,duration);
+    desk_exit_stage(s,"native-entry",rc);
     if(rc==RISC_DEEP_SLEEP_RETAINED || rc>=0 || rc<RISC_DEEP_SLEEP_UNSUPPORTED)
         return desk_retain(s);
     return 0; /* Shared caller restores; desk_resume then clears pending bytes. */
@@ -448,12 +501,13 @@ static int desk_timer_sleep(const risc_runtime_api_v1 *rt,const risc_display_out
 #endif
         portable_desk_clock_refused();return 0;
     }
-    const char *names[]={X4_POWER_CAPABILITY,RISC_DISPLAY_OUTPUT_CAPABILITY,RISC_RETAINED_WAKE_CAPABILITY};
-    const uint64_t instances[]={17,3,0};
-    risc_runtime_capability_v1 grants[3]={0};unsigned acquired=0;
+    const char *names[]={X4_POWER_CAPABILITY,RISC_DISPLAY_OUTPUT_CAPABILITY,RISC_RETAINED_WAKE_CAPABILITY,"storage.volume"};
+    const uint64_t instances[]={17,3,0,9};
+    risc_runtime_capability_v1 grants[4]={0};unsigned acquired=0;
     x4_desk_sleep state={.rt=rt,.display=display,.alarms=alarms,.timer_only=true};
+    desk_exit_stage(&state,"provider-contract",0);
     bool ran=false;int result=0;
-    for(;acquired<3;++acquired) {
+    for(;acquired<4;++acquired) {
         grants[acquired].struct_size=sizeof(grants[acquired]);
         /* False can conceal retained failed-start cleanup even if the output
          * is empty. Preserve earlier grants and do no further provider I/O. */
@@ -462,19 +516,30 @@ static int desk_timer_sleep(const risc_runtime_api_v1 *rt,const risc_display_out
     state.power=x4_power_deep(grants[0].api);
     state.panel=risc_display_output_power(grants[1].api);
     state.wake=grants[2].api;
+    state.storage=risc_storage_volume_sleep(grants[3].api);
     if(!state.power || !state.power->power.read_key || !state.panel ||
-       grants[1].api!=display || !desk_wake_valid(state.wake))goto release;
+       grants[1].api!=display || !desk_wake_valid(state.wake) || !state.storage)goto release;
     result=desk_neutral(&state);
+    desk_exit_stage(&state,"key-neutral",result);
     if(result==-2)return -2;
     if(result!=1)goto release;
     const portable_desk_sleep_ops ops={.context=&state,.cancelled=desk_cancelled,
         .stage=desk_stage,.prepare=desk_prepare_timer,.resume=desk_resume,.stage_enter=desk_stage_enter};
+    desk_exit_stage(&state,"clock-cycle",0);
     ran=true;result=portable_desk_clock_run(rt,&ops);
     if(result==-2 || state.retained)return -2;
     if(desk_resume(&state)!=1)return -2;
     result=0;
 release:
     while(acquired)if(!rt->release(&grants[--acquired]))return -2;
+#ifdef PORTABLE_STAGE_LOGS
+    if(rt->diagnostic) {
+        char line[112];
+        snprintf(line,sizeof(line),"SPARSE_CLOCK timer-exit stage=%s status=%ld",
+            state.timer_exit_stage,(long)state.timer_exit_status);
+        (void)rt->diagnostic(line);
+    }
+#endif
     if(!ran)portable_desk_clock_refused();
     return result;
 }
