@@ -7,7 +7,7 @@ is not part of this isolated candidate.
 
 Exact source and predecessor hashes are in `minimal/obd-readiness-inputs.json`.
 The parser/backpressure/channel fixes and hardware checklist are documented in
-[Utilities](https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities/blob/b70252c9755a0dcf2775c61ac5595d8b19e107e5/docs/obd-readiness/AUDIT.md).
+[Utilities](https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities/blob/a9c6dfea6800676bc272c118cab80c6c41e45c9a/docs/obd-readiness/AUDIT.md).
 The indication-mode correction is documented in
 [Drivers](https://github.com/michaelrolphone-cmyk/RiscRTE-Drivers/blob/3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c/Drivers/ble_serial/AUDIT-20261012.md).
 
