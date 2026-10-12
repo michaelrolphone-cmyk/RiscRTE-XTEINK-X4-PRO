@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compose the Timecard 0.2.17 lifecycle correction over the qualified OBD X4 union.
 
-Preserve the old immutable Timecard image and all unrelated package/native bytes.
+Preserve the old selected Timecard image and all unrelated package/native bytes.
 Only Timecard receives a new immutable SD selection; its authority is unchanged.
 """
 import argparse,copy,hashlib,json,tempfile,zipfile
@@ -23,7 +23,7 @@ GRANT={'capability':'ui.text-input','api':1,'instance_id':0}
 def payload(old,old_sd,components,revision):
  require(set(components)=={'timecard.elf','timecard.json'},'Unexpected component members')
  expected=json.loads(old['timecard.json']);require(expected['version']=='0.2.16','Wrong Timecard predecessor')
- require(old['timecard.json']==old_sd['Apps/timecard/image-'+PRIOR['x4']+'/manifest.json'],'Mismatched selected Timecard manifests')
+ require(old['timecard.json']==old_sd['Apps/timecard/manifest.json'],'Mismatched selected Timecard manifests')
  require(expected['requires'].count({'capability':'ui.text-input','api':1})==1,'Wrong inherited shared-input authority');expected['version']=VERSION
  require(json.loads(components['timecard.json'])==expected,'Timecard authority exceeds additive delta')
  new=dict(old);sd=dict(old_sd);digest=sha(components['timecard.elf']);directory='Apps/timecard/image-'+digest
@@ -31,7 +31,7 @@ def payload(old,old_sd,components,revision):
  new['timecard.json']=components['timecard.json'];sd[directory+'/timecard.elf']=components['timecard.elf'];sd[directory+'/manifest.json']=components['timecard.json']
  boot=json.loads(old['boot.json']);original=copy.deepcopy(boot)
  rows=[r for r in boot['app_capabilities'] if r['manifest']=='timecard.json'];require(len(rows)==1 and rows[0]['grants'].count(GRANT)==1,'Unexpected Timecard authority')
- prior_image=copy.deepcopy(rows[0]['image_source']);require(prior_image=={'path':'Apps/timecard/image-'+PRIOR['x4']+'/timecard.elf','volume_instance':9},'Wrong immutable Timecard source')
+ prior_image=copy.deepcopy(rows[0]['image_source']);require(prior_image=={'path':'Apps/timecard/timecard.elf','volume_instance':9},'Wrong immutable Timecard source')
  rows[0]['image_source']['path']=directory+'/timecard.elf';new['boot.json']=encoded(boot)
  rows[0]['image_source']=prior_image;require(boot==original,'Unrelated boot authority changed')
  cohort=json.loads(old['cohort.json']);require(cohort['version']=='0.1.102' and cohort['source_revision']==BASE,'Wrong baseline cohort');cohort['source_revision']=revision;new['cohort.json']=encoded(cohort)
@@ -46,7 +46,7 @@ def compose(a):
  old,old_sd,parts=[read_tree(a.baseline/n) for n in ['store','SD','components']]
  require(streamed_image_digest(parts,base['components'])==BASE_IMAGE_SHA,'Wrong baseline sparse image')
  require(inventory(old)==base['store'] and inventory(old_sd)==base['sd'] and len(old)==106 and len(old_sd)==SELECTION['baseline']['sd_file_count'],'Wrong baseline inventory')
- require(sha(old_sd['Apps/timecard/image-'+PRIOR['x4']+'/timecard.elf'])==PRIOR['x4'],'Wrong selected Timecard predecessor')
+ require(sha(old_sd['Apps/timecard/timecard.elf'])==PRIOR['x4'],'Wrong selected Timecard predecessor')
  require(set(parts)==set(base['components']),'Wrong component inventory')
  for n,row in base['components'].items():require(len(parts[n])==row['bytes'] and sha(parts[n])==row['sha256'],'Component custody differs: '+n)
  record=json.loads((a.timecard_build/'timecard-build-record.json').read_bytes());require(record['device']=='x4' and record['version']==VERSION and record['sources']['system-apps']==SYSTEM and record['sources']['runtime']==base['runtime_commit'] and record['product_recipe']==revision,'Wrong Timecard source/profile')
@@ -63,7 +63,7 @@ def compose(a):
  before={r['manifest']:r for r in base['selected_sd_images']};after={r['manifest']:r for r in selected};require(len(selected)==48 and set(before)==set(after) and {n for n in before if before[n]!=after[n]}=={'timecard.json'},'Unrelated selected image changed');require(after['timecard.json']['sha256']==record['sha256'],'Timecard selection differs')
  overlay_paths=set(base['sd_overlay']['files'])|SD_CHANGED|additions;overlay={n:sd[n] for n in sorted(overlay_paths)};parts.update({'bootfs.bin':image,'bank_state.bin':state});full_sha=streamed_image_digest(parts,base['components'])
  receipt=copy.deepcopy(base)
- receipt.update(schema='x4.timecard-input-lifecycle-composition',product_source=revision,product_tree=git(ROOT,'rev-parse','HEAD^{tree}'),product_base=BASE,baseline_full_image_sha256=BASE_IMAGE_SHA,baseline_receipt_sha256=sha(raw),recipe_sha256=sha(Path(__file__).read_bytes()),store=inventory(new),sd=inventory(sd),selected_sd_images=selected,changed_store_paths=sorted(CHANGED),changed_sd_paths=sorted(SD_CHANGED),added_sd_files=sorted(additions),original_sd_files_preserved=len(old_sd)-len(SD_CHANGED),old_immutable_timecard_image_preserved=True,boot_authority_unchanged=True,boot_authority_delta=[],boot_image_selection_changed=['timecard.json'],timecard_build=record,components={n:dict(bytes=len(v),sha256=sha(v),offset=base['components'][n]['offset']) for n,v in parts.items()},packing_sha256=sha(encoded(packing)),full_image_bytes=0x1000000,full_image_sha256=full_sha,current_component_versions=dict(base['current_component_versions'],timecard=VERSION),native_rebuilt=False,native_unchanged=True,lists_resident_owner_unchanged=True,shared_text_hosts_unchanged=True,scene_host_unchanged=True,lifecycle_successor=True,independent_full_image_verified=True,hardware_tested=False,target_instructions_executed=False,full_image_materialized=False,delivered=False,delivery_hold_until_utc='2026-10-12T23:30:00Z')
+ receipt.update(schema='x4.timecard-input-lifecycle-composition',product_source=revision,product_tree=git(ROOT,'rev-parse','HEAD^{tree}'),product_base=BASE,baseline_full_image_sha256=BASE_IMAGE_SHA,baseline_receipt_sha256=sha(raw),recipe_sha256=sha(Path(__file__).read_bytes()),store=inventory(new),sd=inventory(sd),selected_sd_images=selected,changed_store_paths=sorted(CHANGED),changed_sd_paths=sorted(SD_CHANGED),added_sd_files=sorted(additions),original_sd_files_preserved=len(old_sd)-len(SD_CHANGED),old_timecard_image_preserved=True,boot_authority_unchanged=True,boot_authority_delta=[],boot_image_selection_changed=['timecard.json'],timecard_build=record,components={n:dict(bytes=len(v),sha256=sha(v),offset=base['components'][n]['offset']) for n,v in parts.items()},packing_sha256=sha(encoded(packing)),full_image_bytes=0x1000000,full_image_sha256=full_sha,current_component_versions=dict(base['current_component_versions'],timecard=VERSION),native_rebuilt=False,native_unchanged=True,lists_resident_owner_unchanged=True,shared_text_hosts_unchanged=True,scene_host_unchanged=True,lifecycle_successor=True,independent_full_image_verified=True,hardware_tested=False,target_instructions_executed=False,full_image_materialized=False,delivered=False,delivery_hold_until_utc='2026-10-12T23:30:00Z')
  receipt['component_sources']['timecard']=dict(repository='michaelrolphone-cmyk/RiscRTE-Productivity',commit=record['sources']['productivity'],version=VERSION,system_commit=SYSTEM,build_record_sha256=sha((a.timecard_build/'timecard-build-record.json').read_bytes()))
  a.output.mkdir(parents=True)
  for n,items in [('store',new),('SD',sd),('components',parts)]:write_files(a.output/n,items)

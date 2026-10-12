@@ -6,7 +6,7 @@ from build_timecard_policy import SELECTION
 p=argparse.ArgumentParser(description=__doc__)
 for n in ('runtime','tools','delivery','output'):p.add_argument('--'+n,type=lambda v:Path(v).resolve(),required=True)
 a=p.parse_args();r=json.loads((a.delivery/'receipts/evening-composition.json').read_text())
-assert r['schema']=='x4.timecard-input-lifecycle-composition' and r['native_unchanged'] and r['old_immutable_timecard_image_preserved']
+assert r['schema']=='x4.timecard-input-lifecycle-composition' and r['native_unchanged'] and r['old_timecard_image_preserved']
 assert len(r['store'])==106 and len(r['sd'])==SELECTION['baseline']['sd_file_count']+2 and r['changed_sd_paths']==[] and r['original_sd_files_preserved']==SELECTION['baseline']['sd_file_count']
 assert len(r['added_sd_files'])==2 and r['boot_image_selection_changed']==['timecard.json']
 row=next(v for v in r['selected_sd_images'] if v['manifest']=='timecard.json');assert row['sha256']==r['timecard_build']['sha256'] and row['path']=='Apps/timecard/image-'+row['sha256']+'/timecard.elf'

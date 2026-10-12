@@ -6,10 +6,10 @@ import build_timecard_policy as b
 class RecipeTest(unittest.TestCase):
  def prior(self):
   manifest=a.encoded({'version':'0.2.16','requires':[{'capability':'ui.text-input','api':1},{'capability':'radio.iq','api':1}]})
-  directory='Apps/timecard/image-'+a.PRIOR['x4']
+  directory='Apps/timecard'
   return {'timecard.json':manifest,'default.elf':b'preserved-home','ui-text/driver.elf':b'preserved-text','ui-scene/driver.elf':b'preserved-scene',
    'boot.json':a.encoded({'app_capabilities':[{'manifest':'timecard.json','grants':[a.GRANT],'image_source':{'path':directory+'/timecard.elf','volume_instance':9}},{'manifest':'lists.json','grants':[a.GRANT]}],'drivers':[{'manifest':'ui-text/manifest.json','image_source':{'path':'frozen-host'}}]}),
-   'cohort.json':a.encoded({'version':'0.1.102','source_revision':a.BASE})}, {directory+'/timecard.elf':b'old',directory+'/manifest.json':manifest,'Apps/timecard/timecard.elf':b'older-flat','Apps/timecard/manifest.json':b'older-flat-manifest','Apps/lists/lists.elf':b'older-lists','frozen-host':b'preserved-host'}
+   'cohort.json':a.encoded({'version':'0.1.102','source_revision':a.BASE})}, {directory+'/timecard.elf':b'old',directory+'/manifest.json':manifest,'Apps/lists/lists.elf':b'older-lists','frozen-host':b'preserved-host'}
  def component(self,old):return {'timecard.elf':b'new','timecard.json':a.encoded(dict(json.loads(old['timecard.json']),version=b.VERSION))}
  def test_exact_delta_and_preserved_bytes(self):
   old,sd=self.prior();before=copy.deepcopy((old,sd));new,new_sd,added=a.payload(old,sd,self.component(old),'new')
@@ -23,8 +23,8 @@ class RecipeTest(unittest.TestCase):
  def test_excess_authority_rejected(self):
   old,sd=self.prior();c=self.component(old);m=json.loads(c['timecard.json']);m['requires'].append({'capability':'net.http','api':1});c['timecard.json']=a.encoded(m)
   with self.assertRaises(ValueError):a.payload(old,sd,c,'new')
- def test_flat_image_not_selected(self):
-  old,sd=self.prior();boot=json.loads(old['boot.json']);boot['app_capabilities'][0]['image_source']['path']='Apps/timecard/timecard.elf';old['boot.json']=a.encoded(boot)
+ def test_other_image_not_selected(self):
+  old,sd=self.prior();boot=json.loads(old['boot.json']);boot['app_capabilities'][0]['image_source']['path']='Apps/timecard/wrong.elf';old['boot.json']=a.encoded(boot)
   with self.assertRaises(ValueError):a.payload(old,sd,self.component(old),'new')
  def test_immutable_collision_rejected(self):
   old,sd=self.prior();sd['Apps/timecard/image-'+a.sha(b'new')+'/timecard.elf']=b'collision'
