@@ -1,0 +1,42 @@
+{
+  "schema": "x4.hollow-component-qualification",
+  "schema_version": 1,
+  "utilities_commit": "5c91c3517aa9f992e24fc453855701ec5a992355",
+  "runtime_commit": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+  "system_commit": "49752a02746b38afbcc403bb92189be5a8356c9d",
+  "version": "1.2.2",
+  "elf_sha256": "465d71581bb7655b9e2ec5de5c94b09a8fb3375f916c148497b15b431bdbfdbb",
+  "reproduces_previously_qualified_target": true,
+  "old_app_owned_peak_bytes": 4361179,
+  "new_app_owned_peak_bytes": 3842764,
+  "saved_bytes": 518415,
+  "regression_budget_bytes": 4194304,
+  "budget_is_measured_device_memory": false,
+  "modes": [
+    "normal",
+    "ASan+UBSan"
+  ],
+  "pixel_parity_cases_per_mode": 60,
+  "canvas_app_entrypoint_cases_per_mode": {
+    "normal": 10,
+    "asan-ubsan": 10
+  },
+  "required_failure_cleanup": true,
+  "optional_staging_fallback": true,
+  "retained_invocation": true,
+  "all_chapters_and_cameras": true,
+  "original_entrypoint_pixels_identical": true,
+  "all_features_preserved": true,
+  "hardware_tested": false,
+  "logs": {
+    "canvas-tests-normal.log": "48ea9f8f2ebc7b45093d04fdb2e285bff7b900cd70cb18203e9e5c2fb272458d",
+    "memory-tests-normal.log": "a525116ddfe881d3614096d1d9aefcdba6825f2b2a5f7ed7d508d8476d625dc6",
+    "target-build.log": "20598bf62bf2bebef322d1ed6c1d6d6172432df758ffd025b2db39f7618c0f92",
+    "memory-tests.log": "a525116ddfe881d3614096d1d9aefcdba6825f2b2a5f7ed7d508d8476d625dc6",
+    "canvas-tests.log": "48ea9f8f2ebc7b45093d04fdb2e285bff7b900cd70cb18203e9e5c2fb272458d"
+  },
+  "bounded_actual_entrypoint_passes_per_mode": {
+    "normal": 4,
+    "asan-ubsan": 4
+  }
+}

@@ -1,0 +1,767 @@
+{
+  "schema": "x4.memory-product-preservation-audit",
+  "schema_version": 1,
+  "status": "pass",
+  "sources": {
+    "product": {
+      "commit": "be68e3c658c43e7c1611fca2750289396876858a",
+      "tree": "797e63870bb67bb80035ee53c4e2fa4beecd6e12",
+      "clean": false
+    },
+    "runtime": {
+      "commit": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+      "tree": "f5b403c185b18d2ac89f2e0d2d8783b9369a44b0",
+      "clean": true
+    },
+    "utilities": {
+      "commit": "5c91c3517aa9f992e24fc453855701ec5a992355",
+      "tree": "32b7f9184ffc16c42b8095793ef00804fbb7d35c",
+      "clean": true
+    },
+    "system": {
+      "commit": "49752a02746b38afbcc403bb92189be5a8356c9d",
+      "tree": "be22b9bd3aed153d94473c1516c310c2282e57fa",
+      "clean": true
+    },
+    "native_platform": {
+      "commit": "922ac6b490fb6d3b22f642106bb1edd522c6ff4b",
+      "tree": "e091e64fb29a215b8abb35ab398e51e132736586",
+      "clean": true
+    }
+  },
+  "concurrent_product_worktree_changes": [
+    "M minimal/scripts/compose_memory_099.py",
+    "?? minimal/docs/MEMORY_099.md",
+    "?? minimal/docs/evidence/memory-099/hollow-component-qualification.json",
+    "?? minimal/docs/evidence/memory-099/preflight-composition-tests.json",
+    "?? minimal/docs/evidence/memory-099/preflight-packing-replay.json",
+    "?? minimal/scripts/qualify_memory_099.py",
+    "?? minimal/scripts/test_hollow_native_catalog.py",
+    "?? minimal/test/memory_099_composition_test.py"
+  ],
+  "audit_script_sha256": "9273fc47b4459d676a89a3b1e9244edcb96e5cf05900822771ba0b54a5d5bf1c",
+  "candidate_full_sha256": "ea1eaa0c8758396a537a1da4dedb375d46afb1e3c9de7df4645c3de5a01dc5f0",
+  "baseline_full_sha256": "4f7be9d66fd9461c89f8df7d48b07bdd4da53870b8276d6ddf08ce9da9fd1797",
+  "recipe_sha256": "16edaea6b6d154e731999d2e030bf3de3a78b6ce9487e7b54f98f5ba5220b9a5",
+  "lock_sha256": "cb4c1da0ea794728767ff60a3049e3a5f85ef30e71be91f162786bdff875af08",
+  "candidate_receipt_sha256": "71b1fe33d17ad1fe33819e667c6095f28a9d0dcd262754b9747e4fa3adef9f59",
+  "checks": [
+    {
+      "name": "frozen_098_identity",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "candidate_full_identity",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "source_lock",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "product_source",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "recipe_and_lock_identity",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "store_exact_change_set",
+      "pass_": true,
+      "detail": {
+        "paths": [
+          "cohort.json",
+          "hollow_trail.json"
+        ],
+        "preserved_files": 104
+      }
+    },
+    {
+      "name": "store_receipts",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "SD_exact_change_set",
+      "pass_": true,
+      "detail": {
+        "paths": [
+          "Apps/hollow_trail/hollow_trail.elf",
+          "Apps/hollow_trail/manifest.json"
+        ],
+        "preserved_files": 83
+      }
+    },
+    {
+      "name": "SD_receipts",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "component_change_set",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_appdata.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_bank_state.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_bootfs.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_bootloader.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_firmware.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_otadata.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "x4-obd-098-final-delivery_partitions.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_appdata.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_bank_state.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_bootfs.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_bootloader.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_firmware.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_otadata.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "combined-preflight_partitions.bin",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "all_unrelated_flash_bytes",
+      "pass_": true,
+      "detail": {
+        "bytes": 8970240,
+        "ranges": [
+          [
+            0,
+            65536
+          ],
+          [
+            2555904,
+            3080192
+          ],
+          [
+            8388608,
+            16719872
+          ],
+          [
+            16728064,
+            16777216
+          ]
+        ]
+      }
+    },
+    {
+      "name": "firmware_padding",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "independent_flash_decode",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "independent_bank_state",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "physical_boot_packing",
+      "pass_": true,
+      "detail": {
+        "changed_pages": [
+          375,
+          376,
+          492
+        ],
+        "changed_files": [
+          "cohort.json",
+          "cohort.json",
+          "hollow_trail.json"
+        ]
+      }
+    },
+    {
+      "name": "packing_receipt",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "independent_packing_replay",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "boot_authority_installation",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "Home_version_bytes_authority",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "Files97_version_bytes_authority",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "OBD98_version_bytes_authority",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "Home_Files_receipt_and_ELFs",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "OBD_scene_serial_provenance",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_ble_scanner",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_points_in_time",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_calculator",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_stopwatch",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_countdown",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_timecard",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_ble_touchpad",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_ble_buttons",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_waterfall",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_contexts",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_lists",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_ebook-reader",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_daily-digest",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "096_lifecycle_receipt",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "Hollow_manifest_only_version",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "Hollow_locked_artifacts",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "cohort_only_intended_identity_fields",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-i2c",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-uc8279-fast",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-gt911",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-frontlight",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-power-buttons",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-battery",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-rtc",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_x4pro-power",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_twatch-ble",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_ble-sensors",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_wifi",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_s3-radio-iq-v1",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_contexts-service",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_ble-hid",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_alarm-service",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_software-update-firmware",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_software-update-apps",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_telemetry-battery",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_ble-telemetry",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_telemetry-broadcast",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_usb-device-msc-esp32s3",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_scene-host",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_scene-profile-portrait-monochrome",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_text-input-host",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_civil-clock-x4",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_net-http-client",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_installed-apps",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_network-tcp-listener",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_crypto-entropy",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_ble-session-setup",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "provider_selected_fallback_ble-serial",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_ble_scanner",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_points_in_time",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_calculator",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_stopwatch",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_countdown",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_timecard",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_ble_touchpad",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_ble_buttons",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_waterfall",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_contexts",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_gameboy",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_lists",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_model_viewer",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_hollow_trail",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_ebook-reader",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_daily-digest",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "app_selected_manifest_obd-dashboard",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "selected_images",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "cumulative_zip",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "delivered_096_plus_cumulative_zip_equals_099_SD",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "no_new_keyboard",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "native_candidate_lock",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "native_custody_compiled_startup_options",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "native_ELF_firmware_identity",
+      "pass_": true,
+      "detail": null
+    },
+    {
+      "name": "runtime_forward_port_only_TLS_no_ABI",
+      "pass_": true,
+      "detail": [
+        "src/main.cpp",
+        "src/ports/esp32s3/NativeHttp.h",
+        "src/ports/esp32s3/NativeTlsMemory.h"
+      ]
+    },
+    {
+      "name": "hardware_limits_disclosed",
+      "pass_": true,
+      "detail": null
+    }
+  ],
+  "lifecycle_096": [
+    {
+      "id": "ble_scanner",
+      "version": "0.2.24",
+      "elf_sha256": "53eda9257bc9a4bb9f5995b7cbfa4a1bb207c6c59c8541e03cf3b4448f1aea5f",
+      "manifest_sha256": "f5a3c081d1ce39feffb09a332187799bb255bdc60000ffd837724c9268ee8e1e"
+    },
+    {
+      "id": "points_in_time",
+      "version": "0.6.17",
+      "elf_sha256": "0ea368123a6f07bc251e233a15f116831fd2cf60e1144e9ae0514bb231dc0501",
+      "manifest_sha256": "ead276f1b21deba612417f9748aa575bd9ca890949bfb6896ff39b2bd74b9c3f"
+    },
+    {
+      "id": "calculator",
+      "version": "0.1.25",
+      "elf_sha256": "b18e7746b475ef4fb965b4aeb84ee1d56d52ccf608f7c708adf02a2566fbd2d3",
+      "manifest_sha256": "77d07d60c4c2aa2295ffebdb72406cab8080709350a892c20079f2f497088038"
+    },
+    {
+      "id": "stopwatch",
+      "version": "0.1.25",
+      "elf_sha256": "38815777c30764737436e806922f80632353c58c4248ea8dfc59b3dc4c4b75aa",
+      "manifest_sha256": "8122ab1ccd38ed597a593d8d5070cbb9484524aee6237bd0e73442cbd121316a"
+    },
+    {
+      "id": "countdown",
+      "version": "0.1.24",
+      "elf_sha256": "3bcc882c7e85c5c45dc54f45fb02fe4f51d972d759e2c13b83c2d07ad58f7e84",
+      "manifest_sha256": "dbb4cde4fa66e9e8ecc54eda9fd17ea8d5cb2af8f594a9781a7ce66705ca02a1"
+    },
+    {
+      "id": "timecard",
+      "version": "0.2.15",
+      "elf_sha256": "7b74d87f3a568b4b9d968c1695870ab79a06cac2f5f91099885291b40b69cf71",
+      "manifest_sha256": "b70916dab9885ee553d8ed4e2d44717c1084cfdf56e9fec3e8d4694011c58974"
+    },
+    {
+      "id": "ble_touchpad",
+      "version": "0.1.23",
+      "elf_sha256": "4138f2364aca210d02a81dc7427c1665fa1ba89af1c76650b39e851b704550ec",
+      "manifest_sha256": "b8ac0a6778bcd14dba159eeb11ab91f666b5503d8ae15c6317ff908185351ee3"
+    },
+    {
+      "id": "ble_buttons",
+      "version": "0.1.25",
+      "elf_sha256": "91497b0f2dd97e307258dbd50128a7f7e94d444c3711f7db0b9fe82e024289c4",
+      "manifest_sha256": "de31438b351803a958e2ef3634720e3aa588696c2fd5bb9a23ce89635bb3e635"
+    },
+    {
+      "id": "waterfall",
+      "version": "0.3.2",
+      "elf_sha256": "6bc23b727a855e93d7b742bf3eece8e52e0726653a7bb56018ebf00025161ae6",
+      "manifest_sha256": "36c418e524ca6a86ccf967831f6fcdce869f51f349888e4c86b0ce42174c770f"
+    },
+    {
+      "id": "contexts",
+      "version": "0.4.2",
+      "elf_sha256": "f2fd480a5d3135cf01decbaec4b7288285cee5677e29251d12badcb10928babb",
+      "manifest_sha256": "5e42291c956444c131386e4d311a06255b07874fc2a19217f706ecef942ebb03"
+    },
+    {
+      "id": "lists",
+      "version": "0.1.1",
+      "elf_sha256": "716458214fe30123c186d1972a6950332820f5922397a7a506b3802edffbb582",
+      "manifest_sha256": "4397b9b06c8b7702e41a5955576c36d403f9add66d520c90f31425ec2c635c48"
+    },
+    {
+      "id": "ebook-reader",
+      "version": "0.1.8",
+      "elf_sha256": "455190996d053b15b79cbad3637386222f3a5286f76016c128f48594801f8bab",
+      "manifest_sha256": "863907e73ccd199f0cbd6fb8016418d2e4b2102f1f6d0b3baa8175b23601fc55"
+    },
+    {
+      "id": "daily-digest",
+      "version": "0.1.0",
+      "elf_sha256": "72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa",
+      "manifest_sha256": "1f8827a772257e0136ead7de69971867be557e60483f1ae7d530c4e4f31edd21"
+    }
+  ],
+  "runtime_source_changes": [
+    ".github/workflows/https-psram-regressions.yml",
+    ".github/workflows/integration.yml",
+    "README.md",
+    "docs/HTTPS_PSRAM_MEMORY.md",
+    "platformio.ini",
+    "src/main.cpp",
+    "src/ports/esp32s3/NativeHttp.h",
+    "src/ports/esp32s3/NativeTlsMemory.h",
+    "test/native_http_shim/README.md",
+    "test/native_http_shim/esp_heap_caps.h",
+    "test/native_http_shim/esp_tls.h",
+    "test/native_http_shim/mbedtls/asn1.h",
+    "test/native_http_shim/mbedtls/bignum.h",
+    "test/native_http_shim/mbedtls/cipher.h",
+    "test/native_http_shim/mbedtls/dhm.h",
+    "test/native_http_shim/mbedtls/ecp.h",
+    "test/native_http_shim/mbedtls/md.h",
+    "test/native_http_shim/mbedtls/pem.h",
+    "test/native_http_shim/mbedtls/pk.h",
+    "test/native_http_shim/mbedtls/platform.h",
+    "test/native_http_shim/mbedtls/ssl.h",
+    "test/native_http_shim/mbedtls/x509_crt.h",
+    "test/native_http_test.cpp",
+    "test/native_tls_memory_other.cpp",
+    "test/native_tls_memory_test.cpp",
+    "test/run_native_tls_memory_test.sh",
+    "test/test_native_startup.py"
+  ],
+  "findings": [],
+  "limits": [
+    "Read-only artifact/source/host audit; no device access, firmware flash or real TLS handshake.",
+    "Recipe replay reproduces preflight source identity; final published product revision requires recomposition and a fresh audit.",
+    "The cumulative overlay presumes the existing delivered .96 SD baseline, including its lifecycle manifests."
+  ]
+}

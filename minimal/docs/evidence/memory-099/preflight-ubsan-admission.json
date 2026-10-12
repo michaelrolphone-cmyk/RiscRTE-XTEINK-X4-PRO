@@ -1,0 +1,26 @@
+{
+  "schema": "x4.memory-preflight-admission",
+  "schema_version": 1,
+  "preflight_product_commit": "be68e3c658c43e7c1611fca2750289396876858a",
+  "full_image_sha256": "ea1eaa0c8758396a537a1da4dedb375d46afb1e3c9de7df4645c3de5a01dc5f0",
+  "runtime_commit": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+  "mode": "UBSan",
+  "admission": {
+    "prepared": true,
+    "cohort_validated": true,
+    "error": "",
+    "hardware_calls": 0,
+    "storage_calls": 0,
+    "elf_count": 43,
+    "cooperative_yields": 173
+  },
+  "rejected_namespace_changes": [
+    "range-moved",
+    "range-removed",
+    "cache-owner-moved",
+    "settings-disabled"
+  ],
+  "native_usb_phy": true,
+  "native_elf_sha256": "f6cadeca79d04ebf9c26505358f7a5105a408a6e9f88359be5f9d9cab6b810d4",
+  "hardware_tested": false
+}

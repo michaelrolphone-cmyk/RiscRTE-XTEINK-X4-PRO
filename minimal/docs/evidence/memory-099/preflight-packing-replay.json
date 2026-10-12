@@ -1,0 +1,265 @@
+{
+  "passed": true,
+  "full_image_sha256": "ea1eaa0c8758396a537a1da4dedb375d46afb1e3c9de7df4645c3de5a01dc5f0",
+  "bootfs_sha256": "a5b7a7849b74bf24a39fa60dba2c584abea2f7a002974ec8363f6eeb110baee6",
+  "metadata_paths": [
+    "boot.json",
+    "board.json",
+    "board/manifest.json",
+    "i2c/manifest.json",
+    "panel/manifest.json",
+    "touch/manifest.json",
+    "light/manifest.json",
+    "buttons/manifest.json",
+    "battery/manifest.json",
+    "rtc/manifest.json",
+    "sd/manifest.json",
+    "power/manifest.json",
+    "ble/manifest.json",
+    "sensors/manifest.json",
+    "wifi/manifest.json",
+    "iq/manifest.json",
+    "contexts/manifest.json",
+    "hid/manifest.json",
+    "alarm/manifest.json",
+    "upd-fw/manifest.json",
+    "upd-app/manifest.json",
+    "battery-telem/manifest.json",
+    "ble-telem/manifest.json",
+    "broadcast/manifest.json",
+    "usb-msc/manifest.json",
+    "ui-scene/manifest.json",
+    "ui-profile/manifest.json",
+    "ui-text/manifest.json",
+    "civil-clock-x4/manifest.json",
+    "net-http-client/manifest.json",
+    "installed-apps/manifest.json",
+    "sharing-tcp/manifest.json",
+    "sharing-entropy/manifest.json",
+    "sharing-ble/manifest.json",
+    "ble-serial/manifest.json",
+    "default.json",
+    "cohort.json",
+    "springboard.json",
+    "file_browser.json",
+    "ble_scanner.json",
+    "points_in_time.json",
+    "settings.json",
+    "calculator.json",
+    "stopwatch.json",
+    "countdown.json",
+    "timecard.json",
+    "battery.json",
+    "alarms.json",
+    "wifi_settings.json",
+    "ble_touchpad.json",
+    "ble_buttons.json",
+    "waterfall.json",
+    "ota_update.json",
+    "app_store.json",
+    "contexts.json",
+    "usb_sd_transfer.json",
+    "gameboy.json",
+    "lists.json",
+    "model_viewer.json",
+    "hollow_trail.json",
+    "ebook_reader.json",
+    "daily_digest.json",
+    "obd_dashboard.json"
+  ],
+  "metadata_count": 63,
+  "native_max_files": 4,
+  "plans": {
+    "metadata": {
+      "file_opens": 63,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          200,
+          37745
+        ],
+        "read": [
+          420,
+          107520
+        ],
+        "close": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "68a62fe6c10191b5319cb955a0430d409fb0290b8ed73524fb41965e34ee0d06"
+    },
+    "healthy-sd": {
+      "file_opens": 66,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          212,
+          39989
+        ],
+        "read": [
+          3457,
+          884992
+        ],
+        "close": [
+          0,
+          0
+        ],
+        "fstat": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "c9743d89bf1c4e3475349af6aab437091cd8ec527afe5ad8494aaf7043f38912"
+    },
+    "cold-sd": {
+      "file_opens": 66,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          1709,
+          376232
+        ],
+        "read": [
+          3457,
+          884992
+        ],
+        "close": [
+          0,
+          0
+        ],
+        "fstat": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "e3c77e09ff4e2dc91157cf05cd49c314dec8c3b0c5242440298dabc15ed29966"
+    },
+    "fallback": {
+      "file_opens": 83,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          326,
+          62342
+        ],
+        "read": [
+          5332,
+          1364992
+        ],
+        "close": [
+          0,
+          0
+        ],
+        "fstat": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "c6598a121dcaeb77735bb1016f2c67dcb11dd5d3bfe1051e084c7ce5e5e2d214"
+    },
+    "timer-fallback": {
+      "file_opens": 69,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          231,
+          43611
+        ],
+        "read": [
+          3887,
+          995072
+        ],
+        "close": [
+          0,
+          0
+        ],
+        "fstat": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "421b16f9a875b85ad5cc4148b7262527f88a712462c0cf6e10972af3d3823134"
+    },
+    "all-files": {
+      "file_opens": 106,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          488,
+          95120
+        ],
+        "read": [
+          19546,
+          5003776
+        ],
+        "close": [
+          0,
+          0
+        ],
+        "fstat": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "c30cb1594da0461a99c479bd3d2c4854d70369ade1e19d447115e69a9e46410e"
+    },
+    "random-all-files": {
+      "file_opens": 106,
+      "totals": {
+        "mount": [
+          3888,
+          336960
+        ],
+        "open": [
+          78588,
+          17638875
+        ],
+        "fstat": [
+          0,
+          0
+        ],
+        "read": [
+          19546,
+          5003776
+        ],
+        "close": [
+          0,
+          0
+        ]
+      },
+      "normal_matches_sanitized": true,
+      "plan_sha256": "dcef543c38e78e3dfda216f99b4c41303dfedd623c76c89223dbb908aed3914a"
+    }
+  },
+  "physical_timing_measured": false,
+  "write_and_erase_calls": 0,
+  "profile_source_sha256": "e6b16da7ac1fbe467ca53b38f699692b78174fe052235b3f20d86aec88b21af1",
+  "sanitizer_note": "ASan + UBSan except alignment, excluded for the upstream packed SPIFFS layout.",
+  "profile_sha256": "eb8412e647d0d4365c3c7ba85887e17e6e0a7c83f46ee2e898e880dbaaa60461",
+  "sanitized_profile_sha256": "3b76f0f5cc2b411e52c7d36a356f5b590993cd490caed6efaaee48ec762642d2"
+}

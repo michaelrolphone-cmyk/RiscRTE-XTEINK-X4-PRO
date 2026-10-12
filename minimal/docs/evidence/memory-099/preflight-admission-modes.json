@@ -1,0 +1,44 @@
+{
+  "schema": "x4.memory-preflight-modes",
+  "schema_version": 1,
+  "product_commit": "be68e3c658c43e7c1611fca2750289396876858a",
+  "runtime_commit": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+  "image_sha256": "ea1eaa0c8758396a537a1da4dedb375d46afb1e3c9de7df4645c3de5a01dc5f0",
+  "modes": {
+    "normal": {
+      "admission": {
+        "prepared": true,
+        "cohort_validated": true,
+        "error": "",
+        "hardware_calls": 0,
+        "storage_calls": 0,
+        "elf_count": 43,
+        "cooperative_yields": 173
+      },
+      "selected_sd_images": 48,
+      "receipt_sha256": "ebf78954c1c7332268d1d68f9f1e26c01e0e7df122c7e5d3a9f8cb4189e5d92b",
+      "catalog_logs": {
+        "obd": "88ce137e4bfb27e49c9339fc1cd73cef79d8067da1b2369dcd3e114dba97deb4",
+        "hollow": "879d128490edbad9e3851d01314f82811234045f4d4c9de18d7f4e975f3db3e7"
+      }
+    },
+    "asan-ubsan": {
+      "admission": {
+        "prepared": true,
+        "cohort_validated": true,
+        "error": "",
+        "hardware_calls": 0,
+        "storage_calls": 0,
+        "elf_count": 43,
+        "cooperative_yields": 173
+      },
+      "selected_sd_images": 48,
+      "receipt_sha256": "06cbdd04d2acd935acb9d721abe35cdbef29864abf20c50dc781067ef3b27e8b",
+      "catalog_logs": {
+        "obd": "88ce137e4bfb27e49c9339fc1cd73cef79d8067da1b2369dcd3e114dba97deb4",
+        "hollow": "879d128490edbad9e3851d01314f82811234045f4d4c9de18d7f4e975f3db3e7"
+      }
+    }
+  },
+  "physical_hardware_tested": false
+}
