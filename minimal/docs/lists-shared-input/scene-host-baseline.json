@@ -1,0 +1,54 @@
+{
+  "schema": "lists.scene-host.baseline.v1",
+  "device": "x4",
+  "manifest": {
+    "architecture": "xtensa-esp32s3",
+    "driver_abi": 2,
+    "file_name": "driver.elf",
+    "id": "scene-host",
+    "provides": [
+      {
+        "api": 1,
+        "capability": "ui.scene"
+      }
+    ],
+    "requires": [
+      {
+        "api": 1,
+        "capability": "display.output"
+      },
+      {
+        "api": 1,
+        "capability": "input.touch.raw"
+      },
+      {
+        "api": 1,
+        "capability": "input.navigation"
+      },
+      {
+        "api": 1,
+        "capability": "platform.clock"
+      },
+      {
+        "api": 1,
+        "capability": "ui.presentation-profile"
+      }
+    ],
+    "type": "driver",
+    "version": "0.4.4"
+  },
+  "manifest_sha256": "acd8339f0d3f64aac567f1f45455615daec3aa4520dd9b26e510afebd86cc3d3",
+  "elf_sha256": "f9a3b503531154a6479c5c36780daee51d6e0050a1a54b7327624b242930b188",
+  "elf_bytes": 466712,
+  "boot_row": {
+    "image_source": {
+      "internal_fallback": true,
+      "path": "Drivers/scene-host/image-f9a3b503531154a6479c5c36780daee51d6e0050a1a54b7327624b242930b188.elf",
+      "volume_instance": 9
+    },
+    "manifest": "ui-scene/manifest.json"
+  },
+  "defines": [],
+  "font_tree": "28a2ae80bef4537aacd626a507900c19b071bad1",
+  "x4_generated_telemetry_font_sha256": "2d7501e42d6223ebbc191817715431182c435fea944a1a02166a0748a577eaf1"
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "lists.shared-text-host.baseline.v1",
+  "device": "x4",
+  "manifest": {
+    "architecture": "xtensa-esp32s3",
+    "driver_abi": 2,
+    "file_name": "driver.elf",
+    "id": "text-input-host",
+    "provides": [
+      {
+        "api": 1,
+        "capability": "ui.text-input"
+      }
+    ],
+    "requires": [
+      {
+        "api": 1,
+        "capability": "ui.scene"
+      }
+    ],
+    "type": "driver",
+    "version": "0.1.5"
+  },
+  "manifest_sha256": "355073080e29add7d95150cf7941418091dbd05cc99cd44b6b38ef250078e720",
+  "elf_sha256": "5517367ec213230ca5cc7e33c3f92231a89dae90cb9aba29d5bb8a36791890a1",
+  "elf_bytes": 13336,
+  "boot_row": {
+    "image_source": {
+      "internal_fallback": true,
+      "path": "Drivers/text-input-host/image-5517367ec213230ca5cc7e33c3f92231a89dae90cb9aba29d5bb8a36791890a1.elf",
+      "volume_instance": 9
+    },
+    "manifest": "ui-text/manifest.json"
+  },
+  "defines": [],
+  "fonts_owned_by_unchanged_scene_host": true
+}
