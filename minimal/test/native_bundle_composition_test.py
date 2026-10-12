@@ -76,6 +76,15 @@ class NativeBundleCompositionTest(unittest.TestCase):
         self.write('x4-runtime-options-proof.json',b'{}');self.refresh_assets()
         with self.assertRaisesRegex(ValueError,'option proof mismatch'):self.validate()
 
+    def test_explicit_qualified_runtime_lock_preserves_exact_source_checks(self):
+        lock=dict(repository='michaelrolphone-cmyk/RiscRTE',commit=self.revision,version='0.1.57')
+        self.assertEqual(validate_native_composition(self.native,self.candidate,self.runtime,self.platform,
+            expected_runtime=lock),self.candidate['x4_native_composition'])
+        for key,value in (('commit','a'*40),('version','9.9.9'),('repository','other/repo')):
+            with self.subTest(key=key),self.assertRaisesRegex(ValueError,'product lock'):
+                validate_native_composition(self.native,self.candidate,self.runtime,self.platform,
+                    expected_runtime=dict(lock,**{key:value}))
+
     def test_plain_runtime_rejected_at_matching_version(self):
         del self.candidate['x4_native_composition']
         with self.assertRaisesRegex(ValueError,'generic Runtime is insufficient'):self.validate()

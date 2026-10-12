@@ -1,0 +1,39 @@
+{
+  "self_test": "PASS",
+  "negative_checks": 22,
+  "sd_files": 81,
+  "selected_sd_images": 46,
+  "native_or_home_execution_tested": false,
+  "synthetic_deliverable_created": false,
+  "roundtrip": {
+    "independent_full_image_verified": true,
+    "boot_authority_unchanged": true,
+    "files_1_5_30_unchanged": true,
+    "changed_store_paths": [
+      "cohort.json",
+      "default.elf",
+      "default.json"
+    ],
+    "preserved_store_files": 100,
+    "preserved_flash_ranges": [
+      [
+        0,
+        65536
+      ],
+      [
+        2555904,
+        3080192
+      ],
+      [
+        8388608,
+        16719872
+      ],
+      [
+        16728064,
+        16777216
+      ]
+    ],
+    "full_image_bytes": 16777216,
+    "full_image_sha256": "7396bf7729d7cd2e0903c06fcc70de013ad798e5aa8b8330f494abb6dd3df2c3"
+  }
+}

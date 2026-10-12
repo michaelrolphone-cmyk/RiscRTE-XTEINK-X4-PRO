@@ -6,6 +6,7 @@ hardware qualification. Existing .90 complete SD tree is required and unchanged.
 """
 import argparse
 import copy
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -51,7 +52,40 @@ def baseline(folder, sd_root):
     return receipt,store,sd,parts,full
 
 
-def payload(home,old,lock):
+def qualified_lock(path, source=ROOT):
+    raw=path.read_bytes()
+    require(raw==(source/'minimal/fast-boot-094-inputs.json').read_bytes(),
+            'Qualification lock is not the committed product lock')
+    return raw,json.loads(raw)
+
+
+def feature_policy(value):
+    if isinstance(value,list):return [feature_policy(v) for v in value]
+    if not isinstance(value,dict):return value
+    skip={'source_sha256','system_source_sha256','build_source_sha256','source_directory',
+          'compiled_include_directory','runtime_sdk'}
+    result={k:feature_policy(v) for k,v in value.items() if k not in skip}
+    if isinstance(result.get('source'),str) and result['source'].startswith('/'):
+        result['source']=Path(result['source']).name
+    if 'relocation_tools' in result:
+        result['relocation_tools']={Path(k).name:v for k,v in result['relocation_tools'].items()}
+    return result
+
+
+def preserve_features(evidence,previous):
+    flags=lambda record:Counter('-I<compiled-output>' if f.startswith('-I') else f for f in record['build_defines'])
+    wanted=flags(previous);wanted['-DPORTABLE_DESK_DEFER_RADIOS']+=1
+    require(flags(evidence)==wanted,'Home compiled features changed beyond deferred radios')
+    for key in ('desk_clock','clock_policy','display_rotation','launcher_app','navigation','sleep_capability',
+                'alarm_client','quick_actions','quick_radios','home_app','ble_broadcast','contexts','installed_catalog',
+                'paper_transition','paper_motion','tagged_alarm_sdk','home_points','desk_points','desk_sdk_headers',
+                'time_resolution','grant_count','sparse_start','provider_activation','timer_preferences',
+                'foreground_promotion','invocation_retention','boot_animation','idle_policy','preferences',
+                'app_loading','raster_snapshot','resident_shell','grant_bindings','retained_wake_sdk_sha256'):
+        require(feature_policy(evidence[key])==feature_policy(previous[key]),'Home feature policy changed: '+key)
+
+
+def payload(home,old,lock,previous):
     require(lock['product_version']==VERSION and lock['home_version']==HOME,'Wrong qualification version')
     artifacts={n:(home/n).read_bytes() for n in HOME_NAMES}
     require(inventory(artifacts)==lock['home_artifacts'],'Home differs from qualification lock')
@@ -64,6 +98,14 @@ def payload(home,old,lock):
     require(evidence['desk_clock'] and evidence['sparse_start'] and evidence['deferred_foreground_services'] is True and
             evidence['timer_preferences']=='retained-only' and evidence['grant_count']==19 and
             evidence['grant_bindings']=={'storage.app-data':[62]},'Home selected feature/profile mismatch')
+    preserve_features(evidence,previous)
+    require(evidence.get('deferred_radio_policy')=={
+        'completion':'first completed Home frame',
+        'forced_before':['user-input','quick-controls','sleep','launch','resident-loading'],
+        'broadcast_cleanup':'unchanged',
+        'alarm_priority':'existing cue/modal completes before deferred policy',
+        'low_battery_policy':'existing immediate safety override','timer_radio_loads':0},
+        'Deferred foreground lifecycle policy differs')
     require(evidence['local_sleep_source_sha256']==HOOK==sha((ROOT/'minimal/apps/portable_sleep.c').read_bytes()),
             'The .93 minute SD-close transaction changed')
     return artifacts,evidence
@@ -117,7 +159,13 @@ def sources(a,lock,evidence):
     changes=git(ROOT,'diff','--name-only',build_source,a.product_revision).splitlines()
     require(all(n in ('minimal/fast-boot-094-inputs.json','minimal/docs/FAST_BOOT_094.md') or
                 n.startswith('minimal/docs/evidence/fast-boot-094/') for n in changes),'Product changed after Home build')
-    for name,digest in evidence['desk_sources'].items():
+    needed={'Apps/paper_clock.c','lib/PortableApps/src/adapter.c','lib/PortableApps/src/sparse_clock_adapter.inc',
+            'lib/PortableApps/src/alarm.inc','lib/PortableApps/src/resident_loading.inc',
+            'lib/PortableApps/include/PortableDeskClockApp.h','scripts/build_paper_clock.py'}
+    deferred=evidence.get('deferred_foreground_sources',{})
+    require(needed<=deferred.keys(),'Deferred foreground source closure missing')
+    merged=dict(evidence['desk_sources']);merged.update(deferred)
+    for name,digest in merged.items():
         path=a.system_source/name
         require(path.resolve().is_relative_to(a.system_source.resolve()) and not path.is_symlink() and
                 sha(path.read_bytes())==digest,'Home compiled source changed: '+name)
@@ -127,8 +175,10 @@ def sources(a,lock,evidence):
 def compose(a):
     require(not a.output.exists(),'Output must be new')
     base,old,sd,parts,full=baseline(a.baseline,a.sd)
-    lock_raw=a.lock.read_bytes();lock=json.loads(lock_raw)
-    artifacts,evidence=payload(a.home,old,lock)
+    lock_raw,lock=qualified_lock(a.lock)
+    previous_raw=(a.baseline/'receipts/home-client/build-evidence.json').read_bytes()
+    require(sha(previous_raw)==base['home_client']['artifacts']['build-evidence.json'],'Baseline Home evidence differs')
+    artifacts,evidence=payload(a.home,old,lock,json.loads(previous_raw))
     home_source,changes=sources(a,lock,evidence)
     candidate_raw=(a.native/'candidate.json').read_bytes();candidate=json.loads(candidate_raw)
     require(sha(candidate_raw)==lock['native_candidate_sha256'],'Native candidate differs from qualification lock')

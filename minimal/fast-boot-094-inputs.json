@@ -1,0 +1,69 @@
+{
+  "product_version": "0.1.94",
+  "home_version": "0.4.13",
+  "runtime": {
+    "repository": "michaelrolphone-cmyk/RiscRTE",
+    "commit": "6377d498a47b59dac8ad85d930983fffc6c8baa5",
+    "tree": "be5547ca564472c567c11612185862e10dbf1acd",
+    "version": "0.2.24"
+  },
+  "system": {
+    "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+    "commit": "399e922049b2b9982a2cb35486afffea5f383251",
+    "tree": "f41ba467d6a96f214bed594728b8e28e01960d5c"
+  },
+  "home_artifacts": {
+    "default.elf": "9b42c85959995290831b6ae87a3fdab8583de70fd4e3c5e567517b1d6407fb44",
+    "default.json": "fc16120d123932426974be2f253b4e22e4082745869240dc4065c689e8c7555b",
+    "build-evidence.json": "84188af26b860deb27edbca66d1c2564fa663db1be7058e6f6cca2650d2ccfd9"
+  },
+  "home_product_source": "405013dcb12c4da10f3ec6df648313a522cc0fed",
+  "native_candidate_sha256": "a224e74b4bdddcb61205c2790c261ecb77e854cabb29635aa0c0f386b192e830",
+  "native_build_options": {
+    "app_image_cache": false,
+    "app_policy_rows": 24,
+    "app_requirement_rows": 24,
+    "installed_app_capacity": 64,
+    "provider_capacity": 40,
+    "retained_wake_bytes": 512,
+    "shared_files_transport": true,
+    "usb_phy": true
+  },
+  "qualification": {
+    "native_single_job_target": true,
+    "native_elf_reproduces_bin": true,
+    "metadata_reader_preserved_reads": 271,
+    "metadata_requested_ticks_before": 271,
+    "metadata_requested_ticks_after": 62,
+    "foreground_lifecycle_cases": 58,
+    "foreground_modes": [
+      "normal",
+      "asan-ubsan"
+    ],
+    "hardware_tested": false,
+    "timer_profile_cases": 64,
+    "timer_modes": [
+      "normal",
+      "asan-ubsan"
+    ],
+    "unchanged_timer_pixel_outputs": 40,
+    "internal_elf_admission_count": 42,
+    "selected_sd_elf_admission_count": 46,
+    "negative_namespace_probes": 4,
+    "composition_negative_probes": 22,
+    "native_bundle_admission_unit_tests": 12,
+    "native_source_unit_tests": 19,
+    "leak_sanitizer": "unavailable under ptrace; ASan/UBSan instrumented suites passed with leak detection disabled"
+  },
+  "qualification_evidence_sha256": {
+    "native-qualification.json": "542b20ca222020fb9b377f59fb07ac9a50a72228a4fcdd7b60c4896a41c663db",
+    "foreground-qualification.json": "35eba18c3e025b0c5a61e5577d25c537af5cd5338e1c4baa169bba48626729fe",
+    "composition-self-test.json": "1c26f4023193b04984132b78e86b40a33c47b972fe6226b3ff4975272e03cc69",
+    "preflight-admission.json": "8896cd625c79914f880a77a8ae9cbe02f01d9eefda8ee2e4f16b03c368f077e4",
+    "preflight-sd-admission.json": "8f6cb4a08cc9e8badddd30d498a3e484bfd10eb5f749f1a03bff0f70a396f301",
+    "native-source-tests.log": "f526e7dcebcefb5a600ebd432045acfe0fe1c0ff76a56f02ff127e05c060d68d",
+    "native-composition-tests.log": "6e29985d412b01a2842a3ff5bcba4c0eb7baf41e7970de46ad1064bd25436aa6",
+    "system-qualification.json": "38efdf25062bb75dce248ff250e75009c0e49d874f9596296d5418a5c8def56e",
+    "timer-qualification.json": "4436f2aa24ae6df6bb50b0599e2491744f0268105dd8b82cb4614538160c7d36"
+  }
+}

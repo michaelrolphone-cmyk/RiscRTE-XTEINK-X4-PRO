@@ -1,0 +1,605 @@
+{
+  "process_cases": 64,
+  "runs": [
+    {
+      "profile": "normal",
+      "case": "valid",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "valid",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "valid",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "valid",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "expired",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "expired",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "expired",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "expired",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "rewind",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "rewind",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "rewind",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "rewind",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "old-snapshot",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "old-snapshot",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "old-snapshot",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "old-snapshot",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "step-terminal",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "step-terminal",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "step-terminal",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "step-terminal",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "projection-terminal",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "projection-terminal",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "projection-terminal",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "projection-terminal",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "uncertain",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "uncertain",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "uncertain",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "uncertain",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "valid",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "expired",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "valid",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "normal",
+      "case": "expired",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "valid",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "valid",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "valid",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "valid",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "expired",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "expired",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "expired",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "expired",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "rewind",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "rewind",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "rewind",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "rewind",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER rewind: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "old-snapshot",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "old-snapshot",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "old-snapshot",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "old-snapshot",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER old-snapshot: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "step-terminal",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "step-terminal",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "step-terminal",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "step-terminal",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER step-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "projection-terminal",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "projection-terminal",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "projection-terminal",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "projection-terminal",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER projection-terminal: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "uncertain",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "uncertain",
+      "flip": "0",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "uncertain",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "uncertain",
+      "flip": "1",
+      "asynchronous": true,
+      "reboot": false,
+      "result": "TIMER uncertain: silent terminal fence and no later provider/cleanup calls PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "valid",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "expired",
+      "flip": "0",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "valid",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER valid: refresh=0 steps=0 copies=0 clean=0 grants=7; dark, no foreground policy PASS"
+    },
+    {
+      "profile": "asan-ubsan",
+      "case": "expired",
+      "flip": "1",
+      "asynchronous": false,
+      "reboot": true,
+      "result": "TIMER expired: refresh=1 steps=3 copies=1 clean=1 grants=7; dark, no foreground policy PASS"
+    }
+  ],
+  "build_defines": [
+    "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+    "-DPORTABLE_RTC_WALL_TIME",
+    "-DPORTABLE_DISPLAY_ROTATION=90",
+    "-DPAPER_CLOCK_LAUNCHER=\"springboard.elf\"",
+    "-DPORTABLE_DESK_DEFER_RADIOS",
+    "-DPORTABLE_INSTALLED_CATALOG",
+    "-DPORTABLE_INSTALLED_CATALOG_HOST",
+    "-DPORTABLE_INSTALLED_VOLUME_INSTANCE=9ULL",
+    "-DPORTABLE_BOOT_ANIMATION",
+    "-DPORTABLE_PAPER_CROSSFADE",
+    "-DPORTABLE_BLE_BROADCAST",
+    "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+    "-DPORTABLE_DESK_POINTS_FACE",
+    "-DPORTABLE_DESK_POINTS_SNAPSHOT",
+    "-DPORTABLE_DESK_LOCK_HOME",
+    "-DPORTABLE_INPUT_NAVIGATION",
+    "-DPORTABLE_APP_SLEEP_LOCAL",
+    "-DPORTABLE_CROWN_SLEEP_LOCAL",
+    "-DPORTABLE_DESK_CLOCK",
+    "-DPORTABLE_DESK_CLOCK_SPARSE_START",
+    "-DPORTABLE_CONTEXTS_CLIENT",
+    "-DPORTABLE_CONTEXTS_CLOCK_RF_ONLY",
+    "-DPORTABLE_DESK_WAKE_LIGHT",
+    "-DPORTABLE_ALARM_CLIENT",
+    "-DALARM_SERVICE_TAGGED_V2",
+    "-DPORTABLE_HOME_POINTS_NATIVE_UTC",
+    "-DALARM_NATIVE_UTC",
+    "-DPORTABLE_RESIDENT_SHELL_HOST",
+    "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+    "-DPORTABLE_RESIDENT_POLICY",
+    "-DPORTABLE_RESIDENT_LEGACY_HANDOFF",
+    "-DPORTABLE_RASTER_SNAPSHOT",
+    "-DPORTABLE_CRASH_REPORT_SD",
+    "-DPORTABLE_CRASH_REPORT_NAMESPACE=62",
+    "-DPORTABLE_DISPLAY_SETTLED",
+    "-DPORTABLE_FRONTLIGHT_TONE",
+    "-DPORTABLE_PAPER_TRANSITIONS",
+    "-DPORTABLE_STAGE_LOGS",
+    "-DPORTABLE_QUICK_USB_TRANSFER",
+    "-DPORTABLE_QUICK_ACTIONS",
+    "-DPORTABLE_QUICK_RADIOS",
+    "-DPORTABLE_X4_IDLE_POLICY",
+    "-DPORTABLE_LOW_BATTERY",
+    "-DPORTABLE_APP_SLEEP_LOCAL",
+    "-DPORTABLE_RESIDENT_LOADING",
+    "-DTEST_TIMER_STORAGE_SLEEP",
+    "-DTEST_NATIVE_LANDSCAPE"
+  ],
+  "retained_schema": 3,
+  "retained_bytes": 408,
+  "timer_live_grant_bound": 7,
+  "runtime_live_grant_bound": 16,
+  "contexts_timer_acquisitions": 0,
+  "pixels": "normal and ASan/UBSan byte identical",
+  "hardware": "not run",
+  "baseline_pixels": null,
+  "baseline_matching_images": 0,
+  "baseline_records": null,
+  "source_sha256": {
+    "/workspace/shared/x4-fast-system-20261012/Apps/paper_clock.c": "bc00b0bbef8c23f76c0ca21e0808f4293a25ab635f0a798586fe7008d66b59a3",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/adapter.c": "70da59abf9570fa4ba07cb82b7be9a20c965cc647fdfeced43cb0408f84deed7",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/desk_clock_faces.c": "f76843e4e7d5607205328e491fdb5f0d21121728607b894d2a1c266630e19fc7",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/PortableRealtimeClient.c": "a8115817eb490bb51f3e338fde4dce2542cb82dceefe476beae21a91c14ceade",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/PortableTimeZone.c": "28c0fecf7a4d83bde07d2b72cb591122cf3c49c3219c8344b97b82a90625c5e7",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/PortableTimeZoneCatalog.c": "29d4c86037f7554c94a4404d5e39e28091430a1f9c23b5e35224aed3df826f20",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/PortableTimeZonePreference.c": "b54e455d587ba2ecda8f59dd899b59b767214aee807b92d79d18c5e9d30b6bb7",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/quick_actions.c": "5eb885a4940edceefc1d96b8cce977bdfaf7dfaf46a0efca6bf5ea382262f7d8",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/quick_render.c": "d5b02fc2fd6a9eb2e9b2ccfc9848cb786fb2cf9da613d0514eb529c3375337dc",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/quick_session.c": "a1f649cd59652e5e70f29832188c36459e72a3dc2bc31075bfd7f3ee83311f08",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/quick_radios.c": "77285cd11aba58869274b3d0684d8a5969dcb0659cec82caac1e12ea078d053b",
+    "/workspace/shared/x4-desk-minute-wake-20261012/minimal/apps/portable_sleep.c": "0858a85e56bb12ef1255b02eeb5fb3618a4e46fd283e0a369f4f3bffefe0462b",
+    "/workspace/shared/x4-desk-minute-wake-20261012/minimal/apps/portable_idle_sleep.c": "8bef69d648dc1c8aad12adb24c90a2a48320287a74ff969ca33d9186fc3ab297",
+    "/workspace/shared/x4-fast-system-20261012/test/native_apps/context_sparse_timer_test.c": "35389b2be4b7efbbe8ad263859a802a50637f677b701d5f60aa5a610fb829949",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/PortableInstalledCatalog.c": "a4b9f7c7f894cf71d7479b43dad63ad7edfba0013c379d1ac28c7269531630a6",
+    "/workspace/shared/x4-fast-system-20261012/test/native_apps/sparse_points_expiry_test.c": "e527d30f103f3c1cb5e80cce292a1fef95200fcce71d89d61b2c6266f47390b7",
+    "/workspace/shared/x4-fast-system-20261012/test/native_apps/sparse_clock_startup_test.c": "6a029288ea5c63b29d61ac83ad3500838c12a842babc43bf2cfe3c5370497992",
+    "/workspace/shared/x4-fast-system-20261012/Apps/paper_sparse_clock.inc": "21fd472ff7292b562bff0e26ec8c31b08fc4142239c9eda25e0133d24ef429b6",
+    "/workspace/shared/x4-fast-system-20261012/Apps/paper_home_points.inc": "e1098780996f17b5c17f3b6ed1aa22405821f7e751266729dc8bc1a18817c274",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/contexts_adapter.inc": "09772b7aee76f3ff735bf394d10de940979714fc8f1c68f077232e18a30dc84a",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/contexts_policy.inc": "0e90782a4f6ac054ce5deb2da29a4b29424cb238fe220df548f4fef41386fc9c",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/contexts_clock.inc": "85fa81404b037fee3bd605721c8658395e5f42584b3d64619d4896dc7ff7993b",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/sparse_clock_adapter.inc": "d176c37eb47b9bf80f9003356a43470aa7cbebf8a88ca2e157b6b5bc71e46fa2",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/resident_adapter.inc": "c18b529a08ecd547a8a0c8d1207949b2834dd391449407486724001d3ed11416",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/resident_shell.inc": "37ccceaa5bcb5b713b2add592655b3d151757951511ab52679d404391eaa4f34",
+    "/workspace/shared/x4-fast-system-20261012/lib/PortableApps/src/resident_policy.inc": "f3b9b7cc33ec243dd64c664589c96179940dc30dbaa0683025460ed00a15e319",
+    "/workspace/shared/x4-fast-system-20261012/scripts/test_context_sparse_timer.py": "f619d8c05e2f1b400e456ccccca9a9647002d993e3d5d1f7c1326221c32f87cf"
+  }
+}
