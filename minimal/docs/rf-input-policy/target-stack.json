@@ -1,0 +1,66 @@
+{
+  "schema": "rf.target-stack.v1",
+  "device": "x4",
+  "application_source": "52157660ec573cf4639ffe3eefcad5b7b3115c4e",
+  "system_source": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+  "target_elf_sha256": "f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1",
+  "debug_elf_sha256": "54c30164463af92f9d307bbfb4a430244900e992e71d3da47dd12d4308af85c5",
+  "method": "Actual target disassembly entry a1 frame operands; no target instructions executed",
+  "entry_frames_bytes": {
+    "portable_text_client_request_result": 32,
+    "text_width": 32,
+    "portable_text_client_live$constprop$158": 32,
+    "portable_text_client_release$constprop$157": 48,
+    "text_policy": 48,
+    "portable_app_before_launch": 32,
+    "portable_app_before_home": 32,
+    "app_main": 192,
+    "text_input_neutral": 32,
+    "text_color": 128,
+    "text_input_alive": 32,
+    "text_input_navigation": 32,
+    "text_input_touch_open": 32,
+    "portable_text_adapter_policy_capture": 32,
+    "portable_text_adapter_policy_prepare": 64,
+    "app_module_fini": 32,
+    "app_module_init": 64,
+    "portable_text_adapter_policy_apply": 64,
+    "text_length": 32
+  },
+  "maximum_modal_frame_bytes": 192,
+  "all_entry_frames_maximum_bytes": 3808,
+  "static_modal_storage": {
+    "editing": {
+      "bytes": 32,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 782076
+    },
+    "text_checkpoint": {
+      "bytes": 8,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 777756
+    },
+    "text_client": {
+      "bytes": 48,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 777768
+    },
+    "text_state": {
+      "bytes": 88,
+      "symbol_kind": "b",
+      "static_storage": true,
+      "address": 777664
+    }
+  },
+  "bounded_label_buffer_bytes": 17,
+  "static_editing_record_bytes": 32,
+  "per_frame_regression_checks_passed": true,
+  "peak_call_chain_stack_usage_proven": false,
+  "limits": [
+    "Inlining folds helper frames into their callers; absent standalone symbols are not separate frame measurements.",
+    "Disassembly frame sizes do not prove dynamic call-chain peak stack use, Runtime stack allocation, or physical execution."
+  ]
+}

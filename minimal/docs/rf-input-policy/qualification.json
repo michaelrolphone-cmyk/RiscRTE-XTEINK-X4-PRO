@@ -1,0 +1,251 @@
+{
+  "schema": "rf.modal-policy.public-qualification.v1",
+  "device": "x4",
+  "component": {
+    "device": "x4",
+    "repository": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+    "branch": "work/rf-input-policy-20261012",
+    "compiled_recipe_commit": "d79aff73a77eb6d6e4b5ddf1369c492e5e5903d3",
+    "compiled_recipe_tree": "40ba52acf27a95e45e92fde74fc842e21771a3b1",
+    "compiled_recipe_checkout": "/workspace/shared/rf-input-policy-x4-public-20261012",
+    "compiled_recipe_published": true,
+    "recipe_publication_status": "published_ref_verified",
+    "compiled_recipe_ci": {
+      "name": "RF modal policy recipe",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38320463404",
+      "id": 38320463404
+    },
+    "all_commit_ci": [
+      {
+        "name": "RF modal policy recipe",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38320463404",
+        "id": 38320463404
+      },
+      {
+        "name": "Typed minimal X4 drivers",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38320463385",
+        "id": 38320463385
+      }
+    ],
+    "candidate_directory": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate",
+    "target_build_directory": "/workspace/shared/rf-input-policy-components-public-20261012/x4-target",
+    "target_elf": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4-target/waterfall.elf",
+      "bytes": 284800,
+      "sha256": "f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1"
+    },
+    "target_manifest": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4-target/waterfall.json",
+      "bytes": 1159,
+      "sha256": "c280c4c111c9ea7899b33dfa6956fd94b25ecffb860c8e8b3b20bd1d9bc477da"
+    },
+    "target_build_record": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4-target/waterfall-build-record.json",
+      "bytes": 65945,
+      "sha256": "a27878891b56fff86317ce9330958808e04bb9518ae13f16b2d8b41eb6a430e4"
+    },
+    "waterfall_version": "0.3.5",
+    "sources": {
+      "system-apps": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+      "utilities": "52157660ec573cf4639ffe3eefcad5b7b3115c4e",
+      "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70",
+      "watch": "089868395268b696c05651c33816345bfe0425df"
+    },
+    "source_roots": {
+      "system-apps": "/workspace/shared/timecard-input-policy-system-20261012",
+      "utilities": "/workspace/shared/rf-input-policy-utilities-20261012",
+      "runtime": "/workspace/shared/first-attempt-time-alarm-runtime-28-20261012",
+      "watch": "/workspace/shared/watch-scroll-regression-20261011/watch-profile",
+      "generated": "/workspace/shared/rf-input-policy-components-public-20261012/x4-target"
+    },
+    "flags": [
+      "-DPORTABLE_NOVA_UI",
+      "-DPORTABLE_ALARM_CLIENT",
+      "-DALARM_SERVICE_TAGGED_V2",
+      "-DPORTABLE_NATIVE_CUSTODY_FENCE",
+      "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+      "-DPORTABLE_INPUT_NAVIGATION",
+      "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+      "-DPORTABLE_APP_LAUNCH_GUARD",
+      "-DPORTABLE_PAPER_PREFERENCES",
+      "-DPORTABLE_CONTEXTS_CLIENT",
+      "-DPORTABLE_UNPADDED_HOURS",
+      "-DPORTABLE_BLE_BROADCAST",
+      "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+      "-DPORTABLE_RESIDENT_SHELL_CLIENT",
+      "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+      "-DPORTABLE_RESIDENT_POLICY",
+      "-DPORTABLE_RASTER_SNAPSHOT",
+      "-DPORTABLE_CONTEXTS_SOURCE_MASK=CONTEXTS_RADIO",
+      "-DPORTABLE_DISPLAY_ROTATION=90",
+      "-DPORTABLE_HOME_APP=\"default.elf\"",
+      "-DPORTABLE_RADIO_SESSION",
+      "-DPORTABLE_RADIO_CONTINUOUS_CAPTURE",
+      "-DPORTABLE_BLE_FOREGROUND",
+      "-DPORTABLE_FORCE_FULL_FRAMES",
+      "-DRF_STORAGE_INSTANCE=8",
+      "-DRF_APP_DATA_INSTANCE=3",
+      "-DRF_RETURN_APP=\"springboard.elf\"",
+      "-DPORTABLE_RF_SHARED_TEXT_INPUT",
+      "-DPORTABLE_TEXT_INPUT_CLIENT",
+      "-DPORTABLE_CHECKED_STORAGE_RUNTIME",
+      "-DPORTABLE_APP_HOME_GUARD",
+      "-DPORTABLE_TEXT_INPUT_POLICY"
+    ],
+    "all_inherited_defines_and_fonts_retained": true,
+    "sealed_target_elf_byte_identical": true,
+    "normal_admission": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/qualification/normal/result.json",
+      "bytes": 32677,
+      "sha256": "36e98d945f971869c5fd441c690fe4019d0164e98ae89919b2a0ef7e4b6cd63b"
+    },
+    "sanitized_admission": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/qualification/asan-ubsan/result.json",
+      "bytes": 32691,
+      "sha256": "d7d9fa3606c168e167944d9b6525a582f4c1115312d636a7c74a9714395ffb75"
+    },
+    "normal_admission_passed": true,
+    "sanitized_admission_passed": true,
+    "normal_sanitized_admission_identical": true,
+    "packing": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/receipts/packing.json",
+      "bytes": 3870,
+      "sha256": "7cc0a5c0b93b3948e164fdc884211d6f058bc51add63b9a2ec6b1d2f1b20d2b7"
+    },
+    "free_spiffs_blocks": 126,
+    "required_free_spiffs_blocks": 126,
+    "changed_store_paths": [
+      "boot.json",
+      "cohort.json",
+      "waterfall.json"
+    ],
+    "native_unchanged": true,
+    "shared_text_hosts_unchanged": true,
+    "scene_host_unchanged": true,
+    "grant_delta": [],
+    "target_stack": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4-stack.json",
+      "bytes": 2200,
+      "sha256": "05218022ad5cfea50a9c1d9c12059137b5e8c66fcbf0db0649f3ddf0ded2a402"
+    },
+    "flagoff_equivalence": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4-flagoff.json",
+      "bytes": 1024,
+      "sha256": "d979543ba39c7c8ebb089cb021d9a5d6be0cdbad1f887e5e650966a49436f6d4"
+    },
+    "full_image_sha256": "ca2f78ee8b9f8362051f5e8c4aafbbe0771578d081e5429befa0e5395d24c8c1",
+    "full_image_bytes": 16777216,
+    "full_image_materialized": false,
+    "components": {
+      "appdata.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/appdata.bin",
+        "bytes": 524288,
+        "sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+      },
+      "bank_state.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/bank_state.bin",
+        "bytes": 8192,
+        "sha256": "31415505679e726b3f99e00aaa5409facf603a76be52191bdb4939fd232e8ead"
+      },
+      "bootfs.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/bootfs.bin",
+        "bytes": 5308416,
+        "sha256": "f1b847889d77eeb9f8defa1e95865a5177d6b5ea1ea9d804622254ec1a4d0dfc"
+      },
+      "bootloader.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/bootloader.bin",
+        "bytes": 15104,
+        "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363"
+      },
+      "firmware.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/firmware.bin",
+        "bytes": 1458576,
+        "sha256": "0cb155e1ff160afadeacea7cbb095234c6a072a4c164983da11c08135a55fbc9"
+      },
+      "otadata.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/otadata.bin",
+        "bytes": 8192,
+        "sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3"
+      },
+      "partitions.bin": {
+        "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/components/partitions.bin",
+        "bytes": 3072,
+        "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+      }
+    },
+    "hardware_verified": false,
+    "delivered": false,
+    "composition_receipt": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/receipts/evening-composition.json",
+      "bytes": 848471,
+      "sha256": "ebafe0e7ff2ec99dbd2676faa8d79db3fd23b9b531b5080cbb5bea421ba24baf"
+    },
+    "complete_qualification": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/qualification/waterfall-qualification.json",
+      "bytes": 847,
+      "sha256": "26afb97ce92e7a4f4a97dac47c537c4178e0b60dfcb3562235b927b23877f5f9"
+    },
+    "store_files": 106,
+    "internal_elfs": 43,
+    "selected_sd_elfs": 48,
+    "sd_files": 103,
+    "added_sd_files": [
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/manifest.json",
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/waterfall.elf"
+    ],
+    "original_sd_files_preserved": 101,
+    "sd_overlay": {
+      "path": "/workspace/shared/rf-input-policy-components-public-20261012/x4/candidate/X4-0.1.102-Combined-Changed-SD.zip",
+      "bytes": 2725584,
+      "sha256": "3c4cd17e21b9a2fc0256aef8dc914562bf90876a57921f9cd3e068eb9af67acd"
+    },
+    "obd_version_preserved": "0.2.2",
+    "ble_serial_version_preserved": "0.1.1",
+    "timecard_version_preserved": "0.2.17"
+  },
+  "focused_policy_runs": 20,
+  "workflow_regression_runs": 492,
+  "predecessor_frame_comparisons": 152,
+  "normal_sanitized_image_comparisons": 773,
+  "source": {
+    "utilities": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Utilities",
+      "commit": "52157660ec573cf4639ffe3eefcad5b7b3115c4e",
+      "path": "/workspace/shared/rf-input-policy-utilities-20261012",
+      "published": true
+    },
+    "system": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+      "commit": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+      "path": "/workspace/shared/timecard-input-policy-system-20261012",
+      "published": true
+    }
+  },
+  "baseline": {
+    "path": "/workspace/shared/timecard-input-policy-components-20261012/handoff-published.json",
+    "bytes": 22428,
+    "sha256": "f9709fecdee7ea86d2be79e5c00c9c0cd1bafa73c9495f180cb9fe826965cb09"
+  },
+  "limits": [
+    "Common Watch PMU modal Back inherits a known gap being repaired separately. These RF artifacts do not claim to repair or qualify that path.",
+    "Deterministic host/backend fixtures and target disassembly do not prove physical RF, touch, PMU, sleep or radio hardware behavior.",
+    "Per-function target frames are measured; dynamic peak call-chain stack usage is not proved.",
+    "Local ASan/UBSan cohorts use detect_leaks=0 for the ptrace executor; explicit resource-accounting checks remain enabled.",
+    "These standalone recipes compose over the frozen Timecard union. They must be applied additively to any later cumulative selection, without replacing newer components."
+  ],
+  "previous_sealed_handoff": {
+    "path": "/workspace/shared/rf-input-policy-components-20261012/handoff-local-qualified.json",
+    "bytes": 21054,
+    "sha256": "b1059b00514e7d50ba40f3ebe80333f740a2daa7a79ac3b5882a6e860b98aca5"
+  },
+  "later_cumulative_selections_modified": false,
+  "delivered": false,
+  "flashed": false,
+  "hardware_verified": false
+}
