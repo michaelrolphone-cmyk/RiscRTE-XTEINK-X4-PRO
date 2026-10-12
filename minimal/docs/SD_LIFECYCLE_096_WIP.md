@@ -1,3 +1,5 @@
+Historical draft checkpoint. Superseded by [qualified .96 recipe](SD_LIFECYCLE_096.md).
+
 # X4 .96 work checkpoint; not qualified or delivered
 
 The .95 boot layout is preserved. Device logs show SD BLE Scanner and Calculator
