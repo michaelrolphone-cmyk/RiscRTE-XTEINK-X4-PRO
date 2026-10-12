@@ -1,0 +1,35 @@
+{
+  "schema": "lists.resident-owner.target-stack.v1",
+  "device": "x4",
+  "system_source": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+  "target_elf_sha256": "e9dbe8b91e93463e97cdc43a94f3fa1a7c1b07013e4c6689ad0fced51be7f776",
+  "debug_elf_sha256": "e9dbe8b91e93463e97cdc43a94f3fa1a7c1b07013e4c6689ad0fced51be7f776",
+  "continuity_entry_frames_bytes": {
+    "portable_resident_run_foreground": 1232,
+    "resident_dispatch": 96
+  },
+  "maximum_continuity_frame_bytes": 1232,
+  "all_entry_frames_maximum_bytes": 3808,
+  "static_continuity_storage": {
+    "resident_policy_input_continuity": {
+      "bytes": 1,
+      "static_storage": true,
+      "symbol_kind": "b"
+    },
+    "resident_policy_requested": {
+      "bytes": 1,
+      "static_storage": true,
+      "symbol_kind": "b"
+    }
+  },
+  "per_frame_regression_checks_passed": true,
+  "target_instructions_executed": false,
+  "peak_call_chain_stack_usage_proven": false,
+  "policy_helper_inlined_into": "resident_dispatch",
+  "baseline_elf_sha256": "85c56071217d603a594514c0eef3a25982c7b03bafe86f1121880db62b3c5bb9",
+  "baseline_entry_frames_bytes": {
+    "portable_resident_run_foreground": 1232,
+    "resident_dispatch": 96
+  },
+  "all_relevant_frames_identical_to_predecessor": true
+}

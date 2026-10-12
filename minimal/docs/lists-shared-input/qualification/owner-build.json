@@ -1,0 +1,1897 @@
+{
+  "schema": "lists.x4-resident-owner.component.v1",
+  "device": "x4",
+  "version": "0.4.15",
+  "sha256": "e9dbe8b91e93463e97cdc43a94f3fa1a7c1b07013e4c6689ad0fced51be7f776",
+  "bytes": 557472,
+  "manifest_sha256": "fb600fbe72a1022cfce151c650ce7ef5972e1584395415ea5bd997c854b68bdf",
+  "compiler": "xtensa-esp32s3-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+  "compiler_path": "/workspace/scratch/c744abbbbd60/watch-build-tools/platformio-core/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc",
+  "compiler_command": [
+    "/workspace/scratch/c744abbbbd60/watch-build-tools/platformio-core/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc",
+    "-DPORTABLE_ALARM_BUSY_DEFER",
+    "-std=c11",
+    "-Os",
+    "-fPIC",
+    "-mtext-section-literals",
+    "-mlongcalls",
+    "-fvisibility=hidden",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-nostdlib",
+    "-nostartfiles",
+    "-shared",
+    "-Wl,--hash-style=sysv",
+    "-Wl,--version-script=/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-sdk/exports.map",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+    "-DPORTABLE_RTC_WALL_TIME",
+    "-DPORTABLE_DISPLAY_ROTATION=90",
+    "-DPAPER_CLOCK_LAUNCHER=\"springboard.elf\"",
+    "-DPORTABLE_DESK_DEFER_RADIOS",
+    "-DPORTABLE_INSTALLED_CATALOG",
+    "-DPORTABLE_INSTALLED_CATALOG_HOST",
+    "-DPORTABLE_INSTALLED_VOLUME_INSTANCE=9ULL",
+    "-DPORTABLE_BOOT_ANIMATION",
+    "-Wl,--no-relax",
+    "-DPORTABLE_PAPER_CROSSFADE",
+    "-DPORTABLE_BLE_BROADCAST",
+    "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+    "-DPORTABLE_DESK_POINTS_FACE",
+    "-DPORTABLE_DESK_POINTS_SNAPSHOT",
+    "-DPORTABLE_DESK_LOCK_HOME",
+    "-DPORTABLE_INPUT_NAVIGATION",
+    "-DPORTABLE_APP_SLEEP_LOCAL",
+    "-DPORTABLE_CROWN_SLEEP_LOCAL",
+    "-DPORTABLE_DESK_CLOCK",
+    "-DPORTABLE_DESK_CLOCK_SPARSE_START",
+    "-DPORTABLE_CONTEXTS_CLIENT",
+    "-DPORTABLE_CONTEXTS_CLOCK_RF_ONLY",
+    "-DPORTABLE_DESK_WAKE_LIGHT",
+    "-DPORTABLE_ALARM_CLIENT",
+    "-DALARM_SERVICE_TAGGED_V2",
+    "-DPORTABLE_HOME_POINTS_NATIVE_UTC",
+    "-DALARM_NATIVE_UTC",
+    "-DPORTABLE_RESIDENT_SHELL_HOST",
+    "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+    "-DPORTABLE_RESIDENT_POLICY",
+    "-DPORTABLE_RESIDENT_LEGACY_HANDOFF",
+    "-DPORTABLE_RASTER_SNAPSHOT",
+    "-DPORTABLE_CRASH_REPORT_SD",
+    "-DPORTABLE_CRASH_REPORT_NAMESPACE=62",
+    "-DPORTABLE_DISPLAY_SETTLED",
+    "-DPORTABLE_FRONTLIGHT_TONE",
+    "-DPORTABLE_PAPER_TRANSITIONS",
+    "-DPORTABLE_STAGE_LOGS",
+    "-DPORTABLE_QUICK_USB_TRANSFER",
+    "-DPORTABLE_QUICK_ACTIONS",
+    "-DPORTABLE_QUICK_RADIOS",
+    "-DPORTABLE_X4_IDLE_POLICY",
+    "-DPORTABLE_LOW_BATTERY",
+    "-DPORTABLE_APP_SLEEP_LOCAL",
+    "-I/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-sdk/idle-sdk/include",
+    "-DPORTABLE_RESIDENT_LOADING",
+    "-I/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-sdk/paper-sdk/include",
+    "-I/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/NativeApps/include",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/Apps/paper_clock.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/adapter.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-sdk/catalog.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/quick_actions.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/quick_render.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/quick_session.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/quick_radios.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-product/minimal/apps/portable_idle_sleep.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/desk_clock_faces.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-product/minimal/apps/portable_sleep.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/PortableRealtimeClient.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/PortableTimeZone.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/PortableTimeZoneCatalog.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/PortableTimeZonePreference.c",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system/lib/PortableApps/src/PortableInstalledCatalog.c",
+    "-lgcc",
+    "-o",
+    "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-sdk/default.elf"
+  ],
+  "defines": [
+    "-DPORTABLE_ALARM_BUSY_DEFER",
+    "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+    "-DPORTABLE_RTC_WALL_TIME",
+    "-DPORTABLE_DISPLAY_ROTATION=90",
+    "-DPAPER_CLOCK_LAUNCHER=\"springboard.elf\"",
+    "-DPORTABLE_DESK_DEFER_RADIOS",
+    "-DPORTABLE_INSTALLED_CATALOG",
+    "-DPORTABLE_INSTALLED_CATALOG_HOST",
+    "-DPORTABLE_INSTALLED_VOLUME_INSTANCE=9ULL",
+    "-DPORTABLE_BOOT_ANIMATION",
+    "-DPORTABLE_PAPER_CROSSFADE",
+    "-DPORTABLE_BLE_BROADCAST",
+    "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+    "-DPORTABLE_DESK_POINTS_FACE",
+    "-DPORTABLE_DESK_POINTS_SNAPSHOT",
+    "-DPORTABLE_DESK_LOCK_HOME",
+    "-DPORTABLE_INPUT_NAVIGATION",
+    "-DPORTABLE_APP_SLEEP_LOCAL",
+    "-DPORTABLE_CROWN_SLEEP_LOCAL",
+    "-DPORTABLE_DESK_CLOCK",
+    "-DPORTABLE_DESK_CLOCK_SPARSE_START",
+    "-DPORTABLE_CONTEXTS_CLIENT",
+    "-DPORTABLE_CONTEXTS_CLOCK_RF_ONLY",
+    "-DPORTABLE_DESK_WAKE_LIGHT",
+    "-DPORTABLE_ALARM_CLIENT",
+    "-DALARM_SERVICE_TAGGED_V2",
+    "-DPORTABLE_HOME_POINTS_NATIVE_UTC",
+    "-DALARM_NATIVE_UTC",
+    "-DPORTABLE_RESIDENT_SHELL_HOST",
+    "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+    "-DPORTABLE_RESIDENT_POLICY",
+    "-DPORTABLE_RESIDENT_LEGACY_HANDOFF",
+    "-DPORTABLE_RASTER_SNAPSHOT",
+    "-DPORTABLE_CRASH_REPORT_SD",
+    "-DPORTABLE_CRASH_REPORT_NAMESPACE=62",
+    "-DPORTABLE_DISPLAY_SETTLED",
+    "-DPORTABLE_FRONTLIGHT_TONE",
+    "-DPORTABLE_PAPER_TRANSITIONS",
+    "-DPORTABLE_STAGE_LOGS",
+    "-DPORTABLE_QUICK_USB_TRANSFER",
+    "-DPORTABLE_QUICK_ACTIONS",
+    "-DPORTABLE_QUICK_RADIOS",
+    "-DPORTABLE_X4_IDLE_POLICY",
+    "-DPORTABLE_LOW_BATTERY",
+    "-DPORTABLE_APP_SLEEP_LOCAL",
+    "-DPORTABLE_RESIDENT_LOADING"
+  ],
+  "added_defines": [],
+  "selected_system_commit": "0cae9c90b74982e784f5e59c655f246dfbc69178",
+  "selected_system_tree": "44f7ca4ea8fad9f7c4d7f19f89403868bda2d3f1",
+  "system_overlay_commit": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+  "approved_source_overlays": {
+    "lib/PortableApps/src/resident_policy.inc": {
+      "sha256": "0d8dfb5b531706b3ab7fb0da8291335fed77446cb0539825ae6830f10e21429a",
+      "bytes": 4221
+    },
+    "lib/PortableApps/src/resident_shell.inc": {
+      "sha256": "1da77c2ced23782ceef3ebf21e5393834d7f70a3b70187cbbcc40569c6d0fdda",
+      "bytes": 10424
+    },
+    "lib/PortableApps/include/PortableResidentPolicyInput.h": {
+      "sha256": "58063d5b10c848c09a1340e297c6aeb8fc7b9b4d7aed32e813d6c1904fbc5c0e",
+      "bytes": 658
+    }
+  },
+  "sources": {
+    "selected-system": "0cae9c90b74982e784f5e59c655f246dfbc69178",
+    "system-apps": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "selected-product": "16ce5f68002c77d79e10feb7e794437d2b16b8b5"
+  },
+  "source_roots": {
+    "selected-system": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-system",
+    "selected-product": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-product",
+    "selected-sdk": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/frozen/selected-sdk",
+    "toolchain": "/workspace/scratch/c744abbbbd60/watch-build-tools/platformio-core/packages/toolchain-xtensa-esp32s3"
+  },
+  "product_recipe": "e9adf95603d18b3a0c9f55c4c9276afe18a29d40",
+  "build_recipe_sha256": "566b713e31a0c73c295719ef0da84f6e55c5e61b8ed0a733e627406b8789d346",
+  "target_dependencies": {
+    "selected-system:Apps/paper_clock.c": {
+      "sha256": "bc00b0bbef8c23f76c0ca21e0808f4293a25ab635f0a798586fe7008d66b59a3",
+      "bytes": 18838
+    },
+    "selected-system:lib/NativeApps/include/T5AppApi.h": {
+      "sha256": "23ec6910005343055e71d0a364458824734f52c91a28364e419a85e94aa4ff42",
+      "bytes": 10831
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdbool.h": {
+      "sha256": "e623d179a58105d3c9213fd11384dd39cde9f1ecc06c09af9faeaa9cde3d3dde",
+      "bytes": 1524
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stddef.h": {
+      "sha256": "00d0ea9efd2c42822baefc048d5e99e136e5f3482fbeb610ec512867c6c5f391",
+      "bytes": 14140
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdint.h": {
+      "sha256": "86a7914ab7d6a18465a6fb9a7b54f945cad604fdbf3ca0d10e4e0254e0037911",
+      "bytes": 328
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdint-gcc.h": {
+      "sha256": "2e51dee23483fb7cec9895dff04fc314372847631f3227aef6fe636e269d8ca7",
+      "bytes": 9457
+    },
+    "selected-sdk:idle-sdk/include/RiscRuntimeV1.h": {
+      "sha256": "6e114c69b4de04a8faa254d89e92143b11549824f53d63b8e75d7e09cd216387",
+      "bytes": 7932
+    },
+    "selected-sdk:idle-sdk/include/PortableTime.h": {
+      "sha256": "350b8c5255dafa9e25c4a20cfb458cdcda3439da929dab05e0de0c82e981ff6e",
+      "bytes": 2920
+    },
+    "selected-sdk:idle-sdk/time/denver/display_time.h": {
+      "sha256": "9460e26e1d6faf574a212cdec86d9477de7a0e5d50168d5e7e76613be2868a03",
+      "bytes": 2710
+    },
+    "selected-sdk:idle-sdk/time/denver/twatch_calendar.h": {
+      "sha256": "67e4a670e4ee8a485843e99be0d198d0b60d84a0bc8d84fc77a3d0e4bde39733",
+      "bytes": 553
+    },
+    "selected-sdk:idle-sdk/time/denver/twatch_caps.h": {
+      "sha256": "b8b3003c77c72eb251227329c94fda7244389fb45c7a7e92aa01a5ddce50600e",
+      "bytes": 217
+    },
+    "selected-sdk:idle-sdk/include/PortableRtcClock.h": {
+      "sha256": "43508db1cd392606cf37a7e55ad15e3770de1284af13a431876fd5d7785b838c",
+      "bytes": 1813
+    },
+    "selected-sdk:idle-sdk/include/PortableTimeFormat.h": {
+      "sha256": "8eb4d0f850c974da910a516c0f13ed9302ad3928849aa85d7641bdbcf3bd1867",
+      "bytes": 2574
+    },
+    "selected-sdk:idle-sdk/include/RiscKeyValueV1.h": {
+      "sha256": "0e73bf29c402be030baf52f5b2b324f5b872549cdf58aa31f45b72bd70977179",
+      "bytes": 2339
+    },
+    "selected-sdk:idle-sdk/include/RiscBatteryGaugeV1.h": {
+      "sha256": "03d2f2b78e8f261cfb10f5c44bcabc1495bfecb17d7953586a58c27dce151b86",
+      "bytes": 535
+    },
+    "selected-sdk:idle-sdk/include/RiscProviderV2.h": {
+      "sha256": "2935d83493a411e19ee98b8c7e805b86f4adf98c6bde66fd031df7cc379bdc17",
+      "bytes": 3302
+    },
+    "selected-sdk:idle-sdk/include/RiscStreamProviderV1.h": {
+      "sha256": "0fe306e060321387c816bb70ec4370a501a423f4fe19a20c9be80aa1b98f3432",
+      "bytes": 1411
+    },
+    "selected-sdk:idle-sdk/include/PortableAppSleep.h": {
+      "sha256": "027f70965663bc86e7f3bbf2733002870e2254ec92d39037def5f42c52fedc62",
+      "bytes": 3195
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputV1.h": {
+      "sha256": "99b682ba34f07e7868dec8e78dfb816c067fdc184e647033bc6ed8d489b9c9a2",
+      "bytes": 5930
+    },
+    "selected-sdk:idle-sdk/include/AlarmServiceV2.h": {
+      "sha256": "d7e750a8093e1b5e698483254edc38533b7242a3446d0bca5866c9dfd6ad07a1",
+      "bytes": 2434
+    },
+    "selected-sdk:idle-sdk/include/AlarmServiceV1.h": {
+      "sha256": "c70c087550306c123255e1ace41aeb504809e16b0193e382ec8dfbd7cb5531f5",
+      "bytes": 5105
+    },
+    "selected-system:Apps/PaperPresentation.h": {
+      "sha256": "8d13a8c73187d1e35f67c3208f861b95ceac143b6401e6572c2b4356ef409747",
+      "bytes": 1161
+    },
+    "selected-system:Apps/SpringboardPresentation.h": {
+      "sha256": "af80cd3f66de0ca0ca7077a926e196a14de2c79263d449f90e501090aa55031b",
+      "bytes": 953
+    },
+    "selected-system:Apps/PaperFrame.h": {
+      "sha256": "8c7952e8e43cc404ec485dd5b6cbf1e8200b2b4f88409c903ecf1fd0667e2d5b",
+      "bytes": 1586
+    },
+    "selected-sdk:idle-sdk/include/PortablePerformance.h": {
+      "sha256": "4242d93019235138f6d0a80cd1edc58e55b9c591157d5f90b0d6c2992ce0672e",
+      "bytes": 1808
+    },
+    "selected-sdk:idle-sdk/include/PortableStageLog.h": {
+      "sha256": "b347496d8bbb70cbbc19bd85d4a4a214f57b660d90cfb1ccaab9138fac787f02",
+      "bytes": 871
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/stdio.h": {
+      "sha256": "48c6e22a842695f5ea6147a796da05b8cb3d9422c9d507ac6ccf411fdcac98c9",
+      "bytes": 29725
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/_ansi.h": {
+      "sha256": "5c6403b471ee897c9a6c12e00a58617247804eb3ee72d7baeb7c08616090dd1d",
+      "bytes": 2625
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/newlib.h": {
+      "sha256": "3ef7b3e450249c3146c88050f2a30281dadd6ec6592c05d488b6017ae715cac5",
+      "bytes": 7293
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/_newlib_version.h": {
+      "sha256": "93a397574a25b9c143cee7fcb86d8fc9a0c9ba418e4710a30d2d19ba1e4120db",
+      "bytes": 337
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/config.h": {
+      "sha256": "19e01fbd1d5d99b06baa9575a6c3c99353ac720ca055a68dfe95a69becc6e153",
+      "bytes": 7661
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/ieeefp.h": {
+      "sha256": "d4a06e4410874187a345752942ada750c74c9d80849e1b0d081b98a9c570db4f",
+      "bytes": 10105
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/features.h": {
+      "sha256": "a0efa8fe696cb885fac7b307793fff00e40bdb1051ecf81306c1a17c1bddef0f",
+      "bytes": 16330
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/cdefs.h": {
+      "sha256": "d8db73988994274b0d28d8abddb8bc555a9687db55d1f54f680e0842e959d296",
+      "bytes": 23259
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/_default_types.h": {
+      "sha256": "5d8f9f7ead7927e4b8b7ed00172e84f2ae82ea7f5f6ba3240ff813a9236771b3",
+      "bytes": 6650
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdarg.h": {
+      "sha256": "c13e54e7c95faa3ad5ebe3f024852a755612c26db49eabcf2b15cea48d4aa3c9",
+      "bytes": 4072
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/reent.h": {
+      "sha256": "33391d61a83ebbfb122e80514fbf7ed4d770556d8e8d46e029addbbf6077cd79",
+      "bytes": 25782
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_types.h": {
+      "sha256": "1bf0428859ddd602938cd25864ba4ebcb7bac003893c1a89d6ff1f11cd04752f",
+      "bytes": 5027
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/_types.h": {
+      "sha256": "44544ecbbc10c8aa58ca2da6d0617ffeee5af847af24515ab108c8218d6d92c8",
+      "bytes": 112
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/lock.h": {
+      "sha256": "f5cad9196ce745967fd2673e085b5c03df7887d4d11d7544aff05ff6679be6b8",
+      "bytes": 2455
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/assert.h": {
+      "sha256": "76d2c321e49e268077d5e6f14e3da71b8f1e28ced650fe3cd403261b3d09923f",
+      "bytes": 1172
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/types.h": {
+      "sha256": "0a9beb981196c25b1992ed65eb25c909d6de4047c498392ee24da069e93abf40",
+      "bytes": 5467
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_stdint.h": {
+      "sha256": "49f8328943afa2a83ed4a35fcb808ed08b8c9fcb55373c786fb1b1d3a21952d7",
+      "bytes": 1824
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_pthreadtypes.h": {
+      "sha256": "e0924bdccdc1b9983c51436971b690cd58024aa7c56b83f3e076bfc4f51091b6",
+      "bytes": 7510
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/sched.h": {
+      "sha256": "48534a2ecc4bbf6287a8ea9dfde9c7660608e25f0812d56c3733da696bd04743",
+      "bytes": 1898
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_timespec.h": {
+      "sha256": "cea8007561c4c9285063cc2f941a284d008e9f044fdfa346572e8bb39f236391",
+      "bytes": 2173
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/types.h": {
+      "sha256": "3be8e785d201f2972db6a96ae1adb4263227623c7e298aded1a662cb8da93ea3",
+      "bytes": 372
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/stdio.h": {
+      "sha256": "bd987ea6fed5d31d8a4e7d183a7d988e981ecca3cffce76ee482fcb0bf65594b",
+      "bytes": 799
+    },
+    "selected-sdk:idle-sdk/include/PortableResidentShell.h": {
+      "sha256": "d92e6cc59adb9f38139b3b1693990e6494fa327cc81747a7a591c9cbfd8a3696",
+      "bytes": 658
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/string.h": {
+      "sha256": "3dfccecfe9a38d9cb6d32c371c8269ca5c20e8103ea7f4547c82d38347220634",
+      "bytes": 5593
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/string.h": {
+      "sha256": "b7164ee36ccb0a08bc27c7e381ea417c97d8c3fd3157de62b75d2a6bf7a0a589",
+      "bytes": 116
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/stdlib.h": {
+      "sha256": "6ce97f49c423d05b3ef8305591c3e00837027ca10be391e8793109bcec7957d2",
+      "bytes": 11901
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/stdlib.h": {
+      "sha256": "43552e520d412993325ba62cb496839cd03fd46b0df67149a5ccbe1b95c45fdd",
+      "bytes": 138
+    },
+    "selected-system:Apps/PaperBattery.h": {
+      "sha256": "269daa3729f4e454f29dbc1323601cdc722e88ab428267af917af5cdbd4f7708",
+      "bytes": 1385
+    },
+    "selected-system:Apps/paper_sparse_clock.inc": {
+      "sha256": "21fd472ff7292b562bff0e26ec8c31b08fc4142239c9eda25e0133d24ef429b6",
+      "bytes": 23347
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClockApp.h": {
+      "sha256": "cdf7fdbacf6fd1ff8e8f080936082aafbe01af1c81cc7710d7d362fb69870b6c",
+      "bytes": 4564
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClock.h": {
+      "sha256": "603609b28ee7d891de2743d0f86417c3b00ca4201be28eb42ac257194e594bb4",
+      "bytes": 9675
+    },
+    "selected-sdk:idle-sdk/include/PortableReaderPreferences.h": {
+      "sha256": "3f0b7b12b1ddf6bf9c45c9598dab5488feadde0e9f5879b5e12c9f4eff8d4eda",
+      "bytes": 3347
+    },
+    "selected-sdk:idle-sdk/include/PortableSleepPolicy.h": {
+      "sha256": "70fa8ff8f63270b2a04d591bdbc61cd7e16d6483421121a96fe22f2855966d9d",
+      "bytes": 5753
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskPointsSnapshot.h": {
+      "sha256": "7d3a6816c86d029b9900e7af56e878cea814ed94d637a031031cc8fe928157eb",
+      "bytes": 3885
+    },
+    "selected-sdk:idle-sdk/include/PortablePointsCatalogView.h": {
+      "sha256": "0350a2d42d1befc07b838ef4386458d876cabc0820a2b773d9eb1b383dd2bead",
+      "bytes": 2368
+    },
+    "selected-sdk:idle-sdk/include/PointsCatalogProjection.h": {
+      "sha256": "df15444df2afdb7e202be1feee03154353523fd12ab781417ada4a3f0661bfea",
+      "bytes": 664
+    },
+    "selected-sdk:idle-sdk/include/PortableTimeZone.h": {
+      "sha256": "3cfb6687d8f3675beb020a059b8cd3b3d8beffd42c11c6fd61d14b48af729c54",
+      "bytes": 4467
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClockFaces.h": {
+      "sha256": "6864b07c69edcdc20e473d9716db2d9ce19edf2fbfafc379566c1990c78ac5a2",
+      "bytes": 1542
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClockSettings.h": {
+      "sha256": "ca26111d67474f7664d9fac748708c25f0bc0454c0ffe647e6199d689059af0d",
+      "bytes": 3874
+    },
+    "selected-sdk:idle-sdk/include/PortableRealtimeClient.h": {
+      "sha256": "9a366511975762ab7124931e9124756319acfe586ba9f3881a9f710129290b0a",
+      "bytes": 6070
+    },
+    "selected-sdk:idle-sdk/include/RiscRealtimeV1.h": {
+      "sha256": "639781f728841cda6d40c3033877436b9e5d59519a4b15e11a9bc99b2365395d",
+      "bytes": 2091
+    },
+    "selected-sdk:idle-sdk/include/PortableRtcBasis.h": {
+      "sha256": "89bd6751cf29c78e0eb3b76b3fe1862d5ebe733b9da0de4688e95150885496f9",
+      "bytes": 4114
+    },
+    "selected-sdk:idle-sdk/include/PortableTimeZonePreference.h": {
+      "sha256": "0674f99eebc20d8665dc63915019c39b0dd7171e0ea8b6a284150b2eb473d7b0",
+      "bytes": 1584
+    },
+    "selected-sdk:idle-sdk/include/RiscProviderPromotionV1.h": {
+      "sha256": "751585fed0336bf068cdde488d65b2e0191f113184e48eecbfb4f80861512c51",
+      "bytes": 1388
+    },
+    "selected-sdk:idle-sdk/include/PortableContextsClient.h": {
+      "sha256": "791163fe6f944f4b6d4a72611073c43c328dc93275a1bb7d68b09405be9dbe7c",
+      "bytes": 14287
+    },
+    "selected-sdk:idle-sdk/include/ContextsServiceV1.h": {
+      "sha256": "ade2f40d01c7c384c6a71b4ee2a3b077c140ac6af06d7cc69350f02f7be6643d",
+      "bytes": 6542
+    },
+    "selected-sdk:idle-sdk/include/PortableContextPreferences.h": {
+      "sha256": "1fb5e6d3cc796892f15c15162bd38b64d4b4508756de5f0c77b2015fbe388826",
+      "bytes": 7561
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickPreferences.h": {
+      "sha256": "bc0de08849d553da4049cee1608d765db1f48d89aa27524094088ea31d8b1b91",
+      "bytes": 3040
+    },
+    "selected-sdk:idle-sdk/include/PortableAlarmSettings.h": {
+      "sha256": "cf4fb88bfeabb99282b02a871963858a9d20c8985e7da80d57341c33c5250284",
+      "bytes": 2392
+    },
+    "selected-sdk:idle-sdk/include/PortableRadioPolicy.h": {
+      "sha256": "560cf6d492bcf3453b2ee260e6e4dfa102afece7fb1d406a77f2fa32465d1ae3",
+      "bytes": 3224
+    },
+    "selected-sdk:idle-sdk/include/PortableLowBattery.h": {
+      "sha256": "c83b663b1d5676c7eb7a8ec59157f0efc561802cfe2a3b6eb63937e28b0acca3",
+      "bytes": 4554
+    },
+    "selected-sdk:idle-sdk/include/PortablePowerStatus.h": {
+      "sha256": "957925504f2032963d1f2411bc676f2f6b493b41db3f9317182c2cca1a3067e4",
+      "bytes": 1039
+    },
+    "selected-sdk:idle-sdk/include/PortableContextFingerprints.h": {
+      "sha256": "76bfffa6336aa1caa10a0c479c6d67f6792847083a32da6b2910c3ec675d381c",
+      "bytes": 3906
+    },
+    "selected-sdk:idle-sdk/include/ContextFingerprintService.h": {
+      "sha256": "edbd70bd1542824f58ddd487cf22d7b59ced4bb762361288210a489a01c4f0b7",
+      "bytes": 2978
+    },
+    "selected-sdk:idle-sdk/include/ContextsRules.h": {
+      "sha256": "e890b236dd7a969f25db9642fcd8eea25eaed68f3dcb41820ffaacc95c159c89",
+      "bytes": 8405
+    },
+    "selected-sdk:idle-sdk/include/RiscAppDataV1.h": {
+      "sha256": "9eb18840ea691f88e85cca6ede3de4833467745ec29225a51a58cb84c0aac84e",
+      "bytes": 3869
+    },
+    "selected-sdk:idle-sdk/include/PortableFingerprintClock.h": {
+      "sha256": "7e133d788602d27b9332cecda8cc9cf8ee27bd30257f3d7570c886c675aa729b",
+      "bytes": 2046
+    },
+    "selected-sdk:idle-sdk/include/PortableContextRules.h": {
+      "sha256": "c5dc73ff50bdd59b2011a61a3a04a0f6949287cd8ec051bc4b898aeafef3f3cf",
+      "bytes": 5667
+    },
+    "selected-system:lib/PortableApps/boot_logo/RiscRteLogo.h": {
+      "sha256": "dc4cd411affdbe6a6f0bcc5961145111e900dff13da92a590cdba4d5a93bd481",
+      "bytes": 3547
+    },
+    "selected-system:Apps/paper_boot_animation.inc": {
+      "sha256": "c78417a19c34210f0616ecad298eb4a3bad979736c0417111f35285bda0e07d4",
+      "bytes": 2609
+    },
+    "selected-system:lib/PortableApps/include/PortableRaster.h": {
+      "sha256": "0cded4d7c7d288f5f7a9b20114810aee209302e042d9cfead2cd8316866afc2e",
+      "bytes": 915
+    },
+    "selected-system:lib/PortableApps/boot_logo/RiscRteBootAnimation.h": {
+      "sha256": "ea9ea37e2cef0a0d40ceb38b9c8ed3d991f73315b0968159539ad43c03ebaf51",
+      "bytes": 14876
+    },
+    "selected-system:Apps/paper_home_points.inc": {
+      "sha256": "e1098780996f17b5c17f3b6ed1aa22405821f7e751266729dc8bc1a18817c274",
+      "bytes": 15643
+    },
+    "selected-system:Apps/PaperHomeCatalogPoints.h": {
+      "sha256": "4c484d7a4205004ae414e8f6e2d5da8593192406d912b1c9b82ff8b0f27b4d87",
+      "bytes": 2866
+    },
+    "selected-sdk:idle-sdk/include/PortablePointsState.h": {
+      "sha256": "69dd5c45cea14991a06b397b800de7006aee8509d6ffa905a905f40d8a40baaa",
+      "bytes": 2936
+    },
+    "selected-sdk:idle-sdk/include/PointsUtcSchedule.h": {
+      "sha256": "b1ff4460410ec793d2fe7711562412c0e735e80c7fc4b881d761dab4e973e188",
+      "bytes": 6123
+    },
+    "selected-sdk:idle-sdk/include/PointsSchedule.h": {
+      "sha256": "9e34d32dbf989ee28f287813744748ab2d3193857a71bcab66e1f9b41749306c",
+      "bytes": 5713
+    },
+    "selected-sdk:idle-sdk/include/PointsRecords.h": {
+      "sha256": "ee59148062a39b2973e70c9c4816c1109686df0440d0ffd0d56ef0bff8820332",
+      "bytes": 11691
+    },
+    "selected-sdk:idle-sdk/include/AlarmRecords.h": {
+      "sha256": "e04d9cfa6c32a70125ef618b85d048936afad2204fb97d459cda8c36fd0b2066",
+      "bytes": 5040
+    },
+    "selected-sdk:idle-sdk/include/PortableHomePointsCatalog.h": {
+      "sha256": "d3c46fef226e626c0732c190108d016caf7bfbdfa0ac15c120e3ce281ca9181b",
+      "bytes": 623
+    },
+    "selected-system:Apps/PaperQuickIntent.h": {
+      "sha256": "3cad9e4a2d9e7a8301a61f1f43fa00a470223b77053000d09b1d538c52501bc0",
+      "bytes": 306
+    },
+    "selected-system:Apps/paper_home_type.inc": {
+      "sha256": "5e677d78a783aa1dfd968d5ed6897fd58faf7aa7a2a9a930aa9886a9f80d0a89",
+      "bytes": 11597
+    },
+    "selected-system:lib/PortableApps/home_fonts/text.inc": {
+      "sha256": "c027811edd22a69ac963a4fc1e0cf7f9c95b0c819bdb1ec77c58974276539a1d",
+      "bytes": 135721
+    },
+    "selected-system:lib/PortableApps/home_fonts/dial.inc": {
+      "sha256": "bb0ec471a837d97574c3b7047a53d1962b0de1adf2f2476072719578c80ea4c6",
+      "bytes": 21954
+    },
+    "selected-system:lib/PortableApps/home_fonts/desk_time.inc": {
+      "sha256": "4990d6d4fe1592f71afa7fcf40fbf6553823a5fcde5daa1443778a0af354a247",
+      "bytes": 17209
+    },
+    "selected-system:Apps/paper_home_reference.inc": {
+      "sha256": "1779b382d85c455dab3c52b3fcc3a60b4d3fe89ee481748e3e7bb2f5b6eb4994",
+      "bytes": 6482
+    },
+    "selected-system:lib/PortableApps/home_fonts/reference.inc": {
+      "sha256": "a345e3ece76cb4d117f27750248c20e97a62a45d2064b57d5cb4453d577cedf7",
+      "bytes": 156535
+    },
+    "selected-sdk:idle-sdk/include/PortableRasterLayer.h": {
+      "sha256": "6bfac32a8582a41d447bd8121dc76fdd147c2761f3d75ff458b556339c4f2ff9",
+      "bytes": 1525
+    },
+    "selected-system:lib/PortableApps/src/adapter.c": {
+      "sha256": "70da59abf9570fa4ba07cb82b7be9a20c965cc647fdfeced43cb0408f84deed7",
+      "bytes": 131985
+    },
+    "selected-sdk:idle-sdk/include/RiscRuntimeHostControlV1.h": {
+      "sha256": "697f710f7512dc724c2986bac0abc86756c9ae0739577b4f4ab20583a2743815",
+      "bytes": 855
+    },
+    "selected-sdk:idle-sdk/include/RiscResidentShellV1.h": {
+      "sha256": "1a84715c03fcc7fae7f75cb72c0daf875e761567dda5d1b39ec0dc8b14fba8bd",
+      "bytes": 6957
+    },
+    "selected-sdk:idle-sdk/include/PortableApps.h": {
+      "sha256": "d8fc1fae3669c439fda7af94568a93bc1d1f35ddc6fe05615eac1cb41ea4a78e",
+      "bytes": 300
+    },
+    "selected-sdk:idle-sdk/include/PortableTouch.h": {
+      "sha256": "817d5bde4d3a3c4634512503d283d0c7e731744a65e743305038294b58205004",
+      "bytes": 15111
+    },
+    "selected-sdk:idle-sdk/include/RiscTouchV1.h": {
+      "sha256": "fe18fab3ac20fda95747388f1428408b7795e5da3511c7a9fff07c16ddfd2c7d",
+      "bytes": 2703
+    },
+    "selected-sdk:idle-sdk/include/PortableNativeCustody.h": {
+      "sha256": "9dc7d0fb89bbab8304d829fa63e5baed3c6c348fdf37cc4166f5e8117a2594b6",
+      "bytes": 1046
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputPowerV1.h": {
+      "sha256": "e9c7d3bd3ddf9bce128503aafb5669734db09424149f45b3a6f735cd5a7c8667",
+      "bytes": 2501
+    },
+    "selected-sdk:idle-sdk/include/T5BatteryApi.h": {
+      "sha256": "f939c924102099de4ed746519791ce2b68eb2bac79bc212caeaad1366dc8c9a5",
+      "bytes": 2322
+    },
+    "selected-system:lib/NativeApps/include/T5StorageApi.h": {
+      "sha256": "be0d63a89943a75a58723b703284992e8c6e95956c7cb39a9b3523af2c5d23ba",
+      "bytes": 1717
+    },
+    "selected-system:lib/NativeApps/include/T5UiApi.h": {
+      "sha256": "88dbfde2a45ab385c69ee0b8192e8025446c9872711e4810f799251479b1057a",
+      "bytes": 3565
+    },
+    "selected-system:lib/NativeApps/include/T5VideoApi.h": {
+      "sha256": "af3f2318e53e20efb4e8e9e98d93abae11f1788fe14640c7b02392c22d08c6a4",
+      "bytes": 2901
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include-fixed/limits.h": {
+      "sha256": "a3d5feec7276fe05f811fd1831d46bd2b602d29ebc09255a7d67d70d67507800",
+      "bytes": 6089
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include-fixed/syslimits.h": {
+      "sha256": "22dd0ab81baadd5a8d455b445855f341d419c7b0267beca235de00b7ec78e529",
+      "bytes": 330
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/limits.h": {
+      "sha256": "da14a02ae312070c0da60d5251d4283d4214218e5ee5c63e4a07f2e24245ec62",
+      "bytes": 3888
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/syslimits.h": {
+      "sha256": "d8f01b787861f63ab1f01fcd29c1cdf9b1d48a1dfced9e12a3415ea0e908f9ff",
+      "bytes": 3211
+    },
+    "selected-sdk:idle-sdk/include/PortableBackgroundServices.h": {
+      "sha256": "f1291afed98c321a81550e7648234d478652f81299cbad9c44814218a384e5b8",
+      "bytes": 575
+    },
+    "selected-system:lib/PortableApps/src/performance.inc": {
+      "sha256": "547a1f1902f60b816b8dc25a28821fb0a4c84c21e219c460a6dbb760a8c71db9",
+      "bytes": 6261
+    },
+    "selected-sdk:idle-sdk/include/PortableInstalledCatalog.h": {
+      "sha256": "ead6bf9af9226d8e644bc257a7b7a3eb61d746bd14f10bd6ddbd57b309684e30",
+      "bytes": 1057
+    },
+    "selected-sdk:idle-sdk/include/InstalledAppsV1.h": {
+      "sha256": "0575bfdc3d54ca9430cc9689ca536384013a0e40b24c9002c28abfe2cc3f5d00",
+      "bytes": 2299
+    },
+    "selected-sdk:idle-sdk/include/RiscStorageVolumeV1.h": {
+      "sha256": "d477167a06004640b2c07c05d662c103be6e1b9e4a4d866f6fce13e754ef02f5",
+      "bytes": 9048
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickSession.h": {
+      "sha256": "5229c4bb8730151d15042e6695d44643810c27b85205160cf7bdb0b73349de98",
+      "bytes": 2339
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickActions.h": {
+      "sha256": "e96642f2d3a2056ec6022ef3f03806e5d2a2dfb582d8116480e32696a34c7883",
+      "bytes": 5051
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickRender.h": {
+      "sha256": "a442eff258880584976d81407cef82aac66e86b91d68ee919f477e92f5bef36a",
+      "bytes": 1534
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickRadios.h": {
+      "sha256": "676fbb46d0eae28fef515672a20c380088f69b3389a14ae44b5a67b9f014c44b",
+      "bytes": 488
+    },
+    "selected-sdk:idle-sdk/include/PortableBluetoothControl.h": {
+      "sha256": "777f0c7f92092d05a428c04255b6df1b3e9510a36c7425fc95092b3321e67a2c",
+      "bytes": 601
+    },
+    "selected-sdk:idle-sdk/include/WifiApi.h": {
+      "sha256": "eddb48c2e4284a592f32a540e10e02572bf251e3145783e9083278afd1aa0159",
+      "bytes": 2504
+    },
+    "selected-sdk:idle-sdk/include/RiscRadioScanV1.h": {
+      "sha256": "696227eecfd124f941023673680e0a15917d5b03c8f769756ed12ec34f7ccc9b",
+      "bytes": 1750
+    },
+    "selected-sdk:idle-sdk/include/RiscRadioAsyncV1.h": {
+      "sha256": "2b5a916cfe9e1fb6520043c2b8f3e8c13ea8e022166fcbdfa6b50ce691ebfe48",
+      "bytes": 2797
+    },
+    "selected-sdk:idle-sdk/include/PortableAlarmClient.h": {
+      "sha256": "2e16dcb9d4b7b27615756b6781a9354fb61c3c6ea4d33eba448062d783dd7c36",
+      "bytes": 6427
+    },
+    "selected-sdk:idle-sdk/include/PortableAlarmTerminalClient.h": {
+      "sha256": "2f2ea1064a106ca5d4a25ee5d69d700099f20814a4d7dcb92b18af9d53123f1a",
+      "bytes": 6948
+    },
+    "selected-system:lib/PortableApps/src/native_custody_adapter.inc": {
+      "sha256": "f0576be60ad328cb5e42eae00101b1545c7ad4f4d94d81a40b79b0ad4f69e017",
+      "bytes": 14352
+    },
+    "selected-system:lib/PortableApps/src/contexts_adapter.inc": {
+      "sha256": "09772b7aee76f3ff735bf394d10de940979714fc8f1c68f077232e18a30dc84a",
+      "bytes": 5936
+    },
+    "selected-sdk:idle-sdk/include/PortableBroadcastClient.h": {
+      "sha256": "51ed76a5fac542fb2d5ae039797806fd8b1d31f69a072340c0ce91e628cbff2d",
+      "bytes": 5193
+    },
+    "selected-sdk:idle-sdk/include/TelemetryBroadcastV1.h": {
+      "sha256": "986a52b5a3ddd361189d204e33624ce6275d953bca6a94a6e6dd5c136a89e2d5",
+      "bytes": 2202
+    },
+    "selected-sdk:idle-sdk/include/RiscTelemetryV1.h": {
+      "sha256": "8ef64c586e8392c1d7521498c25cfdaccefd53242530e2dda9116e9cc12a5d48",
+      "bytes": 1107
+    },
+    "selected-system:lib/PortableApps/src/broadcast_adapter.inc": {
+      "sha256": "6467b269f727fe3b6cea75e931dfa42c159ed119af9470d364e70f8bb26aa55a",
+      "bytes": 4780
+    },
+    "selected-sdk:idle-sdk/include/PortableNavigation.h": {
+      "sha256": "f3b9623d1e97d6a18df565aef0d9c934f18a1b97b701fbbc208de3bf0a344e6d",
+      "bytes": 773
+    },
+    "selected-sdk:idle-sdk/include/RiscInputNavigationV1.h": {
+      "sha256": "2644754feb7238d066908658ac9d4fe25537d4d5e424a6aef1365fabea600a26",
+      "bytes": 1713
+    },
+    "selected-system:lib/PortableApps/src/raster_snapshot_state.inc": {
+      "sha256": "9ac68f97f4dbc60b2ff1c9b227da7aa6abe6a1c28a450a7a46fe7053fc7eefaa",
+      "bytes": 3828
+    },
+    "selected-system:lib/PortableApps/src/nova.inc": {
+      "sha256": "6b4905d8840537ff6e8e82196b090b104dae1149a22a449d350778de762da07d",
+      "bytes": 11744
+    },
+    "selected-system:lib/PortableApps/fonts/icons.inc": {
+      "sha256": "fbfee54e9dd3fd331bdfc6babf60427ccffa93c4e8956ceb0129d2b6111d411d",
+      "bytes": 44023
+    },
+    "selected-system:lib/PortableApps/fonts/springboard_gamepad.inc": {
+      "sha256": "c67ff7e31de55f08882a8fbcca03f41789fb8edd0a6b8dc723cf2ce8c3c6248f",
+      "bytes": 1536
+    },
+    "selected-system:lib/PortableApps/fonts/text.inc": {
+      "sha256": "88aad3c3002381190ba5fc584fb2177b623cbeb30bc6cf7bfde10b0399d20c42",
+      "bytes": 22659
+    },
+    "selected-system:lib/PortableApps/src/paper.inc": {
+      "sha256": "0c961540912e0f42b1a9bb9bb95086d8a1296a48b5d1aa1e96da28c624888939",
+      "bytes": 5675
+    },
+    "selected-system:lib/PortableApps/paper_fonts/text.inc": {
+      "sha256": "9ee273df1c27df92d8ab2a985fb474d15b715770984894da4fee40b8cd9f2e4a",
+      "bytes": 30441
+    },
+    "selected-system:lib/PortableApps/src/paper_transition.inc": {
+      "sha256": "1dd29653b9effbf277591cebe6d634cb5dff816159962f6005c78605212ca4fc",
+      "bytes": 2753
+    },
+    "selected-sdk:idle-sdk/include/PortablePaperTransition.h": {
+      "sha256": "2f1b60dddeeae8111287fc0aa13d0d15fcc37fcdaa5da3ae6fb96edb85847328",
+      "bytes": 1240
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputSnapshotV1.h": {
+      "sha256": "b835fd1a3600551d54efb2806cbe8dd3ecc512a538572dc853aaf11f4e2490b6",
+      "bytes": 2062
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputMetricsV1.h": {
+      "sha256": "5be17adbae2ec26a855894e0d6443ac29572002c21efe53b2a913a5a0f0c642d",
+      "bytes": 3203
+    },
+    "selected-system:lib/PortableApps/src/quick_adapter.inc": {
+      "sha256": "0f1598c533e487cfdc19633ccbeb8760cc813d249efce7eaadfe5c1e8b2722ef",
+      "bytes": 24357
+    },
+    "selected-system:lib/PortableApps/src/quick_paper.inc": {
+      "sha256": "f3bfacb674b2a0960419a472418e0a18660e0723a3c333d9dfa9b92cb08ee25b",
+      "bytes": 6476
+    },
+    "selected-system:lib/PortableApps/src/quick_reference.inc": {
+      "sha256": "e1482082ea2f03082f49fbd416590f6f22370fa93e3a6e4de5a542b3eb3efdbe",
+      "bytes": 10609
+    },
+    "selected-system:lib/PortableApps/quick_fonts/reference.inc": {
+      "sha256": "9519bbcd9100f275488ef5cb142e648389f8bd1addf1bab7f3609fe464c87308",
+      "bytes": 47562
+    },
+    "selected-system:lib/PortableApps/src/contexts_policy.inc": {
+      "sha256": "0e90782a4f6ac054ce5deb2da29a4b29424cb238fe220df548f4fef41386fc9c",
+      "bytes": 7542
+    },
+    "selected-system:lib/PortableApps/src/contexts_rules_adapter.inc": {
+      "sha256": "6ef74ac5ac2faf93796af6dc4cffe9b2cdcde3e9cd3b566509c1865ac77b0236",
+      "bytes": 5488
+    },
+    "selected-sdk:idle-sdk/include/PortableContextActions.h": {
+      "sha256": "9ebea2abc377b880fed7ab8537b93fa123eb58ea11d35f53aa96bcf4fd0dbb0c",
+      "bytes": 2692
+    },
+    "selected-sdk:idle-sdk/include/alarm_writer.h": {
+      "sha256": "6a28cd9955cbd099fe778777c63ebcb2c606ee48bab206fece6f45c644138ba0",
+      "bytes": 1792
+    },
+    "selected-system:lib/PortableApps/src/contexts_clock.inc": {
+      "sha256": "85fa81404b037fee3bd605721c8658395e5f42584b3d64619d4896dc7ff7993b",
+      "bytes": 4186
+    },
+    "selected-system:lib/PortableApps/src/installed_catalog_adapter.inc": {
+      "sha256": "76aabb6052b96cd2925d03d7f5648a1d4d295a08f0f8e108f9334bd314409d4b",
+      "bytes": 1479
+    },
+    "selected-system:lib/PortableApps/src/resident_adapter.inc": {
+      "sha256": "c8086ddb8f773046eb3961d2bb4e20b9916867d3e14351d7231c316c38b2d806",
+      "bytes": 11051
+    },
+    "selected-system:lib/PortableApps/src/resident_shell.inc": {
+      "sha256": "1da77c2ced23782ceef3ebf21e5393834d7f70a3b70187cbbcc40569c6d0fdda",
+      "bytes": 10424
+    },
+    "selected-system:lib/PortableApps/src/resident_failure.inc": {
+      "sha256": "7ba48431a9b1db8448abfbfcd7687034d865370d84fbee62785c3fbb0897bae1",
+      "bytes": 6709
+    },
+    "selected-system:lib/PortableApps/src/failure_evidence.inc": {
+      "sha256": "e3fe25694d5fea76681831cd90ba0a4ed3aa102acb2cd0d64fbafe41facfe5ce",
+      "bytes": 7264
+    },
+    "selected-sdk:idle-sdk/include/RiscFailureEvidenceV1.h": {
+      "sha256": "f2b024c21780155bacf78bd67a279d8959365c1d25ff1ba421449dd5d3b35265",
+      "bytes": 3015
+    },
+    "selected-sdk:idle-sdk/include/FailureEvidenceReport.h": {
+      "sha256": "4e82c61315936c04ee75f61f6a375b2f568fdd6aacc58487127a11f0932c4a67",
+      "bytes": 6299
+    },
+    "selected-system:lib/PortableApps/src/failure_archive.inc": {
+      "sha256": "d70d5ab3f217ceed7e8ae26156d1856d95473eeb3dafc8d7b1b105115e7d72c2",
+      "bytes": 12472
+    },
+    "selected-sdk:idle-sdk/include/CrashReportSpool.h": {
+      "sha256": "73937a89c3b6000ceb3db51664d3677be5fa13886b3deb8898baff85732b78ec",
+      "bytes": 19815
+    },
+    "selected-sdk:idle-sdk/include/CrashReportSd.h": {
+      "sha256": "779e02c23c190439a7683b0cc827012e3fbe781085a118e2722ec22604d5f6ba",
+      "bytes": 13702
+    },
+    "selected-sdk:idle-sdk/include/RiscStorageVolumeStateV1.h": {
+      "sha256": "1f2f7dbfe9ec7ac27a57149ac720cf7f3a4801d6d34b5532f77c77db252b87a1",
+      "bytes": 1750
+    },
+    "selected-sdk:idle-sdk/include/RiscStorageExportV1.h": {
+      "sha256": "74ae82f05a916ca0d2df1bb251bc66cc0ac33dde38757ced7c8e864374d43c8a",
+      "bytes": 5001
+    },
+    "selected-system:lib/PortableApps/src/resident_policy.inc": {
+      "sha256": "0d8dfb5b531706b3ab7fb0da8291335fed77446cb0539825ae6830f10e21429a",
+      "bytes": 4221
+    },
+    "selected-sdk:idle-sdk/include/PortableResidentPolicyInput.h": {
+      "sha256": "58063d5b10c848c09a1340e297c6aeb8fc7b9b4d7aed32e813d6c1904fbc5c0e",
+      "bytes": 658
+    },
+    "selected-system:lib/PortableApps/src/resident_sleep.inc": {
+      "sha256": "882fe0ea2afccf446ffa5997d98e022999ee89ed59e63b1fb2cb730ce3c70c6b",
+      "bytes": 6721
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputSettledV1.h": {
+      "sha256": "18bfd89f3fa01d35e74f83c28ace60f16ca42fa0f678d7dc1fdc16e163fccc4f",
+      "bytes": 1645
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputFrontlightV1.h": {
+      "sha256": "80add72493af301d89b521cd1987dbc3e17c618c5c56415ddf345aff50f4d18d",
+      "bytes": 1814
+    },
+    "selected-system:lib/PortableApps/src/resident_loading.inc": {
+      "sha256": "9f16e692c6bd0aa4740e83d3048ced4be85246adce82b956c0935086eb013f09",
+      "bytes": 3276
+    },
+    "selected-system:lib/PortableApps/src/alarm.inc": {
+      "sha256": "310619d5df3759fd20c7594a26eb08b5180e201795cc67af879ec3dfd1fa525e",
+      "bytes": 21548
+    },
+    "selected-system:lib/PortableApps/src/raster_snapshot_replay.inc": {
+      "sha256": "cc87e7c47d4928eb495cfe62ea0516fb3a07e00426c09d3c301f3255c4302c9a",
+      "bytes": 19052
+    },
+    "selected-system:lib/PortableApps/src/raster_layers.inc": {
+      "sha256": "37d11bf454fc73bc49de5a4723ccad058c00d244b80af511f2a9656d20afd357",
+      "bytes": 5976
+    },
+    "selected-system:lib/PortableApps/src/sparse_clock_adapter.inc": {
+      "sha256": "d176c37eb47b9bf80f9003356a43470aa7cbebf8a88ca2e157b6b5bc71e46fa2",
+      "bytes": 18219
+    },
+    "selected-system:lib/PortableApps/src/home_points_catalog_adapter.inc": {
+      "sha256": "3da35f5e6651a5224fa96696ec152ce4084d2c78d16e1ba1bc4f5d916553ccf9",
+      "bytes": 962
+    },
+    "selected-sdk:idle-sdk/include/PointsServiceProjection.h": {
+      "sha256": "42710361e60a6f644377302d1492ef24bbfd392aebe72acac3b8c5414702977a",
+      "bytes": 1265
+    },
+    "selected-sdk:catalog.c": {
+      "sha256": "fdb5735f35b0480c60a9de0210e352e322ad7ec31629b2af7aa40d3d4782ce87",
+      "bytes": 2440
+    },
+    "selected-system:lib/PortableApps/src/quick_actions.c": {
+      "sha256": "5eb885a4940edceefc1d96b8cce977bdfaf7dfaf46a0efca6bf5ea382262f7d8",
+      "bytes": 17760
+    },
+    "selected-system:lib/PortableApps/src/quick_render.c": {
+      "sha256": "d5b02fc2fd6a9eb2e9b2ccfc9848cb786fb2cf9da613d0514eb529c3375337dc",
+      "bytes": 10756
+    },
+    "selected-system:lib/PortableApps/src/quick_actions_assets.inc": {
+      "sha256": "6e0eadad1387eee501f4524d3b21d86fac61e9051822c368070468b9c41d896c",
+      "bytes": 31324
+    },
+    "selected-system:lib/PortableApps/src/quick_session.c": {
+      "sha256": "a1f649cd59652e5e70f29832188c36459e72a3dc2bc31075bfd7f3ee83311f08",
+      "bytes": 12255
+    },
+    "selected-system:lib/PortableApps/src/quick_radios.c": {
+      "sha256": "77285cd11aba58869274b3d0684d8a5969dcb0659cec82caac1e12ea078d053b",
+      "bytes": 6032
+    },
+    "selected-product:minimal/apps/portable_idle_sleep.c": {
+      "sha256": "8bef69d648dc1c8aad12adb24c90a2a48320287a74ff969ca33d9186fc3ab297",
+      "bytes": 8373
+    },
+    "selected-product:minimal/drivers/x4pro_power/X4PowerV1.h": {
+      "sha256": "ba4696466768e45bd5a3b675a280a195c1015576630a57022477cab05f09027f",
+      "bytes": 659
+    },
+    "selected-sdk:idle-sdk/include/RiscLightSleepV1.h": {
+      "sha256": "43cbd671265959ec2db7904bf6185e97a87c4cde9d389cdccf6fbb7c916f3b94",
+      "bytes": 1307
+    },
+    "selected-sdk:idle-sdk/include/RiscTimedSleepV1.h": {
+      "sha256": "475ba9bfaf6c7497ace7baeb93f2bd9a6abe1e3a91f62eed24862a88d60dbf34",
+      "bytes": 1359
+    },
+    "selected-sdk:idle-sdk/include/RiscDeepSleepV1.h": {
+      "sha256": "0949cf9591ef0f07b61c1306897287ea2eb1533755b5e569bfe1cb2c9b236161",
+      "bytes": 1880
+    },
+    "selected-sdk:idle-sdk/include/RiscTouchPowerV1.h": {
+      "sha256": "82c6faed9b7e26788e3a226cd3532b1d2c3b59447c8abdc25b5e407ef0399dd0",
+      "bytes": 3013
+    },
+    "selected-system:lib/PortableApps/src/desk_clock_faces.c": {
+      "sha256": "f76843e4e7d5607205328e491fdb5f0d21121728607b894d2a1c266630e19fc7",
+      "bytes": 9989
+    },
+    "selected-system:lib/PortableApps/desk_clock/digits.inc": {
+      "sha256": "a636cf8ee3f31e379e3624931ef88588a771cc81b43ed0a2696779ecdc09a700",
+      "bytes": 80080
+    },
+    "selected-system:lib/PortableApps/desk_clock/sine.inc": {
+      "sha256": "8d1ec56b53a684dbf4c2020439499cf1d81470647caa24a092b443e236658560",
+      "bytes": 1662
+    },
+    "selected-product:minimal/apps/portable_sleep.c": {
+      "sha256": "0858a85e56bb12ef1255b02eeb5fb3618a4e46fd283e0a369f4f3bffefe0462b",
+      "bytes": 29604
+    },
+    "selected-product:minimal/drivers/x4pro_power/X4PowerDeepV1.h": {
+      "sha256": "61690e17fe81558c692b8029b21af284e782370a96bb9ff890de81d2ef9b50a9",
+      "bytes": 1259
+    },
+    "selected-sdk:idle-sdk/include/RiscRetainedWakeV1.h": {
+      "sha256": "7c7b6f0d56631f3aab521a43499d2ea840d075084536e4afa654a74c52e1e511",
+      "bytes": 2933
+    },
+    "selected-system:lib/PortableApps/src/PortableRealtimeClient.c": {
+      "sha256": "a8115817eb490bb51f3e338fde4dce2542cb82dceefe476beae21a91c14ceade",
+      "bytes": 12233
+    },
+    "selected-system:lib/PortableApps/src/PortableTimeZone.c": {
+      "sha256": "28c0fecf7a4d83bde07d2b72cb591122cf3c49c3219c8344b97b82a90625c5e7",
+      "bytes": 13774
+    },
+    "selected-system:lib/PortableApps/src/PortableTimeZoneCatalog.c": {
+      "sha256": "29d4c86037f7554c94a4404d5e39e28091430a1f9c23b5e35224aed3df826f20",
+      "bytes": 28608
+    },
+    "selected-system:lib/PortableApps/src/PortableTimeZonePreference.c": {
+      "sha256": "b54e455d587ba2ecda8f59dd899b59b767214aee807b92d79d18c5e9d30b6bb7",
+      "bytes": 3514
+    },
+    "selected-system:lib/PortableApps/src/PortableInstalledCatalog.c": {
+      "sha256": "a4b9f7c7f894cf71d7479b43dad63ad7edfba0013c379d1ac28c7269531630a6",
+      "bytes": 7454
+    }
+  },
+  "predecessor_actual_dependencies": {
+    "selected-system:Apps/paper_clock.c": {
+      "sha256": "bc00b0bbef8c23f76c0ca21e0808f4293a25ab635f0a798586fe7008d66b59a3",
+      "bytes": 18838
+    },
+    "selected-system:lib/NativeApps/include/T5AppApi.h": {
+      "sha256": "23ec6910005343055e71d0a364458824734f52c91a28364e419a85e94aa4ff42",
+      "bytes": 10831
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdbool.h": {
+      "sha256": "e623d179a58105d3c9213fd11384dd39cde9f1ecc06c09af9faeaa9cde3d3dde",
+      "bytes": 1524
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stddef.h": {
+      "sha256": "00d0ea9efd2c42822baefc048d5e99e136e5f3482fbeb610ec512867c6c5f391",
+      "bytes": 14140
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdint.h": {
+      "sha256": "86a7914ab7d6a18465a6fb9a7b54f945cad604fdbf3ca0d10e4e0254e0037911",
+      "bytes": 328
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdint-gcc.h": {
+      "sha256": "2e51dee23483fb7cec9895dff04fc314372847631f3227aef6fe636e269d8ca7",
+      "bytes": 9457
+    },
+    "selected-sdk:idle-sdk/include/RiscRuntimeV1.h": {
+      "sha256": "6e114c69b4de04a8faa254d89e92143b11549824f53d63b8e75d7e09cd216387",
+      "bytes": 7932
+    },
+    "selected-sdk:idle-sdk/include/PortableTime.h": {
+      "sha256": "350b8c5255dafa9e25c4a20cfb458cdcda3439da929dab05e0de0c82e981ff6e",
+      "bytes": 2920
+    },
+    "selected-sdk:idle-sdk/time/denver/display_time.h": {
+      "sha256": "9460e26e1d6faf574a212cdec86d9477de7a0e5d50168d5e7e76613be2868a03",
+      "bytes": 2710
+    },
+    "selected-sdk:idle-sdk/time/denver/twatch_calendar.h": {
+      "sha256": "67e4a670e4ee8a485843e99be0d198d0b60d84a0bc8d84fc77a3d0e4bde39733",
+      "bytes": 553
+    },
+    "selected-sdk:idle-sdk/time/denver/twatch_caps.h": {
+      "sha256": "b8b3003c77c72eb251227329c94fda7244389fb45c7a7e92aa01a5ddce50600e",
+      "bytes": 217
+    },
+    "selected-sdk:idle-sdk/include/PortableRtcClock.h": {
+      "sha256": "43508db1cd392606cf37a7e55ad15e3770de1284af13a431876fd5d7785b838c",
+      "bytes": 1813
+    },
+    "selected-sdk:idle-sdk/include/PortableTimeFormat.h": {
+      "sha256": "8eb4d0f850c974da910a516c0f13ed9302ad3928849aa85d7641bdbcf3bd1867",
+      "bytes": 2574
+    },
+    "selected-sdk:idle-sdk/include/RiscKeyValueV1.h": {
+      "sha256": "0e73bf29c402be030baf52f5b2b324f5b872549cdf58aa31f45b72bd70977179",
+      "bytes": 2339
+    },
+    "selected-sdk:idle-sdk/include/RiscBatteryGaugeV1.h": {
+      "sha256": "03d2f2b78e8f261cfb10f5c44bcabc1495bfecb17d7953586a58c27dce151b86",
+      "bytes": 535
+    },
+    "selected-sdk:idle-sdk/include/RiscProviderV2.h": {
+      "sha256": "2935d83493a411e19ee98b8c7e805b86f4adf98c6bde66fd031df7cc379bdc17",
+      "bytes": 3302
+    },
+    "selected-sdk:idle-sdk/include/RiscStreamProviderV1.h": {
+      "sha256": "0fe306e060321387c816bb70ec4370a501a423f4fe19a20c9be80aa1b98f3432",
+      "bytes": 1411
+    },
+    "selected-sdk:idle-sdk/include/PortableAppSleep.h": {
+      "sha256": "027f70965663bc86e7f3bbf2733002870e2254ec92d39037def5f42c52fedc62",
+      "bytes": 3195
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputV1.h": {
+      "sha256": "99b682ba34f07e7868dec8e78dfb816c067fdc184e647033bc6ed8d489b9c9a2",
+      "bytes": 5930
+    },
+    "selected-sdk:idle-sdk/include/AlarmServiceV2.h": {
+      "sha256": "d7e750a8093e1b5e698483254edc38533b7242a3446d0bca5866c9dfd6ad07a1",
+      "bytes": 2434
+    },
+    "selected-sdk:idle-sdk/include/AlarmServiceV1.h": {
+      "sha256": "c70c087550306c123255e1ace41aeb504809e16b0193e382ec8dfbd7cb5531f5",
+      "bytes": 5105
+    },
+    "selected-system:Apps/PaperPresentation.h": {
+      "sha256": "8d13a8c73187d1e35f67c3208f861b95ceac143b6401e6572c2b4356ef409747",
+      "bytes": 1161
+    },
+    "selected-system:Apps/SpringboardPresentation.h": {
+      "sha256": "af80cd3f66de0ca0ca7077a926e196a14de2c79263d449f90e501090aa55031b",
+      "bytes": 953
+    },
+    "selected-system:Apps/PaperFrame.h": {
+      "sha256": "8c7952e8e43cc404ec485dd5b6cbf1e8200b2b4f88409c903ecf1fd0667e2d5b",
+      "bytes": 1586
+    },
+    "selected-sdk:idle-sdk/include/PortablePerformance.h": {
+      "sha256": "4242d93019235138f6d0a80cd1edc58e55b9c591157d5f90b0d6c2992ce0672e",
+      "bytes": 1808
+    },
+    "selected-sdk:idle-sdk/include/PortableStageLog.h": {
+      "sha256": "b347496d8bbb70cbbc19bd85d4a4a214f57b660d90cfb1ccaab9138fac787f02",
+      "bytes": 871
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/stdio.h": {
+      "sha256": "48c6e22a842695f5ea6147a796da05b8cb3d9422c9d507ac6ccf411fdcac98c9",
+      "bytes": 29725
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/_ansi.h": {
+      "sha256": "5c6403b471ee897c9a6c12e00a58617247804eb3ee72d7baeb7c08616090dd1d",
+      "bytes": 2625
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/newlib.h": {
+      "sha256": "3ef7b3e450249c3146c88050f2a30281dadd6ec6592c05d488b6017ae715cac5",
+      "bytes": 7293
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/_newlib_version.h": {
+      "sha256": "93a397574a25b9c143cee7fcb86d8fc9a0c9ba418e4710a30d2d19ba1e4120db",
+      "bytes": 337
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/config.h": {
+      "sha256": "19e01fbd1d5d99b06baa9575a6c3c99353ac720ca055a68dfe95a69becc6e153",
+      "bytes": 7661
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/ieeefp.h": {
+      "sha256": "d4a06e4410874187a345752942ada750c74c9d80849e1b0d081b98a9c570db4f",
+      "bytes": 10105
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/features.h": {
+      "sha256": "a0efa8fe696cb885fac7b307793fff00e40bdb1051ecf81306c1a17c1bddef0f",
+      "bytes": 16330
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/cdefs.h": {
+      "sha256": "d8db73988994274b0d28d8abddb8bc555a9687db55d1f54f680e0842e959d296",
+      "bytes": 23259
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/_default_types.h": {
+      "sha256": "5d8f9f7ead7927e4b8b7ed00172e84f2ae82ea7f5f6ba3240ff813a9236771b3",
+      "bytes": 6650
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdarg.h": {
+      "sha256": "c13e54e7c95faa3ad5ebe3f024852a755612c26db49eabcf2b15cea48d4aa3c9",
+      "bytes": 4072
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/reent.h": {
+      "sha256": "33391d61a83ebbfb122e80514fbf7ed4d770556d8e8d46e029addbbf6077cd79",
+      "bytes": 25782
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_types.h": {
+      "sha256": "1bf0428859ddd602938cd25864ba4ebcb7bac003893c1a89d6ff1f11cd04752f",
+      "bytes": 5027
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/_types.h": {
+      "sha256": "44544ecbbc10c8aa58ca2da6d0617ffeee5af847af24515ab108c8218d6d92c8",
+      "bytes": 112
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/lock.h": {
+      "sha256": "f5cad9196ce745967fd2673e085b5c03df7887d4d11d7544aff05ff6679be6b8",
+      "bytes": 2455
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/assert.h": {
+      "sha256": "76d2c321e49e268077d5e6f14e3da71b8f1e28ced650fe3cd403261b3d09923f",
+      "bytes": 1172
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/types.h": {
+      "sha256": "0a9beb981196c25b1992ed65eb25c909d6de4047c498392ee24da069e93abf40",
+      "bytes": 5467
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_stdint.h": {
+      "sha256": "49f8328943afa2a83ed4a35fcb808ed08b8c9fcb55373c786fb1b1d3a21952d7",
+      "bytes": 1824
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_pthreadtypes.h": {
+      "sha256": "e0924bdccdc1b9983c51436971b690cd58024aa7c56b83f3e076bfc4f51091b6",
+      "bytes": 7510
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/sched.h": {
+      "sha256": "48534a2ecc4bbf6287a8ea9dfde9c7660608e25f0812d56c3733da696bd04743",
+      "bytes": 1898
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/_timespec.h": {
+      "sha256": "cea8007561c4c9285063cc2f941a284d008e9f044fdfa346572e8bb39f236391",
+      "bytes": 2173
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/types.h": {
+      "sha256": "3be8e785d201f2972db6a96ae1adb4263227623c7e298aded1a662cb8da93ea3",
+      "bytes": 372
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/stdio.h": {
+      "sha256": "bd987ea6fed5d31d8a4e7d183a7d988e981ecca3cffce76ee482fcb0bf65594b",
+      "bytes": 799
+    },
+    "selected-sdk:idle-sdk/include/PortableResidentShell.h": {
+      "sha256": "d92e6cc59adb9f38139b3b1693990e6494fa327cc81747a7a591c9cbfd8a3696",
+      "bytes": 658
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/string.h": {
+      "sha256": "3dfccecfe9a38d9cb6d32c371c8269ca5c20e8103ea7f4547c82d38347220634",
+      "bytes": 5593
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/string.h": {
+      "sha256": "b7164ee36ccb0a08bc27c7e381ea417c97d8c3fd3157de62b75d2a6bf7a0a589",
+      "bytes": 116
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/stdlib.h": {
+      "sha256": "6ce97f49c423d05b3ef8305591c3e00837027ca10be391e8793109bcec7957d2",
+      "bytes": 11901
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/machine/stdlib.h": {
+      "sha256": "43552e520d412993325ba62cb496839cd03fd46b0df67149a5ccbe1b95c45fdd",
+      "bytes": 138
+    },
+    "selected-system:Apps/PaperBattery.h": {
+      "sha256": "269daa3729f4e454f29dbc1323601cdc722e88ab428267af917af5cdbd4f7708",
+      "bytes": 1385
+    },
+    "selected-system:Apps/paper_sparse_clock.inc": {
+      "sha256": "21fd472ff7292b562bff0e26ec8c31b08fc4142239c9eda25e0133d24ef429b6",
+      "bytes": 23347
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClockApp.h": {
+      "sha256": "cdf7fdbacf6fd1ff8e8f080936082aafbe01af1c81cc7710d7d362fb69870b6c",
+      "bytes": 4564
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClock.h": {
+      "sha256": "603609b28ee7d891de2743d0f86417c3b00ca4201be28eb42ac257194e594bb4",
+      "bytes": 9675
+    },
+    "selected-sdk:idle-sdk/include/PortableReaderPreferences.h": {
+      "sha256": "3f0b7b12b1ddf6bf9c45c9598dab5488feadde0e9f5879b5e12c9f4eff8d4eda",
+      "bytes": 3347
+    },
+    "selected-sdk:idle-sdk/include/PortableSleepPolicy.h": {
+      "sha256": "70fa8ff8f63270b2a04d591bdbc61cd7e16d6483421121a96fe22f2855966d9d",
+      "bytes": 5753
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskPointsSnapshot.h": {
+      "sha256": "7d3a6816c86d029b9900e7af56e878cea814ed94d637a031031cc8fe928157eb",
+      "bytes": 3885
+    },
+    "selected-sdk:idle-sdk/include/PortablePointsCatalogView.h": {
+      "sha256": "0350a2d42d1befc07b838ef4386458d876cabc0820a2b773d9eb1b383dd2bead",
+      "bytes": 2368
+    },
+    "selected-sdk:idle-sdk/include/PointsCatalogProjection.h": {
+      "sha256": "df15444df2afdb7e202be1feee03154353523fd12ab781417ada4a3f0661bfea",
+      "bytes": 664
+    },
+    "selected-sdk:idle-sdk/include/PortableTimeZone.h": {
+      "sha256": "3cfb6687d8f3675beb020a059b8cd3b3d8beffd42c11c6fd61d14b48af729c54",
+      "bytes": 4467
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClockFaces.h": {
+      "sha256": "6864b07c69edcdc20e473d9716db2d9ce19edf2fbfafc379566c1990c78ac5a2",
+      "bytes": 1542
+    },
+    "selected-sdk:idle-sdk/include/PortableDeskClockSettings.h": {
+      "sha256": "ca26111d67474f7664d9fac748708c25f0bc0454c0ffe647e6199d689059af0d",
+      "bytes": 3874
+    },
+    "selected-sdk:idle-sdk/include/PortableRealtimeClient.h": {
+      "sha256": "9a366511975762ab7124931e9124756319acfe586ba9f3881a9f710129290b0a",
+      "bytes": 6070
+    },
+    "selected-sdk:idle-sdk/include/RiscRealtimeV1.h": {
+      "sha256": "639781f728841cda6d40c3033877436b9e5d59519a4b15e11a9bc99b2365395d",
+      "bytes": 2091
+    },
+    "selected-sdk:idle-sdk/include/PortableRtcBasis.h": {
+      "sha256": "89bd6751cf29c78e0eb3b76b3fe1862d5ebe733b9da0de4688e95150885496f9",
+      "bytes": 4114
+    },
+    "selected-sdk:idle-sdk/include/PortableTimeZonePreference.h": {
+      "sha256": "0674f99eebc20d8665dc63915019c39b0dd7171e0ea8b6a284150b2eb473d7b0",
+      "bytes": 1584
+    },
+    "selected-sdk:idle-sdk/include/RiscProviderPromotionV1.h": {
+      "sha256": "751585fed0336bf068cdde488d65b2e0191f113184e48eecbfb4f80861512c51",
+      "bytes": 1388
+    },
+    "selected-sdk:idle-sdk/include/PortableContextsClient.h": {
+      "sha256": "791163fe6f944f4b6d4a72611073c43c328dc93275a1bb7d68b09405be9dbe7c",
+      "bytes": 14287
+    },
+    "selected-sdk:idle-sdk/include/ContextsServiceV1.h": {
+      "sha256": "ade2f40d01c7c384c6a71b4ee2a3b077c140ac6af06d7cc69350f02f7be6643d",
+      "bytes": 6542
+    },
+    "selected-sdk:idle-sdk/include/PortableContextPreferences.h": {
+      "sha256": "1fb5e6d3cc796892f15c15162bd38b64d4b4508756de5f0c77b2015fbe388826",
+      "bytes": 7561
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickPreferences.h": {
+      "sha256": "bc0de08849d553da4049cee1608d765db1f48d89aa27524094088ea31d8b1b91",
+      "bytes": 3040
+    },
+    "selected-sdk:idle-sdk/include/PortableAlarmSettings.h": {
+      "sha256": "cf4fb88bfeabb99282b02a871963858a9d20c8985e7da80d57341c33c5250284",
+      "bytes": 2392
+    },
+    "selected-sdk:idle-sdk/include/PortableRadioPolicy.h": {
+      "sha256": "560cf6d492bcf3453b2ee260e6e4dfa102afece7fb1d406a77f2fa32465d1ae3",
+      "bytes": 3224
+    },
+    "selected-sdk:idle-sdk/include/PortableLowBattery.h": {
+      "sha256": "c83b663b1d5676c7eb7a8ec59157f0efc561802cfe2a3b6eb63937e28b0acca3",
+      "bytes": 4554
+    },
+    "selected-sdk:idle-sdk/include/PortablePowerStatus.h": {
+      "sha256": "957925504f2032963d1f2411bc676f2f6b493b41db3f9317182c2cca1a3067e4",
+      "bytes": 1039
+    },
+    "selected-sdk:idle-sdk/include/PortableContextFingerprints.h": {
+      "sha256": "76bfffa6336aa1caa10a0c479c6d67f6792847083a32da6b2910c3ec675d381c",
+      "bytes": 3906
+    },
+    "selected-sdk:idle-sdk/include/ContextFingerprintService.h": {
+      "sha256": "edbd70bd1542824f58ddd487cf22d7b59ced4bb762361288210a489a01c4f0b7",
+      "bytes": 2978
+    },
+    "selected-sdk:idle-sdk/include/ContextsRules.h": {
+      "sha256": "e890b236dd7a969f25db9642fcd8eea25eaed68f3dcb41820ffaacc95c159c89",
+      "bytes": 8405
+    },
+    "selected-sdk:idle-sdk/include/RiscAppDataV1.h": {
+      "sha256": "9eb18840ea691f88e85cca6ede3de4833467745ec29225a51a58cb84c0aac84e",
+      "bytes": 3869
+    },
+    "selected-sdk:idle-sdk/include/PortableFingerprintClock.h": {
+      "sha256": "7e133d788602d27b9332cecda8cc9cf8ee27bd30257f3d7570c886c675aa729b",
+      "bytes": 2046
+    },
+    "selected-sdk:idle-sdk/include/PortableContextRules.h": {
+      "sha256": "c5dc73ff50bdd59b2011a61a3a04a0f6949287cd8ec051bc4b898aeafef3f3cf",
+      "bytes": 5667
+    },
+    "selected-system:lib/PortableApps/boot_logo/RiscRteLogo.h": {
+      "sha256": "dc4cd411affdbe6a6f0bcc5961145111e900dff13da92a590cdba4d5a93bd481",
+      "bytes": 3547
+    },
+    "selected-system:Apps/paper_boot_animation.inc": {
+      "sha256": "c78417a19c34210f0616ecad298eb4a3bad979736c0417111f35285bda0e07d4",
+      "bytes": 2609
+    },
+    "selected-system:lib/PortableApps/include/PortableRaster.h": {
+      "sha256": "0cded4d7c7d288f5f7a9b20114810aee209302e042d9cfead2cd8316866afc2e",
+      "bytes": 915
+    },
+    "selected-system:lib/PortableApps/boot_logo/RiscRteBootAnimation.h": {
+      "sha256": "ea9ea37e2cef0a0d40ceb38b9c8ed3d991f73315b0968159539ad43c03ebaf51",
+      "bytes": 14876
+    },
+    "selected-system:Apps/paper_home_points.inc": {
+      "sha256": "e1098780996f17b5c17f3b6ed1aa22405821f7e751266729dc8bc1a18817c274",
+      "bytes": 15643
+    },
+    "selected-system:Apps/PaperHomeCatalogPoints.h": {
+      "sha256": "4c484d7a4205004ae414e8f6e2d5da8593192406d912b1c9b82ff8b0f27b4d87",
+      "bytes": 2866
+    },
+    "selected-sdk:idle-sdk/include/PortablePointsState.h": {
+      "sha256": "69dd5c45cea14991a06b397b800de7006aee8509d6ffa905a905f40d8a40baaa",
+      "bytes": 2936
+    },
+    "selected-sdk:idle-sdk/include/PointsUtcSchedule.h": {
+      "sha256": "b1ff4460410ec793d2fe7711562412c0e735e80c7fc4b881d761dab4e973e188",
+      "bytes": 6123
+    },
+    "selected-sdk:idle-sdk/include/PointsSchedule.h": {
+      "sha256": "9e34d32dbf989ee28f287813744748ab2d3193857a71bcab66e1f9b41749306c",
+      "bytes": 5713
+    },
+    "selected-sdk:idle-sdk/include/PointsRecords.h": {
+      "sha256": "ee59148062a39b2973e70c9c4816c1109686df0440d0ffd0d56ef0bff8820332",
+      "bytes": 11691
+    },
+    "selected-sdk:idle-sdk/include/AlarmRecords.h": {
+      "sha256": "e04d9cfa6c32a70125ef618b85d048936afad2204fb97d459cda8c36fd0b2066",
+      "bytes": 5040
+    },
+    "selected-sdk:idle-sdk/include/PortableHomePointsCatalog.h": {
+      "sha256": "d3c46fef226e626c0732c190108d016caf7bfbdfa0ac15c120e3ce281ca9181b",
+      "bytes": 623
+    },
+    "selected-system:Apps/PaperQuickIntent.h": {
+      "sha256": "3cad9e4a2d9e7a8301a61f1f43fa00a470223b77053000d09b1d538c52501bc0",
+      "bytes": 306
+    },
+    "selected-system:Apps/paper_home_type.inc": {
+      "sha256": "5e677d78a783aa1dfd968d5ed6897fd58faf7aa7a2a9a930aa9886a9f80d0a89",
+      "bytes": 11597
+    },
+    "selected-system:lib/PortableApps/home_fonts/text.inc": {
+      "sha256": "c027811edd22a69ac963a4fc1e0cf7f9c95b0c819bdb1ec77c58974276539a1d",
+      "bytes": 135721
+    },
+    "selected-system:lib/PortableApps/home_fonts/dial.inc": {
+      "sha256": "bb0ec471a837d97574c3b7047a53d1962b0de1adf2f2476072719578c80ea4c6",
+      "bytes": 21954
+    },
+    "selected-system:lib/PortableApps/home_fonts/desk_time.inc": {
+      "sha256": "4990d6d4fe1592f71afa7fcf40fbf6553823a5fcde5daa1443778a0af354a247",
+      "bytes": 17209
+    },
+    "selected-system:Apps/paper_home_reference.inc": {
+      "sha256": "1779b382d85c455dab3c52b3fcc3a60b4d3fe89ee481748e3e7bb2f5b6eb4994",
+      "bytes": 6482
+    },
+    "selected-system:lib/PortableApps/home_fonts/reference.inc": {
+      "sha256": "a345e3ece76cb4d117f27750248c20e97a62a45d2064b57d5cb4453d577cedf7",
+      "bytes": 156535
+    },
+    "selected-sdk:idle-sdk/include/PortableRasterLayer.h": {
+      "sha256": "6bfac32a8582a41d447bd8121dc76fdd147c2761f3d75ff458b556339c4f2ff9",
+      "bytes": 1525
+    },
+    "selected-system:lib/PortableApps/src/adapter.c": {
+      "sha256": "70da59abf9570fa4ba07cb82b7be9a20c965cc647fdfeced43cb0408f84deed7",
+      "bytes": 131985
+    },
+    "selected-sdk:idle-sdk/include/RiscRuntimeHostControlV1.h": {
+      "sha256": "697f710f7512dc724c2986bac0abc86756c9ae0739577b4f4ab20583a2743815",
+      "bytes": 855
+    },
+    "selected-sdk:idle-sdk/include/RiscResidentShellV1.h": {
+      "sha256": "1a84715c03fcc7fae7f75cb72c0daf875e761567dda5d1b39ec0dc8b14fba8bd",
+      "bytes": 6957
+    },
+    "selected-sdk:idle-sdk/include/PortableApps.h": {
+      "sha256": "d8fc1fae3669c439fda7af94568a93bc1d1f35ddc6fe05615eac1cb41ea4a78e",
+      "bytes": 300
+    },
+    "selected-sdk:idle-sdk/include/PortableTouch.h": {
+      "sha256": "817d5bde4d3a3c4634512503d283d0c7e731744a65e743305038294b58205004",
+      "bytes": 15111
+    },
+    "selected-sdk:idle-sdk/include/RiscTouchV1.h": {
+      "sha256": "fe18fab3ac20fda95747388f1428408b7795e5da3511c7a9fff07c16ddfd2c7d",
+      "bytes": 2703
+    },
+    "selected-sdk:idle-sdk/include/PortableNativeCustody.h": {
+      "sha256": "9dc7d0fb89bbab8304d829fa63e5baed3c6c348fdf37cc4166f5e8117a2594b6",
+      "bytes": 1046
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputPowerV1.h": {
+      "sha256": "e9c7d3bd3ddf9bce128503aafb5669734db09424149f45b3a6f735cd5a7c8667",
+      "bytes": 2501
+    },
+    "selected-sdk:idle-sdk/include/T5BatteryApi.h": {
+      "sha256": "f939c924102099de4ed746519791ce2b68eb2bac79bc212caeaad1366dc8c9a5",
+      "bytes": 2322
+    },
+    "selected-system:lib/NativeApps/include/T5StorageApi.h": {
+      "sha256": "be0d63a89943a75a58723b703284992e8c6e95956c7cb39a9b3523af2c5d23ba",
+      "bytes": 1717
+    },
+    "selected-system:lib/NativeApps/include/T5UiApi.h": {
+      "sha256": "88dbfde2a45ab385c69ee0b8192e8025446c9872711e4810f799251479b1057a",
+      "bytes": 3565
+    },
+    "selected-system:lib/NativeApps/include/T5VideoApi.h": {
+      "sha256": "af3f2318e53e20efb4e8e9e98d93abae11f1788fe14640c7b02392c22d08c6a4",
+      "bytes": 2901
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include-fixed/limits.h": {
+      "sha256": "a3d5feec7276fe05f811fd1831d46bd2b602d29ebc09255a7d67d70d67507800",
+      "bytes": 6089
+    },
+    "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include-fixed/syslimits.h": {
+      "sha256": "22dd0ab81baadd5a8d455b445855f341d419c7b0267beca235de00b7ec78e529",
+      "bytes": 330
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/limits.h": {
+      "sha256": "da14a02ae312070c0da60d5251d4283d4214218e5ee5c63e4a07f2e24245ec62",
+      "bytes": 3888
+    },
+    "toolchain:xtensa-esp32s3-elf/sys-include/sys/syslimits.h": {
+      "sha256": "d8f01b787861f63ab1f01fcd29c1cdf9b1d48a1dfced9e12a3415ea0e908f9ff",
+      "bytes": 3211
+    },
+    "selected-sdk:idle-sdk/include/PortableBackgroundServices.h": {
+      "sha256": "f1291afed98c321a81550e7648234d478652f81299cbad9c44814218a384e5b8",
+      "bytes": 575
+    },
+    "selected-system:lib/PortableApps/src/performance.inc": {
+      "sha256": "547a1f1902f60b816b8dc25a28821fb0a4c84c21e219c460a6dbb760a8c71db9",
+      "bytes": 6261
+    },
+    "selected-sdk:idle-sdk/include/PortableInstalledCatalog.h": {
+      "sha256": "ead6bf9af9226d8e644bc257a7b7a3eb61d746bd14f10bd6ddbd57b309684e30",
+      "bytes": 1057
+    },
+    "selected-sdk:idle-sdk/include/InstalledAppsV1.h": {
+      "sha256": "0575bfdc3d54ca9430cc9689ca536384013a0e40b24c9002c28abfe2cc3f5d00",
+      "bytes": 2299
+    },
+    "selected-sdk:idle-sdk/include/RiscStorageVolumeV1.h": {
+      "sha256": "d477167a06004640b2c07c05d662c103be6e1b9e4a4d866f6fce13e754ef02f5",
+      "bytes": 9048
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickSession.h": {
+      "sha256": "5229c4bb8730151d15042e6695d44643810c27b85205160cf7bdb0b73349de98",
+      "bytes": 2339
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickActions.h": {
+      "sha256": "e96642f2d3a2056ec6022ef3f03806e5d2a2dfb582d8116480e32696a34c7883",
+      "bytes": 5051
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickRender.h": {
+      "sha256": "a442eff258880584976d81407cef82aac66e86b91d68ee919f477e92f5bef36a",
+      "bytes": 1534
+    },
+    "selected-sdk:idle-sdk/include/PortableQuickRadios.h": {
+      "sha256": "676fbb46d0eae28fef515672a20c380088f69b3389a14ae44b5a67b9f014c44b",
+      "bytes": 488
+    },
+    "selected-sdk:idle-sdk/include/PortableBluetoothControl.h": {
+      "sha256": "777f0c7f92092d05a428c04255b6df1b3e9510a36c7425fc95092b3321e67a2c",
+      "bytes": 601
+    },
+    "selected-sdk:idle-sdk/include/WifiApi.h": {
+      "sha256": "eddb48c2e4284a592f32a540e10e02572bf251e3145783e9083278afd1aa0159",
+      "bytes": 2504
+    },
+    "selected-sdk:idle-sdk/include/RiscRadioScanV1.h": {
+      "sha256": "696227eecfd124f941023673680e0a15917d5b03c8f769756ed12ec34f7ccc9b",
+      "bytes": 1750
+    },
+    "selected-sdk:idle-sdk/include/RiscRadioAsyncV1.h": {
+      "sha256": "2b5a916cfe9e1fb6520043c2b8f3e8c13ea8e022166fcbdfa6b50ce691ebfe48",
+      "bytes": 2797
+    },
+    "selected-sdk:idle-sdk/include/PortableAlarmClient.h": {
+      "sha256": "2e16dcb9d4b7b27615756b6781a9354fb61c3c6ea4d33eba448062d783dd7c36",
+      "bytes": 6427
+    },
+    "selected-sdk:idle-sdk/include/PortableAlarmTerminalClient.h": {
+      "sha256": "2f2ea1064a106ca5d4a25ee5d69d700099f20814a4d7dcb92b18af9d53123f1a",
+      "bytes": 6948
+    },
+    "selected-system:lib/PortableApps/src/native_custody_adapter.inc": {
+      "sha256": "f0576be60ad328cb5e42eae00101b1545c7ad4f4d94d81a40b79b0ad4f69e017",
+      "bytes": 14352
+    },
+    "selected-system:lib/PortableApps/src/contexts_adapter.inc": {
+      "sha256": "09772b7aee76f3ff735bf394d10de940979714fc8f1c68f077232e18a30dc84a",
+      "bytes": 5936
+    },
+    "selected-sdk:idle-sdk/include/PortableBroadcastClient.h": {
+      "sha256": "51ed76a5fac542fb2d5ae039797806fd8b1d31f69a072340c0ce91e628cbff2d",
+      "bytes": 5193
+    },
+    "selected-sdk:idle-sdk/include/TelemetryBroadcastV1.h": {
+      "sha256": "986a52b5a3ddd361189d204e33624ce6275d953bca6a94a6e6dd5c136a89e2d5",
+      "bytes": 2202
+    },
+    "selected-sdk:idle-sdk/include/RiscTelemetryV1.h": {
+      "sha256": "8ef64c586e8392c1d7521498c25cfdaccefd53242530e2dda9116e9cc12a5d48",
+      "bytes": 1107
+    },
+    "selected-system:lib/PortableApps/src/broadcast_adapter.inc": {
+      "sha256": "6467b269f727fe3b6cea75e931dfa42c159ed119af9470d364e70f8bb26aa55a",
+      "bytes": 4780
+    },
+    "selected-sdk:idle-sdk/include/PortableNavigation.h": {
+      "sha256": "f3b9623d1e97d6a18df565aef0d9c934f18a1b97b701fbbc208de3bf0a344e6d",
+      "bytes": 773
+    },
+    "selected-sdk:idle-sdk/include/RiscInputNavigationV1.h": {
+      "sha256": "2644754feb7238d066908658ac9d4fe25537d4d5e424a6aef1365fabea600a26",
+      "bytes": 1713
+    },
+    "selected-system:lib/PortableApps/src/raster_snapshot_state.inc": {
+      "sha256": "9ac68f97f4dbc60b2ff1c9b227da7aa6abe6a1c28a450a7a46fe7053fc7eefaa",
+      "bytes": 3828
+    },
+    "selected-system:lib/PortableApps/src/nova.inc": {
+      "sha256": "6b4905d8840537ff6e8e82196b090b104dae1149a22a449d350778de762da07d",
+      "bytes": 11744
+    },
+    "selected-system:lib/PortableApps/fonts/icons.inc": {
+      "sha256": "fbfee54e9dd3fd331bdfc6babf60427ccffa93c4e8956ceb0129d2b6111d411d",
+      "bytes": 44023
+    },
+    "selected-system:lib/PortableApps/fonts/springboard_gamepad.inc": {
+      "sha256": "c67ff7e31de55f08882a8fbcca03f41789fb8edd0a6b8dc723cf2ce8c3c6248f",
+      "bytes": 1536
+    },
+    "selected-system:lib/PortableApps/fonts/text.inc": {
+      "sha256": "88aad3c3002381190ba5fc584fb2177b623cbeb30bc6cf7bfde10b0399d20c42",
+      "bytes": 22659
+    },
+    "selected-system:lib/PortableApps/src/paper.inc": {
+      "sha256": "0c961540912e0f42b1a9bb9bb95086d8a1296a48b5d1aa1e96da28c624888939",
+      "bytes": 5675
+    },
+    "selected-system:lib/PortableApps/paper_fonts/text.inc": {
+      "sha256": "9ee273df1c27df92d8ab2a985fb474d15b715770984894da4fee40b8cd9f2e4a",
+      "bytes": 30441
+    },
+    "selected-system:lib/PortableApps/src/paper_transition.inc": {
+      "sha256": "1dd29653b9effbf277591cebe6d634cb5dff816159962f6005c78605212ca4fc",
+      "bytes": 2753
+    },
+    "selected-sdk:idle-sdk/include/PortablePaperTransition.h": {
+      "sha256": "2f1b60dddeeae8111287fc0aa13d0d15fcc37fcdaa5da3ae6fb96edb85847328",
+      "bytes": 1240
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputSnapshotV1.h": {
+      "sha256": "b835fd1a3600551d54efb2806cbe8dd3ecc512a538572dc853aaf11f4e2490b6",
+      "bytes": 2062
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputMetricsV1.h": {
+      "sha256": "5be17adbae2ec26a855894e0d6443ac29572002c21efe53b2a913a5a0f0c642d",
+      "bytes": 3203
+    },
+    "selected-system:lib/PortableApps/src/quick_adapter.inc": {
+      "sha256": "0f1598c533e487cfdc19633ccbeb8760cc813d249efce7eaadfe5c1e8b2722ef",
+      "bytes": 24357
+    },
+    "selected-system:lib/PortableApps/src/quick_paper.inc": {
+      "sha256": "f3bfacb674b2a0960419a472418e0a18660e0723a3c333d9dfa9b92cb08ee25b",
+      "bytes": 6476
+    },
+    "selected-system:lib/PortableApps/src/quick_reference.inc": {
+      "sha256": "e1482082ea2f03082f49fbd416590f6f22370fa93e3a6e4de5a542b3eb3efdbe",
+      "bytes": 10609
+    },
+    "selected-system:lib/PortableApps/quick_fonts/reference.inc": {
+      "sha256": "9519bbcd9100f275488ef5cb142e648389f8bd1addf1bab7f3609fe464c87308",
+      "bytes": 47562
+    },
+    "selected-system:lib/PortableApps/src/contexts_policy.inc": {
+      "sha256": "0e90782a4f6ac054ce5deb2da29a4b29424cb238fe220df548f4fef41386fc9c",
+      "bytes": 7542
+    },
+    "selected-system:lib/PortableApps/src/contexts_rules_adapter.inc": {
+      "sha256": "6ef74ac5ac2faf93796af6dc4cffe9b2cdcde3e9cd3b566509c1865ac77b0236",
+      "bytes": 5488
+    },
+    "selected-sdk:idle-sdk/include/PortableContextActions.h": {
+      "sha256": "9ebea2abc377b880fed7ab8537b93fa123eb58ea11d35f53aa96bcf4fd0dbb0c",
+      "bytes": 2692
+    },
+    "selected-sdk:idle-sdk/include/alarm_writer.h": {
+      "sha256": "6a28cd9955cbd099fe778777c63ebcb2c606ee48bab206fece6f45c644138ba0",
+      "bytes": 1792
+    },
+    "selected-system:lib/PortableApps/src/contexts_clock.inc": {
+      "sha256": "85fa81404b037fee3bd605721c8658395e5f42584b3d64619d4896dc7ff7993b",
+      "bytes": 4186
+    },
+    "selected-system:lib/PortableApps/src/installed_catalog_adapter.inc": {
+      "sha256": "76aabb6052b96cd2925d03d7f5648a1d4d295a08f0f8e108f9334bd314409d4b",
+      "bytes": 1479
+    },
+    "selected-system:lib/PortableApps/src/resident_adapter.inc": {
+      "sha256": "c8086ddb8f773046eb3961d2bb4e20b9916867d3e14351d7231c316c38b2d806",
+      "bytes": 11051
+    },
+    "selected-system:lib/PortableApps/src/resident_shell.inc": {
+      "sha256": "37ccceaa5bcb5b713b2add592655b3d151757951511ab52679d404391eaa4f34",
+      "bytes": 10391
+    },
+    "selected-system:lib/PortableApps/src/resident_failure.inc": {
+      "sha256": "7ba48431a9b1db8448abfbfcd7687034d865370d84fbee62785c3fbb0897bae1",
+      "bytes": 6709
+    },
+    "selected-system:lib/PortableApps/src/failure_evidence.inc": {
+      "sha256": "e3fe25694d5fea76681831cd90ba0a4ed3aa102acb2cd0d64fbafe41facfe5ce",
+      "bytes": 7264
+    },
+    "selected-sdk:idle-sdk/include/RiscFailureEvidenceV1.h": {
+      "sha256": "f2b024c21780155bacf78bd67a279d8959365c1d25ff1ba421449dd5d3b35265",
+      "bytes": 3015
+    },
+    "selected-sdk:idle-sdk/include/FailureEvidenceReport.h": {
+      "sha256": "4e82c61315936c04ee75f61f6a375b2f568fdd6aacc58487127a11f0932c4a67",
+      "bytes": 6299
+    },
+    "selected-system:lib/PortableApps/src/failure_archive.inc": {
+      "sha256": "d70d5ab3f217ceed7e8ae26156d1856d95473eeb3dafc8d7b1b105115e7d72c2",
+      "bytes": 12472
+    },
+    "selected-sdk:idle-sdk/include/CrashReportSpool.h": {
+      "sha256": "73937a89c3b6000ceb3db51664d3677be5fa13886b3deb8898baff85732b78ec",
+      "bytes": 19815
+    },
+    "selected-sdk:idle-sdk/include/CrashReportSd.h": {
+      "sha256": "779e02c23c190439a7683b0cc827012e3fbe781085a118e2722ec22604d5f6ba",
+      "bytes": 13702
+    },
+    "selected-sdk:idle-sdk/include/RiscStorageVolumeStateV1.h": {
+      "sha256": "1f2f7dbfe9ec7ac27a57149ac720cf7f3a4801d6d34b5532f77c77db252b87a1",
+      "bytes": 1750
+    },
+    "selected-sdk:idle-sdk/include/RiscStorageExportV1.h": {
+      "sha256": "74ae82f05a916ca0d2df1bb251bc66cc0ac33dde38757ced7c8e864374d43c8a",
+      "bytes": 5001
+    },
+    "selected-system:lib/PortableApps/src/resident_policy.inc": {
+      "sha256": "f3b9b7cc33ec243dd64c664589c96179940dc30dbaa0683025460ed00a15e319",
+      "bytes": 3746
+    },
+    "selected-system:lib/PortableApps/src/resident_sleep.inc": {
+      "sha256": "882fe0ea2afccf446ffa5997d98e022999ee89ed59e63b1fb2cb730ce3c70c6b",
+      "bytes": 6721
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputSettledV1.h": {
+      "sha256": "18bfd89f3fa01d35e74f83c28ace60f16ca42fa0f678d7dc1fdc16e163fccc4f",
+      "bytes": 1645
+    },
+    "selected-sdk:idle-sdk/include/RiscDisplayOutputFrontlightV1.h": {
+      "sha256": "80add72493af301d89b521cd1987dbc3e17c618c5c56415ddf345aff50f4d18d",
+      "bytes": 1814
+    },
+    "selected-system:lib/PortableApps/src/resident_loading.inc": {
+      "sha256": "9f16e692c6bd0aa4740e83d3048ced4be85246adce82b956c0935086eb013f09",
+      "bytes": 3276
+    },
+    "selected-system:lib/PortableApps/src/alarm.inc": {
+      "sha256": "310619d5df3759fd20c7594a26eb08b5180e201795cc67af879ec3dfd1fa525e",
+      "bytes": 21548
+    },
+    "selected-system:lib/PortableApps/src/raster_snapshot_replay.inc": {
+      "sha256": "cc87e7c47d4928eb495cfe62ea0516fb3a07e00426c09d3c301f3255c4302c9a",
+      "bytes": 19052
+    },
+    "selected-system:lib/PortableApps/src/raster_layers.inc": {
+      "sha256": "37d11bf454fc73bc49de5a4723ccad058c00d244b80af511f2a9656d20afd357",
+      "bytes": 5976
+    },
+    "selected-system:lib/PortableApps/src/sparse_clock_adapter.inc": {
+      "sha256": "d176c37eb47b9bf80f9003356a43470aa7cbebf8a88ca2e157b6b5bc71e46fa2",
+      "bytes": 18219
+    },
+    "selected-system:lib/PortableApps/src/home_points_catalog_adapter.inc": {
+      "sha256": "3da35f5e6651a5224fa96696ec152ce4084d2c78d16e1ba1bc4f5d916553ccf9",
+      "bytes": 962
+    },
+    "selected-sdk:idle-sdk/include/PointsServiceProjection.h": {
+      "sha256": "42710361e60a6f644377302d1492ef24bbfd392aebe72acac3b8c5414702977a",
+      "bytes": 1265
+    },
+    "selected-sdk:catalog.c": {
+      "sha256": "fdb5735f35b0480c60a9de0210e352e322ad7ec31629b2af7aa40d3d4782ce87",
+      "bytes": 2440
+    },
+    "selected-system:lib/PortableApps/src/quick_actions.c": {
+      "sha256": "5eb885a4940edceefc1d96b8cce977bdfaf7dfaf46a0efca6bf5ea382262f7d8",
+      "bytes": 17760
+    },
+    "selected-system:lib/PortableApps/src/quick_render.c": {
+      "sha256": "d5b02fc2fd6a9eb2e9b2ccfc9848cb786fb2cf9da613d0514eb529c3375337dc",
+      "bytes": 10756
+    },
+    "selected-system:lib/PortableApps/src/quick_actions_assets.inc": {
+      "sha256": "6e0eadad1387eee501f4524d3b21d86fac61e9051822c368070468b9c41d896c",
+      "bytes": 31324
+    },
+    "selected-system:lib/PortableApps/src/quick_session.c": {
+      "sha256": "a1f649cd59652e5e70f29832188c36459e72a3dc2bc31075bfd7f3ee83311f08",
+      "bytes": 12255
+    },
+    "selected-system:lib/PortableApps/src/quick_radios.c": {
+      "sha256": "77285cd11aba58869274b3d0684d8a5969dcb0659cec82caac1e12ea078d053b",
+      "bytes": 6032
+    },
+    "selected-product:minimal/apps/portable_idle_sleep.c": {
+      "sha256": "8bef69d648dc1c8aad12adb24c90a2a48320287a74ff969ca33d9186fc3ab297",
+      "bytes": 8373
+    },
+    "selected-product:minimal/drivers/x4pro_power/X4PowerV1.h": {
+      "sha256": "ba4696466768e45bd5a3b675a280a195c1015576630a57022477cab05f09027f",
+      "bytes": 659
+    },
+    "selected-sdk:idle-sdk/include/RiscLightSleepV1.h": {
+      "sha256": "43cbd671265959ec2db7904bf6185e97a87c4cde9d389cdccf6fbb7c916f3b94",
+      "bytes": 1307
+    },
+    "selected-sdk:idle-sdk/include/RiscTimedSleepV1.h": {
+      "sha256": "475ba9bfaf6c7497ace7baeb93f2bd9a6abe1e3a91f62eed24862a88d60dbf34",
+      "bytes": 1359
+    },
+    "selected-sdk:idle-sdk/include/RiscDeepSleepV1.h": {
+      "sha256": "0949cf9591ef0f07b61c1306897287ea2eb1533755b5e569bfe1cb2c9b236161",
+      "bytes": 1880
+    },
+    "selected-sdk:idle-sdk/include/RiscTouchPowerV1.h": {
+      "sha256": "82c6faed9b7e26788e3a226cd3532b1d2c3b59447c8abdc25b5e407ef0399dd0",
+      "bytes": 3013
+    },
+    "selected-system:lib/PortableApps/src/desk_clock_faces.c": {
+      "sha256": "f76843e4e7d5607205328e491fdb5f0d21121728607b894d2a1c266630e19fc7",
+      "bytes": 9989
+    },
+    "selected-system:lib/PortableApps/desk_clock/digits.inc": {
+      "sha256": "a636cf8ee3f31e379e3624931ef88588a771cc81b43ed0a2696779ecdc09a700",
+      "bytes": 80080
+    },
+    "selected-system:lib/PortableApps/desk_clock/sine.inc": {
+      "sha256": "8d1ec56b53a684dbf4c2020439499cf1d81470647caa24a092b443e236658560",
+      "bytes": 1662
+    },
+    "selected-product:minimal/apps/portable_sleep.c": {
+      "sha256": "0858a85e56bb12ef1255b02eeb5fb3618a4e46fd283e0a369f4f3bffefe0462b",
+      "bytes": 29604
+    },
+    "selected-product:minimal/drivers/x4pro_power/X4PowerDeepV1.h": {
+      "sha256": "61690e17fe81558c692b8029b21af284e782370a96bb9ff890de81d2ef9b50a9",
+      "bytes": 1259
+    },
+    "selected-sdk:idle-sdk/include/RiscRetainedWakeV1.h": {
+      "sha256": "7c7b6f0d56631f3aab521a43499d2ea840d075084536e4afa654a74c52e1e511",
+      "bytes": 2933
+    },
+    "selected-system:lib/PortableApps/src/PortableRealtimeClient.c": {
+      "sha256": "a8115817eb490bb51f3e338fde4dce2542cb82dceefe476beae21a91c14ceade",
+      "bytes": 12233
+    },
+    "selected-system:lib/PortableApps/src/PortableTimeZone.c": {
+      "sha256": "28c0fecf7a4d83bde07d2b72cb591122cf3c49c3219c8344b97b82a90625c5e7",
+      "bytes": 13774
+    },
+    "selected-system:lib/PortableApps/src/PortableTimeZoneCatalog.c": {
+      "sha256": "29d4c86037f7554c94a4404d5e39e28091430a1f9c23b5e35224aed3df826f20",
+      "bytes": 28608
+    },
+    "selected-system:lib/PortableApps/src/PortableTimeZonePreference.c": {
+      "sha256": "b54e455d587ba2ecda8f59dd899b59b767214aee807b92d79d18c5e9d30b6bb7",
+      "bytes": 3514
+    },
+    "selected-system:lib/PortableApps/src/PortableInstalledCatalog.c": {
+      "sha256": "a4b9f7c7f894cf71d7479b43dad63ad7edfba0013c379d1ac28c7269531630a6",
+      "bytes": 7454
+    }
+  },
+  "historical_trace_difference": {
+    "actual_compile_uses": "toolchain:lib/gcc/xtensa-esp32s3-elf/8.4.0/include/stdint-gcc.h",
+    "historical_inventory_only": [
+      "toolchain:xtensa-esp32s3-elf/sys-include/stdint.h",
+      "toolchain:xtensa-esp32s3-elf/sys-include/sys/_intsup.h"
+    ],
+    "selected_elf_reproduction_exact": true
+  },
+  "predecessor": {
+    "sha256": "85c56071217d603a594514c0eef3a25982c7b03bafe86f1121880db62b3c5bb9",
+    "bytes": 557384
+  },
+  "repeat_exact_identity": true,
+  "original_dependency_spellings": 213,
+  "original_unique_dependencies": 210,
+  "fonts_and_all_other_inputs_preserved": true,
+  "original_flags_and_boot_wake_fixes_preserved": true,
+  "authority_unchanged": true,
+  "imports": [
+    "free",
+    "malloc",
+    "memchr",
+    "memcmp",
+    "memcpy",
+    "memmove",
+    "memset",
+    "risc_runtime_get_api",
+    "snprintf",
+    "strcmp",
+    "strcpy",
+    "strlen",
+    "strncmp"
+  ],
+  "exports": [
+    "app_main",
+    "app_module_fini",
+    "app_module_init",
+    "risc_resident_app_descriptor_v1"
+  ],
+  "native_runtime_firmware_changed": false,
+  "hardware_verified": false
+}

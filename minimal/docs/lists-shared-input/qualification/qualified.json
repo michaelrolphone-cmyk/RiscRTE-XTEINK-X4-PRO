@@ -1,0 +1,329 @@
+{
+  "schema": "lists.published-source.device-qualification.v1",
+  "device": "x4",
+  "compiled_recipe_commit": "e9adf95603d18b3a0c9f55c4c9276afe18a29d40",
+  "source_application_commit": "f83d79a0753c2a451730000d2f553aa21fda7830",
+  "source_system_commit": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+  "receipt_publication_status": "pending_at_compilation",
+  "union_handoff_sha256": "b174cba70ab88df294a48e53611bf0fecb2f0e2c8976bd6ab56e7f5e22cf3065",
+  "delivery_hold_until_utc": "2026-10-12T23:30:00Z",
+  "delivered": false,
+  "flashed": false,
+  "hardware_verified": false,
+  "qualification": {
+    "source_commit": "f83d79a0753c2a451730000d2f553aa21fda7830",
+    "compiled_recipe_commit": "e9adf95603d18b3a0c9f55c4c9276afe18a29d40",
+    "sources": {
+      "system-apps": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+      "productivity": "f83d79a0753c2a451730000d2f553aa21fda7830",
+      "runtime": "1c1ed8661ea30d47e7e9707c41d492ce3a2b4d70"
+    },
+    "source_roots": {
+      "system-apps": "/workspace/shared/lists-shared-input-system-published-20261012",
+      "productivity": "/workspace/shared/lists-shared-input-productivity-published-20261012",
+      "runtime": "/workspace/shared/first-attempt-time-alarm-runtime-28-20261012",
+      "generated": "/workspace/shared/lists-shared-input-components-20261012/x4-published/lists"
+    },
+    "selected_resident_profile": {
+      "schema": "lists.selected-resident-profile.v1",
+      "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+      "commit": "eec748ca081fe59346be03180600c65013cc7298",
+      "path": "sdk/app/RiscSceneResidentV1.h",
+      "sha256": "a657fcd906217fdbb03894c15b10009b352d6a5b7466868afa603a03236b8851",
+      "bytes": 2812,
+      "purpose": "Preserve the exact selected Watch/X4 Lists resident helper while adding shared text input. This is a byte-identical frozen build input, not a new shared helper implementation."
+    },
+    "candidate_directory": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate",
+    "target_build_directory": "/workspace/shared/lists-shared-input-components-20261012/x4-published/lists",
+    "target_elf": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/lists/lists.elf",
+      "bytes": 41524,
+      "sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c"
+    },
+    "target_manifest": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/lists/lists.json",
+      "bytes": 517,
+      "sha256": "ff6b7d2ce1e61bde96ec736e23b1313f474fe488211e3d8ba8feb8b37b91f120"
+    },
+    "target_build_record": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/lists/lists-build-record.json",
+      "bytes": 16589,
+      "sha256": "f7e5a9a49babc197a882eabdf4d88d6a1032a43c54318503e6b50c667e5b103d"
+    },
+    "raw_elf_sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c",
+    "raw_elf_bytes": 41524,
+    "predecessor_version": "0.1.1",
+    "predecessor_elf_sha256": "716458214fe30123c186d1972a6950332820f5922397a7a506b3802edffbb582",
+    "changed_store_paths": [
+      "boot.json",
+      "cohort.json",
+      "default.elf",
+      "default.json",
+      "lists.json",
+      "ui-scene/driver.elf",
+      "ui-scene/manifest.json",
+      "ui-text/driver.elf",
+      "ui-text/manifest.json"
+    ],
+    "preserved_store_files": 97,
+    "store_files": 106,
+    "storage_namespace": 63,
+    "grant_delta": [
+      {
+        "manifest": "lists.json",
+        "grant": {
+          "capability": "ui.text-input",
+          "api": 1,
+          "instance_id": 0
+        }
+      }
+    ],
+    "all_other_boot_rows_and_fields_preserved": true,
+    "font_bytes_and_presentation_profiles_preserved": true,
+    "scene_host_updated": true,
+    "scene_host_version": "0.4.6",
+    "scene_host_elf": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/scene/driver.elf",
+      "bytes": 467088,
+      "sha256": "a264c572f180d53e6f8e4632bd2834e5dc0b3a3581c95e5fe9995197deea4359"
+    },
+    "scene_host_manifest": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/scene/manifest.json",
+      "bytes": 593,
+      "sha256": "022f36048963396f3b4a361570011e3bc725433c7524d0f1e6bc1d40ea2f0fc7"
+    },
+    "scene_host_build_record": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/scene/scene-build-record.json",
+      "bytes": 16414,
+      "sha256": "c96a977d75ba9940a630fc8cf3d7e9f6ddff13baa70894330f4e9c6d14db3231"
+    },
+    "scene_host_authority_unchanged": true,
+    "scene_host_predecessor_identity": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/scene-host-predecessor.json",
+      "bytes": 1696,
+      "sha256": "83286cab940f01ff88e0facece3dcbae2cf8711e22cb00f52e838ee5fcefa2e9"
+    },
+    "scene_host_target_stack": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/scene-target-stack.json",
+      "bytes": 1149,
+      "sha256": "c1312f5ca5c8b6279affc03044a4f6f037e0ca8b93cb6f43caf692d9d6258c4c"
+    },
+    "text_host_updated": true,
+    "text_host_version": "0.1.7",
+    "text_host_elf": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/text/driver.elf",
+      "bytes": 19232,
+      "sha256": "f2f39e89719fd93155a4ce649e2606c450f8d264569a47c7300a2befaa262c92"
+    },
+    "text_host_manifest": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/text/manifest.json",
+      "bytes": 321,
+      "sha256": "60791284f2124d197876cf900345e9d5e37ed5952ce4f1fcff21c2ad54bc3ff1"
+    },
+    "text_host_build_record": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/text/text-build-record.json",
+      "bytes": 12287,
+      "sha256": "964cad387fcb5be3c115c31a95a3c29cb559edf10aac583b5b82722c508a0266"
+    },
+    "text_host_authority_unchanged": true,
+    "text_host_target_stack": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/text-target-stack.json",
+      "bytes": 1693,
+      "sha256": "668169d3e5e69cc8b726d3b600962fe6816b0ed69b8dabfb05e1174b6abb904a"
+    },
+    "text_host_predecessor_identity": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/text-host-predecessor.json",
+      "bytes": 7669,
+      "sha256": "6c7c58406fc6c4703a358c8003576a342d6c1f95023f5d4d4d2fe6b69161bcf3"
+    },
+    "all_unrelated_store_bytes_preserved": true,
+    "packing": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/receipts/packing.json",
+      "bytes": 3870,
+      "sha256": "02b7a27209674d5744c638428b66f6bbf3ffaeba5a5ba7db9bbf9d371a6fa79f"
+    },
+    "free_blocks": 126,
+    "minimum_free_blocks": 2,
+    "target_stack": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/target-stack.json",
+      "bytes": 2689,
+      "sha256": "fe9a6db046a27f1d6e5e851ce14b30da8c835be6acb4a949431dd4447db8ea3f"
+    },
+    "expanded_target_stack": null,
+    "flagoff_target": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/flagoff-target.json",
+      "bytes": 4308,
+      "sha256": "fa9a32873305f812216dcd0578a458c39f3c0d5a87147973f8820d2d9b8e6a16"
+    },
+    "actual_target_dependency_count": 23,
+    "actual_text_host_dependency_count": 15,
+    "actual_scene_host_dependency_count": 32,
+    "compiled_font_dependency_count": 5,
+    "all_recorded_dependency_hashes_verified": true,
+    "native_unchanged": true,
+    "no_unpublished_sd_changes_consumed": true,
+    "full_images_materialized": false,
+    "hardware_verified": false,
+    "resident_owner_updated": true,
+    "resident_owner_version": "0.4.15",
+    "resident_owner_elf": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/default.elf",
+      "bytes": 557472,
+      "sha256": "e9dbe8b91e93463e97cdc43a94f3fa1a7c1b07013e4c6689ad0fced51be7f776"
+    },
+    "resident_owner_manifest": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/default.json",
+      "bytes": 1475,
+      "sha256": "fb600fbe72a1022cfce151c650ce7ef5972e1584395415ea5bd997c854b68bdf"
+    },
+    "resident_owner_build_record": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner/owner-build-record.json",
+      "bytes": 82618,
+      "sha256": "69e3002b7d4089dd7e1b7f6c34444409f14b644dfc36aceef0eae27d466e7fcf"
+    },
+    "resident_owner_target_stack": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/owner-target-stack.json",
+      "bytes": 1241,
+      "sha256": "4751723a45736412bf2683622f7fd82a33753704d3972f8f756032e29ab07175"
+    },
+    "resident_owner_selected_source": "0cae9c90b74982e784f5e59c655f246dfbc69178",
+    "resident_owner_overlay_source": "f4b30f8ebcc6d8cb905c8e90c91b1691acbe8165",
+    "resident_owner_dependency_count": 210,
+    "resident_owner_exact_predecessor_reproduction": {
+      "sha256": "85c56071217d603a594514c0eef3a25982c7b03bafe86f1121880db62b3c5bb9",
+      "bytes": 557384
+    },
+    "normal_admission": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/normal/result.json",
+      "bytes": 32535,
+      "sha256": "4942eebe812bf311bbae11c950ce406523336bf3ec7103d91bac4f32db45cfde"
+    },
+    "sanitized_admission": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/asan-ubsan/result.json",
+      "bytes": 32549,
+      "sha256": "ab2d83e6c0ce33fdf9df3bc0d320d0db4746aeebc4a59ed00378b273e9e0bced"
+    },
+    "normal_sanitized_admission_identical": true,
+    "internal_elfs": 43,
+    "selected_sd_elfs": 48,
+    "selected_lists_image": {
+      "manifest": "lists.json",
+      "matches_internal_fallback": false,
+      "path": "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/lists.elf",
+      "role": "app",
+      "sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c",
+      "size_bytes": 41524
+    },
+    "full_image_sha256": "7bfe1c065344a3657467887cbc9d169853596f39942f028fb0c3445c8f2cdcaa",
+    "native_bin_sha256": "0cb155e1ff160afadeacea7cbb095234c6a072a4c164983da11c08135a55fbc9",
+    "components": {
+      "firmware.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/firmware.bin",
+        "bytes": 1458576,
+        "sha256": "0cb155e1ff160afadeacea7cbb095234c6a072a4c164983da11c08135a55fbc9"
+      },
+      "bootloader.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/bootloader.bin",
+        "bytes": 15104,
+        "sha256": "2a71d69b471e20c2bac7fb469f3c6a807b3ebee780e348e5889db0da849ca363"
+      },
+      "bootfs.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/bootfs.bin",
+        "bytes": 5308416,
+        "sha256": "ec33668ad80669ba117e2ad40f9f86567d230f0da48ce10b36249acda2214761"
+      },
+      "appdata.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/appdata.bin",
+        "bytes": 524288,
+        "sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+      },
+      "bank_state.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/bank_state.bin",
+        "bytes": 8192,
+        "sha256": "ab438132f80032d0b6ecb7a9c9a1407e2040b81eea25fbe26daa66e34f76722e"
+      },
+      "otadata.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/otadata.bin",
+        "bytes": 8192,
+        "sha256": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3"
+      },
+      "partitions.bin": {
+        "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/components/partitions.bin",
+        "bytes": 3072,
+        "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+      }
+    },
+    "changed_sd_paths": [],
+    "added_sd_files": [
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/lists.elf",
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/manifest.json",
+      "Drivers/scene-host/image-a264c572f180d53e6f8e4632bd2834e5dc0b3a3581c95e5fe9995197deea4359.elf",
+      "Drivers/text-input-host/image-f2f39e89719fd93155a4ce649e2606c450f8d264569a47c7300a2befaa262c92.elf"
+    ],
+    "sd_files": 96,
+    "old_sd_files_preserved": 92,
+    "internal_lists_fallback_present": false,
+    "old_flat_lists_sd_image_preserved": true,
+    "old_lists_sd_image_preserved": true,
+    "selected_text_host_image": {
+      "manifest": "ui-text/manifest.json",
+      "matches_internal_fallback": true,
+      "path": "Drivers/text-input-host/image-f2f39e89719fd93155a4ce649e2606c450f8d264569a47c7300a2befaa262c92.elf",
+      "role": "driver",
+      "sha256": "f2f39e89719fd93155a4ce649e2606c450f8d264569a47c7300a2befaa262c92",
+      "size_bytes": 19232
+    },
+    "selected_scene_host_image": {
+      "manifest": "ui-scene/manifest.json",
+      "matches_internal_fallback": true,
+      "path": "Drivers/scene-host/image-a264c572f180d53e6f8e4632bd2834e5dc0b3a3581c95e5fe9995197deea4359.elf",
+      "role": "driver",
+      "sha256": "a264c572f180d53e6f8e4632bd2834e5dc0b3a3581c95e5fe9995197deea4359",
+      "size_bytes": 467088
+    },
+    "sd_overlay": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/X4-0.1.102-Combined-Changed-SD.zip",
+      "bytes": 2353876,
+      "sha256": "dd1e6103d4b7330c78cc7143c31a181762a160a9b008d5396e9bd8dddd702f12"
+    },
+    "sd_overlay_files": 22,
+    "sd_overlay_requires_delivered_096_baseline": true,
+    "composition_receipt": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/candidate/receipts/evening-composition.json",
+      "bytes": 809736,
+      "sha256": "a7c091c54f3ba9af43198bf795208758c3a65697cd8c7c28c03f30c5a63fd20e"
+    },
+    "complete_cohort_qualification": {
+      "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/lists-qualification.json",
+      "bytes": 815,
+      "sha256": "ea3cedc41515bc3de2586ed8f9abcbf8e0cec5081c14427242fcacaab34a6824"
+    },
+    "exact_obd_hollow_catalog_regressions": true,
+    "compiled_recipe_published": true,
+    "compiled_recipe_remote_ref_verified": true,
+    "compiled_recipe_url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/commit/e9adf95603d18b3a0c9f55c4c9276afe18a29d40",
+    "compiled_recipe_ci": {
+      "conclusion": "success",
+      "runs": [
+        {
+          "id": 38301945479,
+          "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38301945479",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 38301945389,
+          "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38301945389",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "receipt_publication": {
+      "status": "pending",
+      "compiled_recipe_commit": "e9adf95603d18b3a0c9f55c4c9276afe18a29d40",
+      "receipt_only_expected": true
+    },
+    "exact_public_source_reproduction": true
+  }
+}

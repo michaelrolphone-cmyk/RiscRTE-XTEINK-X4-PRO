@@ -1,0 +1,38 @@
+{
+  "schema": "lists.complete-cohort-admission-summary.v1",
+  "device": "x4",
+  "normal": {
+    "prepared": true,
+    "cohort_validated": true,
+    "error": "",
+    "hardware_calls": 0,
+    "storage_calls": 0,
+    "elf_count": 43,
+    "cooperative_yields": 173
+  },
+  "sanitized": {
+    "prepared": true,
+    "cohort_validated": true,
+    "error": "",
+    "hardware_calls": 0,
+    "storage_calls": 0,
+    "elf_count": 43,
+    "cooperative_yields": 173
+  },
+  "identical_admission": true,
+  "complete_internal_elfs": 43,
+  "complete_selected_sd_elfs": 48,
+  "exact_obd_hollow_catalogs": true,
+  "normal_full_receipt": {
+    "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/normal/result.json",
+    "bytes": 32535,
+    "sha256": "4942eebe812bf311bbae11c950ce406523336bf3ec7103d91bac4f32db45cfde"
+  },
+  "sanitized_full_receipt": {
+    "path": "/workspace/shared/lists-shared-input-components-20261012/x4-published/qualification/asan-ubsan/result.json",
+    "bytes": 32549,
+    "sha256": "ab2d83e6c0ce33fdf9df3bc0d320d0db4746aeebc4a59ed00378b273e9e0bced"
+  },
+  "local_sanitizers": "ASan+UBSan; detect_leaks=0 for ptrace environment",
+  "hardware_verified": false
+}
