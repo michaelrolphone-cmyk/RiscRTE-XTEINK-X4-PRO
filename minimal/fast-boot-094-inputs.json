@@ -9,15 +9,15 @@
   },
   "system": {
     "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
-    "commit": "399e922049b2b9982a2cb35486afffea5f383251",
+    "commit": "7870df1ae0272cf180f454392927b997f2553846",
     "tree": "f41ba467d6a96f214bed594728b8e28e01960d5c"
   },
   "home_artifacts": {
     "default.elf": "9b42c85959995290831b6ae87a3fdab8583de70fd4e3c5e567517b1d6407fb44",
     "default.json": "fc16120d123932426974be2f253b4e22e4082745869240dc4065c689e8c7555b",
-    "build-evidence.json": "84188af26b860deb27edbca66d1c2564fa663db1be7058e6f6cca2650d2ccfd9"
+    "build-evidence.json": "db362ea1c77d4e17f4f4b98ed041f276befc2ad463cec03b60d3c99a063df08a"
   },
-  "home_product_source": "405013dcb12c4da10f3ec6df648313a522cc0fed",
+  "home_product_source": "93a845fe11f8a962e99ba024b31ce5f02812a38d",
   "native_candidate_sha256": "a224e74b4bdddcb61205c2790c261ecb77e854cabb29635aa0c0f386b192e830",
   "native_build_options": {
     "app_image_cache": false,
@@ -53,7 +53,8 @@
     "composition_negative_probes": 22,
     "native_bundle_admission_unit_tests": 12,
     "native_source_unit_tests": 19,
-    "leak_sanitizer": "unavailable under ptrace; ASan/UBSan instrumented suites passed with leak detection disabled"
+    "leak_sanitizer": "unavailable under ptrace; ASan/UBSan instrumented suites passed with leak detection disabled",
+    "public_source_home_elf_matches_qualified_local": true
   },
   "qualification_evidence_sha256": {
     "native-qualification.json": "542b20ca222020fb9b377f59fb07ac9a50a72228a4fcdd7b60c4896a41c663db",
@@ -64,6 +65,7 @@
     "native-source-tests.log": "f526e7dcebcefb5a600ebd432045acfe0fe1c0ff76a56f02ff127e05c060d68d",
     "native-composition-tests.log": "6e29985d412b01a2842a3ff5bcba4c0eb7baf41e7970de46ad1064bd25436aa6",
     "system-qualification.json": "38efdf25062bb75dce248ff250e75009c0e49d874f9596296d5418a5c8def56e",
-    "timer-qualification.json": "4436f2aa24ae6df6bb50b0599e2491744f0268105dd8b82cb4614538160c7d36"
+    "timer-qualification.json": "4436f2aa24ae6df6bb50b0599e2491744f0268105dd8b82cb4614538160c7d36",
+    "source-publication.json": "48ad1b2f6e7be721eaeaa07215fc7ea023ce0104c258c46017839180c8d24c90"
   }
 }

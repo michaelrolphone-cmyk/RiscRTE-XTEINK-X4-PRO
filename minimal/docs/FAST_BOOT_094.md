@@ -50,6 +50,4 @@ Wi-Fi/HCI acquisitions. Existing early broadcast cleanup is retained and may
 already load BLE dependencies. Due-alarm handling precedes optional policy;
 low-battery protection remains immediate. There is no metadata or image cache.
 
-Runtime source is published. Final X4 and shared Home source checkpoints are
-locally committed while explicit public-publication approval is pending. This
-status does not change the exact local source identities in the build receipts.
+Runtime and System source checkpoints are published and verified. The published-source Home rebuild is byte-identical to the qualified local target. Final product composition uses the committed qualification lock and verified source lineage. No merge, release or device flashing is performed.
