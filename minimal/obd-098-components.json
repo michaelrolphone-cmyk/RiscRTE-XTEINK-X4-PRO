@@ -1,0 +1,51 @@
+{
+  "schema": "x4.obd-component-sources.v1",
+  "status": "Exact published component source; native and existing Files remain from .97",
+  "runtime": {
+    "commit": "6377d498a47b59dac8ad85d930983fffc6c8baa5",
+    "tree": "be5547ca564472c567c11612185862e10dbf1acd"
+  },
+  "system": {
+    "commit": "49752a02746b38afbcc403bb92189be5a8356c9d",
+    "tree": "be22b9bd3aed153d94473c1516c310c2282e57fa",
+    "version": "0.4.1",
+    "elf_sha256": "25b12c8e807e1d57684badf8e1d9b3f4b188cd6896a88f4e82f2287e31fbbb6d",
+    "parents": [
+      "0accd8905b5a64bf5e9269fe92a6e47c9fd1cc90",
+      "b5cc754b545795610ed0d2de262e0fdd5110a54a"
+    ]
+  },
+  "utilities": {
+    "commit": "52422dfb3a1dac21e0ca82e7a1300098c2a0d16f",
+    "tree": "6adedf99e187b2275ceea45824b02263865146bc",
+    "version": "0.2.1",
+    "elf_sha256": "b2ca8861412e3b79fb6cad14516c574cc2f4479107eaa0bb35165a8059c27f20"
+  },
+  "drivers": {
+    "commit": "8ec572af94ee6e844b1685d8d050471cd58cad87",
+    "tree": "2048b22e1d94e6e80a8e20e103c83dec14a99900",
+    "version": "0.1.0",
+    "elf_sha256": "cc5bf2a38bf655c1cb51cbdaf3eacbffff69b852adbfb57363ee366cc453ef1f"
+  },
+  "qualification": {
+    "app_scenarios_per_mode": 16,
+    "app_modes": [
+      "normal",
+      "ASan+UBSan"
+    ],
+    "scene_presenter_profile_executions": 179,
+    "ble_real_stack_cases_per_mode": 10,
+    "native_catalog_modes": [
+      "normal",
+      "ASan+UBSan"
+    ],
+    "hardware_tested": false,
+    "ci": "success",
+    "component_ci": {
+      "scene_041": "https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps/actions/runs/38202650887",
+      "obd_021": "https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities/actions/runs/38202722714",
+      "status": "success",
+      "union_scene": "https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps/actions/runs/38202979052"
+    }
+  }
+}
