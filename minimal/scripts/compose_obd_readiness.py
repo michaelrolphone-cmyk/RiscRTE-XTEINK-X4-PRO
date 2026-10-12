@@ -4,7 +4,7 @@
 No native firmware changes. Retain all unrelated store/SD bytes, and retain the
 old immutable provider image. Only OBD's canonical app image/manifest are replaced.
 """
-import argparse,copy,hashlib,json,os,tempfile,zipfile
+import argparse,copy,errno,hashlib,json,os,tempfile,zipfile
 from pathlib import Path
 from compose_desk_wake_093 import read_tree,clean_source
 from compose_files_092 import require,sha,encoded,inventory,git,write_files,load_assembly_tools
@@ -42,7 +42,11 @@ def write_shared(root,items,baseline):
  """Hard-link byte-identical immutable inputs to avoid duplicate sparse trees."""
  for name,data in items.items():
   dest=root/name;dest.parent.mkdir(parents=True,exist_ok=True);prior=baseline/name
-  if prior.is_file() and prior.read_bytes()==data:os.link(prior,dest)
+  if prior.is_file() and prior.read_bytes()==data:
+   try:os.link(prior,dest)
+   except OSError as error:
+    if error.errno!=errno.EXDEV:raise
+    dest.write_bytes(data)
   else:dest.write_bytes(data)
 
 def compose(a):

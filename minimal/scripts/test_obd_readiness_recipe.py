@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Allow only the two audited component deltas; reject authority expansion."""
-import copy,json
-from compose_obd_readiness import payload,CHANGED,SD_CHANGED,encoded,sha
+import copy,errno,json,tempfile
+from pathlib import Path
+from unittest.mock import patch
+from compose_obd_readiness import payload,CHANGED,SD_CHANGED,encoded,sha,write_shared
 
 def fixture():
  app={'id':'obd-dashboard','version':'0.2.1','requires':[{'capability':'ui.scene','api':1},{'capability':'bluetooth.serial','api':1},{'capability':'storage.volume','api':1}]}
@@ -31,5 +33,11 @@ def run():
  bad=copy.deepcopy(sd);bad['Apps/obd-dashboard/manifest.json']=b'{}';rejected(lambda:payload(old,bad,data,'new'))
  bad=copy.deepcopy(sd);bad[next(iter(added))]=b'collision';rejected(lambda:payload(old,bad,data,'new'))
  bad=copy.deepcopy(old);m=json.loads(bad['boot.json']);m['drivers'][0]['image_source']['internal_fallback']=False;bad['boot.json']=encoded(m);rejected(lambda:payload(bad,sd,data,'new'))
+ with tempfile.TemporaryDirectory() as temp:
+  root=Path(temp);source=root/'source';source.mkdir();(source/'keep').write_bytes(b'original')
+  with patch('compose_obd_readiness.os.link',side_effect=OSError(errno.EXDEV,'Cross-device fixture')):
+   write_shared(root/'output',{'keep':b'original','added':b'new'},source)
+  assert (root/'output/keep').read_bytes()==(source/'keep').read_bytes()==b'original'
+  assert (root/'output/added').read_bytes()==b'new'
  print('OBD overlay: exact delta, unrelated bytes, prior provider preserved, six rejection cases PASS')
 if __name__=='__main__':run()
