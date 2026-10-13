@@ -18,7 +18,7 @@ from native_binary_exports import exports
 from spiffs_image import read_image
 from elftools.elf.elffile import ELFFile
 report=json.loads((out/'assembly-report.json').read_text())
-raw=(out/'X4-0.1.110-Points-Modal-Policy-full-0x0.bin').read_bytes()
+raw=(out/'X4-0.1.110-Scanner-Modal-Policy-full-0x0.bin').read_bytes()
 assert len(raw)==0x1000000 and hashlib.sha256(raw).hexdigest()==report['image_sha256']
 current=read_image(raw[0x2f0000:0x800000],0x510000)
 meta=json.loads(current['cohort.json']);native=raw[0x10000:0x10000+meta['firmware_size']]
