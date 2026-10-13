@@ -1,0 +1,42 @@
+{
+  "cases": 50,
+  "mode": "asan",
+  "commands": [
+    [
+      "cc",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-I/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/lib/PortableApps/include",
+      "-I/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/lib/NativeApps/include",
+      "-I.deps/runtime/sdk/app",
+      "/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/test/native_apps/wifi_modal_policy_test.c",
+      "-o",
+      "build/x4-wifi/modal-asan/legacy"
+    ],
+    [
+      "cc",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-I/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/lib/PortableApps/include",
+      "-I/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/lib/NativeApps/include",
+      "-I.deps/runtime/sdk/app",
+      "/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/test/native_apps/wifi_modal_policy_test.c",
+      "-DTEST_MODAL_ATOMIC",
+      "-I/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/lib/RemoteFiles/vendor/tinydtls_sha2",
+      "/home/runner/work/RiscRTE-System-Apps/RiscRTE-System-Apps/lib/RemoteFiles/vendor/tinydtls_sha2/sha2.c",
+      "-o",
+      "build/x4-wifi/modal-asan/atomic"
+    ]
+  ],
+  "source": "1db9915d53abf13e163596838adaac5647879e58",
+  "tracked_dirty": false,
+  "hardware_tested": false
+}
