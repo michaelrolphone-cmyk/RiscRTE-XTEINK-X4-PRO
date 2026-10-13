@@ -63,7 +63,7 @@ def main():
   require(fs.remaining_blocks>=2,'Insufficient SPIFFS spare blocks')
   free=fs.remaining_blocks
   return fs.to_binary(),free
- require(pack(old)[0]==oldfs,'Generator does not reproduce .106 store byte-for-byte')
+ require(pack(old)[0]==oldfs,'Generator does not reproduce .107 store byte-for-byte')
  fs,free=pack(files);require(pack(files)==(fs,free),'Nondeterministic SPIFFS output')
  require(read_image(fs,0x510000)==files,'SPIFFS extraction mismatch')
  changed=sorted(n for n in old if files[n]!=old[n])

@@ -1,0 +1,268 @@
+{
+  "schema": "rf.shared-input.qualification.v1",
+  "source_pins": {
+    "utilities": {
+      "path": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities",
+      "commit": "52157660ec573cf4639ffe3eefcad5b7b3115c4e",
+      "status": []
+    },
+    "system": {
+      "path": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system",
+      "commit": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+      "status": []
+    },
+    "runtime": {
+      "path": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/native",
+      "commit": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+      "status": []
+    },
+    "baseline": {
+      "path": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities",
+      "commit": "52157660ec573cf4639ffe3eefcad5b7b3115c4e",
+      "status": []
+    }
+  },
+  "not_claimed": [
+    "physical hardware",
+    "RF/crown/touch/PMU hardware",
+    "Runtime ELF loader integration",
+    "Runtime storage implementation"
+  ],
+  "physical_backends": [
+    "deterministic signed 10-bit coherent complex IQ",
+    "ordered raw touch",
+    "navigation",
+    "RGB565/mono1 display with stride guards",
+    "KV and app-data",
+    "bounded base Contexts",
+    "alarm",
+    "resident checkpoint",
+    "RTC/realtime",
+    "BLE/Wi-Fi"
+  ],
+  "leak_sanitizer": "detect_leaks=0 for executor ptrace/runtime limit; explicit malloc/free, grants, subscriptions and display lease accounting",
+  "sources": {
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/scripts/test_rf_shared_input.py": "9124405823910db448eb7b55655ff5e09e0d5cdb0cca99df57585ebd5d1a94e0",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/test/rf_shared_input/renderer.c": "a3b4f5e8d11953c6b1f90772d39ad5dc8f0f69c5e3b5d66ec1bdd0a3ea1f1e2d",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_app_data_scope.h": "5b21f23b2505f12ef38ed1fc0e90b3c665066f639f2ccd8ca90e3b8073f69010",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_application.inc": "7986394d3a615fcea398e3d079b5650c2431c0de22c55dba23300707f3e872b9",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_background.h": "6792af20634225de59fdc4c176a471bcbbd6d9f4ff06e9de964261d1f9668cb0",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_controls.inc": "fd52d7deae54b348ab9c3fbe50b410b049102e38baaaa6db52b135da213f05ee",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_dsp.h": "71dad410511bba28991f0e99cb88f2931c6262cabc01dbb5d9659e33a3eeee7c",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_identity.h": "068428308352e542f0494afd389f3601e867571c3fd9057c4aec693d70abcb57",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_math.h": "bc5723aa8206249f23e5809d3911009582ba83891b9db597cc15a200bb6d3fc8",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_neural.h": "b4c22ab1d48bb1c742dc1e88f0de018a79fdb09fa780262a12f91dfb36680799",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_neural_store.h": "306a42bd54d6e162e6acae03bdb9b99942040d0f303ba053b2bc0b2bddd39769",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_presentation.h": "d9989eae6813ae1c5b461d5d77b9d28ed35c6797817e8b06250073dd5fca4c6f",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_signature_app.inc": "cfed71bff2620e6ba36a6bd047b6f6e8e6d3bd403f97de40e6046ffed1a12b59",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_signature_store.h": "2347b304c85eb2618dfd4b819e4acc372d554ba381ad7e3b9b89fdbaddac5a06",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_signatures.h": "32cad5efb47468682cabdc0fdb263ecb1c27b701434f691489b1b339b49e9825",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_store.h": "faff7237d5873e234bd116e931c5398ed4147fc1a5b05a1b696172bcf1d62e44",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_temporal.h": "4f5e42b6928d9af5b49fa5a0455c0c5d8866f2f04410a9432131104a43aa277d",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_temporal_app.inc": "be027c03461c64a02997454d40284b9fa729a6adbde00a8d86e9b3cde0b0e48e",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_temporal_files.h": "6efeee51858e2d0b6cbeb5b30cddaea7ebc1ca81293b35cacf31a43665d558fe",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/rf_temporal_store.h": "0d76c52c8831879799c4774daae742d99b8a59e1e7d5996bb71aceb602206370",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/waterfall.c": "ba04b1499f8de2aeb202664581e86ed39f69a48f85b0efdc87d0999269b8611a",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/context_signal_library.inc": "d19380adfc76870d05c9d2da82ee09fe1fd52b8ba563b6b65efab8b777d63d4a",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/Apps/context_fingerprint_app.inc": "757ac801d2c2ae66f2f45b9810aec8f52c8f155811d37966bd077c1a7b47b3f1",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system/scripts/generate_telemetry_fonts.py": "718ed123fa468da46f451020d0e8e96c213a08a23d6dfa815d5c920f4a9bbfd0",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/host-fonts/Services/scene_host/fonts/telemetry.inc": "2d7501e42d6223ebbc191817715431182c435fea944a1a02166a0748a577eaf1",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system/Services/scene_host/host.c": "2110ecf4de15d299dfca0e12d461e48abddf9f43ae956df4c97a6a482d9516cf",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system/Services/text_input/host.c": "a35225f8afc149c55d2d15caf3671def4f0b631aecd267eb6c01085689556904",
+    "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system/Services/scene_profile/profile.c": "ae72dc5de62ca7d212b46194406d4b4ce8a1be4767682efd8a4dce9ea2476c17"
+  },
+  "profiles": {
+    "x4": {
+      "receipt": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/minimal/recovery-108/qualified-target.json",
+      "runtime": {
+        "path": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/native",
+        "commit": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+        "status": []
+      },
+      "host_system": {
+        "path": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system",
+        "commit": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+        "status": []
+      },
+      "sha256": "a27878891b56fff86317ce9330958808e04bb9518ae13f16b2d8b41eb6a430e4",
+      "deployed_defines": [
+        "-DPORTABLE_NOVA_UI",
+        "-DPORTABLE_ALARM_CLIENT",
+        "-DALARM_SERVICE_TAGGED_V2",
+        "-DPORTABLE_NATIVE_CUSTODY_FENCE",
+        "-DPORTABLE_NATIVE_TIME_TOOLBAR",
+        "-DPORTABLE_INPUT_NAVIGATION",
+        "-DPORTABLE_APP_OWNS_TOUCH_CHROME",
+        "-DPORTABLE_APP_LAUNCH_GUARD",
+        "-DPORTABLE_PAPER_PREFERENCES",
+        "-DPORTABLE_CONTEXTS_CLIENT",
+        "-DPORTABLE_UNPADDED_HOURS",
+        "-DPORTABLE_BLE_BROADCAST",
+        "-DPORTABLE_BLE_BROADCAST_DEFAULT_OFF",
+        "-DPORTABLE_RESIDENT_SHELL_CLIENT",
+        "-DPORTABLE_ALARM_TERMINAL_RETENTION",
+        "-DPORTABLE_RESIDENT_POLICY",
+        "-DPORTABLE_RASTER_SNAPSHOT",
+        "-DPORTABLE_CONTEXTS_SOURCE_MASK=CONTEXTS_RADIO",
+        "-DPORTABLE_DISPLAY_ROTATION=90",
+        "-DPORTABLE_HOME_APP=\"default.elf\"",
+        "-DPORTABLE_RADIO_SESSION",
+        "-DPORTABLE_RADIO_CONTINUOUS_CAPTURE",
+        "-DPORTABLE_BLE_FOREGROUND",
+        "-DPORTABLE_FORCE_FULL_FRAMES",
+        "-DRF_STORAGE_INSTANCE=8",
+        "-DRF_APP_DATA_INSTANCE=3",
+        "-DRF_RETURN_APP=\"springboard.elf\"",
+        "-DPORTABLE_RF_SHARED_TEXT_INPUT",
+        "-DPORTABLE_TEXT_INPUT_CLIENT",
+        "-DPORTABLE_CHECKED_STORAGE_RUNTIME",
+        "-DPORTABLE_APP_HOME_GUARD",
+        "-DPORTABLE_TEXT_INPUT_POLICY"
+      ],
+      "added_defines": [
+        "-DRF_TEST_PAPER"
+      ],
+      "omitted_defines": [],
+      "omitted_target_options": [
+        "Xtensa machine/linker options",
+        "-flto; native tests use -O1 -g"
+      ],
+      "raster": [
+        480,
+        800
+      ],
+      "scene_profile": {
+        "display_rotation": 270,
+        "touch_rotation": 0,
+        "paper": true,
+        "source": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system/Services/scene_profile/profile.c"
+      }
+    }
+  },
+  "results": [
+    {
+      "target": "x4",
+      "mode": "policy-stopped-done",
+      "sanitized": false,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/normal/policy-stopped-done/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-stopped-cancel",
+      "sanitized": false,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/normal/policy-stopped-cancel/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-active",
+      "sanitized": false,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/normal/policy-active/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-unavailable",
+      "sanitized": false,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/normal/policy-unavailable/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-continuity",
+      "sanitized": false,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/normal/policy-continuity/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-retained",
+      "sanitized": false,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/normal/policy-retained/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-stopped-done",
+      "sanitized": true,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/sanitized/policy-stopped-done/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-stopped-cancel",
+      "sanitized": true,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/sanitized/policy-stopped-cancel/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-active",
+      "sanitized": true,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/sanitized/policy-active/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-unavailable",
+      "sanitized": true,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/sanitized/policy-unavailable/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-continuity",
+      "sanitized": true,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/sanitized/policy-continuity/run.log"
+    },
+    {
+      "target": "x4",
+      "mode": "policy-retained",
+      "sanitized": true,
+      "returncode": 0,
+      "log": "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/rf-modal-tests/x4/sanitized/policy-retained/run.log"
+    }
+  ],
+  "baseline_pixels": [],
+  "normal_sanitized_pixel_identical": [
+    "x4/policy-stopped-done/app.png",
+    "x4/policy-stopped-done/capture-00.png",
+    "x4/policy-stopped-done/keyboard.png",
+    "x4/policy-stopped-cancel/app.png",
+    "x4/policy-stopped-cancel/capture-00.png",
+    "x4/policy-stopped-cancel/keyboard.png",
+    "x4/policy-active/app.png",
+    "x4/policy-active/capture-00.png",
+    "x4/policy-active/keyboard.png",
+    "x4/policy-unavailable/app.png",
+    "x4/policy-unavailable/capture-00.png",
+    "x4/policy-continuity/app.png",
+    "x4/policy-continuity/capture-00.png",
+    "x4/policy-continuity/keyboard.png",
+    "x4/policy-retained/app.png",
+    "x4/policy-retained/keyboard.png"
+  ],
+  "non_keyboard_views": [
+    "startup",
+    "spectrum",
+    "waterfall",
+    "monitor",
+    "controls",
+    "controls-scrolled",
+    "frequency-label",
+    "signatures",
+    "signature-editor",
+    "events",
+    "event-editor",
+    "event-capture",
+    "event-examples",
+    "shared-rooms",
+    "shared-events",
+    "shared-editor",
+    "shared-capture",
+    "monitor-edit",
+    "receiver"
+  ]
+}
