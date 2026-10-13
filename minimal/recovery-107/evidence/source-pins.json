@@ -1,0 +1,28 @@
+{
+  "system_commit": "3f7474bbbdaacb7fb196a8c6b74a23017eff2772",
+  "system_tree": "3300141cf3c963fae3f1eca17ff31aac3d721591",
+  "runtime_commit": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+  "utilities_commit": "dcbad832cff91f7988a8e43d84725650b9815953",
+  "reader_commit": "c98e4222048244b1e729869ed47aa99130025fd3",
+  "x4_build_commit": "23655bf6c83e073d957454b841b5260fb593bf6c",
+  "x4_sleep_hook_commit": "8dba3205f63dcb9558d80890b9bf5c4aed16f230",
+  "target_workflow": 38463026089,
+  "target_artifact": 11846946567,
+  "target_artifact_sha256": "e608243093492faa3158799d45b98872274029114268d90bdf26ff30c786c3b2",
+  "target_repeat_identical": true,
+  "delivered_105_profile_checks": {
+    "desk_sdk_headers": true,
+    "tagged_alarm_sdk": true,
+    "local_sleep_source_sha256": true,
+    "build_defines": true
+  },
+  "sd_changes_required": false,
+  "delivery_not_before": "2026-10-13T23:30:00Z",
+  "hardware_tested": false,
+  "fixture_sha256": {
+    "strict.cpp": "0672af578733974e4853400b3c6c061c14f185297600c278ae0d297ed4374df2",
+    "fixture.cpp": "bedd840c9fefca74fd990339b33eb4e107fdaefa675581837c51a1e7d0f2dce7",
+    "cohort_elf_admission.h": "525e956fab608220414cba9822603b59dc5087e06e02edf4060623f0a30c4525",
+    "native-resolver-105.json": "37967eff0ed91a2bfb3afc880882157bfa677ef0d796fd36b67783931d6cd762"
+  }
+}

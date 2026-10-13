@@ -16,6 +16,7 @@ def main():
   p.add_argument('--'+n,required=True,type=Path)
  p.add_argument('--system-commit',required=True)
  a=p.parse_args();sys.path.insert(0,str(a.runtime/'scripts'))
+ require(a.system_commit=='3f7474bbbdaacb7fb196a8c6b74a23017eff2772','Wrong qualified System source')
  from spiffs_image import read_image
  from paired_bank_images import initial_bank_state,parse_record
  base=a.baseline.read_bytes()
@@ -29,8 +30,13 @@ def main():
  require(original_record[6]==hashlib.sha256(fw).digest() and original_record[7]==hashlib.sha256(oldfs).digest(),'Baseline bank mismatch')
  manifest=json.loads((a.home/'default.json').read_bytes());before=json.loads(old['default.json'])
  require(before['version']=='0.4.17' and manifest['version']=='0.4.18','Home version must advance')
- require(dict(manifest,version=before['version'])==before,'Home capability/identity change')
+ def identity(value):
+  return dict(value,version='',requires=sorted(value['requires'],key=lambda row:json.dumps(row,sort_keys=True)))
+ require(identity(manifest)==identity(before),'Home capability/identity change')
+ # The builder may reorder identical requirements. Retain delivered ordering.
+ manifest=dict(before,version=manifest['version'])
  files['default.elf']=(a.home/'default.elf').read_bytes()
+ require(sha(files['default.elf'])=='c9754aa1d4d9fcb08e53ed2031bcb34122509ef4f1fa932ff0af9a3e62b07db5','Wrong qualified Home target')
  files['default.json']=(json.dumps(manifest,indent=2)+'\n').encode()
  meta.update(version='0.1.107',source_revision=a.system_commit)
  files['cohort.json']=(json.dumps(meta,separators=(',',':'))+'\n').encode()
@@ -53,7 +59,8 @@ def main():
    for i,n in enumerate(order):
     q=Path(tmp)/str(i);q.write_bytes(values[n]);fs.create_file('/'+n,str(q))
   require(fs.remaining_blocks>=2,'Insufficient SPIFFS spare blocks')
-  return fs.to_binary(),fs.remaining_blocks
+  free=fs.remaining_blocks
+  return fs.to_binary(),free
  require(pack(old)[0]==oldfs,'Generator does not reproduce .106 store byte-for-byte')
  fs,free=pack(files);require(pack(files)==(fs,free),'Nondeterministic SPIFFS output')
  require(read_image(fs,0x510000)==files,'SPIFFS extraction mismatch')
