@@ -1,0 +1,36 @@
+name: Selected .111 settings persistence
+on:
+  push:
+    branches: ['audit/x4-settings-selected-20261013']
+    paths:
+      - 'minimal/recovery-111/settings-audit/**'
+      - '.github/workflows/settings-selected-111.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  settings:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        sanitize: [false, true]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: a91edf3fada6a559ec107186dd163d0c8da10d29
+          path: runtime
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+          ref: 1db9915d53abf13e163596838adaac5647879e58
+          path: system
+      - run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - name: Persistence, native erase, SD restore and availability
+        run: python3 minimal/recovery-111/settings-audit/run_regressions.py --runtime runtime --system system --output results ${{ matrix.sanitize && '--sanitize' || '' }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: settings-${{ matrix.sanitize }}
+          path: results
