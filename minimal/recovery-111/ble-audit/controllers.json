@@ -1,0 +1,50 @@
+[
+  {
+    "test": "model-normal",
+    "exit": 0
+  },
+  {
+    "test": "gestures-normal",
+    "exit": 0
+  },
+  {
+    "test": "touchpad-normal",
+    "exit": 0
+  },
+  {
+    "test": "buttons-normal",
+    "exit": 0
+  },
+  {
+    "test": "resident-touchpad-normal",
+    "exit": 0
+  },
+  {
+    "test": "resident-buttons-normal",
+    "exit": 0
+  },
+  {
+    "test": "model-ubsan",
+    "exit": 0
+  },
+  {
+    "test": "gestures-ubsan",
+    "exit": 0
+  },
+  {
+    "test": "touchpad-ubsan",
+    "exit": 0
+  },
+  {
+    "test": "buttons-ubsan",
+    "exit": 0
+  },
+  {
+    "test": "resident-touchpad-ubsan",
+    "exit": 0
+  },
+  {
+    "test": "resident-buttons-ubsan",
+    "exit": 0
+  }
+]

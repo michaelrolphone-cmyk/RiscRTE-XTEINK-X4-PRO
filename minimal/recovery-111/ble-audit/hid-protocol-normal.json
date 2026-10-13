@@ -1,0 +1,138 @@
+[
+  {
+    "case": "happy",
+    "exit": 0
+  },
+  {
+    "case": "scroll",
+    "exit": 0
+  },
+  {
+    "case": "reject",
+    "exit": 0
+  },
+  {
+    "case": "timeout",
+    "exit": 0
+  },
+  {
+    "case": "late",
+    "exit": 0
+  },
+  {
+    "case": "late-wrap",
+    "exit": 0
+  },
+  {
+    "case": "legacy",
+    "exit": 0
+  },
+  {
+    "case": "invalid-public-key",
+    "exit": 0
+  },
+  {
+    "case": "tamper",
+    "exit": 0
+  },
+  {
+    "case": "retained",
+    "exit": 0
+  },
+  {
+    "case": "malformed",
+    "exit": 0
+  },
+  {
+    "case": "storage",
+    "exit": 0
+  },
+  {
+    "case": "claim-retry",
+    "exit": 0
+  },
+  {
+    "case": "immediate-close",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-mode",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-refresh",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-control",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-ccc",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-watchdog",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-explicit",
+    "exit": 0
+  },
+  {
+    "case": "backpressure-disconnect",
+    "exit": 0
+  },
+  {
+    "case": "mouse-reconnect",
+    "exit": 0
+  },
+  {
+    "case": "mouse-no-subscription",
+    "exit": 0
+  },
+  {
+    "case": "mouse-transport-recovery",
+    "exit": 0
+  },
+  {
+    "case": "mouse-receive-recovery",
+    "exit": 0
+  },
+  {
+    "case": "mouse-retained-recovery",
+    "exit": 0
+  },
+  {
+    "case": "mouse-queued-recovery",
+    "exit": 0
+  },
+  {
+    "case": "forget-new-host",
+    "exit": 0
+  },
+  {
+    "case": "forget-lost-disconnect",
+    "exit": 0
+  },
+  {
+    "case": "forget-terminate-race",
+    "exit": 0
+  },
+  {
+    "case": "forget-race-new-host",
+    "exit": 0
+  },
+  {
+    "case": "forget-race-retained",
+    "exit": 0
+  },
+  {
+    "case": "forget-reboot",
+    "exit": 0
+  },
+  {
+    "case": "forget-unsafe-close",
+    "exit": 0
+  }
+]
