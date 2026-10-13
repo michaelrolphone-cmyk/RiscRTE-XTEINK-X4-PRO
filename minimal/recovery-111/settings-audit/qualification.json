@@ -1,0 +1,21 @@
+{
+  "workflow_run": 38483395812,
+  "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38483395812",
+  "head_sha": "061ca5c4bffc8eb0849bc86ec747084026a376ce",
+  "conclusion": "success",
+  "receipts": [
+    {
+      "mode": "normal",
+      "test_families": 12,
+      "results_sha256": "578803eff8fe6022448844eeb2304ff422f2eb6b7e4e256fbc9c81905229a000",
+      "archive_sha256": "f5ad3127be47284bd9ce654e2566dc66d9b8627c499a639dde49b6134013e4b3"
+    },
+    {
+      "mode": "sanitized",
+      "test_families": 12,
+      "results_sha256": "945e0ff21eefbfe5891cddadf4a41fa29a9ea282556d6f824ae9d9731e3cc6c8",
+      "archive_sha256": "73bd84d0f50a8256b16f545b67a0b6347b4a38c6411b2e131a7df5c0cd4e9fef"
+    }
+  ],
+  "hardware_tested": false
+}

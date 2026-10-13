@@ -1,0 +1,1 @@
+Native atomic endpoint + checked AppDataFiles/NvsReplicaMetadata: 1000 owner polls without backend I/O, worker publication/cleanup, complete map+intent reboot PASS

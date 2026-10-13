@@ -1,0 +1,119 @@
+{
+  "images": {
+    "103": {
+      "image_sha256": "41b3447bbac9d67c82101e6a04730435f753ea5f9404fc4b1c85bae09ed7efa8",
+      "cohort": {
+        "firmware_sha256": "c50ad163094b44076f9c49790c1c049628eb28c028484024da1916ff19a9c74f",
+        "firmware_size": 1653136,
+        "layout": "riscrte-paired-appdata-v2",
+        "product": "xteink-x4-pro",
+        "runtime_version": "0.2.28",
+        "schema": "riscrte.cohort",
+        "schema_version": 1,
+        "source_repo": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+        "source_revision": "bc55d11de8ee6b4bcaa36ffc377e889e29f39447",
+        "store_abi": 2,
+        "version": "0.1.103"
+      },
+      "compiled_markers": [
+        "RTE_BOOT error=native-settings-backend",
+        "RTE_BOOT error=native-settings-admission",
+        "RTE_BOOT error=native-settings-hydration",
+        "/appdata/.native-settings",
+        "/.native-settings"
+      ],
+      "appdata_sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+    },
+    "111": {
+      "image_sha256": "77fc8f87f1c4f825a35e17d65c7bf663b82bbab3be9f8f0f6973581529818b00",
+      "cohort": {
+        "firmware_sha256": "3242bc4ac994a9b60ab73588955b311508e221d092b8cbc270d9136c608ec026",
+        "firmware_size": 1657456,
+        "layout": "riscrte-paired-appdata-v2",
+        "product": "xteink-x4-pro",
+        "runtime_version": "0.2.28",
+        "schema": "riscrte.cohort",
+        "schema_version": 1,
+        "source_repo": "michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO",
+        "source_revision": "597a54b1c84a1beba2f861242995019ac273377a",
+        "store_abi": 2,
+        "version": "0.1.111"
+      },
+      "compiled_markers": [
+        "RTE_BOOT error=native-settings-backend",
+        "RTE_BOOT error=native-settings-admission",
+        "RTE_BOOT error=native-settings-hydration",
+        "/appdata/.native-settings",
+        "/.native-settings"
+      ],
+      "appdata_sha256": "5f03c248f2de31c4da9ae8d9bc2033df064cee5e37694a9982f70fbb2f1d2ef0"
+    }
+  },
+  "writers": [
+    {
+      "manifest": "settings.json",
+      "app_id": "settings",
+      "namespace": 1,
+      "version": "1.3.29",
+      "key_value_grants_unchanged": true,
+      "internal_elf_sha256": "1c4914ed12749cb076019dd255c40939d73a6be10f1eda069c4e5d68b48148b7",
+      "image_source": null
+    },
+    {
+      "manifest": "default.json",
+      "app_id": "paper_clock",
+      "namespace": 1,
+      "version": "0.4.18",
+      "key_value_grants_unchanged": true,
+      "internal_elf_sha256": "c9754aa1d4d9fcb08e53ed2031bcb34122509ef4f1fa932ff0af9a3e62b07db5",
+      "image_source": null
+    },
+    {
+      "manifest": "battery.json",
+      "app_id": "battery",
+      "namespace": 1,
+      "version": "1.1.19",
+      "key_value_grants_unchanged": true,
+      "internal_elf_sha256": "321ab1330e5850f697d615f6e505b0821ce6ccd2cc6cd070cb47241b6cbc188f",
+      "image_source": null
+    },
+    {
+      "manifest": "ble_scanner.json",
+      "app_id": "ble_scanner",
+      "namespace": 1,
+      "version": "0.2.26",
+      "key_value_grants_unchanged": true,
+      "internal_elf_sha256": null,
+      "image_source": {
+        "path": "Apps/ble_scanner/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c/ble_scanner.elf",
+        "volume_instance": 9
+      }
+    },
+    {
+      "manifest": "contexts.json",
+      "app_id": "contexts",
+      "namespace": 1,
+      "version": "0.4.5",
+      "key_value_grants_unchanged": true,
+      "internal_elf_sha256": null,
+      "image_source": {
+        "path": "Apps/contexts/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9/contexts.elf",
+        "volume_instance": 9
+      }
+    },
+    {
+      "manifest": "wifi_settings.json",
+      "app_id": "wifi_settings",
+      "namespace": 6,
+      "version": "1.1.29",
+      "key_value_grants_unchanged": true,
+      "internal_elf_sha256": "6a5894b9991d71bb952c9a0d49f1a4184da537cd52ab4027449553b4e5ba1f9c",
+      "image_source": null
+    }
+  ],
+  "installation_unchanged": true,
+  "settings_elf_unchanged": true,
+  "appdata_image_unchanged": true,
+  "compiled_markers_are_not_a_native_rebuild": true,
+  "hardware_tested": false
+}

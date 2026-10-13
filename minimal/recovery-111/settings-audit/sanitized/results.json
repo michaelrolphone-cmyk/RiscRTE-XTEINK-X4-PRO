@@ -1,0 +1,125 @@
+{
+  "pins": {
+    "runtime": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+    "system": "1db9915d53abf13e163596838adaac5647879e58"
+  },
+  "sanitized": true,
+  "records": [
+    {
+      "name": "native_replica_core",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_replica_core_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "012339d4904c1c8c11e030e58896cfde1f9c0e9f94b55983243718cfa66aa2b5"
+    },
+    {
+      "name": "native_replica_sd",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_replica_sd_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "fb4b175d282850f6f70bc32b583ec45048daca2e324212e5e7f08d0594087d8b"
+    },
+    {
+      "name": "native_replica_sd_reader",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_replica_sd_reader_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "dd276d502767ae5e13435a424cd007f078b4ebb6e167af5a78763ae686199cae"
+    },
+    {
+      "name": "native_checked_sd_restore",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_checked_sd_restore_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "47b880137a746ab712b8b5a22e861cfac9c8a9cf63b83fb37af3586ed12dff1f"
+    },
+    {
+      "name": "native_checked_sd_restore_power",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_checked_sd_restore_power_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "e2a479b0f64ae73e916ee2274fc58d77cb6e0e525795147d0c1d7e03c7d23804"
+    },
+    {
+      "name": "native_first_sd_checked_store",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_first_sd_checked_store_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "0f3bfa4750f6d4e5f13168a8d836f61f62b376eebed96d33b3865e8a3efeccfd"
+    },
+    {
+      "name": "native_atomic_checked_store",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_atomic_checked_store_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "90392fafe01520e74ccdb0277d70c34b6eeb6cfa6a936dd55fbc6bdf360aff88"
+    },
+    {
+      "name": "native_atomic_wifi_bridge",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_atomic_wifi_bridge_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "5c67290f744a9e10e3a01232fb9f6ba416a7141c3da730f014f027e5f01a8e42"
+    },
+    {
+      "name": "native_settings_availability",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_native_settings_availability_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "5d58e9cb0f216054efdc04c98b6c28cce4cdc255e3a372db841501c59e38d7cd"
+    },
+    {
+      "name": "atomic_key_value_cohort",
+      "command": [
+        "bash",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/runtime/test/run_atomic_key_value_cohort_test.sh"
+      ],
+      "return_code": 0,
+      "log_sha256": "29e25d9f1f5566690ba6adb93f00cf34db698b4b2adcdf5466418c93eedc9e62"
+    },
+    {
+      "name": "wifi_atomic",
+      "command": [
+        "/usr/bin/python3",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/system/scripts/test_wifi_atomic.py",
+        "--output",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/results/wifi_atomic",
+        "--sanitize"
+      ],
+      "return_code": 0,
+      "log_sha256": "fc84bb76000878c9e10352982254f38a043b0f775244fcfd33d9a75fd393d59a"
+    },
+    {
+      "name": "wifi_availability",
+      "command": [
+        "/usr/bin/python3",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/system/scripts/test_wifi_availability.py",
+        "--output",
+        "/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/results/wifi_availability",
+        "--sanitize",
+        "--paper"
+      ],
+      "return_code": 0,
+      "log_sha256": "050695a94359b3334f0862ee5f2566960bac9d302f1567f719fb50bc60473285"
+    }
+  ],
+  "hardware_tested": false
+}

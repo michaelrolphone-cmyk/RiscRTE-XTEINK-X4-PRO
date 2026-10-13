@@ -1,0 +1,150 @@
+[
+  {
+    "mode": "normal",
+    "manifest_sha256": "88a71255c08073784dfab49b9e6c20f76dc7c11f9cdca319bd5e9ec36ede6304",
+    "source_commit": "1d952dea1899f8fbfdc81dc3c366b0f4722d1012",
+    "current_runtime": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+    "unchanged_files": 1233,
+    "changed_files": [
+      "src/bootstrap/CohortRuntime.inc",
+      "src/ports/esp32s3/CpuPort.cpp"
+    ],
+    "missing_files": [],
+    "campaigns": [
+      {
+        "case": "writer-identities",
+        "exit_code": 0
+      },
+      {
+        "case": "normal",
+        "exit_code": 0
+      },
+      {
+        "case": "restore",
+        "exit_code": 0
+      },
+      {
+        "case": "absent",
+        "exit_code": 0
+      },
+      {
+        "case": "ambiguous",
+        "exit_code": 0
+      },
+      {
+        "case": "conflict",
+        "exit_code": 0
+      },
+      {
+        "case": "interrupt",
+        "exit_code": 73
+      },
+      {
+        "case": "interruption-restore",
+        "exit_code": 0
+      },
+      {
+        "case": "first-cut",
+        "exit_code": 74
+      },
+      {
+        "case": "first-resume",
+        "exit_code": 0
+      },
+      {
+        "case": "no-entropy",
+        "exit_code": 0
+      },
+      {
+        "case": "publication-cut",
+        "exit_code": 75
+      },
+      {
+        "case": "publication-resume",
+        "exit_code": 0
+      },
+      {
+        "case": "publication-erase",
+        "exit_code": 0
+      },
+      {
+        "case": "async-restore",
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "mode": "asan",
+    "manifest_sha256": "ec1d15dd9ae34915c3426ed6103eb8e16087737c396d47eea79b43cb87159093",
+    "source_commit": "1d952dea1899f8fbfdc81dc3c366b0f4722d1012",
+    "current_runtime": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+    "unchanged_files": 1233,
+    "changed_files": [
+      "src/bootstrap/CohortRuntime.inc",
+      "src/ports/esp32s3/CpuPort.cpp"
+    ],
+    "missing_files": [],
+    "campaigns": [
+      {
+        "case": "writer-identities",
+        "exit_code": 0
+      },
+      {
+        "case": "normal",
+        "exit_code": 0
+      },
+      {
+        "case": "restore",
+        "exit_code": 0
+      },
+      {
+        "case": "absent",
+        "exit_code": 0
+      },
+      {
+        "case": "ambiguous",
+        "exit_code": 0
+      },
+      {
+        "case": "conflict",
+        "exit_code": 0
+      },
+      {
+        "case": "interrupt",
+        "exit_code": 73
+      },
+      {
+        "case": "interruption-restore",
+        "exit_code": 0
+      },
+      {
+        "case": "first-cut",
+        "exit_code": 74
+      },
+      {
+        "case": "first-resume",
+        "exit_code": 0
+      },
+      {
+        "case": "no-entropy",
+        "exit_code": 0
+      },
+      {
+        "case": "publication-cut",
+        "exit_code": 75
+      },
+      {
+        "case": "publication-resume",
+        "exit_code": 0
+      },
+      {
+        "case": "publication-erase",
+        "exit_code": 0
+      },
+      {
+        "case": "async-restore",
+        "exit_code": 0
+      }
+    ]
+  }
+]
