@@ -1,0 +1,353 @@
+{
+  "sanitize": "normal",
+  "runs": [
+    {
+      "suite": "regression",
+      "case": "draft",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "uncertain",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "failure",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "preservation",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-0",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-1",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-2",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-3",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-4",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-5",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-6",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-7",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-entry-9",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "name-home",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "name-home-pending",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "name-home-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "acquire-loss",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "initial-draw-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "replace-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "projection-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "read-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "resolve-read-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "release-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "home-uncertain",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "old-service",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "service-busy",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "controls",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "editor-navigation",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-input",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-retention",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-abandoned",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-alarm",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-frame",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-runtime-1",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-runtime-2",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-runtime-3",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-runtime-4",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-runtime-5",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-runtime-6",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "types-scroll",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "geometry",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "reference",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-entrypoint-accept",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-entrypoint-cancel",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-entrypoint-pending",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-entrypoint-unavailable",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-entrypoint-home",
+      "passed": true
+    },
+    {
+      "suite": "regression",
+      "case": "text-entrypoint-alarm",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "detached",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "continuity",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "pending",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "busy",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "presenting",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "input-busy",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "activity",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "pending-home",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "pending-alarm",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "resident-poll-exit",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "resident-policy-exit",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "missing",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "unavailable",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "retained-pause",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "retained-resume",
+      "passed": true
+    },
+    {
+      "suite": "policy",
+      "case": "again-resume",
+      "passed": true
+    }
+  ],
+  "frames": {
+    "reference-edit.pbm": "590765160c11c0698781a122dcf7cb72f2eff2f2b73cfbdb1b3e259a65c0cf46",
+    "type-default-controls.pbm": "9890893a9568cf8bee9786f9ce4a255e84fe3716821f78cd447204d1533709db",
+    "saved-point-edit-heading.pbm": "b219b790bf75ecbfe4e3bfb0fa342a98b36c9316d5d976c94925177bac46a34a",
+    "edit-visible-back.pbm": "e371e6a545cdf02c06f4a3e48fc9293a75f80ffd11d3c8d9212b54de8ca98c65",
+    "add-visible-back.pbm": "6bb8b3c979cea693578f46d2075789ae4d07d2f3a11a6ff3fd17795ae543af5e",
+    "catalog-save-unconfirmed.pbm": "0e50fc8f48f7f396756dfc6cf44afbef8228a1e23ff95c0b25712b3e3c76e726",
+    "reference-type-defaults.pbm": "2ed9f796c5678742e9580b8a45979db1e530c8e27139a6a2b5043435b6380a90",
+    "catalog-next-page.pbm": "17fe3bb56cf402ae30af3040b27e10a871cedc3f50981a7cf89727852488454b",
+    "catalog-days.pbm": "9d06611d508a76001137a2cebb1fb51c13cda7383dec162dbc30594547122c23",
+    "catalog-over-eight.pbm": "c2fb0e63cf39e76e2026068dd06f47dd74d7f01e8a080041b349f473917110a4",
+    "reference-points.pbm": "a170495dbf8897d78a455cbcf21618c11448fa7a5335c3b155c9e656a09586cd",
+    "types-scrolled.pbm": "72be3ef651fea428ab8af4ed835e5172f9bf641652f977c0d35e96ee35ebe2b0",
+    "reference-time.pbm": "77379da972a33d014b33be2c6f22dffcd5e77e2a7aa9a602d4632c94bed9da59",
+    "catalog-time.pbm": "38d423d3ff5d05228a5a6a8dd12c9a32b5b68c73863dcb7221274098684cb952",
+    "catalog-list.pbm": "e0511deb4b7c5f94c94fc5a664029dc0ba8f576e911bfd74069f718c713dc2b8",
+    "catalog-name-done.pbm": "9890893a9568cf8bee9786f9ce4a255e84fe3716821f78cd447204d1533709db",
+    "catalog-custom-type.pbm": "c3977cadee2927beb4b293590e948775dc8dc2e18323bad80adfd807666d283a",
+    "new-type-direct-keyboard.pbm": "0285f28504c3798247e1cce205a82c611e1cb886626d1409aef0305efbe23e4f",
+    "catalog-storage-full.pbm": "ba3e4ed1d466a2f8411540462c421ed5ff88d83255dc242f151a21238961bfbf"
+  },
+  "target_sha256": "4c425708c58cd8d8c5a280609ec17b5e4a2d8ad079003221f7c7c1d4feac8883",
+  "hardware_tested": false
+}
