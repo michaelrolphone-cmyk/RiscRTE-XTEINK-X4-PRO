@@ -1,0 +1,67 @@
+{
+  "architecture": "xtensa-esp32s3",
+  "entry": "app_main",
+  "file_name": "waterfall.elf",
+  "id": "waterfall",
+  "requires": [
+    {
+      "api": 1,
+      "capability": "display.output"
+    },
+    {
+      "api": 1,
+      "capability": "input.touch.raw"
+    },
+    {
+      "api": 1,
+      "capability": "input.navigation"
+    },
+    {
+      "api": 1,
+      "capability": "board.battery"
+    },
+    {
+      "api": 1,
+      "capability": "runtime.realtime"
+    },
+    {
+      "api": 1,
+      "capability": "storage.key-value"
+    },
+    {
+      "api": 2,
+      "capability": "alarm.service"
+    },
+    {
+      "api": 1,
+      "capability": "radio.iq"
+    },
+    {
+      "api": 2,
+      "capability": "storage.key-value"
+    },
+    {
+      "api": 1,
+      "capability": "storage.app-data"
+    },
+    {
+      "api": 1,
+      "capability": "telemetry.broadcast"
+    },
+    {
+      "api": 1,
+      "capability": "contexts.service"
+    },
+    {
+      "api": 1,
+      "capability": "storage.shared-data"
+    },
+    {
+      "capability": "ui.text-input",
+      "api": 1
+    }
+  ],
+  "runtime_lifecycle": "foreground",
+  "type": "application",
+  "version": "0.3.4"
+}

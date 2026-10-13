@@ -1,0 +1,21 @@
+{
+  "schema": "rf.modal-policy.selection.v1",
+  "finalized": true,
+  "device": "x4",
+  "version": "0.3.5",
+  "sources": {
+    "system-apps": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+    "utilities": "52157660ec573cf4639ffe3eefcad5b7b3115c4e"
+  },
+  "baseline": {
+    "compiled_recipe_commit": "a9ca3a8e5a17283a656092884d22771cf1dcfc01",
+    "system_commit": "fd4b1e52fe2a49c3c4c22f9ccd4c98a91f88afa0",
+    "combined_handoff_sha256": "f9709fecdee7ea86d2be79e5c00c9c0cd1bafa73c9495f180cb9fe826965cb09",
+    "receipt_sha256": "b130b000f74c83a8b0f3f19bd0ac12dcaec4ec36d6a90740d5d91934df2f164f",
+    "full_image_sha256": "7346a810638e51886167640f90eb5a0fc16c2d89fdb9bac308fbbdde3e233076",
+    "candidate_store_sha256": null,
+    "free_spiffs_blocks": 126,
+    "sd_file_count": 101,
+    "rf_predecessor_record_sha256": "4509ac5b61cc71e9d7c9d1373c5323e1f89bd5a1902067cf0e203f0454e89e6f"
+  }
+}
