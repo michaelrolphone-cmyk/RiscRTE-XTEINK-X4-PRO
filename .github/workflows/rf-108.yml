@@ -43,7 +43,7 @@ jobs:
           python minimal/recovery-108/build_rf.py --system deps/system --utilities deps/utilities --runtime-sdk deps/build-sdk --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output target-rf
       - name: Real X4 app, adapter, text and scene modal lifecycle under ASan and UBSan
         run: |
-          python deps/utilities/scripts/test_rf_shared_input.py --system-apps deps/system --x4-host-system deps/system --runtime deps/native --x4-runtime deps/native --x4-recipe minimal/recovery-108/qualified-target.json --baseline-utilities deps/utilities --x4-baseline deps/utilities --target x4 --extra-define PORTABLE_TEXT_INPUT_POLICY --scenario policy-stopped-done --scenario policy-stopped-cancel --scenario policy-active --scenario policy-unavailable --scenario policy-continuity --scenario policy-retained --output rf-modal-tests
+          python minimal/recovery-108/test_modal.py --utilities deps/utilities --system-apps deps/system --x4-host-system deps/system --runtime deps/native --x4-runtime deps/native --x4-recipe minimal/recovery-108/qualified-target.json --baseline-utilities deps/utilities --x4-baseline deps/utilities --target x4 --extra-define PORTABLE_TEXT_INPUT_POLICY --scenario policy-stopped-done --scenario policy-stopped-cancel --scenario policy-active --scenario policy-unavailable --scenario policy-continuity --scenario policy-retained --output rf-modal-tests
       - uses: actions/upload-artifact@v4
         if: always()
         with:
