@@ -1,0 +1,22 @@
+{
+  "linux_run": 38470194627,
+  "linux_artifact": 11850733572,
+  "linux_artifact_sha256": "7713983f55df31fdd1ce60d11c3ca89730131c810ffd78854a98c2f0180313c5",
+  "linux_result": "success",
+  "test_runs": 179,
+  "frame_comparisons": 38,
+  "strict_elf_admissions_per_mode": 45,
+  "admission_modes": [
+    "normal",
+    "undefined"
+  ],
+  "cohort_transition_passed": true,
+  "repeat_bin_identical": true,
+  "repeat_sd_zip_identical": true,
+  "immutable_108_checksums_passed": true,
+  "hardware_tested": false,
+  "productivity_commit": "c671a34c5617ee4e33c92603e518fbc3dcad376f",
+  "system_commit": "c4579cdb14f4ce185aed32d5de86f44a25733007",
+  "recipe_commit": "50261329f49aa1c83e0819819188cbdc4f53e6bf",
+  "broad_historical_productivity_ci": "Three failed workflows: historical Git-file lookup and stale Timecard expectations; baseline reproduction log retained."
+}
