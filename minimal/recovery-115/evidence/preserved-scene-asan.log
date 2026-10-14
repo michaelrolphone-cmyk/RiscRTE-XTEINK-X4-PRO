@@ -1,0 +1,4 @@
+Telemetry: optional ABI, atomic copies, curve bounds/gaps/styles, real tile/tab taps, invalid/repeated revisions, retained checkpoint no repaint PASS
+Landscape: four baseline rotations, inverse touch coordinates, raster guards, immutable active orientation and session cleanup PASS
+Telemetry: optional ABI, atomic copies, curve bounds/gaps/styles, real tile/tab taps, invalid/repeated revisions, retained checkpoint no repaint PASS
+Landscape: four baseline rotations, inverse touch coordinates, raster guards, immutable active orientation and session cleanup PASS

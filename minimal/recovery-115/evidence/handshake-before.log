@@ -1,0 +1,1 @@
+Assertion failed: (a.reconnecting&&!a.token&&a.screen==CONNECTING), function main, file handshake_retry_test.c, line 8.

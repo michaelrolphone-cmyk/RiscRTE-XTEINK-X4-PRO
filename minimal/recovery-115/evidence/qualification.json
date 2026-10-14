@@ -1,0 +1,46 @@
+{
+  "sources": {
+    "utilities": "710eddc913c6dea5bf6e5b5325a824d32f63429c",
+    "system": "2d8200c3ddab95bfa5516790a09f70401ff36622",
+    "runtime": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+    "drivers": "3a1b31c6d2cc90d7f082dd13d20ff7df77bd127c",
+    "watch-packer": "c8d90c625a51c1ac6e09a8014ab52748b3617981",
+    "x4-baseline": "0bcf1b314d07c8123fe9ecc23778e0372680151d"
+  },
+  "new_features": [
+    "bounded ELM handshake reconnect",
+    "mph defaults preserving valid existing preferences",
+    "velocity/acceleration/jerk history",
+    "all supported sensor polling while recording",
+    "one CSV recording across automatic reconnect",
+    "optional scene landscape"
+  ],
+  "existing_fixes_retained": [
+    "0.2.2 parser/late RX/backpressure",
+    "0.2.3 checkbox and scroll pump",
+    "X4 .114 Home/RTC/sleep and Files"
+  ],
+  "tests": {
+    "app_scenarios_asan_ubsan": 29,
+    "scene_landscape": "normal and ASan/UBSan passed",
+    "scene_raster_cadence_comparisons": 75,
+    "handshake_negative_control": "old source fails; new source passes",
+    "internal_elf_admission": 43,
+    "installed_elf_admission": 2,
+    "cohort_hardware_calls": 0,
+    "cohort_storage_calls": 0
+  },
+  "original_obd_sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c",
+  "obdtest_024_sha256": "9acdf0593b4b3131f4341dbece0e2b178412df16c94abf17bc4657bfd852ec0e",
+  "previous_obdtest_023_sha256": "7fa2b91aef867d32f9b99e404307caf30daa2acfd70e000d039ac458862cb40d",
+  "scene_sha256": "d05c522b5c3dc55fd2645efa304d88241e7d64c850ec86b6723ae7e9b872b6c3",
+  "app_repeat_identical": true,
+  "csv_timestamp_basis": "elapsed milliseconds since explicit recording start; no wall-clock RTC grant",
+  "hardware_tested": false,
+  "recording_fixture": {
+    "files": 1,
+    "rows": 25,
+    "pid_count": 20,
+    "sha256": "5d362c070e0bcaa4c704b5ea77e566597278a332d91c86b534e8f8beefea08f2"
+  }
+}
