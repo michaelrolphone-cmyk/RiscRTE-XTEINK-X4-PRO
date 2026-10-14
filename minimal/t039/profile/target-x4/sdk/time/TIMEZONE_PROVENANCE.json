@@ -1,0 +1,43 @@
+{
+  "upstream_repository": "https://github.com/michaelrolphone-cmyk/T5S3-Reader",
+  "upstream_commit": "34d8e694d89a1e72d8854403d8592c289fae3ddc",
+  "system_apps_base": "a78723d2eefa9f865049c0e492b62c276d61d1ee",
+  "catalog_entries": 419,
+  "license": "MIT; Copyright (c) 2025 Dave Allie; root LICENSE retained",
+  "sources": {
+    "lib/hal/TimeZoneData.cpp": {
+      "git_blob": "6de971cefd068118ebb4ca79c01cdd8c3136b3d0",
+      "sha256": "9695fda250146e961683f7a099cc129ffa951df2accdc090fb91a58f243a57eb"
+    },
+    "lib/hal/TimeZoneCatalog.cpp": {
+      "git_blob": "4d8e8fff080a33fff3b2e0be28d0e0b5c951b63c",
+      "sha256": "e13c2956fd579757be21ce4aa26b1cac272556c17b0e07baef13be1ca8527708"
+    },
+    "lib/hal/TimeZoneCatalog.h": {
+      "git_blob": "39e50cea79cbe6c09df963321fa6daf0f1a1982a",
+      "sha256": "14ca17c193e39f5559edca505b79f6487b9c08ce28d0fd8e42d665c78c529553"
+    },
+    "lib/hal/HalClock.cpp": {
+      "git_blob": "8dd939b6adea7002aa2905a52f09802db0a3c11f",
+      "sha256": "08f6097955362225b47b2b10c195ed3a4de8b603ec9ad2edc959775b07ef56c1"
+    },
+    "scripts/gen_timezones.py": {
+      "git_blob": "82fad42614e1affbe709d28cb3ee389ef8599d65",
+      "sha256": "c8f98ea4e8111bb5b3b6c49ded551921e24bea86f255e9ddfdb77b831460aed9"
+    },
+    "LICENSE": {
+      "git_blob": "b8c074800342d88eb4892d9ef79a65485d1bfcf9",
+      "sha256": "7212963b5b1b5ee34ca158163356beb1e6945dd2cc5d320f1fe7573c424ea640"
+    }
+  },
+  "catalog_policy": "Exact frozen 2026 representative recurring rules, not full historical IANA tzdb. No network refresh.",
+  "implementation": "New pure-C bounded parser, Gregorian conversion, explicit inverse ambiguity and side-effect-free migration. Reader catalog, aliases, region labels, display naming and strict 1800-second interpretation decision are ported. No libc timezone/process/environment imports.",
+  "unchanged_watch_files": {
+    "lib/PortableApps/include/PortableTime.h": "350b8c5255dafa9e25c4a20cfb458cdcda3439da929dab05e0de0c82e981ff6e",
+    "lib/PortableApps/include/PortableTimeFormat.h": "8eb4d0f850c974da910a516c0f13ed9302ad3928849aa85d7641bdbcf3bd1867",
+    "lib/PortableApps/time/denver/display_time.h": "9460e26e1d6faf574a212cdec86d9477de7a0e5d50168d5e7e76613be2868a03",
+    "lib/PortableApps/time/denver/twatch_calendar.h": "67e4a670e4ee8a485843e99be0d198d0b60d84a0bc8d84fc77a3d0e4bde39733",
+    "lib/PortableApps/time/denver/twatch_caps.h": "b8b3003c77c72eb251227329c94fda7244389fb45c7a7e92aa01a5ddce50600e"
+  },
+  "portable_catalog_sha256": "29d4c86037f7554c94a4404d5e39e28091430a1f9c23b5e35224aed3df826f20"
+}

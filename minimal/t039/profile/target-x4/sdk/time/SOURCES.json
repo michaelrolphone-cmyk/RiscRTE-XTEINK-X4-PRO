@@ -1,0 +1,29 @@
+{
+  "repository": "michaelrolphone-cmyk/RiscRTE-T-Watch-S3",
+  "commit": "9ed7bd48a97aea192c8cc9e75c22c1f87c8c7313",
+  "files": [
+    {
+      "path": "lib/PortableApps/time/denver/display_time.h",
+      "source_path": "apps/clock/display_time.h",
+      "sha256": "9460e26e1d6faf574a212cdec86d9477de7a0e5d50168d5e7e76613be2868a03"
+    },
+    {
+      "path": "lib/PortableApps/time/denver/twatch_calendar.h",
+      "source_path": "include/twatch_calendar.h",
+      "sha256": "67e4a670e4ee8a485843e99be0d198d0b60d84a0bc8d84fc77a3d0e4bde39733"
+    }
+  ],
+  "iana_rules": {
+    "source": "IANA tzdb 2026e northamerica",
+    "source_url": "https://github.com/eggert/tz/blob/2026e/northamerica",
+    "source_git_blob": "e3a4bd6d5332b901961381432a6f53cc95ce530f",
+    "supported_years": [
+      2000,
+      2099
+    ],
+    "standard_utc_offset_minutes": -420,
+    "daylight_utc_offset_minutes": -360
+  },
+  "selection": "PORTABLE_RTC_UTC8_DENVER explicitly selects fixed UTC+08 RTC storage and America/Denver display; default shared build is identity/raw.",
+  "wrapper": "twatch_caps.h imports only the already-pinned PortableRtcClock.h table."
+}

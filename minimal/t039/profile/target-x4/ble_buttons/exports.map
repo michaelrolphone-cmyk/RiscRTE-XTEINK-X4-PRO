@@ -1,0 +1,1 @@
+{ global: app_main; app_module_fini; app_module_init; risc_resident_app_descriptor_v1; local: *; };
