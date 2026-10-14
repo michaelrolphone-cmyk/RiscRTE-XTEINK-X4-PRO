@@ -1,0 +1,51 @@
+{
+  "file": "X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin",
+  "version": "0.1.121",
+  "image_sha256": "48145adc023a334885207100ce29596edef3f02c07a6d830ca53e3ab1fbf5993",
+  "baseline_sha256": "a70fd9b7b93193ab6702e8991176a608d4f1f6f3ef96fe29cd7c257ac81f695d",
+  "baseline_file": "/Users/micahelbyrns/Documents/Codex/2026-10-13/task/t060-build/x4/X4-0.1.120-T060-GameBoy-State-factory-erases-data-0x0.bin",
+  "native_sha256": "2e6116022ef7f8b35018ec42aebeefb831560d88be0c1d3b191946ab35840d6a",
+  "native_unchanged": true,
+  "all_other_store_files_unchanged": true,
+  "changed_store_files": [
+    "cohort.json",
+    "default.elf",
+    "default.json"
+  ],
+  "packing": {
+    "generator": "esp-idf-spiffsgen",
+    "upstream_commit": "38eeba213aa695aabfd6d89aa9f5078dbe5a94c3",
+    "generator_sha256": "5779792a4d98a12383233267511735769a201b5c2c79b582186a40c22b7c6466",
+    "config": {
+      "page_size": 256,
+      "page_ix_len": 2,
+      "block_size": 4096,
+      "block_ix_len": 2,
+      "meta_len": 4,
+      "obj_name_len": 32,
+      "obj_id_len": 2,
+      "span_ix_len": 2,
+      "packed": true,
+      "aligned": true,
+      "endianness": "little",
+      "use_magic": true,
+      "use_magic_len": true,
+      "aligned_obj_ix_tables": false
+    },
+    "order": "sorted ASCII path names",
+    "metadata": "zero",
+    "image_bytes": 5308416,
+    "file_count": 107,
+    "payload_bytes": 4367200,
+    "occupied_blocks": 1180,
+    "empty_blocks": 116,
+    "sha256": "aedf87c59efd0e371712825fa305d2a83fd998284537f714f323018650279aad",
+    "independent_round_trip_verified": true
+  },
+  "crash_namespace": 62,
+  "crash_sd_instance": 9,
+  "hardware_tested": false,
+  "sd_file": "/Users/micahelbyrns/Documents/Codex/2026-10-13/task/t060-build/x4/X4-0.1.120-Cumulative-Changed-SD-Keep-Existing.zip",
+  "sd_sha256": "eda159ac74e9b01b0cc28b633486b3bbffe68365cfcc7b13b2d06783786d8958",
+  "sd_unchanged": true
+}
