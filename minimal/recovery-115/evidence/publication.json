@@ -1,0 +1,37 @@
+[
+  {
+    "file": "X4-0.1.115-T057-OBD-Test-factory-erases-data-0x0.bin",
+    "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/releases/download/test-t057-obd-0.1.115/X4-0.1.115-T057-OBD-Test-factory-erases-data-0x0.bin",
+    "sha256": "fb89e6d1457968f81e78dfb6cede94d8277ce47d4c9fb7bcbc40c0597a722251",
+    "download_verified": true,
+    "source_revision": "0e683c58cf68f55f161ca17ba308048930534453"
+  },
+  {
+    "file": "OBDTest-0.2.4-SD-only.zip",
+    "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/releases/download/test-t057-obd-0.1.115/OBDTest-0.2.4-SD-only.zip",
+    "sha256": "5602b3dfb2de9e0415a321622bd144e8e83b3833f7cc0df83fd2c1950d1b11af",
+    "download_verified": true,
+    "source_revision": "0e683c58cf68f55f161ca17ba308048930534453"
+  },
+  {
+    "file": "X4-0.1.115-Cumulative-Changed-SD-Keep-Existing.zip",
+    "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/releases/download/test-t057-obd-0.1.115/X4-0.1.115-Cumulative-Changed-SD-Keep-Existing.zip",
+    "sha256": "b54647eb396eedf69226ff7b7826bda070dec62918a5f2b65c3c09205a63c030",
+    "download_verified": true,
+    "source_revision": "0e683c58cf68f55f161ca17ba308048930534453"
+  },
+  {
+    "file": "T057-OBD-Qualification.zip",
+    "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/releases/download/test-t057-obd-0.1.115/T057-OBD-Qualification.zip",
+    "sha256": "a09abfb96b9b1f53ac7cb908f4fa2b4bb10af280eea1fe31cfdabd4280e361b6",
+    "download_verified": true,
+    "source_revision": "0e683c58cf68f55f161ca17ba308048930534453"
+  },
+  {
+    "file": "SHA256SUMS",
+    "url": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/releases/download/test-t057-obd-0.1.115/SHA256SUMS",
+    "sha256": "b5ae7b1510ca7480452d1dc8df23336946c5729f5a8799a080a685c00bddd2f0",
+    "download_verified": true,
+    "source_revision": "0e683c58cf68f55f161ca17ba308048930534453"
+  }
+]
