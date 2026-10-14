@@ -516,6 +516,21 @@ static uint32_t bootlog_budget_ms=15000,bootlog_sector_limit=2048;
 #include "Export.h"
 
 #if X4PRO_SD_ASYNC
+/* Fresh FatFs scan, bounded by the existing operation/sector budget. This
+ * observation runs only in the copied worker and grants no reservation. */
+static bool package_free_bytes(void*c,uint64_t*out){
+    (void)c;if(out)*out=0;
+    if(!out||!storage_worker||!storage_worker->io->on_worker(storage_worker->io->context)||!enter_ready())return false;
+    bool ok=false;
+    if(!has_handles()){
+        DWORD clusters=0;FATFS*fs=NULL;filesystem.free_clst=0xffffffffu;
+        ok=result_ok(f_getfree("",&clusters,&fs))&&fs==&filesystem&&fs->csize&&fs->csize<=128;
+        if(ok){uint64_t bytes=(uint64_t)clusters*fs->csize*512u;*out=bytes>65536?bytes-65536:0;}
+    }
+    bool released=leave();
+    if(!released||mutex_poisoned||gpio_retained||gpio_fault||sdmmc_fault)async_adapter.retained=true;
+    return ok&&released&&!async_adapter.retained;
+}
 static uint64_t worker_now(void *c){(void)c;return storage_worker->io->now_ms(storage_worker->io->context);}
 static void worker_delay(void *c,uint32_t ms){(void)c;storage_worker->io->delay_ms(storage_worker->io->context,ms);}
 static bool async_claim_scope(void){
@@ -532,6 +547,7 @@ static bool async_claim_scope(void){
     worker_scope_claimed=true;
     async_adapter.worker=storage_worker;async_adapter.volume=&api.terminal.power.volume.base;
     async_adapter.ext=&api.terminal.power.volume;async_adapter.fs=&filesystem_api;
+    async_adapter.package_free_bytes=package_free_bytes;
     if(storage_worker->bind(storage_worker->context,risc_storage_async_execute,&async_adapter)!=RISC_STORAGE_WORK_OK)return false;
     worker_clock=(risc_platform_clock_api_v1){1,sizeof(worker_clock),NULL,worker_now,worker_delay};clock_api=&worker_clock;
     return true;
@@ -731,7 +747,7 @@ const risc_driver_v2 *t5_driver_get(uint32_t abi) {
     }
 #if X4PRO_SD_ASYNC
     asynchronous_api.async_tag=RISC_STORAGE_ASYNC_TAG;asynchronous_api.async_version=RISC_STORAGE_ASYNC_VERSION;
-    download_api.download_tag=RISC_STORAGE_DOWNLOAD_TAG;download_api.download_version=1;
+    download_api.download_tag=RISC_STORAGE_DOWNLOAD_TAG;download_api.download_version=2;
     package_api.package_tag=RISC_STORAGE_PACKAGE_TAG;package_api.package_version=1;package_api.submit_package=package_submit;
     asynchronous_api.begin=async_begin;asynchronous_api.submit=async_submit;asynchronous_api.collect=async_collect;asynchronous_api.end=async_end;
 #endif

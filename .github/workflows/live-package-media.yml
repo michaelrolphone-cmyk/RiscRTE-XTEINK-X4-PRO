@@ -1,0 +1,28 @@
+name: Live package SD capacity
+on:
+  push:
+    branches: ['feat/live-package-media-20261014']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: 4f653b8d3b36c7ae2a2ce93eaa06b2d69e5a9472
+          path: runtime
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: 29276b4e1cff7819af065a77cf64805f6d5a12ce
+          path: reader
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Drivers
+          ref: 39b9be00528c404af63c8f654d1bd2b29cf73b18
+          path: drivers
+      - run: SANITIZE=1 python3 minimal/scripts/test_storage_async.py --runtime runtime --drivers drivers --reference-reader reader --output result

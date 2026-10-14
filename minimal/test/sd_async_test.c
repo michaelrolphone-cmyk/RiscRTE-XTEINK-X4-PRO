@@ -43,6 +43,8 @@ int main(void){
  assert(async_begin(NULL,&session)==0);request(RISC_STORAGE_ASYNC_REFRESH,NULL);
  for(unsigned frames=0;frames<1000;++frames)assert(async_collect(NULL,session,operation,&async_result)==RISC_STORAGE_ASYNC_PENDING&&!work_reads);
  assert(finish()==0&&mounted&&work_opens==1&&work_reads);end_session();
+ assert(risc_storage_volume_download(&logging_api.prepared.base.sleep.terminal.power.volume.base)->download_version==2);
+ assert(async_begin(NULL,&session)==0);risc_storage_package_request_v1 capacity={0};capacity.operation=RISC_STORAGE_PACKAGE_FREE_BYTES;assert(package_submit(NULL,session,&capacity,&operation)==0);unsigned initial_reads=work_reads;assert(async_collect(NULL,session,operation,&async_result)==RISC_STORAGE_ASYNC_PENDING&&work_reads==initial_reads);assert(finish()==0&&async_result.size==8);uint64_t free_before=0;memcpy(&free_before,async_result.data,8);assert(free_before>0);end_session();
  assert(mkdir_path(NULL,"/Apps")&&mkdir_path(NULL,"/Apps/unknown"));
  const char manifest[]="{\"type\":\"application\",\"id\":\"uncompiled\"}";
  uint32_t h=file_open_write(NULL,"/Apps/unknown/manifest.json");assert(h);assert(file_write(NULL,h,manifest,sizeof(manifest)-1)==sizeof(manifest)-1&&file_close(NULL,h,true));
@@ -78,6 +80,7 @@ int main(void){
  pq.operation=RISC_STORAGE_PACKAGE_CLOSE_WRITE;pq.size=5000;assert(package_submit(NULL,session,&pq,&operation)==0);assert(finish()==0);end_session();
  uint64_t length=0;uint32_t streamed=file_open_read(NULL,"/Drivers/chunked.elf",&length);assert(streamed&&length==5000);
  unsigned total=0;while(total<5000){unsigned char data[512];size_t n=file_read(NULL,streamed,data,sizeof(data));assert(n&&n<=sizeof(data));for(size_t j=0;j<n;++j)assert(data[j]==0x37);total+=(unsigned)n;}assert(file_close(NULL,streamed,false));
+ assert(async_begin(NULL,&session)==0);assert(package_submit(NULL,session,&capacity,&operation)==0);assert(finish()==0&&async_result.size==8);uint64_t free_after=0;memcpy(&free_after,async_result.data,8);assert(free_after<free_before);end_session();
  assert(prepare_sleep(NULL));assert(commit_sleep(NULL));assert(!work_scope&&pins[0].held);assert(resume_sleep(NULL)==RISC_STORAGE_SLEEP_READY&&work_scope&&!pins[0].held);
  assert(async_begin(NULL,&session)==0);request(RISC_STORAGE_ASYNC_OPEN_DIRECTORY,"/Apps");assert(finish()==0);request(RISC_STORAGE_ASYNC_NEXT_ENTRY,NULL);end_session();assert(!has_handles());
  assert(quiesce());stop();assert(!work_bound&&!work_scope&&!fixture_lock);free(card_image);
