@@ -1,1 +1,0 @@
-Assertion failed: (!portable_wifi_async_owned()), function checkpoint, file wifi_resident_seam.inc, line 12.

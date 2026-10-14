@@ -1,5 +1,0 @@
-SD settings catalog/worker: warm-before-available, 65 interruption/restart points, exact checkpoint before journal cleanup, export exclusion and removed-media retry PASS
-Provider provisioning: 110 interrupted owner ticks, checked cancellation, restart/resume and unavailable-media retry PASS
-Provider provisioning: durable intent before I/O, missing image HTTPS, whole graph publication, zero-SD restart and offline journal recovery PASS
-Actual installed provider: staged discovery, cache-first restart, confirmed image admission, journal-before-publication, two recovery boundaries, update/private identity, stale descriptor and corrupt image rejection PASS
-Paged SD checkpoint: 153 interruption boundaries; 98 existing values including 2048-byte opaque value, copied-worker I/O, cold recovery, export exclusion, native delta replay and immutable page verification PASS

@@ -1,6 +1,0 @@
-#!/bin/bash
-args=()
-for arg in "$@";do
- case "$arg" in -shared) args+=(-shared -Wl,-undefined,dynamic_lookup);; -rdynamic|-no-pie|-g) ;; -fsanitize=address,undefined) args+=(-fsanitize=undefined);; *) args+=("$arg");; esac
-done
-exec /usr/bin/c++ "${args[@]}" -Wno-unused-private-field -Wno-unused-but-set-variable

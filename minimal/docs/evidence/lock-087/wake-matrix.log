@@ -1,2 +1,0 @@
-32 retained automatic timer wakes: no foreground promotion or unlock; PASS
-GPIO user wake unlocks only after held-key neutral gate PASS

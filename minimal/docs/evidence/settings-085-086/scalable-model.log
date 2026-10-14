@@ -1,2 +1,0 @@
-SD-first settings: journal-before-success, checkpoint anchors, interrupted writes, stale acknowledgements, lazy legacy migration, owner/media/corruption checks and bounded quota PASS
-Scalable settings: 513 migrated opaque values, 1027 keys, absent-media journal, concurrent checkpoint, cold recovery, uncertain persistence and CRC rejection PASS

@@ -1,9 +1,0 @@
-
-Symbol table '.dynsym' contains 6 entries:
-   Num:    Value  Size Type    Bind   Vis      Ndx Name
-     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
-     1: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND memmove
-     2: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND memcpy
-     3: 00003abc    18 FUNC    GLOBAL DEFAULT    6 t5_driver_get
-     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND memset
-     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND strcmp

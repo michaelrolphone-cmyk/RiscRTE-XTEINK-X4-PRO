@@ -1,1 +1,0 @@
-Assertion failed: (portable_wifi_profile_load(wifi_store,0,&saved)==PORTABLE_WIFI_CREDENTIALS_LOADED), function main, file wifi_connect_save_probe.c, line 10.

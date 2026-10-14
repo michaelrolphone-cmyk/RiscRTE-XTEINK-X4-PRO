@@ -1,8 +1,0 @@
-Provider capability: usb.device.msc@1 (generic ABI 1)
-Exact linked ELF imports: 4
-ELF SHA-256: dd045f3a828048e82d14676757e54a6dab06d01e00b6a3711d28172b4f8ce567
-provider-abi.v1 SHA-256: 0b805a02bd012fcaad63eb69d46c23292401a94424e6427a61311179096badd5
-privileged-imports.v1 SHA-256: 86d6d21bfaa3286410668d34c317b28b21459f2ecdf90bda424dc1b3ca73e19b
-Unsigned provider metadata generated; SHA-256 is integrity, not authority.
-plain: 54 modules, MSC missing-import negatives and two cohort admissions PASS
-sanitized: 54 modules, MSC missing-import negatives and two cohort admissions PASS

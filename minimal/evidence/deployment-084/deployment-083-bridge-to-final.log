@@ -1,2 +1,0 @@
-native-first clone: real payload, 6631 I/O operations, 12 fault/restart/rollback cuts PASS
-cohort: real payload, 7928 I/O operations, 12 fault/restart/rollback cuts PASS

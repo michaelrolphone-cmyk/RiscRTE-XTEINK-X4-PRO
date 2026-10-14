@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/micahelbyrns/Documents/Codex/2026-10-11/task/integration089-system/scripts/assemble_shared_files_bundle.py", line 32, in <module>
-    assert composition['build_options'].get('retained_wake_bytes',128)>=408, 'Selected Home lock schema-3 requires 408 retained bytes; rebuild with --retained-wake-bytes 512'
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: Selected Home lock schema-3 requires 408 retained bytes; rebuild with --retained-wake-bytes 512
