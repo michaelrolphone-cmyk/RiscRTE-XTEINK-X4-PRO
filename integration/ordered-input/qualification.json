@@ -1,0 +1,68 @@
+{
+  "baseline": "26e50931a45cbdfe99b7daeb586677ce53e97940",
+  "utilities": "d03c6564814ff1588bf73af45b3f0288908466c3",
+  "runtime_audit": "26a54ff",
+  "x4_system_unchanged": "8a5ef23480b7711e68fd2d72e9a43cad4a2e2ddc",
+  "reproduction": "Six DOWN/UP taps queued during refresh fail on the baseline at the first began/released assertion.",
+  "fix": "Reuse the existing X4 ordered touch reducer, capture without dispatch during presentation, consume one edge per logical pass, reset modal input through explicit snapshot boundaries, release top-edge reservation after each logical pass.",
+  "tests": {
+    "watch_canvas_normal_ubsan": 194,
+    "watch_current_stopwatch_normal_ubsan": 8,
+    "ordered_touch_reducer_normal_ubsan": "pass",
+    "portable_alarm_normal": 11,
+    "x4_existing_scene_cadence_raster": 75,
+    "shared_signal_library_ubsan": "pass",
+    "runtime_retained_yield_normal": 8,
+    "runtime_host_flags": "Apple clang only: -Wno-unused-private-field -Wno-unused-but-set-variable; no runtime source edits",
+    "spectrum_shared_input_ubsan": "pass: capture/analysis continuity, no presenter overlap, redraw-independent targets, draft/custody handling"
+  },
+  "limits": [
+    "Host providers supply events; no hardware input or latency claim.",
+    "No target binary built or delivered by this checkpoint.",
+    "Local checks used UBSan; Linux CI passed address and undefined sanitizers.",
+    "Runtime and Utilities sources remain unchanged.",
+    "Bounded provider overflow or invalid streams cancel/fence explicitly; no silent coalescing of accepted keys."
+  ],
+  "sha256": {
+    "lib/PortableApps/include/PortableTouch.h": "ac620d1725beec57df1eeb31474644180099305ee132b605d264af6ce98a01c6",
+    "lib/PortableApps/src/adapter.c": "06dd52fd5f9fa66c06dbedcd50a6b816e3ead021b6e00ef446b317fc33b5df47"
+  },
+  "checkpoint_kind": "working branch only; not a release candidate",
+  "intermediate_failures": {
+    "count": 16,
+    "matrix": "controls-settings, controls-save, alarm, wifi-handoff x rotations 0/180 x normal/UBSan",
+    "cause_and_repair": [
+      "Replaced snapshot-only fixture events with sequence-numbered DOWN/MOVE/UP events.",
+      "Replaced direct neutral/down edits with explicit reducer modal reset boundaries.",
+      "Cleared consumed top-edge reservation each logical pass so subsequent edges can advance."
+    ],
+    "status": "Resolved before source checkpoint ae45093; final 194/194 pass."
+  },
+  "ci": {
+    "run": 38511813356,
+    "commit": "189d22dd5c22dd05a48bb516e60562d14bdf5b48",
+    "url": "https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps/actions/runs/38511813356",
+    "result": "success",
+    "checks": "194 canvas/modal cases, ordered touch reducer and 8 current Stopwatch cases in normal and ASan+UBSan modes"
+  },
+  "preserved_panel": {
+    "version": "0.1.12",
+    "elf_sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4"
+  },
+  "audit_scope": {
+    "x4_scene_keyboard": "Existing ordered stream and logical hit-map already decoupled; 75 baseline cadence/raster tests pass, no source change.",
+    "watch_adapter": "Fixed proven collapse of successive captured contacts and preserved modal reset semantics.",
+    "runtime": "Owner-task provider polling and retained-yield fences reviewed; 8 runtime regressions pass, no demonstrated Runtime defect.",
+    "utilities": "Pinned latest d03c656, current Stopwatch tested, shared signal processing regression passed; no application source edits.",
+    "remaining": "Hardware timing/physical input qualification and broader product integration are pending; no universal hardware-performance claim."
+  },
+  "spectrum_test_sdk": {
+    "source": "X4 System 8a5ef23480b7711e68fd2d72e9a43cad4a2e2ddc",
+    "method": "Staged only the missing text-client SDK headers alongside the Watch headers; no conflicting Runtime headers and no source checkout edits.",
+    "sha256": {
+      "RiscTextEntryV1.h": "a5733f06b1d8caf86f21d730abcd9ff833b603807c8b028a49544c997b6cdba3",
+      "PortableTextInputHandoff.h": "ef811b3b7cf805ccdab1fb330e09dd8c533e303d29b8b4693ae5089a85432c36",
+      "PortableTextInputClient.h": "f98564291d4b3685c429cdb96fd6edd0a4b5226b6bbde6ab3ea197a832f5746f"
+    }
+  }
+}
