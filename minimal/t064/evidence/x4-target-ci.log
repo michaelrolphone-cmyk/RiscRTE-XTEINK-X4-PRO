@@ -1,0 +1,973 @@
+target	Set up job	﻿2026-10-14T13:51:42.9915016Z Current runner version: '2.337.0'
+target	Set up job	2026-10-14T13:51:42.9938413Z ##[group]Runner Image Provisioner
+target	Set up job	2026-10-14T13:51:42.9939437Z Hosted Compute Agent
+target	Set up job	2026-10-14T13:51:42.9939985Z Version: 20261012.601
+target	Set up job	2026-10-14T13:51:42.9940604Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+target	Set up job	2026-10-14T13:51:42.9941312Z Build Date: 2026-10-12T17:48:21Z
+target	Set up job	2026-10-14T13:51:42.9941957Z Worker ID: {30def67f-03cb-4232-89e8-576136f34d79}
+target	Set up job	2026-10-14T13:51:42.9942641Z Region: westus3
+target	Set up job	2026-10-14T13:51:42.9943160Z Cloud: Azure
+target	Set up job	2026-10-14T13:51:42.9943680Z ##[endgroup]
+target	Set up job	2026-10-14T13:51:42.9945326Z ##[group]Operating System
+target	Set up job	2026-10-14T13:51:42.9945945Z Ubuntu
+target	Set up job	2026-10-14T13:51:42.9946791Z 24.04.5
+target	Set up job	2026-10-14T13:51:42.9947299Z LTS
+target	Set up job	2026-10-14T13:51:42.9947797Z ##[endgroup]
+target	Set up job	2026-10-14T13:51:42.9948363Z ##[group]Runner Image
+target	Set up job	2026-10-14T13:51:42.9948935Z Image: ubuntu-24.04
+target	Set up job	2026-10-14T13:51:42.9949471Z Version: 20261012.334.1
+target	Set up job	2026-10-14T13:51:42.9950486Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+target	Set up job	2026-10-14T13:51:42.9952156Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+target	Set up job	2026-10-14T13:51:42.9953061Z ##[endgroup]
+target	Set up job	2026-10-14T13:51:42.9954143Z ##[group]GITHUB_TOKEN Permissions
+target	Set up job	2026-10-14T13:51:42.9956680Z Contents: read
+target	Set up job	2026-10-14T13:51:42.9957300Z Metadata: read
+target	Set up job	2026-10-14T13:51:42.9957855Z ##[endgroup]
+target	Set up job	2026-10-14T13:51:42.9959835Z Secret source: Actions
+target	Set up job	2026-10-14T13:51:42.9960784Z Cache mode: write
+target	Set up job	2026-10-14T13:51:42.9961424Z Prepare workflow directory
+target	Set up job	2026-10-14T13:51:43.0279980Z Prepare all required actions
+target	Set up job	2026-10-14T13:51:43.0330764Z Getting action download info
+target	Set up job	2026-10-14T13:51:43.3633766Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+target	Set up job	2026-10-14T13:51:43.4573311Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+target	Set up job	2026-10-14T13:51:43.5817094Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+target	Set up job	2026-10-14T13:51:43.8878293Z Complete job name: target
+target	Run actions/checkout@v4	﻿2026-10-14T13:51:43.9567795Z ##[group]Run actions/checkout@v4
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9568697Z with:
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9569334Z   repository: michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9573609Z   token: ***
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9574146Z   ssh-strict: true
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9574647Z   ssh-user: git
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9575326Z   persist-credentials: true
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9575920Z   clean: true
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9576454Z   sparse-checkout-cone-mode: true
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9577053Z   fetch-depth: 1
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9577556Z   fetch-tags: false
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9578054Z   show-progress: true
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9578654Z   lfs: false
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9579135Z   submodules: false
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9579661Z   set-safe-directory: true
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9580232Z   allow-unsafe-pr-checkout: false
+target	Run actions/checkout@v4	2026-10-14T13:51:43.9580950Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0634380Z Syncing repository: michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0637366Z ##[group]Getting Git version info
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0638575Z Working directory is '/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO'
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0639882Z [command]/usr/bin/git version
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0704516Z git version 2.55.0
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0721894Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0735351Z Temporarily overriding HOME='/home/runner/work/_temp/83d62407-0995-4027-8009-4b40842db8ac' before making global git config changes
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0737752Z Adding repository directory to the temporary git global config as a safe directory
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0742077Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0792347Z Deleting the contents of '/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO'
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0813308Z ##[group]Initializing the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0821372Z [command]/usr/bin/git init /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0909243Z hint: Using 'master' as the name for the initial branch. This default branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0914876Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0918215Z hint: to use in all of your new repositories, which will suppress this warning,
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0919519Z hint: call:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0920307Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0922304Z hint: 	git config --global init.defaultBranch <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0923345Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0924433Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0926224Z hint: 'development'. The just-created branch can be renamed via this command:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0927534Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0930286Z hint: 	git branch -m <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0931146Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0932431Z hint: Disable this message with "git config set advice.defaultBranchName false"
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0934376Z Initialized empty Git repository in /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/.git/
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0937742Z [command]/usr/bin/git remote add origin https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0969602Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0970967Z ##[group]Disabling automatic garbage collection
+target	Run actions/checkout@v4	2026-10-14T13:51:44.0973370Z [command]/usr/bin/git config --local gc.auto 0
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1001254Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1002495Z ##[group]Setting up auth
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1007648Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1034408Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1355378Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1386137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1583411Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1614234Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1805817Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1840440Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1841678Z ##[group]Fetching the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:44.1850035Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f9c9078d708a41f6f815c1608d7081aac93dac0c:refs/remotes/origin/fix/t064-crash-reports
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2686583Z From https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2688692Z  * [new ref]         f9c9078d708a41f6f815c1608d7081aac93dac0c -> origin/fix/t064-crash-reports
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2694061Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2695696Z ##[group]Determining the checkout info
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2697108Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2700086Z [command]/usr/bin/git sparse-checkout disable
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2750145Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2779602Z ##[group]Checking out the ref
+target	Run actions/checkout@v4	2026-10-14T13:51:45.2796053Z [command]/usr/bin/git checkout --progress --force -B fix/t064-crash-reports refs/remotes/origin/fix/t064-crash-reports
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3437248Z Switched to a new branch 'fix/t064-crash-reports'
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3442468Z branch 'fix/t064-crash-reports' set up to track 'origin/fix/t064-crash-reports'.
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3448829Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3485570Z [command]/usr/bin/git log -1 --format=%H
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3506785Z f9c9078d708a41f6f815c1608d7081aac93dac0c
+target	Run actions/checkout@v4	﻿2026-10-14T13:51:45.3900874Z ##[group]Run actions/checkout@v4
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3902115Z with:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3903251Z   repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3904782Z   ref: 09400a550562ca9568ac7ab664ba3222eeedf2c8
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3906333Z   path: deps/system
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3915976Z   token: ***
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3917069Z   ssh-strict: true
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3918074Z   ssh-user: git
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3919121Z   persist-credentials: true
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3920237Z   clean: true
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3921273Z   sparse-checkout-cone-mode: true
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3922516Z   fetch-depth: 1
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3923526Z   fetch-tags: false
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3924572Z   show-progress: true
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3925898Z   lfs: false
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3926900Z   submodules: false
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3928052Z   set-safe-directory: true
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3929236Z   allow-unsafe-pr-checkout: false
+target	Run actions/checkout@v4	2026-10-14T13:51:45.3930474Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4767513Z Syncing repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4779110Z ##[group]Getting Git version info
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4793810Z Working directory is '/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system'
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4822706Z [command]/usr/bin/git version
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4863629Z git version 2.55.0
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4886637Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4899990Z Temporarily overriding HOME='/home/runner/work/_temp/9403da6d-d08b-4710-b89f-457e0c3ac7e5' before making global git config changes
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4902963Z Adding repository directory to the temporary git global config as a safe directory
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4906693Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4943523Z ##[group]Initializing the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4948364Z [command]/usr/bin/git init /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4984950Z hint: Using 'master' as the name for the initial branch. This default branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4987566Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4989757Z hint: to use in all of your new repositories, which will suppress this warning,
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4991522Z hint: call:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4992634Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4994319Z hint: 	git config --global init.defaultBranch <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4996208Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.4997807Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5000002Z hint: 'development'. The just-created branch can be renamed via this command:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5001585Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5003038Z hint: 	git branch -m <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5004892Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5007037Z hint: Disable this message with "git config set advice.defaultBranchName false"
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5010933Z Initialized empty Git repository in /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system/.git/
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5017312Z [command]/usr/bin/git remote add origin https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5034287Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5036541Z ##[group]Disabling automatic garbage collection
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5039554Z [command]/usr/bin/git config --local gc.auto 0
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5076208Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5078008Z ##[group]Setting up auth
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5079624Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5105282Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5308558Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5341430Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5546095Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5567429Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5759915Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5798077Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5800942Z ##[group]Fetching the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:45.5806377Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 09400a550562ca9568ac7ab664ba3222eeedf2c8
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9685397Z From https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9687053Z  * branch            09400a550562ca9568ac7ab664ba3222eeedf2c8 -> FETCH_HEAD
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9689352Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9689930Z ##[group]Determining the checkout info
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9691923Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9697874Z [command]/usr/bin/git sparse-checkout disable
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9739406Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9766920Z ##[group]Checking out the ref
+target	Run actions/checkout@v4	2026-10-14T13:51:46.9771471Z [command]/usr/bin/git checkout --progress --force 09400a550562ca9568ac7ab664ba3222eeedf2c8
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0970852Z Note: switching to '09400a550562ca9568ac7ab664ba3222eeedf2c8'.
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0972058Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0973338Z You are in 'detached HEAD' state. You can look around, make experimental
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0974528Z changes and commit them, and you can discard any commits you make in this
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0975654Z state without impacting any branches by switching back to a branch.
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0976206Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0976626Z If you want to create a new branch to retain commits you create, you may
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0977345Z do so (now or later) by using -c with the switch command. Example:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0977761Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0978025Z   git switch -c <new-branch-name>
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0978351Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0978551Z Or undo this operation with:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0978872Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0979098Z   git switch -
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0979384Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0979831Z Turn off this advice by setting config variable advice.detachedHead to false
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0980348Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0980783Z HEAD is now at 09400a5 Keep pending crash reports intact in deployed X4 Home profile
+target	Run actions/checkout@v4	2026-10-14T13:51:47.0982738Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1017430Z [command]/usr/bin/git log -1 --format=%H
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1039150Z 09400a550562ca9568ac7ab664ba3222eeedf2c8
+target	Run actions/checkout@v4	﻿2026-10-14T13:51:47.1240317Z ##[group]Run actions/checkout@v4
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1240804Z with:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1241174Z   repository: michaelrolphone-cmyk/RiscRTE
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1241671Z   ref: a91edf3fada6a559ec107186dd163d0c8da10d29
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1242115Z   path: deps/runtime
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1244899Z   token: ***
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1245484Z   ssh-strict: true
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1245876Z   ssh-user: git
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1246303Z   persist-credentials: true
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1246737Z   clean: true
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1247143Z   sparse-checkout-cone-mode: true
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1247605Z   fetch-depth: 1
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1247981Z   fetch-tags: false
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1248402Z   show-progress: true
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1248771Z   lfs: false
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1249136Z   submodules: false
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1249625Z   set-safe-directory: true
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1250048Z   allow-unsafe-pr-checkout: false
+target	Run actions/checkout@v4	2026-10-14T13:51:47.1250481Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2065623Z Syncing repository: michaelrolphone-cmyk/RiscRTE
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2067606Z ##[group]Getting Git version info
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2069151Z Working directory is '/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/runtime'
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2091736Z [command]/usr/bin/git version
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2127114Z git version 2.55.0
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2143873Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2157299Z Temporarily overriding HOME='/home/runner/work/_temp/9ab8e54e-a2ae-4b89-b2b9-0e7145493f13' before making global git config changes
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2158865Z Adding repository directory to the temporary git global config as a safe directory
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2160662Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/runtime
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2190442Z ##[group]Initializing the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2195279Z [command]/usr/bin/git init /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/runtime
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2229723Z hint: Using 'master' as the name for the initial branch. This default branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2230974Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2232072Z hint: to use in all of your new repositories, which will suppress this warning,
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2232965Z hint: call:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2233542Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2234265Z hint: 	git config --global init.defaultBranch <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2235014Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2235880Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2237035Z hint: 'development'. The just-created branch can be renamed via this command:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2237878Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2238464Z hint: 	git branch -m <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2239095Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2239981Z hint: Disable this message with "git config set advice.defaultBranchName false"
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2241359Z Initialized empty Git repository in /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/runtime/.git/
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2244138Z [command]/usr/bin/git remote add origin https://github.com/michaelrolphone-cmyk/RiscRTE
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2269060Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2269915Z ##[group]Disabling automatic garbage collection
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2273317Z [command]/usr/bin/git config --local gc.auto 0
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2305631Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2307079Z ##[group]Setting up auth
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2310629Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2339075Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2544893Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2576464Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2789719Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Run actions/checkout@v4	2026-10-14T13:51:47.2825656Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Run actions/checkout@v4	2026-10-14T13:51:47.3017630Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+target	Run actions/checkout@v4	2026-10-14T13:51:47.3061810Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:47.3062859Z ##[group]Fetching the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:47.3077202Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin a91edf3fada6a559ec107186dd163d0c8da10d29
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7043954Z From https://github.com/michaelrolphone-cmyk/RiscRTE
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7044716Z  * branch            a91edf3fada6a559ec107186dd163d0c8da10d29 -> FETCH_HEAD
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7049441Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7050555Z ##[group]Determining the checkout info
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7051689Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7059194Z [command]/usr/bin/git sparse-checkout disable
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7103269Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7130996Z ##[group]Checking out the ref
+target	Run actions/checkout@v4	2026-10-14T13:51:48.7135770Z [command]/usr/bin/git checkout --progress --force a91edf3fada6a559ec107186dd163d0c8da10d29
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8556767Z Note: switching to 'a91edf3fada6a559ec107186dd163d0c8da10d29'.
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8557260Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8557747Z You are in 'detached HEAD' state. You can look around, make experimental
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8558502Z changes and commit them, and you can discard any commits you make in this
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8559303Z state without impacting any branches by switching back to a branch.
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8559768Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8560099Z If you want to create a new branch to retain commits you create, you may
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8560862Z do so (now or later) by using -c with the switch command. Example:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8561279Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8561510Z   git switch -c <new-branch-name>
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8561789Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8561934Z Or undo this operation with:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8562181Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8562338Z   git switch -
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8562530Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8562747Z Turn off this advice by setting config variable advice.detachedHead to false
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8563095Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8563398Z HEAD is now at a91edf3 Add permanent before/after display regressions and read-only cross-device CI
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8567182Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8602783Z [command]/usr/bin/git log -1 --format=%H
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8623614Z a91edf3fada6a559ec107186dd163d0c8da10d29
+target	Run actions/checkout@v4	﻿2026-10-14T13:51:48.8769329Z ##[group]Run actions/checkout@v4
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8769672Z with:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8770019Z   repository: michaelrolphone-cmyk/RiscRTE-Utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8770465Z   ref: dcbad832cff91f7988a8e43d84725650b9815953
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8770826Z   fetch-depth: 0
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8771140Z   path: deps/utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8774212Z   token: ***
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8774509Z   ssh-strict: true
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8774816Z   ssh-user: git
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8775240Z   persist-credentials: true
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8775618Z   clean: true
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8775918Z   sparse-checkout-cone-mode: true
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8776323Z   fetch-tags: false
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8776614Z   show-progress: true
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8776889Z   lfs: false
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8777204Z   submodules: false
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8777506Z   set-safe-directory: true
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8777839Z   allow-unsafe-pr-checkout: false
+target	Run actions/checkout@v4	2026-10-14T13:51:48.8778196Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9577032Z Syncing repository: michaelrolphone-cmyk/RiscRTE-Utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9580604Z ##[group]Getting Git version info
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9581361Z Working directory is '/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities'
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9622906Z [command]/usr/bin/git version
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9665261Z git version 2.55.0
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9687533Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9700435Z Temporarily overriding HOME='/home/runner/work/_temp/48b1d5a7-985d-4c37-833a-2456fc5d4b2a' before making global git config changes
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9701660Z Adding repository directory to the temporary git global config as a safe directory
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9706950Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9737538Z ##[group]Initializing the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9742923Z [command]/usr/bin/git init /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9778810Z hint: Using 'master' as the name for the initial branch. This default branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9780017Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9781559Z hint: to use in all of your new repositories, which will suppress this warning,
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9782536Z hint: call:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9782972Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9783421Z hint: 	git config --global init.defaultBranch <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9783933Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9784414Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9785210Z hint: 'development'. The just-created branch can be renamed via this command:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9786051Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9786442Z hint: 	git branch -m <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9786891Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9787500Z hint: Disable this message with "git config set advice.defaultBranchName false"
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9788752Z Initialized empty Git repository in /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities/.git/
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9790285Z [command]/usr/bin/git remote add origin https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9819287Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9819888Z ##[group]Disabling automatic garbage collection
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9825195Z [command]/usr/bin/git config --local gc.auto 0
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9860358Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9861004Z ##[group]Setting up auth
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9869967Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Run actions/checkout@v4	2026-10-14T13:51:48.9897964Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0096000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0122729Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0339322Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0369186Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0590667Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0697317Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0697953Z ##[group]Fetching the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:49.0707075Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5113674Z From https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5115035Z  * [new branch]      audit/obd-test-readiness-20261012 -> origin/audit/obd-test-readiness-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5116443Z  * [new branch]      codex/awake-contexts-service -> origin/codex/awake-contexts-service
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5117210Z  * [new branch]      codex/nova7-paper-hid     -> origin/codex/nova7-paper-hid
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5117830Z  * [new branch]      codex/nova7-paper-utilities -> origin/codex/nova7-paper-utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5118529Z  * [new branch]      codex/portable-battery    -> origin/codex/portable-battery
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5119301Z  * [new branch]      codex/universal-ui-phase2-20261010 -> origin/codex/universal-ui-phase2-20261010
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5120234Z  * [new branch]      codex/utilities-raster-selection-20261010 -> origin/codex/utilities-raster-selection-20261010
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5121169Z  * [new branch]      docs/utilities-postmerge-evidence-20261002 -> origin/docs/utilities-postmerge-evidence-20261002
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5122280Z  * [new branch]      experimental/x4-settings-persistence-20261012 -> origin/experimental/x4-settings-persistence-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5123218Z  * [new branch]      feat/alarm-adapter-integration -> origin/feat/alarm-adapter-integration
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5124295Z  * [new branch]      feat/audio-frequency-generator -> origin/feat/audio-frequency-generator
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5124966Z  * [new branch]      feat/audio-spectrum       -> origin/feat/audio-spectrum
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5126442Z  * [new branch]      feat/ble-hid-controls     -> origin/feat/ble-hid-controls
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5127427Z  * [new branch]      feat/ble-sensor-names     -> origin/feat/ble-sensor-names
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5128683Z  * [new branch]      feat/canvas-file-source   -> origin/feat/canvas-file-source
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5129702Z  * [new branch]      feat/capability-model-viewer-hollow-trail -> origin/feat/capability-model-viewer-hollow-trail
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5130744Z  * [new branch]      feat/contexts-model-imports -> origin/feat/contexts-model-imports
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5131523Z  * [new branch]      feat/declarative-alarms   -> origin/feat/declarative-alarms
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5132405Z  * [new branch]      feat/frequency-generator-nova7 -> origin/feat/frequency-generator-nova7
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5133306Z  * [new branch]      feat/lora-radio-picker    -> origin/feat/lora-radio-picker
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5134093Z  * [new branch]      feat/nova-power-status    -> origin/feat/nova-power-status
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5134882Z  * [new branch]      feat/nova7-epaper-ble-scanner -> origin/feat/nova7-epaper-ble-scanner
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5136354Z  * [new branch]      feat/nova7-paper-battery-alarms -> origin/feat/nova7-paper-battery-alarms
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5137030Z  * [new branch]      feat/nova7-quick-controls -> origin/feat/nova7-quick-controls
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5137586Z  * [new branch]      feat/obd-dashboard        -> origin/feat/obd-dashboard
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5138088Z  * [new branch]      feat/obd-nova7-design     -> origin/feat/obd-nova7-design
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5138674Z  * [new branch]      feat/obd-side-by-side-test-20261013 -> origin/feat/obd-side-by-side-test-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5139578Z  * [new branch]      feat/points-catalog-storage -> origin/feat/points-catalog-storage
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5140167Z  * [new branch]      feat/points-custom-cues   -> origin/feat/points-custom-cues
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5140716Z  * [new branch]      feat/portable-lora-messages -> origin/feat/portable-lora-messages
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5141343Z  * [new branch]      feat/recurring-points-service -> origin/feat/recurring-points-service
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5142080Z  * [new branch]      feat/rf-spectrogram-analysis -> origin/feat/rf-spectrogram-analysis
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5142946Z  * [new branch]      feat/shared-alarms-countdown -> origin/feat/shared-alarms-countdown
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5143785Z  * [new branch]      feat/shared-daily-tools   -> origin/feat/shared-daily-tools
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5144683Z  * [new branch]      feat/shared-touchpad-gestures -> origin/feat/shared-touchpad-gestures
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5145566Z  * [new branch]      feat/spectrum-signatures  -> origin/feat/spectrum-signatures
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5146154Z  * [new branch]      feat/spectrum-temporal-examples -> origin/feat/spectrum-temporal-examples
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5146811Z  * [new branch]      feat/t057-obd-telemetry   -> origin/feat/t057-obd-telemetry
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5147365Z  * [new branch]      feat/temporal-context-fusion -> origin/feat/temporal-context-fusion
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5147980Z  * [new branch]      feat/temporal-fingerprint-fusion -> origin/feat/temporal-fingerprint-fusion
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5148574Z  * [new branch]      feat/twatch-s3-waterfall  -> origin/feat/twatch-s3-waterfall
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5149122Z  * [new branch]      feat/watch-1.0.5-integration -> origin/feat/watch-1.0.5-integration
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5149695Z  * [new branch]      feat/watch-ble-scanner    -> origin/feat/watch-ble-scanner
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5150226Z  * [new branch]      feat/watch-sensor-broadcast -> origin/feat/watch-sensor-broadcast
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5150823Z  * [new branch]      feat/watch-waterfall-current -> origin/feat/watch-waterfall-current
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5151488Z  * [new branch]      feat/x4-obd-reconnect-021 -> origin/feat/x4-obd-reconnect-021
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5152456Z  * [new branch]      feat/x4-paper-app-integration -> origin/feat/x4-paper-app-integration
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5153376Z  * [new branch]      feat/x4-visual-alarm-profile -> origin/feat/x4-visual-alarm-profile
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5154244Z  * [new branch]      fix/alarm-tagged-descriptor -> origin/fix/alarm-tagged-descriptor
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5155034Z  * [new branch]      fix/alarm-volume-control  -> origin/fix/alarm-volume-control
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5156003Z  * [new branch]      fix/alarms-nova-current   -> origin/fix/alarms-nova-current
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5156866Z  * [new branch]      fix/audio-spectrum-storage-display -> origin/fix/audio-spectrum-storage-display
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5157824Z  * [new branch]      fix/battery-nova-current  -> origin/fix/battery-nova-current
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5158798Z  * [new branch]      fix/ble-buttons-command-delivery-20261010 -> origin/fix/ble-buttons-command-delivery-20261010
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5159856Z  * [new branch]      fix/ble-scanner-retained-cleanup -> origin/fix/ble-scanner-retained-cleanup
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5160884Z  * [new branch]      fix/calculator-nova-current -> origin/fix/calculator-nova-current
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5161782Z  * [new branch]      fix/countdown-nova-current -> origin/fix/countdown-nova-current
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5162972Z  * [new branch]      fix/first-attempt-time-alarm-20261012 -> origin/fix/first-attempt-time-alarm-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5164073Z  * [new branch]      fix/frequency-generator-full-volume -> origin/fix/frequency-generator-full-volume
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5164898Z  * [new branch]      fix/hid-renderer-header-order -> origin/fix/hid-renderer-header-order
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5166515Z  * [new branch]      fix/hollow-trail-launch-memory -> origin/fix/hollow-trail-launch-memory
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5167660Z  * [new branch]      fix/lora-capability-display -> origin/fix/lora-capability-display
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5168627Z  * [new branch]      fix/native-crown-exit-reconstructed -> origin/fix/native-crown-exit-reconstructed
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5169786Z  * [new branch]      fix/obd-sensor-ui-20261012 -> origin/fix/obd-sensor-ui-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5170683Z  * [new branch]      fix/obd-test-recovered-20261013 -> origin/fix/obd-test-recovered-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5171591Z  * [new branch]      fix/rf-capability-display -> origin/fix/rf-capability-display
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5172471Z  * [new branch]      fix/spectrum-room-warmup  -> origin/fix/spectrum-room-warmup
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5173468Z  * [new branch]      fix/spectrum-storage-lifecycle-20261013 -> origin/fix/spectrum-storage-lifecycle-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5174467Z  * [new branch]      fix/stopwatch-nova-current -> origin/fix/stopwatch-nova-current
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5175472Z  * [new branch]      fix/t039-buttons-delivery -> origin/fix/t039-buttons-delivery
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5176568Z  * [new branch]      fix/t063-wave-alarm-startup -> origin/fix/t063-wave-alarm-startup
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5177279Z  * [new branch]      fix/t069-spectrum-waterfall -> origin/fix/t069-spectrum-waterfall
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5177877Z  * [new branch]      fix/t069-waterfall-mode-switch -> origin/fix/t069-waterfall-mode-switch
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5178575Z  * [new branch]      fix/watch-scanner-shared-input-20261012 -> origin/fix/watch-scanner-shared-input-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5179251Z  * [new branch]      fix/waterfall-startup-storage -> origin/fix/waterfall-startup-storage
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5179860Z  * [new branch]      fix/x4-render-performance -> origin/fix/x4-render-performance
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5180450Z  * [new branch]      fix/x4-rf-startup-102     -> origin/fix/x4-rf-startup-102
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5181065Z  * [new branch]      fix/x4-scanner-modal-policy-20261013 -> origin/fix/x4-scanner-modal-policy-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5181819Z  * [new branch]      integrate/t054-contexts-catalog-preferences -> origin/integrate/t054-contexts-catalog-preferences
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5183107Z  * [new branch]      integrate/t054-portable-preferences -> origin/integrate/t054-portable-preferences
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5184170Z  * [new branch]      integrate/x4-native-resident-source -> origin/integrate/x4-native-resident-source
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5184794Z  * [new branch]      main                      -> origin/main
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5185531Z  * [new branch]      migration/initial-utilities -> origin/migration/initial-utilities
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5186200Z  * [new branch]      parity/battery-status-1.0.1 -> origin/parity/battery-status-1.0.1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5186803Z  * [new branch]      parity/battery-status-1.0.1-v2 -> origin/parity/battery-status-1.0.1-v2
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5187523Z  * [new branch]      parity/utilities-battery-status-1.0.1 -> origin/parity/utilities-battery-status-1.0.1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5188272Z  * [new branch]      parity/utilities-current-reader-20261002 -> origin/parity/utilities-current-reader-20261002
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5188996Z  * [new branch]      parity/utilities-pinned-build-20261001 -> origin/parity/utilities-pinned-build-20261001
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5189758Z  * [new branch]      parity/utilities-reader-3d9bc4-20261002 -> origin/parity/utilities-reader-3d9bc4-20261002
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5190509Z  * [new branch]      parity/utilities-sd-web-gnss-20260927 -> origin/parity/utilities-sd-web-gnss-20260927
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5191230Z  * [new branch]      parity/utilities-sd-web-only-20260927 -> origin/parity/utilities-sd-web-only-20260927
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5191883Z  * [new branch]      parity/utilities-sync-2026-09-26 -> origin/parity/utilities-sync-2026-09-26
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5192528Z  * [new branch]      parity/utilities-validation-20260927 -> origin/parity/utilities-validation-20260927
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5193396Z  * [new branch]      publish/utilities-source-20261011 -> origin/publish/utilities-source-20261011
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5194526Z  * [new branch]      publish/utilities-source-20261011-1 -> origin/publish/utilities-source-20261011-1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5195769Z  * [new branch]      release/completed-20261011 -> origin/release/completed-20261011
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5196568Z  * [new branch]      release/obd-manifest-20261011 -> origin/release/obd-manifest-20261011
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5197548Z  * [new branch]      release/spectrum-043-component-tag -> origin/release/spectrum-043-component-tag
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5198536Z  * [new branch]      release/watch-1.0.1-component-tags -> origin/release/watch-1.0.1-component-tags
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5199356Z  * [new branch]      release/watch-1.0.12-source-snapshot -> origin/release/watch-1.0.12-source-snapshot
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5200083Z  * [new branch]      release/watch-102-components -> origin/release/watch-102-components
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5200921Z  * [new branch]      source/x4-rf-contexts-resident -> origin/source/x4-rf-contexts-resident
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5201863Z  * [new branch]      task/pr40-x4-sensor-reconcile -> origin/task/pr40-x4-sensor-reconcile
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5202741Z  * [new branch]      work/buttons-019-tap-recovery-20261010 -> origin/work/buttons-019-tap-recovery-20261010
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5203511Z  * [new branch]      work/contexts-input-lifecycle-20261012 -> origin/work/contexts-input-lifecycle-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5204339Z  * [new branch]      work/contexts-runtime-catalog-20261013 -> origin/work/contexts-runtime-catalog-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5205258Z  * [new branch]      work/contexts-shared-input-20261012 -> origin/work/contexts-shared-input-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5206181Z  * [new branch]      work/lora-input-policy-20261012 -> origin/work/lora-input-policy-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5206852Z  * [new branch]      work/lora-shared-text-20261012 -> origin/work/lora-shared-text-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5207517Z  * [new branch]      work/rf-input-policy-20261012 -> origin/work/rf-input-policy-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5208195Z  * [new branch]      work/rf-shared-input-20261012 -> origin/work/rf-shared-input-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5208915Z  * [new branch]      work/scanner-input-policy-20261012 -> origin/work/scanner-input-policy-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5209777Z  * [new branch]      work/shared-watch-contexts-20261013 -> origin/work/shared-watch-contexts-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5210567Z  * [new branch]      work/shared-watch-lora-20261013 -> origin/work/shared-watch-lora-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5211191Z  * [new branch]      work/shared-watch-rf-20261013 -> origin/work/shared-watch-rf-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5211923Z  * [new branch]      work/shared-watch-spectrum-20261013 -> origin/work/shared-watch-spectrum-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5213074Z  * [new branch]      work/shared-watch-viewer-20261013 -> origin/work/shared-watch-viewer-20261013
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5214175Z  * [new branch]      work/spectrum-input-policy-20261012 -> origin/work/spectrum-input-policy-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5215684Z  * [new branch]      work/spectrum-shared-input-20261012 -> origin/work/spectrum-shared-input-20261012
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5217055Z  * [new branch]      work/universal-utilities-recovery-20261010 -> origin/work/universal-utilities-recovery-20261010
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5218045Z  * [new branch]      x4-native-utc-visual-alarm -> origin/x4-native-utc-visual-alarm
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5218744Z  * [new tag]         app-alarms-v0.2.0         -> app-alarms-v0.2.0
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5219280Z  * [new tag]         app-alarms-v0.2.1         -> app-alarms-v0.2.1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5219867Z  * [new tag]         app-audio_spectrum-v0.2.2 -> app-audio_spectrum-v0.2.2
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5220529Z  * [new tag]         app-audio_spectrum-v0.4.2 -> app-audio_spectrum-v0.4.2
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5220989Z  * [new tag]         app-audio_spectrum-v0.4.3 -> app-audio_spectrum-v0.4.3
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5221676Z  * [new tag]         app-battery-v1.0.10       -> app-battery-v1.0.10
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5222463Z  * [new tag]         app-battery-v1.0.9        -> app-battery-v1.0.9
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5223011Z  * [new tag]         app-ble_scanner-v0.1.0    -> app-ble_scanner-v0.1.0
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5223518Z  * [new tag]         app-calculator-v0.1.4     -> app-calculator-v0.1.4
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5223969Z  * [new tag]         app-calculator-v0.1.5     -> app-calculator-v0.1.5
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5224459Z  * [new tag]         app-countdown-v0.1.3      -> app-countdown-v0.1.3
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5224944Z  * [new tag]         app-countdown-v0.1.4      -> app-countdown-v0.1.4
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5225836Z  * [new tag]         app-frequency_generator-v0.1.2 -> app-frequency_generator-v0.1.2
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5226454Z  * [new tag]         app-frequency_generator-v0.1.3 -> app-frequency_generator-v0.1.3
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5227162Z  * [new tag]         app-lora_messages-v0.1.1  -> app-lora_messages-v0.1.1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5227727Z  * [new tag]         app-stopwatch-v0.1.4      -> app-stopwatch-v0.1.4
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5228193Z  * [new tag]         app-stopwatch-v0.1.5      -> app-stopwatch-v0.1.5
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5228696Z  * [new tag]         service-alarm-service-v0.4.0 -> service-alarm-service-v0.4.0
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5229311Z  * [new tag]         service-alarm-service-v0.4.1 -> service-alarm-service-v0.4.1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5229801Z  * [new tag]         source-v2026.10.11        -> source-v2026.10.11
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5230271Z  * [new tag]         source-v2026.10.11.1      -> source-v2026.10.11.1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5230705Z  * [new tag]         watch-v1.0.12             -> watch-v1.0.12
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5231828Z [command]/usr/bin/git rev-parse --verify --quiet dcbad832cff91f7988a8e43d84725650b9815953^{object}
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5232504Z dcbad832cff91f7988a8e43d84725650b9815953
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5233447Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5233990Z ##[group]Determining the checkout info
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5234509Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5234831Z [command]/usr/bin/git sparse-checkout disable
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5235890Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5248336Z ##[group]Checking out the ref
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5252105Z [command]/usr/bin/git checkout --progress --force dcbad832cff91f7988a8e43d84725650b9815953
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5737681Z Note: switching to 'dcbad832cff91f7988a8e43d84725650b9815953'.
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5738403Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5738692Z You are in 'detached HEAD' state. You can look around, make experimental
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5739240Z changes and commit them, and you can discard any commits you make in this
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5739814Z state without impacting any branches by switching back to a branch.
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5740115Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5740341Z If you want to create a new branch to retain commits you create, you may
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5740921Z do so (now or later) by using -c with the switch command. Example:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5741285Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5741464Z   git switch -c <new-branch-name>
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5741829Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5742001Z Or undo this operation with:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5742255Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5742384Z   git switch -
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5742599Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5742861Z Turn off this advice by setting config variable advice.detachedHead to false
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5743162Z 
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5743464Z HEAD is now at dcbad83 Recover exact .106 independent OBDTest source over verified Utilities base
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5744641Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5777784Z [command]/usr/bin/git log -1 --format=%H
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5803420Z dcbad832cff91f7988a8e43d84725650b9815953
+target	Run actions/checkout@v4	﻿2026-10-14T13:51:50.5972630Z ##[group]Run actions/checkout@v4
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5972966Z with:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5973348Z   repository: michaelrolphone-cmyk/T5S3-Reader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5973759Z   ref: c98e4222048244b1e729869ed47aa99130025fd3
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5974126Z   path: deps/reader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5977103Z   token: ***
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5977387Z   ssh-strict: true
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5977739Z   ssh-user: git
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5978045Z   persist-credentials: true
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5978368Z   clean: true
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5978709Z   sparse-checkout-cone-mode: true
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5979051Z   fetch-depth: 1
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5979379Z   fetch-tags: false
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5979704Z   show-progress: true
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5980000Z   lfs: false
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5980289Z   submodules: false
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5980608Z   set-safe-directory: true
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5980963Z   allow-unsafe-pr-checkout: false
+target	Run actions/checkout@v4	2026-10-14T13:51:50.5981291Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6792928Z Syncing repository: michaelrolphone-cmyk/T5S3-Reader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6794629Z ##[group]Getting Git version info
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6795881Z Working directory is '/home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/reader'
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6827704Z [command]/usr/bin/git version
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6864748Z git version 2.55.0
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6887619Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6894777Z Temporarily overriding HOME='/home/runner/work/_temp/3c0f2a5b-b408-496c-98d6-8d4c09f42981' before making global git config changes
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6896319Z Adding repository directory to the temporary git global config as a safe directory
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6900329Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/reader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6932518Z ##[group]Initializing the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6937690Z [command]/usr/bin/git init /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/reader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6972718Z hint: Using 'master' as the name for the initial branch. This default branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6973795Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6974942Z hint: to use in all of your new repositories, which will suppress this warning,
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6975938Z hint: call:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6976433Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6977075Z hint: 	git config --global init.defaultBranch <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6977787Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6978462Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6979684Z hint: 'development'. The just-created branch can be renamed via this command:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6980499Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6981067Z hint: 	git branch -m <name>
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6981677Z hint:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6982401Z hint: Disable this message with "git config set advice.defaultBranchName false"
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6983718Z Initialized empty Git repository in /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/reader/.git/
+target	Run actions/checkout@v4	2026-10-14T13:51:50.6986226Z [command]/usr/bin/git remote add origin https://github.com/michaelrolphone-cmyk/T5S3-Reader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7022064Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7022760Z ##[group]Disabling automatic garbage collection
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7027517Z [command]/usr/bin/git config --local gc.auto 0
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7054914Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7055818Z ##[group]Setting up auth
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7062251Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7096441Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7292881Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7322088Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7525860Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7556610Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7763752Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7800662Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7801410Z ##[group]Fetching the repository
+target	Run actions/checkout@v4	2026-10-14T13:51:50.7810258Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin c98e4222048244b1e729869ed47aa99130025fd3
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0162245Z From https://github.com/michaelrolphone-cmyk/T5S3-Reader
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0163126Z  * branch            c98e4222048244b1e729869ed47aa99130025fd3 -> FETCH_HEAD
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0166942Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0167710Z ##[group]Determining the checkout info
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0169994Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0176419Z [command]/usr/bin/git sparse-checkout disable
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0216659Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0244614Z ##[group]Checking out the ref
+target	Run actions/checkout@v4	2026-10-14T13:52:04.0249119Z [command]/usr/bin/git checkout --progress --force c98e4222048244b1e729869ed47aa99130025fd3
+target	Run actions/checkout@v4	2026-10-14T13:52:05.2822342Z Updating files:  33% (1093/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.3459580Z Updating files:  34% (1127/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.3744900Z Updating files:  35% (1160/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4241576Z Updating files:  36% (1193/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4369103Z Updating files:  37% (1226/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4421231Z Updating files:  38% (1259/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4459308Z Updating files:  39% (1292/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4479645Z Updating files:  40% (1325/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4490041Z Updating files:  41% (1358/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4500744Z Updating files:  42% (1392/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4516078Z Updating files:  43% (1425/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4529149Z Updating files:  44% (1458/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4557357Z Updating files:  45% (1491/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4570861Z Updating files:  46% (1524/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4584827Z Updating files:  47% (1557/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4595564Z Updating files:  48% (1590/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4614919Z Updating files:  49% (1623/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4631570Z Updating files:  50% (1656/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4646940Z Updating files:  51% (1690/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4657962Z Updating files:  52% (1723/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4670340Z Updating files:  53% (1756/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4683850Z Updating files:  54% (1789/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4700562Z Updating files:  55% (1822/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4709831Z Updating files:  56% (1855/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4720512Z Updating files:  57% (1888/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4738103Z Updating files:  58% (1921/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4754030Z Updating files:  59% (1955/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4769295Z Updating files:  60% (1988/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4786017Z Updating files:  61% (2021/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4814151Z Updating files:  62% (2054/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4827763Z Updating files:  63% (2087/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4842726Z Updating files:  64% (2120/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4858583Z Updating files:  65% (2153/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4875474Z Updating files:  66% (2186/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4889765Z Updating files:  67% (2220/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4900439Z Updating files:  68% (2253/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4914828Z Updating files:  69% (2286/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4928900Z Updating files:  70% (2319/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4940022Z Updating files:  71% (2352/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4949683Z Updating files:  72% (2385/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4967907Z Updating files:  73% (2418/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4983053Z Updating files:  74% (2451/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.4997949Z Updating files:  75% (2484/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5039052Z Updating files:  76% (2518/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5050550Z Updating files:  77% (2551/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5061450Z Updating files:  78% (2584/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5074200Z Updating files:  79% (2617/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5168065Z Updating files:  80% (2650/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5183642Z Updating files:  81% (2683/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5197034Z Updating files:  82% (2716/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5208896Z Updating files:  83% (2749/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5221927Z Updating files:  84% (2783/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5235256Z Updating files:  85% (2816/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5246812Z Updating files:  86% (2849/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5258404Z Updating files:  87% (2882/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5269876Z Updating files:  88% (2915/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5281139Z Updating files:  89% (2948/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5294608Z Updating files:  90% (2981/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5307123Z Updating files:  91% (3014/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5320145Z Updating files:  92% (3048/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5329141Z Updating files:  93% (3081/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5339147Z Updating files:  94% (3114/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5352993Z Updating files:  95% (3147/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5365627Z Updating files:  96% (3180/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5378712Z Updating files:  97% (3213/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5392014Z Updating files:  98% (3246/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5404473Z Updating files:  99% (3279/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5404949Z Updating files: 100% (3312/3312)
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5405572Z Updating files: 100% (3312/3312), done.
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5441732Z Note: switching to 'c98e4222048244b1e729869ed47aa99130025fd3'.
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5442074Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5442341Z You are in 'detached HEAD' state. You can look around, make experimental
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5442884Z changes and commit them, and you can discard any commits you make in this
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5443467Z state without impacting any branches by switching back to a branch.
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5443794Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5444033Z If you want to create a new branch to retain commits you create, you may
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5444551Z do so (now or later) by using -c with the switch command. Example:
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5444874Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5445052Z   git switch -c <new-branch-name>
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5445516Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5445674Z Or undo this operation with:
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5446091Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5446256Z   git switch -
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5446487Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5446728Z Turn off this advice by setting config variable advice.detachedHead to false
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5447059Z 
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5447319Z HEAD is now at c98e422 Merge pull request #446 from michaelrolphone-cmyk/master
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5473309Z ##[endgroup]
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5511741Z [command]/usr/bin/git log -1 --format=%H
+target	Run actions/checkout@v4	2026-10-14T13:52:05.5535379Z c98e4222048244b1e729869ed47aa99130025fd3
+target	Run actions/setup-python@v5	﻿2026-10-14T13:52:05.5689997Z ##[group]Run actions/setup-python@v5
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5690526Z with:
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5690836Z   python-version: 3.11
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5691189Z   check-latest: false
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5693674Z   token: ***
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5693954Z   update-environment: true
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5694323Z   allow-prereleases: false
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5694630Z   freethreaded: false
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.5694926Z ##[endgroup]
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.6918881Z ##[group]Installed versions
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.7003576Z (node:2551) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.7004697Z (Use `node --trace-deprecation ...` to show where the warning was created)
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.7005532Z Successfully set up CPython (3.11.17)
+target	Run actions/setup-python@v5	2026-10-14T13:52:05.7006256Z ##[endgroup]
+target	Install delivered compiler generation	﻿2026-10-14T13:52:05.7144834Z ##[group]Run pip install platformio==6.1.19 pyelftools==0.32 Pillow==11.3.0
+target	Install delivered compiler generation	2026-10-14T13:52:05.7145933Z [36;1mpip install platformio==6.1.19 pyelftools==0.32 Pillow==11.3.0[0m
+target	Install delivered compiler generation	2026-10-14T13:52:05.7146687Z [36;1mpio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'[0m
+target	Install delivered compiler generation	2026-10-14T13:52:05.7745907Z shell: /usr/bin/bash -e {0}
+target	Install delivered compiler generation	2026-10-14T13:52:05.7746315Z env:
+target	Install delivered compiler generation	2026-10-14T13:52:05.7746671Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Install delivered compiler generation	2026-10-14T13:52:05.7747259Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+target	Install delivered compiler generation	2026-10-14T13:52:05.7747764Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Install delivered compiler generation	2026-10-14T13:52:05.7748247Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Install delivered compiler generation	2026-10-14T13:52:05.7748738Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Install delivered compiler generation	2026-10-14T13:52:05.7749185Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+target	Install delivered compiler generation	2026-10-14T13:52:05.7749627Z ##[endgroup]
+target	Install delivered compiler generation	2026-10-14T13:52:08.8804851Z Collecting platformio==6.1.19
+target	Install delivered compiler generation	2026-10-14T13:52:08.9556300Z   Downloading platformio-6.1.19-py3-none-any.whl.metadata (7.2 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:09.4314934Z Collecting pyelftools==0.32
+target	Install delivered compiler generation	2026-10-14T13:52:09.4427022Z   Downloading pyelftools-0.32-py3-none-any.whl.metadata (372 bytes)
+target	Install delivered compiler generation	2026-10-14T13:52:09.9691872Z Collecting Pillow==11.3.0
+target	Install delivered compiler generation	2026-10-14T13:52:09.9799298Z   Downloading pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.0 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:09.9982439Z Collecting bottle==0.13.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0085439Z   Downloading bottle-0.13.4-py2.py3-none-any.whl.metadata (1.6 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0226244Z Collecting click<8.4,>=8.0.4 (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0333438Z   Downloading click-8.3.3-py3-none-any.whl.metadata (2.6 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0505446Z Collecting colorama (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0609903Z   Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0891548Z Collecting marshmallow==3.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.0993999Z   Downloading marshmallow-3.26.2-py3-none-any.whl.metadata (7.3 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.1122992Z Collecting pyserial==3.5.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.1227319Z   Downloading pyserial-3.5-py2.py3-none-any.whl.metadata (1.6 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.1421708Z Collecting requests==2.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.1524978Z   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.1632235Z Collecting semantic_version==2.10.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.1733075Z   Downloading semantic_version-2.10.0-py2.py3-none-any.whl.metadata (9.7 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2025572Z Collecting tabulate==0.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2127500Z   Downloading tabulate-0.10.0-py3-none-any.whl.metadata (40 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2317740Z Collecting ajsonrpc==1.2.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2422982Z   Downloading ajsonrpc-1.2.0-py3-none-any.whl.metadata (6.9 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2636172Z Collecting starlette<0.53,>=0.19 (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2738482Z   Downloading starlette-0.52.1-py3-none-any.whl.metadata (6.3 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.2943359Z Collecting uvicorn<0.41,>=0.16 (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.3045670Z   Downloading uvicorn-0.40.0-py3-none-any.whl.metadata (6.7 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.3150464Z Collecting wsproto==1.* (from platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.3254366Z   Downloading wsproto-1.3.2-py3-none-any.whl.metadata (5.2 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.3404925Z Collecting packaging>=17.0 (from marshmallow==3.*->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.3506271Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.4554143Z Collecting charset_normalizer<4,>=2 (from requests==2.*->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.4659728Z   Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.4813732Z Collecting idna<4,>=2.5 (from requests==2.*->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.4915570Z   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.5286102Z Collecting urllib3<3,>=1.26 (from requests==2.*->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.5389944Z   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.5536838Z Collecting certifi>=2023.5.7 (from requests==2.*->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.5640172Z   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.5799061Z Collecting anyio<5,>=3.6.2 (from starlette<0.53,>=0.19->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.5900938Z   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.6034797Z Collecting typing-extensions>=4.10.0 (from starlette<0.53,>=0.19->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.6136719Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.6277586Z Collecting h11>=0.8 (from uvicorn<0.41,>=0.16->platformio==6.1.19)
+target	Install delivered compiler generation	2026-10-14T13:52:10.6453825Z   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.6614963Z Downloading platformio-6.1.19-py3-none-any.whl (421 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.7021841Z Downloading pyelftools-0.32-py3-none-any.whl (188 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.7163635Z Downloading pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.6 MB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8024837Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 77.7 MB/s  0:00:00
+target	Install delivered compiler generation	2026-10-14T13:52:10.8130667Z Downloading ajsonrpc-1.2.0-py3-none-any.whl (22 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8252387Z Downloading bottle-0.13.4-py2.py3-none-any.whl (103 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8503441Z Downloading click-8.3.3-py3-none-any.whl (110 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8625490Z Downloading marshmallow-3.26.2-py3-none-any.whl (50 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8746841Z Downloading pyserial-3.5-py2.py3-none-any.whl (90 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8867652Z Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.8986772Z Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (269 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9113658Z Downloading idna-3.20-py3-none-any.whl (69 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9235010Z Downloading semantic_version-2.10.0-py2.py3-none-any.whl (15 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9355693Z Downloading starlette-0.52.1-py3-none-any.whl (74 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9477383Z Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9600850Z Downloading tabulate-0.10.0-py3-none-any.whl (39 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9721089Z Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:10.9843281Z Downloading uvicorn-0.40.0-py3-none-any.whl (68 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.0103476Z Downloading wsproto-1.3.2-py3-none-any.whl (24 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.0223684Z Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.0342347Z Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.0464968Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.0588017Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.0710578Z Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+target	Install delivered compiler generation	2026-10-14T13:52:11.2603282Z Installing collected packages: pyserial, pyelftools, bottle, urllib3, typing-extensions, tabulate, semantic_version, Pillow, packaging, idna, h11, colorama, click, charset_normalizer, certifi, ajsonrpc, wsproto, uvicorn, requests, marshmallow, anyio, starlette, platformio
+target	Install delivered compiler generation	2026-10-14T13:52:12.5387897Z 
+target	Install delivered compiler generation	2026-10-14T13:52:12.5404042Z Successfully installed Pillow-11.3.0 ajsonrpc-1.2.0 anyio-4.15.1 bottle-0.13.4 certifi-2026.7.22 charset_normalizer-3.5.2 click-8.3.3 colorama-0.4.6 h11-0.16.0 idna-3.20 marshmallow-3.26.2 packaging-26.3 platformio-6.1.19 pyelftools-0.32 pyserial-3.5 requests-2.34.2 semantic_version-2.10.0 starlette-0.52.1 tabulate-0.10.0 typing-extensions-4.16.0 urllib3-2.8.0 uvicorn-0.40.0 wsproto-1.3.2
+target	Install delivered compiler generation	2026-10-14T13:52:13.0512753Z ********************************************************************************
+target	Install delivered compiler generation	2026-10-14T13:52:13.0513883Z If you like PlatformIO, please:
+target	Install delivered compiler generation	2026-10-14T13:52:13.0514469Z - star it on GitHub > https://github.com/platformio/platformio-core
+target	Install delivered compiler generation	2026-10-14T13:52:13.0515810Z - follow us on LinkedIn to stay up-to-date on the latest project news > https://www.linkedin.com/company/platformio/
+target	Install delivered compiler generation	2026-10-14T13:52:13.0516864Z - try PlatformIO IDE for embedded development > https://platformio.org/platformio-ide
+target	Install delivered compiler generation	2026-10-14T13:52:13.0517425Z ********************************************************************************
+target	Install delivered compiler generation	2026-10-14T13:52:13.0517666Z 
+target	Install delivered compiler generation	2026-10-14T13:52:13.0522964Z Tool Manager: Installing espressif/toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+target	Install delivered compiler generation	2026-10-14T13:52:15.5711023Z Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+target	Install delivered compiler generation	2026-10-14T13:52:18.5907777Z Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+target	Install delivered compiler generation	2026-10-14T13:52:18.7854030Z Tool Manager: toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5 has been installed!
+target	Reproduce unchanged deployed Home first	﻿2026-10-14T13:52:19.4280952Z ##[group]Run git -C deps/system fetch origin 3f7474bbbdaacb7fb196a8c6b74a23017eff2772
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4281747Z [36;1mgit -C deps/system fetch origin 3f7474bbbdaacb7fb196a8c6b74a23017eff2772[0m
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4282351Z [36;1mgit -C deps/system checkout 3f7474bbbdaacb7fb196a8c6b74a23017eff2772[0m
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4283649Z [36;1mpython minimal/recovery-107/build_clock.py --system deps/system --x4 . --runtime deps/runtime --sdk deps/reader/sdk/driver --utilities deps/utilities --reader-scripts deps/reader/scripts --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output baseline[0m
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4285301Z [36;1mecho 'c9754aa1d4d9fcb08e53ed2031bcb34122509ef4f1fa932ff0af9a3e62b07db5  baseline/home/default.elf' | sha256sum -c -[0m
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4286174Z [36;1mgit -C deps/system checkout 09400a550562ca9568ac7ab664ba3222eeedf2c8[0m
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4328583Z shell: /usr/bin/bash -e {0}
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4329092Z env:
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4329559Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4330149Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4330644Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4331100Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4331571Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4332046Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:19.4332499Z ##[endgroup]
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.8654662Z From https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.8655909Z  * branch            3f7474bbbdaacb7fb196a8c6b74a23017eff2772 -> FETCH_HEAD
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9206123Z Warning: you are leaving 1 commit behind, not connected to
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9206718Z any of your branches:
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9206868Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9207207Z   09400a5 Keep pending crash reports intact in deployed X4 Home profile
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9207549Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9207736Z If you want to keep it by creating a new branch, this may be a good time
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9208149Z to do so with:
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9208316Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9208555Z  git branch <new-branch-name> 09400a5
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9208825Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:22.9209040Z HEAD is now at 3f7474b fix(clock): advance beyond delivered Home 0.4.17
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.4823958Z Excluded linker-emitted trailing R_XTENSA_NONE entries: 1
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.6931267Z Native ELF structural validation tests passed
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7108222Z Paper default clock: target structural validation and imports/exports passed
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7260736Z baseline/home/default.elf: OK
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7359985Z Warning: you are leaving 399 commits behind, not connected to
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7360734Z any of your branches:
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7361093Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7361370Z   3f7474b fix(clock): advance beyond delivered Home 0.4.17
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7362340Z   dac2f66 test(clock): expect sparse reconciliation release in diagnostic builds
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7362948Z   3c3ca40 Reconcile sparse foreground Clock with RTC at bounded settled checkpoints
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7363717Z   8ecf587 Add repeatable original/fixed sparse startup and sanitizer matrix
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7364408Z  ... and 395 more.
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7364722Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7365206Z If you want to keep them by creating a new branch, this may be a good time
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7365907Z to do so with:
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7366148Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7366379Z  git branch <new-branch-name> 3f7474b
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7366693Z 
+target	Reproduce unchanged deployed Home first	2026-10-14T13:52:27.7367089Z HEAD is now at 09400a5 Keep pending crash reports intact in deployed X4 Home profile
+target	Build full delivered Home profile twice	﻿2026-10-14T13:52:27.7406207Z ##[group]Run for output in target-a target-b; do
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7406721Z [36;1mfor output in target-a target-b; do[0m
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7407943Z [36;1m  python minimal/recovery-107/build_clock.py --system deps/system --x4 . --runtime deps/runtime --sdk deps/reader/sdk/driver --utilities deps/utilities --reader-scripts deps/reader/scripts --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output "$output"[0m
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7409171Z [36;1mdone[0m
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7409544Z [36;1mcmp target-a/home/default.elf target-b/home/default.elf[0m
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7410026Z [36;1mcmp target-a/home/default.json target-b/home/default.json[0m
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7410566Z [36;1msha256sum target-a/home/default.elf target-a/home/default.json[0m
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7451670Z shell: /usr/bin/bash -e {0}
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7452060Z env:
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7452423Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7452982Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7453597Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7454095Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7454583Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7455059Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+target	Build full delivered Home profile twice	2026-10-14T13:52:27.7455654Z ##[endgroup]
+target	Build full delivered Home profile twice	2026-10-14T13:52:32.4607267Z Excluded linker-emitted trailing R_XTENSA_NONE entries: 1
+target	Build full delivered Home profile twice	2026-10-14T13:52:32.5369914Z Native ELF structural validation tests passed
+target	Build full delivered Home profile twice	2026-10-14T13:52:32.5542854Z Paper default clock: target structural validation and imports/exports passed
+target	Build full delivered Home profile twice	2026-10-14T13:52:37.2677560Z Excluded linker-emitted trailing R_XTENSA_NONE entries: 1
+target	Build full delivered Home profile twice	2026-10-14T13:52:37.3437239Z Native ELF structural validation tests passed
+target	Build full delivered Home profile twice	2026-10-14T13:52:37.3592304Z Paper default clock: target structural validation and imports/exports passed
+target	Build full delivered Home profile twice	2026-10-14T13:52:37.3753271Z 02b38ed65e1adcb8ecd49c0dc6b58f678ea0110160e38f4f70ed61c5e0b484d7  target-a/home/default.elf
+target	Build full delivered Home profile twice	2026-10-14T13:52:37.3755373Z e650b1f7479b1310e410db68ecf421aad64cbd56b0c130eeb8950870e530b9f5  target-a/home/default.json
+target	Run actions/upload-artifact@v4	﻿2026-10-14T13:52:37.3803073Z ##[group]Run actions/upload-artifact@v4
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3803373Z with:
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3803600Z   name: x4-t064-crash-target-evidence
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3804121Z   path: target-a/home/default.elf
+target	Run actions/upload-artifact@v4	target-a/home/default.json
+target	Run actions/upload-artifact@v4	target-a/home/build-evidence.json
+target	Run actions/upload-artifact@v4	target-a/command.json
+target	Run actions/upload-artifact@v4	
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3804638Z   retention-days: 14
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3804871Z   if-no-files-found: warn
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3805274Z   compression-level: 6
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3805598Z   overwrite: false
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3805826Z   include-hidden-files: false
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3806071Z env:
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3806346Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3806795Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3807228Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3807610Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3807992Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3808427Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.3808753Z ##[endgroup]
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5537662Z (node:2815) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5538368Z (Use `node --trace-deprecation ...` to show where the warning was created)
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5625847Z Multiple search paths detected. Calculating the least common ancestor of all paths
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5628018Z The least common ancestor is /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/target-a. This will be the root directory of the artifact
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5628945Z With the provided path, there will be 4 files uploaded
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5629720Z Artifact name is valid!
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.5630222Z Root directory input is valid!
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.9418449Z Beginning upload of artifact content to blob storage
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:37.9846537Z (node:2815) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.3797430Z Uploaded bytes 296339
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.4380340Z Finished uploading artifact content to blob storage!
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.4381228Z SHA256 digest of uploaded artifact zip is 319b5f4e10548d24db6adc4eeb3899e3fca3539fd950515762e2cce4156c40a5
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.4382590Z Finalizing artifact upload
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.7142821Z Artifact x4-t064-crash-target-evidence.zip successfully finalized. Artifact ID 11899707386
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.7143802Z Artifact x4-t064-crash-target-evidence has been successfully uploaded! Final size is 296339 bytes. Artifact ID is 11899707386
+target	Run actions/upload-artifact@v4	2026-10-14T13:52:38.7150127Z Artifact download URL: https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/actions/runs/38575390132/artifacts/11899707386
+target	Post Run actions/setup-python@v5	﻿2026-10-14T13:52:38.7301180Z Post job cleanup.
+target	Post Run actions/setup-python@v5	2026-10-14T13:52:38.8442950Z (node:2828) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+target	Post Run actions/setup-python@v5	2026-10-14T13:52:38.8444006Z (Use `node --trace-deprecation ...` to show where the warning was created)
+target	Post Run actions/checkout@v4	﻿2026-10-14T13:52:38.8629900Z Post job cleanup.
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9498406Z [command]/usr/bin/git version
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9540310Z git version 2.55.0
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9583296Z Temporarily overriding HOME='/home/runner/work/_temp/2f77d0bb-cee7-4ed4-a815-00dedb161ff3' before making global git config changes
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9584206Z Adding repository directory to the temporary git global config as a safe directory
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9590266Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/reader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9631740Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9664485Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9887674Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9913986Z http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9925875Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:38.9958837Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.0178175Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.0212048Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Post Run actions/checkout@v4	﻿2026-10-14T13:52:39.0639205Z Post job cleanup.
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1530659Z [command]/usr/bin/git version
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1583404Z git version 2.55.0
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1627429Z Temporarily overriding HOME='/home/runner/work/_temp/1f93ce65-fc30-4722-96b4-6f6f23e6d5c6' before making global git config changes
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1628589Z Adding repository directory to the temporary git global config as a safe directory
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1633378Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/utilities
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1671261Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1703016Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1921221Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1947247Z http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.1956888Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.2004208Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.2214963Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.2242421Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Post Run actions/checkout@v4	﻿2026-10-14T13:52:39.2592467Z Post job cleanup.
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3424071Z [command]/usr/bin/git version
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3463420Z git version 2.55.0
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3496494Z Temporarily overriding HOME='/home/runner/work/_temp/324046f1-b1cc-42a2-a0b1-f0a7e91b59b1' before making global git config changes
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3497733Z Adding repository directory to the temporary git global config as a safe directory
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3502628Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/runtime
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3538505Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3570087Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3780398Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3800010Z http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3810347Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.3844822Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.4074354Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.4086627Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Post Run actions/checkout@v4	﻿2026-10-14T13:52:39.4439850Z Post job cleanup.
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5270507Z [command]/usr/bin/git version
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5305369Z git version 2.55.0
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5339476Z Temporarily overriding HOME='/home/runner/work/_temp/01e1a140-a2cb-482c-af89-bba3a2e2fc0d' before making global git config changes
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5340820Z Adding repository directory to the temporary git global config as a safe directory
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5345748Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO/deps/system
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5384522Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5417455Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5650804Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5675220Z http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5686133Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5719639Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.5970048Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.6001924Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Post Run actions/checkout@v4	﻿2026-10-14T13:52:39.6387043Z Post job cleanup.
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7221015Z [command]/usr/bin/git version
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7266974Z git version 2.55.0
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7309085Z Temporarily overriding HOME='/home/runner/work/_temp/5fdaad9a-f369-4455-8683-fedd5be7d705' before making global git config changes
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7316379Z Adding repository directory to the temporary git global config as a safe directory
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7317442Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/RiskRTE-XTEINK-X4-PRO/RiskRTE-XTEINK-X4-PRO
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7354442Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7396833Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7676433Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7712847Z http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7722157Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.7763009Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.8067354Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+target	Post Run actions/checkout@v4	2026-10-14T13:52:39.8080234Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+target	Complete job	﻿2026-10-14T13:52:39.8452647Z Cleaning up orphan processes
+target	Complete job	2026-10-14T13:52:39.8699709Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
