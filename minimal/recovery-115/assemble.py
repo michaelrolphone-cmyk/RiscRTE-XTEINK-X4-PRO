@@ -29,7 +29,7 @@ cohort=json.loads(before['cohort.json']);cohort.update(version='0.1.115',source_
 changed=sorted(n for n in store if store[n]!=before[n]);assert changed==['boot.json','cohort.json','obd_test.json','ui-scene/driver.elf','ui-scene/manifest.json']
 image,packing=current_bootfs.build(store,size=size);repeat,_=current_bootfs.build(store,size=size);assert image==repeat and read_image(image,size)==store
 fw=raw[0x10000:0x10000+cohort['firmware_size']];assert sha(fw)==cohort['firmware_sha256']
-state=initial_bank_state(fw,image,True,False);parse_record(state[:96],True,False)
+state=initial_bank_state(fw,image,True);parse_record(state[:96],True)
 full=bytearray(raw);full[0x2f0000:0x800000]=image;full[0xff2000:0xff2000+len(state)]=state
 assert full[:0x2f0000]==raw[:0x2f0000] and full[0x800000:0xff2000]==raw[0x800000:0xff2000] and full[0xff3000:]==raw[0xff3000:]
 out=a.output;out.mkdir(parents=True,exist_ok=True);name='X4-0.1.115-T057-OBD-Test-factory-erases-data-0x0.bin';(out/name).write_bytes(full)
