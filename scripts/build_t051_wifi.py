@@ -1,5 +1,5 @@
 from pathlib import Path
-import argparse,sys,json,hashlib,subprocess,shutil
+import argparse,sys,json,hashlib,subprocess,shutil,zipfile
 p=argparse.ArgumentParser()
 for n in ['product','baseline','baseline-sd','runtime','watch-product','output','wifi']:p.add_argument('--'+n,type=Path,required=True)
 a=p.parse_args();sha=lambda b:hashlib.sha256(b).hexdigest();sys.path.insert(0,str(a.runtime/'scripts'));from spiffs_image import read_image
@@ -22,3 +22,10 @@ for n,b in store.items():f=a.output/'store'/n;f.parent.mkdir(parents=True,exist_
 sd=a.baseline_sd.read_bytes();assert sha(sd)=='de2a7453c3d6769f8e96b5945e76599dbd1257d9adf194c6134278bb3d8033b2';sdname='X4-0.1.113-Cumulative-Changed-SD-Keep-Existing.zip';(a.output/sdname).write_bytes(sd)
 proof={'version':'0.1.113','file':name,'bytes':len(full),'sha256':sha(full),'source_revision':cohort['source_revision'],'changed_files':['cohort.json','wifi_settings.elf','wifi_settings.json'],'component_versions':{'panel':'0.1.12','wifi_settings':'1.1.30'},'all_other_executables_unchanged':True,'native_firmware_unchanged':True,'home_clock_boot_unchanged':True,'sd_file':sdname,'sd_sha256':sha(sd),'sd_new_changes':False,'sd_description':'Cumulative overlay from .111 retained byte-for-byte; no new SD files for the T051 fix','packing':packing,'hardware_verified':False,'inventory':{n:sha(b) for n,b in store.items()}}
 (a.output/'verification.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps({k:v for k,v in proof.items() if k!='inventory'},indent=2))
+
+with zipfile.ZipFile(a.baseline_sd) as archive:
+ for path in archive.namelist():
+  assert not path.startswith('/') and '..' not in Path(path).parts
+  target=a.output/'SD'/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(archive.read(path))
+scanner=next(r for r in json.loads(store['boot.json'])['app_capabilities'] if r['manifest']=='ble_scanner.json')['image_source']['path']
+(a.output/'assembly-report.json').write_text(json.dumps({'version':'0.1.113','image_sha256':sha(full),'scanner_sha256':sha((a.output/'SD'/scanner).read_bytes())},indent=2)+'\n')
