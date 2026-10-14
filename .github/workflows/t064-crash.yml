@@ -1,0 +1,65 @@
+name: X4 T064 crash target
+on:
+  push:
+    branches: [fix/t064-crash-reports]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  target:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+          ref: 09400a5
+          path: deps/system
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: a91edf3fada6a559ec107186dd163d0c8da10d29
+          path: deps/runtime
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Utilities
+          ref: dcbad832cff91f7988a8e43d84725650b9815953
+          fetch-depth: 0
+          path: deps/utilities
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: c98e4222048244b1e729869ed47aa99130025fd3
+          path: deps/reader
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install delivered compiler generation
+        run: |
+          pip install platformio==6.1.19 pyelftools==0.32 Pillow==11.3.0
+          pio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'
+      - name: Reproduce unchanged deployed Home first
+        run: |
+          git -C deps/system fetch origin 3f7474bbbdaacb7fb196a8c6b74a23017eff2772
+          git -C deps/system checkout 3f7474bbbdaacb7fb196a8c6b74a23017eff2772
+          python minimal/recovery-107/build_clock.py --system deps/system --x4 . --runtime deps/runtime --sdk deps/reader/sdk/driver --utilities deps/utilities --reader-scripts deps/reader/scripts --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output baseline
+          echo 'c9754aa1d4d9fcb08e53ed2031bcb34122509ef4f1fa932ff0af9a3e62b07db5  baseline/home/default.elf' | sha256sum -c -
+          git -C deps/system checkout 09400a5
+      - name: Build full delivered Home profile twice
+        run: |
+          for output in target-a target-b; do
+            python minimal/recovery-107/build_clock.py --system deps/system --x4 . --runtime deps/runtime --sdk deps/reader/sdk/driver --utilities deps/utilities --reader-scripts deps/reader/scripts --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output "$output"
+          done
+          cmp target-a/home/default.elf target-b/home/default.elf
+          cmp target-a/home/default.json target-b/home/default.json
+          sha256sum target-a/home/default.elf target-a/home/default.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: x4-t064-crash-target-evidence
+          path: |
+            target-a/home/default.elf
+            target-a/home/default.json
+            target-a/home/build-evidence.json
+            target-a/command.json
+          retention-days: 14
