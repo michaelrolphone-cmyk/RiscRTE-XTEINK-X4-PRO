@@ -19,7 +19,7 @@ if env.subst('$PIOENV') != record['build_environment']:
     raise ValueError('This composed workspace only builds its recorded X4 environment')
 options = record.get('build_options')
 required = {'app_policy_rows', 'app_image_cache'}
-if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256'}:
+if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256', 'native_package_volume'}:
     raise ValueError('Invalid native build options')
 if type(options['app_policy_rows']) is not int or options['app_policy_rows'] not in (16, 17, 18, 24):
     raise ValueError('App policy rows must be 16, 17, 18 or 24')
@@ -105,5 +105,18 @@ if options.get('failure_evidence'):
     env.Append(CPPDEFINES=[('RISC_NATIVE_FAILURE_EVIDENCE', 1)])
     env.Append(CCFLAGS=['-fstack-usage'])
     env.Append(LINKFLAGS=['-Wl,--wrap=esp_panic_handler', '-Wl,-u,risc_native_failure_evidence_abi'])
+if options.get('native_package_volume'):
+    if options['native_package_volume'] is not True:
+        raise ValueError('Native package volume must be explicit true')
+    env.Append(CPPDEFINES=[(name,1) for name in (
+        'BOARD_XTEINK_X4_PRO','RISC_NATIVE_PACKAGE_VOLUME','RISC_NATIVE_SETTINGS_BACKEND',
+        'RISC_NATIVE_SETTINGS_STARTUP_ENTROPY','RISC_NATIVE_APP_DATA_MOUNT',
+        'RISC_NATIVE_SETTINGS_ASSEMBLY','RISC_NATIVE_SETTINGS_PSRAM_PAYLOAD',
+        'RISC_NATIVE_SETTINGS_LIFECYCLE','RISC_NATIVE_SETTINGS_WORKER',
+        'RISC_RUNTIME_ATOMIC_KEY_VALUE','RISC_NATIVE_STORAGE_CUSTODY')])
+    for name in ('esp_vfs_register','esp_vfs_unregister','esp_partition_read',
+                 'esp_partition_write','esp_partition_erase_range',
+                 'esp_littlefs_format','esp_littlefs_format_partition'):
+        env.Append(LINKFLAGS=['-Wl,--wrap='+name,'-Wl,-u,__wrap_'+name])
 env.Append(LINKFLAGS=['-Wl,-u,risc_x4_native_composition_identity', '-Wl,--wrap=app_main'])
 env.BuildSources('$BUILD_DIR/x4-native', str(root / 'x4-native'), '+<X4EarlyBoot.cpp>')

@@ -77,7 +77,7 @@ def snapshot(root, revision):
 def validate_build_options(options):
     required = {'app_policy_rows', 'app_image_cache'}
     require(isinstance(options, dict) and required <= set(options) and
-            set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256'},
+            set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256', 'native_package_volume'},
             'Invalid native build options')
     require(type(options['app_policy_rows']) is int and options['app_policy_rows'] in (16, 17, 18, 24),
             'App policy rows must be 16, 17, 18 or 24')
@@ -99,12 +99,13 @@ def validate_build_options(options):
             'Failure evidence must be an explicit true opt-in')
     require('export_migration_header_sha256' not in options or
             re.fullmatch('[a-f0-9]{64}', options['export_migration_header_sha256']), 'Invalid migration header digest')
+    require('native_package_volume' not in options or options['native_package_volume'] is True, 'Native package volume must be explicit true')
     return options
 
 
 def compose(runtime, output, runtime_commit=None, environment=ENVIRONMENTS[0], platform_root=ROOT,
             app_policy_rows=16, app_image_cache=False, boot_flash_dio=False, usb_phy=False,
-            retained_wake_bytes=None, failure_evidence=False, app_requirement_rows=None, installed_app_capacity=None, provider_capacity=None, shared_files_transport=False, export_migration_header=None):
+            retained_wake_bytes=None, failure_evidence=False, app_requirement_rows=None, installed_app_capacity=None, provider_capacity=None, shared_files_transport=False, export_migration_header=None, native_package_volume=False):
     runtime, output, platform_root = (Path(p).resolve() for p in (runtime, output, platform_root))
     require(environment in ENVIRONMENTS, 'Unsupported X4 native environment')
     require(type(usb_phy) is bool, 'USB PHY selection must be boolean')
@@ -115,6 +116,8 @@ def compose(runtime, output, runtime_commit=None, environment=ENVIRONMENTS[0], p
         options['export_migration_header_sha256']=sha(migration_bytes)
     if provider_capacity is not None:
         options['provider_capacity']=provider_capacity
+    if native_package_volume:
+        options['native_package_volume']=True
     if shared_files_transport:
         options['shared_files_transport']=True
     if installed_app_capacity is not None:
@@ -722,6 +725,7 @@ def main():
     prepare.add_argument('--environment', choices=ENVIRONMENTS, default=ENVIRONMENTS[0])
     prepare.add_argument('--provider-capacity', type=int, choices=(32,40))
     prepare.add_argument('--shared-files-transport', action='store_true')
+    prepare.add_argument('--native-package-volume', action='store_true', help='Select mounted internal package storage and the .111 native settings backend')
     prepare.add_argument('--export-migration-header', type=Path)
     prepare.add_argument('--installed-app-capacity', type=int, choices=(64,))
     prepare.add_argument('--app-policy-rows', type=int, choices=(16, 17, 18, 24), default=16,
