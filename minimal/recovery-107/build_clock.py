@@ -3,10 +3,12 @@
 import argparse,sys,os,subprocess,json,hashlib,shutil
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
+p.add_argument('--automatic-provision',action='store_true')
 for n in ('system','x4','runtime','sdk','utilities','reader-scripts','compiler','output'):
  p.add_argument('--'+n,required=True,type=Path)
 a=p.parse_args()
-for n in vars(a):setattr(a,n,getattr(a,n).resolve())
+for n in vars(a):
+ if isinstance(getattr(a,n),Path):setattr(a,n,getattr(a,n).resolve())
 system=a.system;x4=a.x4;rt=a.runtime;sdk=a.sdk;r=a.output
 r.mkdir(parents=True,exist_ok=True)
 shutil.copytree(a.sdk,r/'sdk',dirs_exist_ok=True)
@@ -27,6 +29,7 @@ host=['--desk-clock','--sparse-start','--desk-lock-home','--desk-points-face','-
  '--resident-loading-catalog',x4/'minimal/sd-app-catalog.json','--raster-snapshot','--frontlight-tone','--frontlight-tone-sdk',sdk,'--display-settled-sdk',sdk,'--crash-report-sd',
  '--boot-animation','--relocation-tools',a.reader_scripts,'--stage-logs','--installed-catalog-volume-instance','9','--deferred-foreground-services',
  '--experimental-atomic-quick','--experimental-atomic-home-automatic','--experimental-settings-availability']
+if a.automatic_provision:host+=['--automatic-provision']
 cmd=list(map(str,[sys.executable,system/'scripts/build_paper_clock.py',*host,'--output-dir',r/'home']))
 (r/'command.json').write_text(json.dumps({'command':cmd,'extra_define':'PORTABLE_ALARM_BUSY_DEFER'},indent=2)+'\n')
 subprocess.run(cmd,check=True,env=dict(os.environ,NATIVE_APP_CC=str(wrapper)))
