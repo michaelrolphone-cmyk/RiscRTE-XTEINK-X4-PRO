@@ -28,7 +28,8 @@
     "internal_elf_admission": 43,
     "installed_elf_admission": 2,
     "cohort_hardware_calls": 0,
-    "cohort_storage_calls": 0
+    "cohort_storage_calls": 0,
+    "unchanged_ble_provider_asan_ubsan_cases": 11
   },
   "original_obd_sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c",
   "obdtest_024_sha256": "9acdf0593b4b3131f4341dbece0e2b178412df16c94abf17bc4657bfd852ec0e",
