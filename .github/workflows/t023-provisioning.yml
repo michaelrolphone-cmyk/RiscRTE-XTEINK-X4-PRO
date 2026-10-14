@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: michaelrolphone-cmyk/RiscRTE-System-Apps
-          ref: 6b0a20c677f67563c57c625e393dcf32ee3f826e
+          ref: 2edb9200291bb7f3ad2c40a699e6364a33d8993a
           path: deps/system
       - uses: actions/checkout@v4
         with:
@@ -45,7 +45,7 @@ jobs:
           git -C deps/system checkout 3f7474bbbdaacb7fb196a8c6b74a23017eff2772
           python minimal/recovery-107/build_clock.py --system deps/system --x4 . --runtime deps/runtime --sdk deps/reader/sdk/driver --utilities deps/utilities --reader-scripts deps/reader/scripts --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output baseline
           echo 'c9754aa1d4d9fcb08e53ed2031bcb34122509ef4f1fa932ff0af9a3e62b07db5  baseline/home/default.elf' | sha256sum -c -
-          git -C deps/system checkout 6b0a20c677f67563c57c625e393dcf32ee3f826e
+          git -C deps/system checkout 2edb9200291bb7f3ad2c40a699e6364a33d8993a
       - name: Build full delivered Home profile twice
         run: |
           for output in target-a target-b; do
