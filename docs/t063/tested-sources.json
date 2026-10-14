@@ -1,0 +1,48 @@
+{
+  "x4": {
+    "commit": "0bcf1b314d07c8123fe9ecc23778e0372680151d",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO.git",
+    "clean": true
+  },
+  "wave": {
+    "commit": "d9b00f435fdb9da60fd4c3ca3bedf3386aa1b588",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiscRTE-Wavshare-S3-Touch-AMOLED-2.06.git",
+    "clean": true,
+    "note": "Tested source checkout .31; .32 preserves tested providers and Settings/alarm bytes, verified against delivered store."
+  },
+  "watch": {
+    "commit": "c8d90c625a51c1ac6e09a8014ab52748b3617981",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiscRTE-T-Watch-S3.git",
+    "clean": true
+  },
+  "utilities": {
+    "commit": "7c060d9b83695cc110958f20fac76fc1bb32389f",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiscRTE-Utilities.git",
+    "clean": true
+  },
+  "settings": {
+    "commit": "269440c1a6b72407cc57f02f99dc4ec2c47402c0",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps.git",
+    "clean": true
+  },
+  "system": {
+    "commit": "3d82ceeb18274cdb10e626819d15b6612f002e69",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiscRTE-System-Apps.git",
+    "clean": true
+  },
+  "runtime": {
+    "commit": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+    "remote": "https://github.com/michaelrolphone-cmyk/RiscRTE.git",
+    "clean": true
+  },
+  "desk_sdk": {
+    "reader_commit": "c98e4222048244b1e729869ed47aa99130025fd3",
+    "headers": {
+      "RiscDisplayOutputV1.h": "99b682ba34f07e7868dec8e78dfb816c067fdc184e647033bc6ed8d489b9c9a2",
+      "RiscDisplayOutputPowerV1.h": "e9c7d3bd3ddf9bce128503aafb5669734db09424149f45b3a6f735cd5a7c8667",
+      "RiscTouchV1.h": "fe18fab3ac20fda95747388f1428408b7795e5da3511c7a9fff07c16ddfd2c7d",
+      "RiscTouchPowerV1.h": "82c6faed9b7e26788e3a226cd3532b1d2c3b59447c8abdc25b5e407ef0399dd0",
+      "RiscStorageVolumeV1.h": "d477167a06004640b2c07c05d662c103be6e1b9e4a4d866f6fce13e754ef02f5"
+    }
+  }
+}

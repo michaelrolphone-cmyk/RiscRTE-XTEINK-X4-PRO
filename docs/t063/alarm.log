@@ -1,0 +1,31 @@
+Fresh boot phase=7 error=0 generation=2 replacements=3
+Second boot phase=7 error=0 generation=2 replacements=0
+BEFORE: successful RTC write produces ALARM_RTC; Retry alone reanchors and succeeds
+AFTER: explicit forward/backward clock changes, tick, due alarm, ACK, old-ticket invalidation, busy/storage rejection, descriptor guards and unexplained jump detection PASS
+Alarm startup: KV/catalog/ledger BUSY phases defer without false errors or write uncertainty; genuine IO/unknown commits retain normal failure and readback rules PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Alarm sleep-resume source guards passed: independent clocks, one-use tickets, refusal, invalid/backward RTC, awake jumps, activation, expiry and Deep restart
+Points default weekday cues, existing/corrupt catalogs, short non-modal start/warning/end cues, custom kinds, modes, sleep and reboot replay passed
+Fresh boot phase=7 error=0 generation=2 replacements=3
+Second boot phase=7 error=0 generation=2 replacements=0
+BEFORE: successful RTC write produces ALARM_RTC; Retry alone reanchors and succeeds
+AFTER: explicit forward/backward clock changes, tick, due alarm, ACK, old-ticket invalidation, busy/storage rejection, descriptor guards and unexplained jump detection PASS
+Alarm startup: KV/catalog/ledger BUSY phases defer without false errors or write uncertainty; genuine IO/unknown commits retain normal failure and readback rules PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Catalog service: >8 events/>2 types, migration, restart/light wake, edit isolation, projection, unknown/refused writes, cleanup and terminal retention PASS
+Alarm sleep-resume source guards passed: independent clocks, one-use tickets, refusal, invalid/backward RTC, awake jumps, activation, expiry and Deep restart
+Points default weekday cues, existing/corrupt catalogs, short non-modal start/warning/end cues, custom kinds, modes, sleep and reboot replay passed
+First-attempt alarm: normal and UBSan (local compiler wrapper; ASan not run) clock-change, startup BUSY, full catalog fault, Points and sleep regressions PASS

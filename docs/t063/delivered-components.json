@@ -1,0 +1,34 @@
+{
+  "wave": {
+    "display/driver.elf": {
+      "sha256": "514e919d65be8c9642cdefbce5efe0daad276185148dbace218ae81beb896d78",
+      "matches_corrected_build": true
+    },
+    "rtc/driver.elf": {
+      "sha256": "159f6d40343fd04781fa78785b0a35d423e6f333e52cb551142a6d27f0970f43",
+      "matches_corrected_build": true
+    },
+    "alarm-service/driver.elf": {
+      "sha256": "4c037010684cc18f2a32f21fa4aae8accfd1b10c741d0f77aa698bab3af5e44a",
+      "matches_corrected_build": true
+    },
+    "settings.elf": {
+      "sha256": "932384fe0c7432e073b999e2220876204254bc8b72466da4af19dfa655c26202",
+      "matches_corrected_build": true
+    }
+  },
+  "watch": {
+    "rtc/driver.elf": {
+      "sha256": "c39b7f6fb6ca4bbc403ea556ea3ebd0d649abb717a0f9692d1094f43f991705a",
+      "matches_corrected_build": true
+    },
+    "alarm-service/driver.elf": {
+      "sha256": "e2f761dc24a1c095ce15212a650b3c09fd11855560923af1cc5df193e24774c4",
+      "matches_corrected_build": true
+    },
+    "settings.elf": {
+      "sha256": "932384fe0c7432e073b999e2220876204254bc8b72466da4af19dfa655c26202",
+      "matches_corrected_build": true
+    }
+  }
+}

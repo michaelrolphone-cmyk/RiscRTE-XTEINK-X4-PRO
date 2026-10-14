@@ -1,0 +1,1 @@
+Settings real save: exactly one write, verified clock-change call, incompatible service blocks before write, RTC failures and alarm-boundary failure remain visible PASS

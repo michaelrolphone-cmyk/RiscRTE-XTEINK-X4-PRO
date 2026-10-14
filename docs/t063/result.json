@@ -1,0 +1,54 @@
+{
+  "task": "T063 remaining sleep and first-use RTC checks",
+  "baselines": {
+    "waveshare": "0.1.32",
+    "watch": "1.1.29",
+    "x4": "0.1.114"
+  },
+  "delivery_hold": false,
+  "new_production_changes": false,
+  "findings": {
+    "waveshare_deep_minus_7": {
+      "status": "existing fix retained in delivered image",
+      "commit": "77087beeacb9bf5563a9b189820ccfe1e470ebe4",
+      "behavior": "vendor panel closes transport and uses scoped reset GPIO hold; checked rollback",
+      "tests": "production vendor panel normal and UBSan passed"
+    },
+    "x4_timer_opens_home": {
+      "status": "existing fix retained in delivered Home",
+      "commit": "a7298c1f684ecdb030443204d644283c0bd26f4d",
+      "behavior": "prepare and commit authorized SD storage before timer deep entry; custody-fenced rollback",
+      "tests": "143 cases x four brightness/diagnostic configurations passed under UBSan"
+    },
+    "watch_first_rtc_set": {
+      "status": "existing explicit clock-change fix retained; Settings and alarm ELF hashes match corrected build",
+      "commit": "80efb298c9ca8d0f62f9a31840c9e51d380b40f6",
+      "behavior": "Settings verifies one RTC write then informs tagged alarm service; service independently validates RTC and reanchors",
+      "tests": "old failure reproduced then forward/backward corrections, sleep tickets, due alarms, errors; normal and UBSan passed"
+    },
+    "x4_first_alarm_startup": {
+      "status": "existing typed no-I/O BUSY retry retained in alarm0.4.10 and repaired Home",
+      "commit": "80efb298c9ca8d0f62f9a31840c9e51d380b40f6",
+      "tests": "first boot, startup BUSY, full catalog faults and sleep regressions normal and UBSan passed"
+    }
+  },
+  "limitations": [
+    "No physical device testing; delivered-image/source checks and host models do not establish hardware symptom resolution.",
+    "No new defect reproduced in the three requested paths; no replacement firmware created.",
+    "Initial broad Wave driver runner stopped at an unrelated missing storage SDK header; focused RTC and vendor-panel tests were compiled and passed separately.",
+    "macOS Bash3 empty-array nounset incompatibility handled only in copied test runner; production sources unchanged.",
+    "ASan was not run in this recheck; compiler wrapper selected UBSan explicitly."
+  ],
+  "evidence": [
+    "delivered-components.json",
+    "x4-components.json",
+    "alarm.log",
+    "x4-sleep.log",
+    "test_vendor_panel-normal.log",
+    "test_vendor_panel-ubsan.log",
+    "test_rtc-normal.log",
+    "test_rtc-ubsan.log",
+    "settings-normal.log",
+    "settings-ubsan.log"
+  ]
+}
