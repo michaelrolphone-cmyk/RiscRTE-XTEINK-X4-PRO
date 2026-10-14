@@ -1,0 +1,183 @@
+{
+  "schema": "riscrte.native-packages.publication",
+  "version": 1,
+  "product": "xteink-x4-pro",
+  "catalog": "native-packages-v1.json",
+  "catalog_bytes": 30691,
+  "catalog_sha256": "e0895d3b3ba177b4ea047cc08a43e8ec7aafe0716cb9779fcc183519295f9743",
+  "asset_commit": "467421e5d9626091dc548af28e0c39f84876f1ea",
+  "applications": 18,
+  "assets": [
+    {
+      "id": "ble_scanner",
+      "version": "0.2.26",
+      "type": "application",
+      "bytes": 162860,
+      "sha256": "2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c.elf"
+    },
+    {
+      "id": "telemetry-broadcast",
+      "version": "0.1.0",
+      "type": "driver",
+      "bytes": 5724,
+      "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d.elf"
+    },
+    {
+      "id": "ble-telemetry",
+      "version": "0.1.0",
+      "type": "driver",
+      "bytes": 9824,
+      "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2.elf"
+    },
+    {
+      "id": "points_in_time",
+      "version": "0.6.18",
+      "type": "application",
+      "bytes": 264532,
+      "sha256": "cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d.elf"
+    },
+    {
+      "id": "calculator",
+      "version": "0.1.25",
+      "type": "application",
+      "bytes": 138876,
+      "sha256": "b18e7746b475ef4fb965b4aeb84ee1d56d52ccf608f7c708adf02a2566fbd2d3",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-b18e7746b475ef4fb965b4aeb84ee1d56d52ccf608f7c708adf02a2566fbd2d3.elf"
+    },
+    {
+      "id": "stopwatch",
+      "version": "0.1.25",
+      "type": "application",
+      "bytes": 142268,
+      "sha256": "38815777c30764737436e806922f80632353c58c4248ea8dfc59b3dc4c4b75aa",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-38815777c30764737436e806922f80632353c58c4248ea8dfc59b3dc4c4b75aa.elf"
+    },
+    {
+      "id": "countdown",
+      "version": "0.1.24",
+      "type": "application",
+      "bytes": 146368,
+      "sha256": "3bcc882c7e85c5c45dc54f45fb02fe4f51d972d759e2c13b83c2d07ad58f7e84",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-3bcc882c7e85c5c45dc54f45fb02fe4f51d972d759e2c13b83c2d07ad58f7e84.elf"
+    },
+    {
+      "id": "ble_touchpad",
+      "version": "0.1.23",
+      "type": "application",
+      "bytes": 155212,
+      "sha256": "4138f2364aca210d02a81dc7427c1665fa1ba89af1c76650b39e851b704550ec",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-4138f2364aca210d02a81dc7427c1665fa1ba89af1c76650b39e851b704550ec.elf"
+    },
+    {
+      "id": "ble_buttons",
+      "version": "0.1.25",
+      "type": "application",
+      "bytes": 155244,
+      "sha256": "91497b0f2dd97e307258dbd50128a7f7e94d444c3711f7db0b9fe82e024289c4",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-91497b0f2dd97e307258dbd50128a7f7e94d444c3711f7db0b9fe82e024289c4.elf"
+    },
+    {
+      "id": "waterfall",
+      "version": "0.3.5",
+      "type": "application",
+      "bytes": 284800,
+      "sha256": "f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1.elf"
+    },
+    {
+      "id": "gameboy",
+      "version": "1.3.24",
+      "type": "application",
+      "bytes": 164604,
+      "sha256": "4e3f218fdee9c8344ca38ac040c337bebfd72ad76fc67832df077e999c7ea794",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-4e3f218fdee9c8344ca38ac040c337bebfd72ad76fc67832df077e999c7ea794.elf"
+    },
+    {
+      "id": "model_viewer",
+      "version": "1.3.0",
+      "type": "application",
+      "bytes": 39284,
+      "sha256": "24b73fff728355ab88e5b34f9eae1caeb9442bbbc36240bd6bc8c29f0708fed0",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-24b73fff728355ab88e5b34f9eae1caeb9442bbbc36240bd6bc8c29f0708fed0.elf"
+    },
+    {
+      "id": "hollow_trail",
+      "version": "1.2.2",
+      "type": "application",
+      "bytes": 449580,
+      "sha256": "465d71581bb7655b9e2ec5de5c94b09a8fb3375f916c148497b15b431bdbfdbb",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-465d71581bb7655b9e2ec5de5c94b09a8fb3375f916c148497b15b431bdbfdbb.elf"
+    },
+    {
+      "id": "ebook-reader",
+      "version": "0.1.9",
+      "type": "application",
+      "bytes": 1918724,
+      "sha256": "395eb0ad04b1c86b26f713b2c82e7d3f2a7a26dd802778bf4d355a5b55b351b2",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-395eb0ad04b1c86b26f713b2c82e7d3f2a7a26dd802778bf4d355a5b55b351b2.elf"
+    },
+    {
+      "id": "daily-digest",
+      "version": "0.1.0",
+      "type": "application",
+      "bytes": 27656,
+      "sha256": "72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa.elf"
+    },
+    {
+      "id": "timecard",
+      "version": "0.2.17",
+      "type": "application",
+      "bytes": 175412,
+      "sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53.elf"
+    },
+    {
+      "id": "contexts",
+      "version": "0.4.5",
+      "type": "application",
+      "bytes": 96896,
+      "sha256": "60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9.elf"
+    },
+    {
+      "id": "lists",
+      "version": "0.1.2",
+      "type": "application",
+      "bytes": 41524,
+      "sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c.elf"
+    },
+    {
+      "id": "obd-dashboard",
+      "version": "0.2.2",
+      "type": "application",
+      "bytes": 77504,
+      "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c.elf"
+    },
+    {
+      "id": "obd-test",
+      "version": "0.2.3",
+      "type": "application",
+      "bytes": 77720,
+      "sha256": "7fa2b91aef867d32f9b99e404307caf30daa2acfd70e000d039ac458862cb40d",
+      "url": "https://raw.githubusercontent.com/michaelrolphone-cmyk/RiskRTE-XTEINK-X4-PRO/467421e5d9626091dc548af28e0c39f84876f1ea/assets/image-7fa2b91aef867d32f9b99e404307caf30daa2acfd70e000d039ac458862cb40d.elf"
+    }
+  ],
+  "source_commits": {
+    "runtime": "1790560c174809f8e8f8d10f2e1e121d6f4c1485",
+    "system": "8a5ef23480b7711e68fd2d72e9a43cad4a2e2ddc",
+    "x4": "6cccc2a099a8e36a734fba99fbc05f172d557a4d"
+  },
+  "requires": {
+    "installed_apps_build_option": "--native-feed",
+    "app_store_build_option": "--native-package-feed",
+    "native_runtime_build_option": "--native-package-volume"
+  },
+  "hardware_qualified": false
+}
