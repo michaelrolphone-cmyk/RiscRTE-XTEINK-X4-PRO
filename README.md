@@ -2,7 +2,14 @@
 
 X4-specific provider sources, board support, display/boot adaptation, build profile, and SD package provisioning. The immutable shared runtime dependency is recorded in [migration-source.json](migration-source.json).
 
-## Build
+## Native SDK 6.1 candidate
+
+The released 0.1.121 source now has a product-owned native CMake profile, preserved
+GPIO1 startup handoff and explicit native-ready checkpoint. See
+[the candidate contract and qualification limits](docs/native-idf61/README.md).
+This is a new native candidate; the historical migration build below remains separate.
+
+## Historical migration build
 
 ```sh
 git clone https://github.com/michaelrolphone-cmyk/T5S3-Reader.git ../riscrte-runtime

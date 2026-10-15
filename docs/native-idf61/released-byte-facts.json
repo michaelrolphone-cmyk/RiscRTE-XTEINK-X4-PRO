@@ -1,0 +1,39 @@
+{
+  "native_bytes": 1665248,
+  "native_sha256": "2e6116022ef7f8b35018ec42aebeefb831560d88be0c1d3b191946ab35840d6a",
+  "runtime_revision": "f734d91780cdb4f1ba36fe82dcbd8fa28f25bb2b",
+  "composition_sha256": "3badafa462a1881d34514dd46454b0535ef48a8739310599fafb00c59b7319a1",
+  "native_esp_checksum_and_appended_sha256": true,
+  "segments": [
+    {
+      "address": 1007878176,
+      "offset": 32,
+      "size": 317476
+    },
+    {
+      "address": 1070188144,
+      "offset": 317516,
+      "size": 10188
+    },
+    {
+      "address": 1107296288,
+      "offset": 327712,
+      "size": 1221048
+    },
+    {
+      "address": 1070198332,
+      "offset": 1548768,
+      "size": 16436
+    },
+    {
+      "address": 1077362688,
+      "offset": 1565212,
+      "size": 99948
+    },
+    {
+      "address": 1611653120,
+      "offset": 1665168,
+      "size": 44
+    }
+  ]
+}

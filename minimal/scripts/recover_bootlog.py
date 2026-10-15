@@ -13,7 +13,7 @@ from pathlib import Path
 SESSION_MAGIC=0x58424c31
 RECORD_MAGIC=0x58344233
 SESSION_SIZE=456
-PHASE={1:'app-main',2:'rail-ready',3:'arduino-variant',4:'setup-gate'}
+PHASE={1:'app-main',2:'rail-ready',3:'arduino-variant',4:'setup-gate',5:'native-ready'}
 KIND={0:'none',1:'boot',2:'provider',3:'app',4:'first-display',5:'failure'}
 
 def fnv(data: bytes) -> int:

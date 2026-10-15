@@ -9,7 +9,9 @@
 namespace X4Boot {
 constexpr uint32_t Magic = 0x58344233;
 enum Milestone : uint32_t { None=0, Boot, Provider, App, Display, Failure };
-enum Phase : uint32_t { AppMain = 1, RailReady, Variant, SetupGate };
+// Preserve released phase values and the 264-byte record. NativeReady uses
+// a new value so recovered Arduino checkpoints keep their truthful label.
+enum Phase : uint32_t { AppMain = 1, RailReady, Variant, SetupGate, NativeReady };
 struct Record {
   uint32_t magic, checksum, boot, phase, operation, reset, raw0, raw1, wake;
   uint32_t gpioBefore, holdBefore, brownout, entryUs, variantUs, gateUs;
@@ -22,7 +24,7 @@ struct Record {
 static_assert(sizeof(Record) == 264, "X4 boot breadcrumb size changed");
 inline const char* phaseName(uint32_t phase) {
   switch(phase){case AppMain:return "app-main";case RailReady:return "rail-ready";
-    case Variant:return "arduino-variant";case SetupGate:return "setup-gate";default:return "unavailable";}
+    case Variant:return "arduino-variant";case NativeReady:return "native-ready";case SetupGate:return "setup-gate";default:return "unavailable";}
 }
 inline const char* milestoneName(uint32_t kind) {
   switch(kind){case Boot:return "boot";case Provider:return "provider";case App:return "app";
@@ -37,7 +39,7 @@ inline uint32_t checksum(const Record& record) {
 }
 inline bool valid(const Record& record) {
   return record.magic == Magic && record.boot && record.phase >= AppMain &&
-    record.phase <= SetupGate && record.operation <= 8 && record.reserved==0 &&
+    record.phase <= NativeReady && record.operation <= 8 && record.reserved==0 &&
     record.milestoneKind<=Failure && record.displayCompleted<=1 && record.messageTruncated<=1 &&
     ((record.milestoneCount==0)==(record.milestoneKind==None)) &&
     std::memchr(record.milestone,0,sizeof(record.milestone)) && record.checksum == checksum(record);

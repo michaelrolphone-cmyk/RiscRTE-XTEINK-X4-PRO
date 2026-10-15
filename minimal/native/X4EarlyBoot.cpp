@@ -17,6 +17,10 @@
 #include "X4NativeBuildIdentity.h"
 
 extern "C" const char risc_x4_native_composition_identity[] = X4_NATIVE_COMPOSITION_IDENTITY;
+#if RISC_NATIVE_ESP_IDF
+extern "C" const char risc_x4_native_source_identity[] = X4_NATIVE_SOURCE_IDENTITY;
+extern "C" __attribute__((noinline)) void risc_x4_native_ready(void);
+#endif
 // The selected Runtime environments provide this bounded, sole-owner sink.
 // It is used only by the setup gate, after Runtime starts its diagnostics.
 namespace RiscDiagnostics { void line(const char* text); }
@@ -123,8 +127,8 @@ bool syncClose(FILE* file) {
   return okay;
 }
 // Actual diagnostic text is retained separately from the small NVS crash
-// summary. PSRAM allocation occurs only after Arduino initializes it. Before
-// that, native rail events use a fixed RAM prefix. No observer allocates or I/Os.
+// summary. PSRAM allocation occurs only at the framework-ready checkpoint.
+// Before that, native rail events use a fixed RAM prefix. No observer allocates or I/Os.
 constexpr size_t TraceBytes=64*1024, EarlyBytes=8192, TailReserve=2048;
 // Allocate the unchanged early prefix from the already initialized internal
 // heap. Static DRAM must not grow into the fixed pre-heap IQ reservation.
@@ -415,25 +419,49 @@ extern "C" void __wrap_app_main(void) {
     X4BootLog::start(retained);
     if(!X4BootLog::earlyText && !startupError)startupError="x4-early-trace-allocation";
   }
+#if RISC_NATIVE_ESP_IDF
+  // IDF has already initialized the cores, heap and PSRAM before app_main.
+  // Replace the former initVariant checkpoint explicitly, before Runtime's
+  // owner/setup task initializes ordinary peripherals or admits providers.
+  // A rail failure stays latched through this checkpoint and the startup gate.
+  risc_x4_native_ready();
+#else
   // All original Arduino initialization and task creation is still executed.
+#endif
   // Failure stays latched for Runtime's existing startup gate; no rail cleanup.
   __real_app_main();
 }
 
+#if RISC_NATIVE_ESP_IDF
+extern "C" void risc_x4_native_ready(void) {
+#else
 extern "C" void initVariant(void) {
+#endif
   if (variant || !attempted) return;
   variant = true;
   X4Boot::changing(retained);
   retained.variantUs = uint32_t(esp_timer_get_time());
+#if RISC_NATIVE_ESP_IDF
+  retained.phase = X4Boot::NativeReady;
+#else
   retained.phase = X4Boot::Variant;
+#endif
   X4Boot::seal(retained);
   X4BootLog::checkpoint(retained);
   X4BootLog::allocateTrace();
+#if RISC_NATIVE_ESP_IDF
+  X4BootLog::textLine("native idf-ready result=entered",retained.variantUs);
+#else
   X4BootLog::textLine("native arduino-variant result=entered",retained.variantUs);
+#endif
 }
 
 extern "C" const char* risc_native_startup_error(void) {
+#if RISC_NATIVE_ESP_IDF
+  if (!attempted || !variant) return startupError ? startupError : "x4-native-ready-not-entered";
+#else
   if (!attempted || !variant) return startupError ? startupError : "x4-init-variant-not-entered";
+#endif
   if (!reported) {
     reported = true;
     X4Boot::changing(retained);

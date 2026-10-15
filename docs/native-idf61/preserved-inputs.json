@@ -1,0 +1,11 @@
+{
+  "product_source": "3ac013bd21815bf18e42466b656dbc333665bf6b",
+  "runtime_source": "f734d91780cdb4f1ba36fe82dcbd8fa28f25bb2b",
+  "product_files": {
+    "minimal/native/X4Gpio1Handoff.h": "66dc807b9f56b49a14d240ad637213a000c0718679754439301c288c2745c2d9",
+    "minimal/drivers/x4pro_board_power/driver.c": "b5a06e7f2a74ab5b204b2590eba515ccd56eb99a35771f3ec6f978353ed389a7",
+    "minimal/drivers/x4pro_uc8279_fast/driver.c": "653d861f198b650d1a7ba1b85af9cd7b0929337e3f9ba42e7e2a2bdeafe3a430",
+    "minimal/panel-012-selection-065.json": "00a84add7dfcbba2069ba7c5e03aad4f32b61eae8bd4bd29a46a7d11050fe87a"
+  },
+  "partitions_sha256": "31f6e41e2acc48df13ee30ad91e55928b2c2093b6916080235a833dd69f3b844"
+}
