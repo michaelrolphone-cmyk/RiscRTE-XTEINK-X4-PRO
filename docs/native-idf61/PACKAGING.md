@@ -99,7 +99,10 @@ role; no generated firmware artifacts are vendored here.
    Require compiler-produced Ninja dependency records, all compiled objects,
    pinned Git source/header bytes, generated configuration/linker scripts,
    toolchain/ROM hashes, and exact MAP-to-ELF symbol addresses in the linked map
-   region. A JSON receipt or standalone `qualify` call cannot authorize output.
+   region. Missing build-local Ninja inputs must be proven phony aliases by the
+   exact current graph; every real child remains required and alias queries are
+   retained. Missing real files, external inputs, cycles and malformed graphs
+   still reject. A JSON receipt or standalone `qualify` call cannot authorize output.
 8. Repack twice deterministically; require independent SPIFFS readback equality.
    Run 496 inactive-bank/torn-write/selector/corruption fault cases across both
    banks and selector sectors, including NVS/app-data/gap/trailing preservation.
@@ -141,7 +144,7 @@ python3 minimal/test/run_native_idf61_boot_test.py
 SANITIZE=1 python3 minimal/test/run_native_idf61_boot_test.py
 ```
 
-The source checkpoint passed 24 packaging tests and 10 shared provenance tests,
+The source checkpoint passed 24 packaging tests and 12 shared provenance tests,
 including the 496-case model,
 the exact profile/settings/partition checks, and all 72 GPIO1/readiness cases
 normally and under ASan/UBSan. Final native linked proof and new-native-bound
@@ -182,3 +185,9 @@ these artifacts; qualification JSON alone does not replace the input evidence.
 Output locations must be outside source checkouts. Publication remains disabled;
 version reservation, release/catalog publication and hardware operations are
 separate actions. Source-only test success is not final artifact qualification.
+
+The first official X4 clean link passed final startup, bootlog-memory and IQ
+proofs with 96 bytes of DRAM margin, then correctly stopped before qualification
+on an SDK-generated Ninja phony alias. The producer now records and expands
+proven aliases without exempting real linker inputs. This diagnostic link is
+not a fully qualified candidate; controlled CI must be rerun on the new sources.
