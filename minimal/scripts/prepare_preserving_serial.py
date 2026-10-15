@@ -15,7 +15,9 @@ def ota(entry):
  return seq,state
 
 def plan(snapshot,baseline,firmware,store,record):
- if sha(baseline) not in ('4764cfc487ab6ab88353a586c2bad1954e82fe0cb9951d93f51a36d60c918855','0902c78c9408a7138134e9e1ca8925000270270b86f3accf01fa6a8ab041ceef'):raise ValueError('baseline is not an admitted actual .81/.83 delivery')
+ if sha(baseline) not in ('4764cfc487ab6ab88353a586c2bad1954e82fe0cb9951d93f51a36d60c918855','0902c78c9408a7138134e9e1ca8925000270270b86f3accf01fa6a8ab041ceef',
+                        'f4aa6c1b9298bb00d5ba4149a15421acc0579677a13b6298e27d4865755aa5c9',
+                        'f0fb90dd585aaa70dfc2527e3686c4de7b3097039aaff339ad0d8748b5c64013'):raise ValueError('baseline is not a recognized exact .81/.83/.85 image')
  if len(snapshot)!=0x1000000 or len(baseline)!=len(snapshot):raise ValueError('16 MiB readback required')
  if snapshot[:0x9000]!=baseline[:0x9000]:raise ValueError('bootloader/partition table mismatch')
  entries=[ota(snapshot[0xff0000+i*4096:0xff0000+i*4096+32]) for i in range(2)]

@@ -140,6 +140,13 @@ build, final product-linked proof and hardware behavior remain to be qualified.
 
 ## Packaging boundary
 
+The source-only [0.1.122 successor packaging gate](PACKAGING.md) recovers the
+actual released internal and complete-SD inventories, requires new native
+source/ELF/BIN/MAP closure and preserves the existing device-MSC workflow.
+Its separate factory/old-bootloader qualification boundary replaces no
+historical evidence and emits no preserving SDK-migration kit.
+
+
 Do not run T064's unchanged-native assertions on a newly built native image.
 That release recipe changes only Home/default ELF, manifest and cohort over its
 exact 0.1.120 base. New native bytes require new cohort/native provenance and

@@ -1,0 +1,1749 @@
+{
+  "app_descriptor": {
+    "idf_version": "v4.4.7-dirty",
+    "project_name": "arduino-lib-builder",
+    "secure_version": 0,
+    "version": "esp-idf: v4.4.7 38eeba213a"
+  },
+  "bootloader_region_sha256": "6ac230d6941c798d91b83334598bb2266a417200aec3b15c74d4d69787e6a269",
+  "elf_count": 43,
+  "elf_imports": {
+    "alarm/driver.elf": {
+      "sha256": "f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "alarms.elf": {
+      "sha256": "073379c9c7ad88bdf4e2c7bb2110db69fc46e593940912047809b101e82bb11e",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ]
+    },
+    "app_store.elf": {
+      "sha256": "c31b5f76ce8a098952234e0e0ac45b61bab8905dc1389c28790853aac46b97d1",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ]
+    },
+    "battery-telem/driver.elf": {
+      "sha256": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da",
+      "undefined_symbols": [
+        "memcpy",
+        "strcmp"
+      ]
+    },
+    "battery.elf": {
+      "sha256": "321ab1330e5850f697d615f6e505b0821ce6ccd2cc6cd070cb47241b6cbc188f",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ]
+    },
+    "battery/driver.elf": {
+      "sha256": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "ble-serial/driver.elf": {
+      "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7",
+      "undefined_symbols": [
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "ble-telem/driver.elf": {
+      "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2",
+      "undefined_symbols": [
+        "memchr",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "ble/driver.elf": {
+      "sha256": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5",
+      "undefined_symbols": []
+    },
+    "board/driver.elf": {
+      "sha256": "8fe67d12a2f497978581dfdc5a065b494564f3b1c3982a664751508ffa2310e9",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "broadcast/driver.elf": {
+      "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d",
+      "undefined_symbols": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "buttons/driver.elf": {
+      "sha256": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "civil-clock-x4/driver.elf": {
+      "sha256": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "strcmp"
+      ]
+    },
+    "contexts/driver.elf": {
+      "sha256": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4",
+      "undefined_symbols": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "default.elf": {
+      "sha256": "02b38ed65e1adcb8ecd49c0dc6b58f678ea0110160e38f4f70ed61c5e0b484d7",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp"
+      ]
+    },
+    "file_browser.elf": {
+      "sha256": "bc71abc19495fd946d3fc7d8f953c77b98a3177a39eb9bf1ae34e3e9a4987978",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strrchr",
+        "strstr"
+      ]
+    },
+    "hid/driver.elf": {
+      "sha256": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555",
+      "undefined_symbols": [
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "i2c/driver.elf": {
+      "sha256": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "installed-apps/driver.elf": {
+      "sha256": "2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "realloc",
+        "snprintf",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strrchr",
+        "strstr"
+      ]
+    },
+    "iq/driver.elf": {
+      "sha256": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "light/driver.elf": {
+      "sha256": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "net-http-client/driver.elf": {
+      "sha256": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507",
+      "undefined_symbols": [
+        "risc_runtime_get_api",
+        "strcmp"
+      ]
+    },
+    "ota_update.elf": {
+      "sha256": "ae943c75f793aa4fef91c04c85eb5dab8aeb68fea824beb4d18509d4d9da0175",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ]
+    },
+    "panel/driver.elf": {
+      "sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "power/driver.elf": {
+      "sha256": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "rtc/driver.elf": {
+      "sha256": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58",
+      "undefined_symbols": [
+        "strcmp"
+      ]
+    },
+    "sd/driver.elf": {
+      "sha256": "10880847a604dc7d6b1ea5555fe7e60a47b6859d26d6ed9299c78b293e9bfd46",
+      "undefined_symbols": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strchr",
+        "strlen",
+        "strrchr"
+      ]
+    },
+    "sensors/driver.elf": {
+      "sha256": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998",
+      "undefined_symbols": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "settings.elf": {
+      "sha256": "1c4914ed12749cb076019dd255c40939d73a6be10f1eda069c4e5d68b48148b7",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ]
+    },
+    "sharing-ble/driver.elf": {
+      "sha256": "589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842",
+      "undefined_symbols": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "sharing-entropy/driver.elf": {
+      "sha256": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "sharing-tcp/driver.elf": {
+      "sha256": "49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "springboard.elf": {
+      "sha256": "934807fc30336ab97eebec63657cb62102d0f836fba19f29c144284bd377a5e0",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp"
+      ]
+    },
+    "touch/driver.elf": {
+      "sha256": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "ui-profile/driver.elf": {
+      "sha256": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341",
+      "undefined_symbols": []
+    },
+    "ui-scene/driver.elf": {
+      "sha256": "8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strchr",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "ui-text/driver.elf": {
+      "sha256": "e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "strcmp",
+        "strlen"
+      ]
+    },
+    "upd-app/driver.elf": {
+      "sha256": "c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a",
+      "undefined_symbols": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ]
+    },
+    "upd-fw/driver.elf": {
+      "sha256": "8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03",
+      "undefined_symbols": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ]
+    },
+    "usb-msc/driver.elf": {
+      "sha256": "9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461",
+      "undefined_symbols": [
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "usb_sd_transfer.elf": {
+      "sha256": "cfff8f91f169cd555b5f7613c1f860cfd6b22619c528396d28c662d0fc97e6d6",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ]
+    },
+    "wifi/driver.elf": {
+      "sha256": "8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9",
+      "undefined_symbols": [
+        "memcpy",
+        "memset",
+        "strlen"
+      ]
+    },
+    "wifi_settings.elf": {
+      "sha256": "b48f179a82666079dd27f6d045dca5f7c0a1ad76a6ceddc8d590ea2a88fa8662",
+      "undefined_symbols": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ]
+    }
+  },
+  "factory_bytes": 16777216,
+  "factory_sha256": "48145adc023a334885207100ce29596edef3f02c07a6d830ca53e3ab1fbf5993",
+  "files": {
+    "alarm/driver.elf": {
+      "bytes": 56516,
+      "sha256": "f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8"
+    },
+    "alarm/manifest.json": {
+      "bytes": 636,
+      "sha256": "0b5cefaa9a47b2754856572f348c9104428711db54d4d203119bd60895a8ca77"
+    },
+    "alarms.elf": {
+      "bytes": 147120,
+      "sha256": "073379c9c7ad88bdf4e2c7bb2110db69fc46e593940912047809b101e82bb11e"
+    },
+    "alarms.json": {
+      "bytes": 716,
+      "sha256": "6c62c39bab1b4f8586eff9a1543e665d88fd798951d31971b77f58b92fd06879"
+    },
+    "app_store.elf": {
+      "bytes": 220588,
+      "sha256": "c31b5f76ce8a098952234e0e0ac45b61bab8905dc1389c28790853aac46b97d1"
+    },
+    "app_store.json": {
+      "bytes": 994,
+      "sha256": "b6e2ab4421f9a45264d3991a50a5c100d383a47bd89644a60791bc618f755bd3"
+    },
+    "battery-telem/driver.elf": {
+      "bytes": 3048,
+      "sha256": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da"
+    },
+    "battery-telem/manifest.json": {
+      "bytes": 409,
+      "sha256": "1f96c3af1e949bf6aff5e554f7a362b02467289f2984338aa7414605a5131335"
+    },
+    "battery.elf": {
+      "bytes": 147036,
+      "sha256": "321ab1330e5850f697d615f6e505b0821ce6ccd2cc6cd070cb47241b6cbc188f"
+    },
+    "battery.json": {
+      "bytes": 794,
+      "sha256": "809050c87e3bfeb04dbc448a6bd7e326a7dcb0f15d9a2cf5ecfc354ce3eb54cb"
+    },
+    "battery/driver.elf": {
+      "bytes": 7172,
+      "sha256": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe"
+    },
+    "battery/manifest.json": {
+      "bytes": 771,
+      "sha256": "268db2abbc2ac2c55d184db0a79b0e1cf108e339bf7651bd74cc81a57382d89a"
+    },
+    "ble-serial/driver.elf": {
+      "bytes": 179308,
+      "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7"
+    },
+    "ble-serial/manifest.json": {
+      "bytes": 456,
+      "sha256": "81e55467acce8340c615b8879e8ed013c4774799ddba39accb62e70ca61f7662"
+    },
+    "ble-telem/driver.elf": {
+      "bytes": 9824,
+      "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2"
+    },
+    "ble-telem/manifest.json": {
+      "bytes": 542,
+      "sha256": "3a9658800cfdbd7d1111020b198e212d98793f6fb949aafaf45943bd263ca973"
+    },
+    "ble/driver.elf": {
+      "bytes": 4320,
+      "sha256": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5"
+    },
+    "ble/manifest.json": {
+      "bytes": 703,
+      "sha256": "4ee16de2288052aee2ac8b773fde0aadc080ad8e7498f64b46951a95ff48ad64"
+    },
+    "ble_buttons.json": {
+      "bytes": 558,
+      "sha256": "486d3d5c9cee5868dbfd872c0da56d4b27293f1b76e5049dee4826aa05b3e278"
+    },
+    "ble_scanner.json": {
+      "bytes": 1038,
+      "sha256": "8ec8e78882a289df5eea24e332dd3c771d8572509ac663656400eae0ce1105e0"
+    },
+    "ble_touchpad.json": {
+      "bytes": 830,
+      "sha256": "b8ac0a6778bcd14dba159eeb11ab91f666b5503d8ae15c6317ff908185351ee3"
+    },
+    "board.json": {
+      "bytes": 7029,
+      "sha256": "d06f9ea76fae9005f4e4c9e7f0c144b20ddc94e203d6cc53efae0b0504844f6a"
+    },
+    "board/driver.elf": {
+      "bytes": 5940,
+      "sha256": "8fe67d12a2f497978581dfdc5a065b494564f3b1c3982a664751508ffa2310e9"
+    },
+    "board/manifest.json": {
+      "bytes": 716,
+      "sha256": "53956ef045217d714cf3ce02dc4eb6d1f83e56ae00d08acd8211fdb4ac1ebbb6"
+    },
+    "boot.json": {
+      "bytes": 28557,
+      "sha256": "a65ef54f1c3f2633d2ee19fd5885a9c32be9f358348df8f6e0dda83fe097a47f"
+    },
+    "broadcast/driver.elf": {
+      "bytes": 5724,
+      "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d"
+    },
+    "broadcast/manifest.json": {
+      "bytes": 533,
+      "sha256": "696951b090d64dd5a7d919055c4061c61b894789c7d6cde0c4fc496f775abeef"
+    },
+    "buttons/driver.elf": {
+      "bytes": 6120,
+      "sha256": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9"
+    },
+    "buttons/manifest.json": {
+      "bytes": 833,
+      "sha256": "ae647b63e6c411b6ab0f482ce6a87e83e0ef56e92fc2c49684a7c0fc66e3e2fa"
+    },
+    "calculator.json": {
+      "bytes": 761,
+      "sha256": "77d07d60c4c2aa2295ffebdb72406cab8080709350a892c20079f2f497088038"
+    },
+    "civil-clock-x4/driver.elf": {
+      "bytes": 38156,
+      "sha256": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
+    },
+    "civil-clock-x4/manifest.json": {
+      "bytes": 401,
+      "sha256": "f80cd2713b87f5b74a08d37b0789b78ac375d50f59df2ede306b4e05d456e1bf"
+    },
+    "cohort.json": {
+      "bytes": 400,
+      "sha256": "09ca05dc12d4a68a5db65fc1d2ac38b79a4f07bd753db468d03e82284ebd03e3"
+    },
+    "contexts.json": {
+      "bytes": 940,
+      "sha256": "7ee1d8bd00c8cb5e9a5aad841f91ca89313ef391292587941e31e7441f27057c"
+    },
+    "contexts/driver.elf": {
+      "bytes": 63284,
+      "sha256": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4"
+    },
+    "contexts/manifest.json": {
+      "bytes": 605,
+      "sha256": "3c518e0017199a6d2ee8edb4b3bcb10f3069a154b70d4a6693994c2d38e86073"
+    },
+    "countdown.json": {
+      "bytes": 759,
+      "sha256": "dbb4cde4fa66e9e8ecc54eda9fd17ea8d5cb2af8f594a9781a7ce66705ca02a1"
+    },
+    "daily_digest.json": {
+      "bytes": 733,
+      "sha256": "1f8827a772257e0136ead7de69971867be557e60483f1ae7d530c4e4f31edd21"
+    },
+    "default.elf": {
+      "bytes": 576348,
+      "sha256": "02b38ed65e1adcb8ecd49c0dc6b58f678ea0110160e38f4f70ed61c5e0b484d7"
+    },
+    "default.json": {
+      "bytes": 1055,
+      "sha256": "2193e77346373d1a5172b52507321801c2aa67d85b56f8692436c228704ad800"
+    },
+    "ebook_reader.json": {
+      "bytes": 659,
+      "sha256": "d2b52619e92d974309b6e9eef678cf7570bcc01868b63e5631f0d0d234110250"
+    },
+    "file_browser.elf": {
+      "bytes": 496828,
+      "sha256": "bc71abc19495fd946d3fc7d8f953c77b98a3177a39eb9bf1ae34e3e9a4987978"
+    },
+    "file_browser.json": {
+      "bytes": 810,
+      "sha256": "811f115c265c29c455a8a70be2a59fb2bb240ba8d1e6490c1d825edd81833e4b"
+    },
+    "gameboy.json": {
+      "bytes": 549,
+      "sha256": "8955c263e6c16e8c4fea630c4edc6957e6b06eda82ac429e00b7d5b6e2048432"
+    },
+    "hid/driver.elf": {
+      "bytes": 125480,
+      "sha256": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555"
+    },
+    "hid/manifest.json": {
+      "bytes": 537,
+      "sha256": "bf2f68ebfb13aba3d48050813453872885286ef5f0fe73c3fd3cb6faaabd3b49"
+    },
+    "hollow_trail.json": {
+      "bytes": 447,
+      "sha256": "0a708911eb6941fe5a04de0e84d9ddcb01fc0806745519389d76d8f2df461194"
+    },
+    "i2c/driver.elf": {
+      "bytes": 5356,
+      "sha256": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1"
+    },
+    "i2c/manifest.json": {
+      "bytes": 838,
+      "sha256": "fb2e867b265bc00c23686c05b5aaf12d15a07f0ed639eaacc5048a7b3738d2e1"
+    },
+    "installed-apps/driver.elf": {
+      "bytes": 141740,
+      "sha256": "2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987"
+    },
+    "installed-apps/manifest.json": {
+      "bytes": 439,
+      "sha256": "f93bbeb0ad79efb51043c3f1f0e5f098fd5a13701468eee943e062ce781cd8f4"
+    },
+    "iq/driver.elf": {
+      "bytes": 43692,
+      "sha256": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50"
+    },
+    "iq/manifest.json": {
+      "bytes": 373,
+      "sha256": "6dab7f69b5829426ac88536104e338ed15ab71f60d9476f4e5afdb3fb1de7d3f"
+    },
+    "light/driver.elf": {
+      "bytes": 5816,
+      "sha256": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b"
+    },
+    "light/manifest.json": {
+      "bytes": 709,
+      "sha256": "a07577b9445c3caf55dec38a2f626b4873fff29f36fd2f75025ce5596d1dedc2"
+    },
+    "lists.json": {
+      "bytes": 517,
+      "sha256": "ff6b7d2ce1e61bde96ec736e23b1313f474fe488211e3d8ba8feb8b37b91f120"
+    },
+    "model_viewer.json": {
+      "bytes": 703,
+      "sha256": "89204d530af77e6323d083093a4a1fff904ecdae573f72252de257394b314dd2"
+    },
+    "net-http-client/driver.elf": {
+      "bytes": 5212,
+      "sha256": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507"
+    },
+    "net-http-client/manifest.json": {
+      "bytes": 335,
+      "sha256": "6635d08c24c2770d52f5c1aff5be2073cb8e7d9c0e33b80c5b1d5de3c9e9bfc6"
+    },
+    "obd_dashboard.json": {
+      "bytes": 625,
+      "sha256": "49204843673f745458102d9f74a60a1a0a155c1db3b133240a93b5b69010831e"
+    },
+    "obd_test.json": {
+      "bytes": 591,
+      "sha256": "e9128f13ecbfbc34390f9d65ff85d836d37c1ef7e1a6077d6d089a8e00499f83"
+    },
+    "ota_update.elf": {
+      "bytes": 214692,
+      "sha256": "ae943c75f793aa4fef91c04c85eb5dab8aeb68fea824beb4d18509d4d9da0175"
+    },
+    "ota_update.json": {
+      "bytes": 860,
+      "sha256": "5ee862213e415f3fe5eff7588fccb5a4f817930f665b096bfe74b6c1dc847a4e"
+    },
+    "panel/driver.elf": {
+      "bytes": 34800,
+      "sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4"
+    },
+    "panel/manifest.json": {
+      "bytes": 965,
+      "sha256": "eafdacde35bbda93f617592b9bd0d7ba7c21204dca22793cc976c5bb9656cade"
+    },
+    "points_in_time.json": {
+      "bytes": 902,
+      "sha256": "d84bb77efe4e008d74b55c6391a9ecdbbcf9c84eaaeaf826ddfbbee3276857a9"
+    },
+    "power/driver.elf": {
+      "bytes": 5704,
+      "sha256": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b"
+    },
+    "power/manifest.json": {
+      "bytes": 828,
+      "sha256": "d971a5fe28b141663a75b2f00afda104712a2635acbb690f4afc6e95f98bd465"
+    },
+    "rtc/driver.elf": {
+      "bytes": 6752,
+      "sha256": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58"
+    },
+    "rtc/manifest.json": {
+      "bytes": 633,
+      "sha256": "8a795ce2cb35c86347eb0a3956db16f0e02f4bed0608b92ea23ceeaa438fbf5f"
+    },
+    "sd/driver.elf": {
+      "bytes": 106996,
+      "sha256": "10880847a604dc7d6b1ea5555fe7e60a47b6859d26d6ed9299c78b293e9bfd46"
+    },
+    "sd/manifest.json": {
+      "bytes": 986,
+      "sha256": "aa67a6bd2c66fc6e6dd4583b63cb756beb0a37397b1d90f0d40adbe74e2f1ad2"
+    },
+    "sensors/driver.elf": {
+      "bytes": 9820,
+      "sha256": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998"
+    },
+    "sensors/manifest.json": {
+      "bytes": 470,
+      "sha256": "e1cbdd0a2490a88cd8984404e37b6ef059403d31f87f47be9c7756fb0133b0b5"
+    },
+    "settings.elf": {
+      "bytes": 153132,
+      "sha256": "1c4914ed12749cb076019dd255c40939d73a6be10f1eda069c4e5d68b48148b7"
+    },
+    "settings.json": {
+      "bytes": 947,
+      "sha256": "58b88f817a94fd9224c0f24b56b9786af6397c15f0c71f7e979c88e4f301d42f"
+    },
+    "sharing-ble/driver.elf": {
+      "bytes": 264572,
+      "sha256": "589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842"
+    },
+    "sharing-ble/manifest.json": {
+      "bytes": 482,
+      "sha256": "c82509361f8a24e4e0f3ac9cddd6e380e19775b4e222e3e6b9e3308ef147a537"
+    },
+    "sharing-entropy/driver.elf": {
+      "bytes": 4124,
+      "sha256": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c"
+    },
+    "sharing-entropy/manifest.json": {
+      "bytes": 411,
+      "sha256": "614db32f01de81e36a9c45aab03cd356ba8ba888b273e7b31f92f68efcbf7ece"
+    },
+    "sharing-tcp/driver.elf": {
+      "bytes": 9308,
+      "sha256": "49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4"
+    },
+    "sharing-tcp/manifest.json": {
+      "bytes": 439,
+      "sha256": "ae19d6877303dfb714bab6c8df4edb85bfc5f76d2e954ded6819402ca6610c2a"
+    },
+    "springboard.elf": {
+      "bytes": 244192,
+      "sha256": "934807fc30336ab97eebec63657cb62102d0f836fba19f29c144284bd377a5e0"
+    },
+    "springboard.json": {
+      "bytes": 866,
+      "sha256": "d5befe455987ff163e61f78d007412e435f49d3dcdf81ccc9caf9956d8b2c105"
+    },
+    "stopwatch.json": {
+      "bytes": 759,
+      "sha256": "8122ab1ccd38ed597a593d8d5070cbb9484524aee6237bd0e73442cbd121316a"
+    },
+    "timecard.json": {
+      "bytes": 890,
+      "sha256": "256902f13b5ef54d56fe35aa2f9d5b71b650a47dc11be4d8c122be38ca5d9dce"
+    },
+    "touch/driver.elf": {
+      "bytes": 14068,
+      "sha256": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4"
+    },
+    "touch/manifest.json": {
+      "bytes": 704,
+      "sha256": "6bfa5e918ab18d9b7c4b5d5eef4e6756b65d3f69f44bcdb7d1460f2f0f95ef1e"
+    },
+    "ui-profile/driver.elf": {
+      "bytes": 2284,
+      "sha256": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341"
+    },
+    "ui-profile/manifest.json": {
+      "bytes": 287,
+      "sha256": "f85d3c86848887ba49133eeb395825d867e83bdbda469758f98b641baaa2a218"
+    },
+    "ui-scene/driver.elf": {
+      "bytes": 471156,
+      "sha256": "8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122"
+    },
+    "ui-scene/manifest.json": {
+      "bytes": 398,
+      "sha256": "ac7166289960a90ced6a99bb5198e1a7c2523bed57eaa7ccec9eb1f274396b6e"
+    },
+    "ui-text/driver.elf": {
+      "bytes": 19400,
+      "sha256": "e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a"
+    },
+    "ui-text/manifest.json": {
+      "bytes": 230,
+      "sha256": "9e9a8cb285ad55c21ab411d7208502709e9fe8051b25f9eedd23a6e9293d6112"
+    },
+    "upd-app/driver.elf": {
+      "bytes": 29676,
+      "sha256": "c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a"
+    },
+    "upd-app/manifest.json": {
+      "bytes": 552,
+      "sha256": "8e67178def1e927a2b9d693d606e98b16dcc3829cadfda591c22249272f7ed9f"
+    },
+    "upd-fw/driver.elf": {
+      "bytes": 29800,
+      "sha256": "8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03"
+    },
+    "upd-fw/manifest.json": {
+      "bytes": 560,
+      "sha256": "efd05de05c28a606e3ad8fe66518e1b69ed0d40b1f0ada61a938e0d29c5c1a5b"
+    },
+    "usb-msc/driver.elf": {
+      "bytes": 34892,
+      "sha256": "9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461"
+    },
+    "usb-msc/manifest.json": {
+      "bytes": 436,
+      "sha256": "454af5a0db75022a182e8f57594ad56710696afc2de4cac32caf1f6a7f67c182"
+    },
+    "usb_sd_transfer.elf": {
+      "bytes": 72832,
+      "sha256": "cfff8f91f169cd555b5f7613c1f860cfd6b22619c528396d28c662d0fc97e6d6"
+    },
+    "usb_sd_transfer.json": {
+      "bytes": 527,
+      "sha256": "825302a3ff2b8cd7fcb411251383cbfe5ce372855320522276551fcc4d6f3dd9"
+    },
+    "waterfall.json": {
+      "bytes": 1159,
+      "sha256": "c280c4c111c9ea7899b33dfa6956fd94b25ecffb860c8e8b3b20bd1d9bc477da"
+    },
+    "wifi/driver.elf": {
+      "bytes": 7692,
+      "sha256": "8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9"
+    },
+    "wifi/manifest.json": {
+      "bytes": 703,
+      "sha256": "5a788cd30e8f75f38559668b0d7fd09f2b9f8e7026c28091d835d6d2c57a2716"
+    },
+    "wifi_settings.elf": {
+      "bytes": 260116,
+      "sha256": "b48f179a82666079dd27f6d045dca5f7c0a1ad76a6ceddc8d590ea2a88fa8662"
+    },
+    "wifi_settings.json": {
+      "bytes": 669,
+      "sha256": "4ff426ca419500d0ffe92cecef8cbca7205cdec160b3f56da0cbfd1c2a09c2da"
+    }
+  },
+  "historical_composition_recovered": false,
+  "historical_native_elf_recovered": false,
+  "native_bytes": 1665248,
+  "native_sha256": "2e6116022ef7f8b35018ec42aebeefb831560d88be0c1d3b191946ab35840d6a",
+  "ota_selection": [
+    [
+      1,
+      2
+    ],
+    null
+  ],
+  "partition_region_sha256": "a6675ae117269ab78b4af211c13c08f4a62a8dcaa17adc3b66f508c464907601",
+  "product": "x4",
+  "release_source_revision": "3ac013bd21815bf18e42466b656dbc333665bf6b",
+  "release_tag": "test-t064-crash-0.1.121",
+  "runtime_revision": "f734d91780cdb4f1ba36fe82dcbd8fa28f25bb2b",
+  "schema": 1,
+  "sd": {
+    "bytes": 10844318,
+    "elf_count": 49,
+    "elf_imports": {
+      "Apps/ble_buttons/ble_buttons.elf": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ],
+      "Apps/ble_scanner/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c/ble_scanner.elf": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ],
+      "Apps/ble_touchpad/ble_touchpad.elf": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ],
+      "Apps/calculator/calculator.elf": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ],
+      "Apps/contexts/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9/contexts.elf": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strlen"
+      ],
+      "Apps/countdown/countdown.elf": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ],
+      "Apps/daily-digest/daily_digest.elf": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strlen"
+      ],
+      "Apps/ebook-reader/ebook_reader.elf": [
+        "__errno",
+        "calloc",
+        "free",
+        "isalpha",
+        "longjmp",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "qsort",
+        "realloc",
+        "risc_runtime_get_api",
+        "setjmp",
+        "snprintf",
+        "strcat",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncasecmp",
+        "strncmp",
+        "strncpy",
+        "strrchr",
+        "strstr",
+        "strtod",
+        "strtof",
+        "strtol",
+        "tolower",
+        "vsnprintf"
+      ],
+      "Apps/gameboy/gameboy.elf": [
+        "calloc",
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "realloc",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strrchr",
+        "strtol"
+      ],
+      "Apps/hollow_trail/hollow_trail.elf": [
+        "calloc",
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strstr"
+      ],
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/lists.elf": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strlen"
+      ],
+      "Apps/model_viewer/model_viewer.elf": [
+        "calloc",
+        "free",
+        "malloc",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strrchr",
+        "strstr"
+      ],
+      "Apps/obd-dashboard/obd_dashboard.elf": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcspn",
+        "strlen",
+        "strncmp",
+        "strstr"
+      ],
+      "Apps/obd-test/obd_test.elf": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcspn",
+        "strlen",
+        "strncmp",
+        "strstr"
+      ],
+      "Apps/points_in_time/image-cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d/points_in_time.elf": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ],
+      "Apps/stopwatch/stopwatch.elf": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ],
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/timecard.elf": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy"
+      ],
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/waterfall.elf": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ],
+      "Drivers/alarm-service/image-f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8.elf": [
+        "free",
+        "malloc",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/ble-hid/image-6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555.elf": [
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/ble-sensors/image-cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998.elf": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/ble-serial/image-643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7.elf": [
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/ble-session-setup/image-589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842.elf": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/ble-telemetry/image-86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2.elf": [
+        "memchr",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/civil-clock-x4/image-d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d.elf": [
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "strcmp"
+      ],
+      "Drivers/contexts-service/image-124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4.elf": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/crypto-entropy/image-b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c.elf": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/installed-apps/image-2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987.elf": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "realloc",
+        "snprintf",
+        "strchr",
+        "strcmp",
+        "strcpy",
+        "strlen",
+        "strncmp",
+        "strrchr",
+        "strstr"
+      ],
+      "Drivers/net-http-client/image-747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507.elf": [
+        "risc_runtime_get_api",
+        "strcmp"
+      ],
+      "Drivers/network-tcp-listener/image-49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4.elf": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/s3-radio-iq-v1/image-448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50.elf": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/scene-host/image-8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122.elf": [
+        "free",
+        "malloc",
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "snprintf",
+        "strchr",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/scene-profile-portrait-monochrome/image-81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341.elf": [],
+      "Drivers/software-update-apps/image-c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a.elf": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ],
+      "Drivers/software-update-firmware/image-8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03.elf": [
+        "memcmp",
+        "memcpy",
+        "memset",
+        "snprintf",
+        "strcmp",
+        "strcpy",
+        "strlen"
+      ],
+      "Drivers/telemetry-battery/image-f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da.elf": [
+        "memcpy",
+        "strcmp"
+      ],
+      "Drivers/telemetry-broadcast/image-0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d.elf": [
+        "memchr",
+        "memcmp",
+        "memcpy",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/text-input-host/image-e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a.elf": [
+        "memcpy",
+        "memset",
+        "risc_runtime_get_api",
+        "strcmp",
+        "strlen"
+      ],
+      "Drivers/twatch-ble/image-fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5.elf": [],
+      "Drivers/usb-device-msc-esp32s3/image-9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461.elf": [
+        "memcpy",
+        "memmove",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/wifi/image-8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9.elf": [
+        "memcpy",
+        "memset",
+        "strlen"
+      ],
+      "Drivers/x4pro-battery/image-937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe.elf": [
+        "strcmp"
+      ],
+      "Drivers/x4pro-frontlight/image-c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b.elf": [
+        "strcmp"
+      ],
+      "Drivers/x4pro-gt911/image-0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4.elf": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ],
+      "Drivers/x4pro-i2c/image-bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1.elf": [
+        "strcmp"
+      ],
+      "Drivers/x4pro-power-buttons/image-8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9.elf": [
+        "strcmp"
+      ],
+      "Drivers/x4pro-power/image-79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b.elf": [
+        "strcmp"
+      ],
+      "Drivers/x4pro-rtc/image-47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58.elf": [
+        "strcmp"
+      ],
+      "Drivers/x4pro-uc8279-fast/image-3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4.elf": [
+        "memcpy",
+        "memset",
+        "strcmp"
+      ]
+    },
+    "file_count": 77,
+    "filename": "X4-0.1.121-Complete-SD-Keep-Existing.zip",
+    "files": {
+      "Apps/ble_buttons/ble_buttons.elf": {
+        "bytes": 159340,
+        "role": "application",
+        "sha256": "2f0e6e69182b9a71a35471a35093ff69b2b26955c87032132650ed7d4895d1fd"
+      },
+      "Apps/ble_buttons/manifest.json": {
+        "bytes": 558,
+        "role": "application-manifest",
+        "sha256": "486d3d5c9cee5868dbfd872c0da56d4b27293f1b76e5049dee4826aa05b3e278"
+      },
+      "Apps/ble_scanner/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c/ble_scanner.elf": {
+        "bytes": 162860,
+        "role": "application",
+        "sha256": "2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c"
+      },
+      "Apps/ble_scanner/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c/manifest.json": {
+        "bytes": 1038,
+        "role": "application-manifest",
+        "sha256": "8ec8e78882a289df5eea24e332dd3c771d8572509ac663656400eae0ce1105e0"
+      },
+      "Apps/ble_touchpad/ble_touchpad.elf": {
+        "bytes": 155212,
+        "role": "application",
+        "sha256": "4138f2364aca210d02a81dc7427c1665fa1ba89af1c76650b39e851b704550ec"
+      },
+      "Apps/ble_touchpad/manifest.json": {
+        "bytes": 830,
+        "role": "application-manifest",
+        "sha256": "b8ac0a6778bcd14dba159eeb11ab91f666b5503d8ae15c6317ff908185351ee3"
+      },
+      "Apps/calculator/calculator.elf": {
+        "bytes": 138876,
+        "role": "application",
+        "sha256": "b18e7746b475ef4fb965b4aeb84ee1d56d52ccf608f7c708adf02a2566fbd2d3"
+      },
+      "Apps/calculator/manifest.json": {
+        "bytes": 761,
+        "role": "application-manifest",
+        "sha256": "77d07d60c4c2aa2295ffebdb72406cab8080709350a892c20079f2f497088038"
+      },
+      "Apps/contexts/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9/contexts.elf": {
+        "bytes": 96896,
+        "role": "application",
+        "sha256": "60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9"
+      },
+      "Apps/contexts/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9/manifest.json": {
+        "bytes": 940,
+        "role": "application-manifest",
+        "sha256": "7ee1d8bd00c8cb5e9a5aad841f91ca89313ef391292587941e31e7441f27057c"
+      },
+      "Apps/countdown/countdown.elf": {
+        "bytes": 146368,
+        "role": "application",
+        "sha256": "3bcc882c7e85c5c45dc54f45fb02fe4f51d972d759e2c13b83c2d07ad58f7e84"
+      },
+      "Apps/countdown/manifest.json": {
+        "bytes": 759,
+        "role": "application-manifest",
+        "sha256": "dbb4cde4fa66e9e8ecc54eda9fd17ea8d5cb2af8f594a9781a7ce66705ca02a1"
+      },
+      "Apps/daily-digest/daily_digest.elf": {
+        "bytes": 27656,
+        "role": "application",
+        "sha256": "72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa"
+      },
+      "Apps/daily-digest/manifest.json": {
+        "bytes": 733,
+        "role": "application-manifest",
+        "sha256": "1f8827a772257e0136ead7de69971867be557e60483f1ae7d530c4e4f31edd21"
+      },
+      "Apps/ebook-reader/ebook_reader.elf": {
+        "bytes": 1918724,
+        "role": "application",
+        "sha256": "395eb0ad04b1c86b26f713b2c82e7d3f2a7a26dd802778bf4d355a5b55b351b2"
+      },
+      "Apps/ebook-reader/manifest.json": {
+        "bytes": 659,
+        "role": "application-manifest",
+        "sha256": "d2b52619e92d974309b6e9eef678cf7570bcc01868b63e5631f0d0d234110250"
+      },
+      "Apps/gameboy/gameboy.elf": {
+        "bytes": 171360,
+        "role": "application",
+        "sha256": "e802dda3a9756a578441e35fdea3a3801bb852875f1a194f0b2318cc65426453"
+      },
+      "Apps/gameboy/manifest.json": {
+        "bytes": 549,
+        "role": "application-manifest",
+        "sha256": "8955c263e6c16e8c4fea630c4edc6957e6b06eda82ac429e00b7d5b6e2048432"
+      },
+      "Apps/hollow_trail/hollow_trail.elf": {
+        "bytes": 449580,
+        "role": "application",
+        "sha256": "465d71581bb7655b9e2ec5de5c94b09a8fb3375f916c148497b15b431bdbfdbb"
+      },
+      "Apps/hollow_trail/manifest.json": {
+        "bytes": 447,
+        "role": "application-manifest",
+        "sha256": "0a708911eb6941fe5a04de0e84d9ddcb01fc0806745519389d76d8f2df461194"
+      },
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/lists.elf": {
+        "bytes": 41524,
+        "role": "application",
+        "sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c"
+      },
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/manifest.json": {
+        "bytes": 517,
+        "role": "application-manifest",
+        "sha256": "ff6b7d2ce1e61bde96ec736e23b1313f474fe488211e3d8ba8feb8b37b91f120"
+      },
+      "Apps/model_viewer/manifest.json": {
+        "bytes": 703,
+        "role": "application-manifest",
+        "sha256": "89204d530af77e6323d083093a4a1fff904ecdae573f72252de257394b314dd2"
+      },
+      "Apps/model_viewer/model_viewer.elf": {
+        "bytes": 39284,
+        "role": "application",
+        "sha256": "24b73fff728355ab88e5b34f9eae1caeb9442bbbc36240bd6bc8c29f0708fed0"
+      },
+      "Apps/obd-dashboard/manifest.json": {
+        "bytes": 625,
+        "role": "application-manifest",
+        "sha256": "49204843673f745458102d9f74a60a1a0a155c1db3b133240a93b5b69010831e"
+      },
+      "Apps/obd-dashboard/obd_dashboard.elf": {
+        "bytes": 77504,
+        "role": "application",
+        "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c"
+      },
+      "Apps/obd-test/manifest.json": {
+        "bytes": 591,
+        "role": "application-manifest",
+        "sha256": "e9128f13ecbfbc34390f9d65ff85d836d37c1ef7e1a6077d6d089a8e00499f83"
+      },
+      "Apps/obd-test/obd_test.elf": {
+        "bytes": 81280,
+        "role": "application",
+        "sha256": "9acdf0593b4b3131f4341dbece0e2b178412df16c94abf17bc4657bfd852ec0e"
+      },
+      "Apps/points_in_time/image-cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d/manifest.json": {
+        "bytes": 902,
+        "role": "application-manifest",
+        "sha256": "d84bb77efe4e008d74b55c6391a9ecdbbcf9c84eaaeaf826ddfbbee3276857a9"
+      },
+      "Apps/points_in_time/image-cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d/points_in_time.elf": {
+        "bytes": 264532,
+        "role": "application",
+        "sha256": "cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d"
+      },
+      "Apps/stopwatch/manifest.json": {
+        "bytes": 759,
+        "role": "application-manifest",
+        "sha256": "8122ab1ccd38ed597a593d8d5070cbb9484524aee6237bd0e73442cbd121316a"
+      },
+      "Apps/stopwatch/stopwatch.elf": {
+        "bytes": 142268,
+        "role": "application",
+        "sha256": "38815777c30764737436e806922f80632353c58c4248ea8dfc59b3dc4c4b75aa"
+      },
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/manifest.json": {
+        "bytes": 890,
+        "role": "application-manifest",
+        "sha256": "256902f13b5ef54d56fe35aa2f9d5b71b650a47dc11be4d8c122be38ca5d9dce"
+      },
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/timecard.elf": {
+        "bytes": 175412,
+        "role": "application",
+        "sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53"
+      },
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/manifest.json": {
+        "bytes": 1159,
+        "role": "application-manifest",
+        "sha256": "c280c4c111c9ea7899b33dfa6956fd94b25ecffb860c8e8b3b20bd1d9bc477da"
+      },
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/waterfall.elf": {
+        "bytes": 284800,
+        "role": "application",
+        "sha256": "f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1"
+      },
+      "Drivers/alarm-service/image-f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8.elf": {
+        "bytes": 56516,
+        "role": "driver",
+        "sha256": "f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8"
+      },
+      "Drivers/ble-hid/image-6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555.elf": {
+        "bytes": 125480,
+        "role": "driver",
+        "sha256": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555"
+      },
+      "Drivers/ble-sensors/image-cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998.elf": {
+        "bytes": 9820,
+        "role": "driver",
+        "sha256": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998"
+      },
+      "Drivers/ble-serial/image-643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7.elf": {
+        "bytes": 179308,
+        "role": "driver",
+        "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7"
+      },
+      "Drivers/ble-session-setup/image-589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842.elf": {
+        "bytes": 264572,
+        "role": "driver",
+        "sha256": "589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842"
+      },
+      "Drivers/ble-telemetry/image-86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2.elf": {
+        "bytes": 9824,
+        "role": "driver",
+        "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2"
+      },
+      "Drivers/civil-clock-x4/image-d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d.elf": {
+        "bytes": 38156,
+        "role": "driver",
+        "sha256": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
+      },
+      "Drivers/contexts-service/image-124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4.elf": {
+        "bytes": 63284,
+        "role": "driver",
+        "sha256": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4"
+      },
+      "Drivers/crypto-entropy/image-b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c.elf": {
+        "bytes": 4124,
+        "role": "driver",
+        "sha256": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c"
+      },
+      "Drivers/installed-apps/image-2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987.elf": {
+        "bytes": 141740,
+        "role": "driver",
+        "sha256": "2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987"
+      },
+      "Drivers/net-http-client/image-747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507.elf": {
+        "bytes": 5212,
+        "role": "driver",
+        "sha256": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507"
+      },
+      "Drivers/network-tcp-listener/image-49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4.elf": {
+        "bytes": 9308,
+        "role": "driver",
+        "sha256": "49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4"
+      },
+      "Drivers/s3-radio-iq-v1/image-448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50.elf": {
+        "bytes": 43692,
+        "role": "driver",
+        "sha256": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50"
+      },
+      "Drivers/scene-host/image-8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122.elf": {
+        "bytes": 471156,
+        "role": "driver",
+        "sha256": "8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122"
+      },
+      "Drivers/scene-profile-portrait-monochrome/image-81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341.elf": {
+        "bytes": 2284,
+        "role": "driver",
+        "sha256": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341"
+      },
+      "Drivers/software-update-apps/image-c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a.elf": {
+        "bytes": 29676,
+        "role": "driver",
+        "sha256": "c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a"
+      },
+      "Drivers/software-update-firmware/image-8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03.elf": {
+        "bytes": 29800,
+        "role": "driver",
+        "sha256": "8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03"
+      },
+      "Drivers/telemetry-battery/image-f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da.elf": {
+        "bytes": 3048,
+        "role": "driver",
+        "sha256": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da"
+      },
+      "Drivers/telemetry-broadcast/image-0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d.elf": {
+        "bytes": 5724,
+        "role": "driver",
+        "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d"
+      },
+      "Drivers/text-input-host/image-e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a.elf": {
+        "bytes": 19400,
+        "role": "driver",
+        "sha256": "e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a"
+      },
+      "Drivers/twatch-ble/image-fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5.elf": {
+        "bytes": 4320,
+        "role": "driver",
+        "sha256": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5"
+      },
+      "Drivers/usb-device-msc-esp32s3/image-9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461.elf": {
+        "bytes": 34892,
+        "role": "driver",
+        "sha256": "9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461"
+      },
+      "Drivers/wifi/image-8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9.elf": {
+        "bytes": 7692,
+        "role": "driver",
+        "sha256": "8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9"
+      },
+      "Drivers/x4pro-battery/image-937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe.elf": {
+        "bytes": 7172,
+        "role": "driver",
+        "sha256": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe"
+      },
+      "Drivers/x4pro-frontlight/image-c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b.elf": {
+        "bytes": 5816,
+        "role": "driver",
+        "sha256": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b"
+      },
+      "Drivers/x4pro-gt911/image-0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4.elf": {
+        "bytes": 14068,
+        "role": "driver",
+        "sha256": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4"
+      },
+      "Drivers/x4pro-i2c/image-bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1.elf": {
+        "bytes": 5356,
+        "role": "driver",
+        "sha256": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1"
+      },
+      "Drivers/x4pro-power-buttons/image-8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9.elf": {
+        "bytes": 6120,
+        "role": "driver",
+        "sha256": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9"
+      },
+      "Drivers/x4pro-power/image-79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b.elf": {
+        "bytes": 5704,
+        "role": "driver",
+        "sha256": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b"
+      },
+      "Drivers/x4pro-rtc/image-47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58.elf": {
+        "bytes": 6752,
+        "role": "driver",
+        "sha256": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58"
+      },
+      "Drivers/x4pro-uc8279-fast/image-3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4.elf": {
+        "bytes": 34800,
+        "role": "driver",
+        "sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4"
+      },
+      "fonts/Noto Sans/NotoSans-Bold.ttf": {
+        "bytes": 630968,
+        "role": "font-resource",
+        "sha256": "13a813c49624ae3ba3c5c6e72c5ebffc4b9e1e6ea32f421c04069b037c6ad431"
+      },
+      "fonts/Noto Sans/NotoSans-BoldItalic.ttf": {
+        "bytes": 644344,
+        "role": "font-resource",
+        "sha256": "7e34616e092593c340449baf9a259075a054c6419511ccf21ff0d83a1c9dd0d0"
+      },
+      "fonts/Noto Sans/NotoSans-Italic.ttf": {
+        "bytes": 642344,
+        "role": "font-resource",
+        "sha256": "feb3e57888ce3acb604f270c278cfb304c674306518771619ddbdefca42a066b"
+      },
+      "fonts/Noto Sans/NotoSans-Regular.ttf": {
+        "bytes": 629024,
+        "role": "font-resource",
+        "sha256": "fe8c022f48d8dd29f17b744d16f9346f4357e16f7d4f7be58b000ae7c291b614"
+      },
+      "fonts/Noto Sans/OFL.txt": {
+        "bytes": 4489,
+        "role": "font-resource",
+        "sha256": "be2f3f8727ac2e18b714ad1c4336d4ddb3f3adbeb9a7f70bfab74d21f4d2b3fb"
+      },
+      "fonts/Noto Serif/NotoSerif-Bold.ttf": {
+        "bytes": 506864,
+        "role": "font-resource",
+        "sha256": "1b941681106aae26ead3a24c6f15b51f994b1b26adce8742a37ce96648f0fe0a"
+      },
+      "fonts/Noto Serif/NotoSerif-BoldItalic.ttf": {
+        "bytes": 534540,
+        "role": "font-resource",
+        "sha256": "2400339667ad2701320aa671e337d1632731e56b397564afe14e981124b899c6"
+      },
+      "fonts/Noto Serif/NotoSerif-Italic.ttf": {
+        "bytes": 534156,
+        "role": "font-resource",
+        "sha256": "15d5f8050fc1f142545e7a26a50bd07a0434eca535d4d98aad9d5e8f03741e43"
+      },
+      "fonts/Noto Serif/NotoSerif-Regular.ttf": {
+        "bytes": 504932,
+        "role": "font-resource",
+        "sha256": "a7e8ea1ab7e7d368b001c892d6148325fffc849a46e030e55e1bdc597bbe939d"
+      },
+      "fonts/Noto Serif/OFL.txt": {
+        "bytes": 4489,
+        "role": "font-resource",
+        "sha256": "be2f3f8727ac2e18b714ad1c4336d4ddb3f3adbeb9a7f70bfab74d21f4d2b3fb"
+      }
+    },
+    "sha256": "2b6dce3efb468f3cd728b50707e0c9552d84e225b65e2b27e683d3d726bc6cef",
+    "source_recipe_revision": "3f9edae04fb548eb3d6acc7eb8ca1a63ef5d5c72"
+  },
+  "source_revision": "7032d7bdfc0ada3e5dec5aafa757a534ab91abe8",
+  "store_abi": 2,
+  "store_bytes": 5308416,
+  "store_file_count": 107,
+  "successor_version": "0.1.122",
+  "target": "esp32s3-16mb-appdata-iq",
+  "version": "0.1.121"
+}

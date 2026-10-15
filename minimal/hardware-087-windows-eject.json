@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "product_version": "0.1.87",
+  "firmware_sha256": "e8ae3b0ea3941fb1a3257ff55d45819e6ac1423620de699f382b677bc5c3c18f",
+  "evidence_type": "user report relayed by parent",
+  "date": "2026-10-11",
+  "passed_behavior": "Windows safely ejecting the USB drive ends the X4 transfer workflow correctly",
+  "throughput_report_kilobytes_per_second": 300,
+  "throughput_direction": "not confirmed",
+  "throughput_status": "optimization item",
+  "scope_limit": "Does not qualify arbitrary disconnect, reset, power-loss or all USB workflows. No hardware operated by this task."
+}

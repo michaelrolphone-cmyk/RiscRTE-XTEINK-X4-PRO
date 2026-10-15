@@ -16,6 +16,18 @@
 #include <RiscDiagnosticSourceV1.h>
 #include "X4NativeBuildIdentity.h"
 
+// These zero-initialized copies are first used at wrapped app_main, after the
+// native SDK has mapped/zeroed PSRAM BSS. They are never panic/ISR/cache-off
+// state. Keep RTC evidence, boot admission and persistence controls internal.
+#if RISC_NATIVE_ESP_IDF && CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY
+#if !CONFIG_SPIRAM_BOOT_INIT
+#error "Native X4 bootlog copies require SDK PSRAM boot initialization"
+#endif
+#define X4_NATIVE_TASK_BSS EXT_RAM_BSS_ATTR
+#else
+#define X4_NATIVE_TASK_BSS
+#endif
+
 extern "C" const char risc_x4_native_composition_identity[] = X4_NATIVE_COMPOSITION_IDENTITY;
 #if RISC_NATIVE_ESP_IDF
 extern "C" const char risc_x4_native_source_identity[] = X4_NATIVE_SOURCE_IDENTITY;
@@ -44,8 +56,8 @@ constexpr const char* Namespace="x4_bootlog";
 constexpr const char* Internal=X4_BOOTLOG_INTERNAL_ROOT "/x4-boot.log";
 constexpr const char* Previous=X4_BOOTLOG_INTERNAL_ROOT "/x4-boot.previous.log";
 constexpr size_t MaxLogBytes=128*1024;
-Session history[SlotCount]{};
-Session current{};
+X4_NATIVE_TASK_BSS Session history[SlotCount]{};
+X4_NATIVE_TASK_BSS Session current{};
 nvs_handle_t handle{};
 bool available=false,initialized=false,pending=false,insideDrain=false;
 bool fileReady=false,historyExported=false,fileUncertain=false;
@@ -146,7 +158,7 @@ constexpr size_t PersistBatchBytes=4096;
 constexpr uint64_t PersistIntervalUs=2000000;
 unsigned terminalDetails=0;
 struct EarlyEvent { uint64_t us; const char* operation; int result; };
-EarlyEvent earlyEvents[10]{};unsigned earlyCount=0;
+X4_NATIVE_TASK_BSS EarlyEvent earlyEvents[10]{};unsigned earlyCount=0;
 void early(const char* operation,int result) {
   if(earlyCount<10)earlyEvents[earlyCount++]={uint64_t(esp_timer_get_time()),operation,result};
 }
@@ -326,7 +338,7 @@ const char* startupError = "x4-app-main-not-entered";
 bool attempted = false, variant = false, reported = false, previousValid = false;
 constexpr gpio_num_t peripheralRail = GPIO_NUM_1;
 X4Boot::Record& retained = risc_x4_boot_record;
-X4Boot::Record previous;
+X4_NATIVE_TASK_BSS X4Boot::Record previous;
 
 void prepareRail() {
   // GPIO1 is the documented peripheral/touch enable. A CPU self-latch has not

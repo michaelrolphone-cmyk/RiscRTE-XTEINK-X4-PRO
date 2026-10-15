@@ -73,5 +73,5 @@ set(x4_generated "${CMAKE_BINARY_DIR}/x4-native-idf61")
 file(MAKE_DIRECTORY "${x4_generated}")
 file(WRITE "${x4_generated}/selection.txt" "${x4_selection}composition_sha256=${x4_composition}\n")
 file(WRITE "${x4_generated}/X4NativeBuildIdentity.h"
-    "#pragma once\n#define X4_NATIVE_COMPOSITION_IDENTITY \"X4_NATIVE_COMPOSITION:${x4_composition}\"\n#define X4_NATIVE_SOURCE_IDENTITY \"X4_SOURCE=${x4_source} X4_VERSION=0.1.121-idf61-candidate X4_BASELINE=3ac013bd21815bf18e42466b656dbc333665bf6b X4_NATIVE_BASELINE=f734d91780cdb4f1ba36fe82dcbd8fa28f25bb2b\"\n")
+    "#pragma once\n#define X4_NATIVE_COMPOSITION_IDENTITY \"X4_NATIVE_COMPOSITION:${x4_composition}\"\n#define X4_NATIVE_SOURCE_IDENTITY \"X4_SOURCE=${x4_source} X4_VERSION=0.1.122-idf61-candidate X4_BASELINE=3ac013bd21815bf18e42466b656dbc333665bf6b X4_NATIVE_BASELINE=f734d91780cdb4f1ba36fe82dcbd8fa28f25bb2b\"\n")
 set(RISC_NATIVE_INCLUDE_DIRECTORIES "${x4_generated}")

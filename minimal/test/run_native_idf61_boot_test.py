@@ -9,7 +9,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 RUNTIME = Path(os.environ['RISCRTE_RUNTIME_ROOT'])
 FILES = {
-    'esp_attr.h': '#define RTC_NOINIT_ATTR\n',
+    'esp_attr.h': '#define RTC_NOINIT_ATTR\n#define EXT_RAM_BSS_ATTR __attribute__((section(".ext_ram.bss.test")))\n',
     'esp_heap_caps.h': '#include <cstdlib>\n#define MALLOC_CAP_SPIRAM 1\n#define MALLOC_CAP_8BIT 2\n#define MALLOC_CAP_INTERNAL 4\ninline void* heap_caps_malloc(size_t n,unsigned){return std::malloc(n);}\n',
     'nvs.h': '''#pragma once
 #include <cstdint>
@@ -44,7 +44,8 @@ with tempfile.TemporaryDirectory() as name:
         target.write_text(content)
     binary = work / 'native-boot-test'
     args = [os.environ.get('CXX', 'c++'), '-std=c++17', '-Wall', '-Wextra', '-Werror',
-            '-Wno-unused-parameter', '-DRISC_NATIVE_ESP_IDF=1', '-I' + str(work),
+            '-Wno-unused-parameter', '-DRISC_NATIVE_ESP_IDF=1',
+            '-DCONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY=1', '-DCONFIG_SPIRAM_BOOT_INIT=1', '-I' + str(work),
             '-I' + str(ROOT / 'minimal/test/early_native_fake'), '-I' + str(RUNTIME / 'sdk/driver'),
             str(ROOT / 'minimal/test/native_idf61_boot_test.cpp'), '-o', str(binary)]
     if os.environ.get('SANITIZE') == '1':
