@@ -1,0 +1,56 @@
+{
+  "candidate_artifacts": {
+    "X4-0.1.121-Complete-SD-Keep-Existing.zip": {
+      "bytes": 10844318,
+      "sha256": "2b6dce3efb468f3cd728b50707e0c9552d84e225b65e2b27e683d3d726bc6cef"
+    },
+    "bootloader.bin": {
+      "bytes": 22640,
+      "sha256": "2b23ebd26fcc4c62a256a6e873bc10adc93cd7ed6c07b6160cd302a534519a5b"
+    },
+    "factory-candidate-erases-data-0x0.bin": {
+      "bytes": 16777216,
+      "sha256": "bc7e913dff34a4a82b455f3eddac910d45e7201a4ded19d372b2a8fd54a30d10"
+    },
+    "firmware.bin": {
+      "bytes": 1751440,
+      "sha256": "4a9faa252f7b87cdacdc3e350352734d682dae9a4bebe30c3502d1adb9e194dd"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+    },
+    "store.bin": {
+      "bytes": 5308416,
+      "sha256": "12c405252575b2dd709caffc1295d9c0b1904e90870941c01ab82500c5fb45bd"
+    }
+  },
+  "candidate_version": "0.1.122",
+  "evidence_asset": "Runtime-0.4.0-X4-0.1.122-Native-IDF61-Evidence.zip",
+  "evidence_sha256": "7d2fc8059ff54fb08a65d66cbcd7ff53e709d8ccea3b34117a5286bb12c71e25",
+  "finalized": true,
+  "product": "x4",
+  "publication_enabled": true,
+  "qualification_sha256": "fb54874040a028eddff10afd30c23a7b6d6b549f151a8098904f24fd181a20bd",
+  "release_branch": "work/native-idf-6.1",
+  "release_tag": "test-native-idf61-0.1.122",
+  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+  "runtime_artifact_id": 12003420515,
+  "runtime_manifest_sha256": "ddf5e3be350658b53bffa023fd3fbc9771c11fce25065f9bf6021ab5ca015d29",
+  "runtime_release_revision": "659d859acb122640ef4003bb8d7099501d4381be",
+  "runtime_repository": "michaelrolphone-cmyk/RiscRTE",
+  "runtime_revision": "659d859acb122640ef4003bb8d7099501d4381be",
+  "runtime_run_attempt": 1,
+  "runtime_run_id": 38797200408,
+  "runtime_tag": "firmware-v0.4.0",
+  "schema": 1,
+  "sources": {
+    "drivers": "5890721073ebabd781d5d278e447c761947a5c58",
+    "image_helper": "74f7491dc470b92dfa41fce41bf0c500f3714a94",
+    "product": "a9009a5d774ae7060b9f298fdcbc81be6c22cc17",
+    "runtime": "659d859acb122640ef4003bb8d7099501d4381be",
+    "sdk": "fff9895c82d744c7237be8847347bdd1b07c6643",
+    "system": "755cc5174a6deaee120d108cbffe67ae809e1e6f"
+  },
+  "version": "0.1.122"
+}

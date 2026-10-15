@@ -1,0 +1,32 @@
+{
+  "candidate_artifacts": {},
+  "candidate_version": "0.1.122",
+  "disabled_reason": "Awaiting successful final controlled CI and Runtime release hashes.",
+  "evidence_asset": "Runtime-0.4.0-X4-0.1.122-Native-IDF61-Evidence.zip",
+  "evidence_sha256": null,
+  "finalized": false,
+  "product": "x4",
+  "publication_enabled": false,
+  "qualification_sha256": null,
+  "release_branch": "work/native-idf-6.1",
+  "release_tag": "test-native-idf61-0.1.122",
+  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+  "runtime_artifact_id": null,
+  "runtime_manifest_sha256": null,
+  "runtime_release_revision": null,
+  "runtime_repository": "michaelrolphone-cmyk/RiscRTE",
+  "runtime_revision": null,
+  "runtime_run_attempt": null,
+  "runtime_run_id": null,
+  "runtime_tag": "firmware-v0.4.0",
+  "schema": 1,
+  "sources": {
+    "drivers": null,
+    "image_helper": "74f7491dc470b92dfa41fce41bf0c500f3714a94",
+    "product": "a9009a5d774ae7060b9f298fdcbc81be6c22cc17",
+    "runtime": null,
+    "sdk": "fff9895c82d744c7237be8847347bdd1b07c6643",
+    "system": null
+  },
+  "version": "0.1.122"
+}
