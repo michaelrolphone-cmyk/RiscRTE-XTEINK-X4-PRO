@@ -46,6 +46,50 @@ class NativeCandidateContracts(unittest.TestCase):
         self.assertTrue(callable(module.admit_sd))
         self.assertIn('rows == 24', __import__('inspect').getsource(module.admit_product))
 
+    def test_x4_retains_file_open_without_enabling_scratch_file_source(self):
+        recipe.reject_unselected_file_source(BEFORE)
+        self.assertIn('file.open', set(recipe.capabilities(json.loads(BEFORE['boot.json']))))
+        self.assertEqual(recipe.x4_backend_selection({}, []), {'file_source_enabled': False})
+        for symbols, labels in (({'risc_file_source_abi': 1}, []), ({}, ['RiscFileSource::backend()'])):
+            with self.subTest(symbols=symbols, labels=labels), self.assertRaisesRegex(ValueError, 'Unselected X4'):
+                recipe.x4_backend_selection(symbols, labels)
+        for value in ({'requires': [{'capability': 'file.open.source'}]},
+                      {'app_capabilities': [{'grants': [{'capability': 'file.open.source'}]}]}):
+            with self.assertRaisesRegex(ValueError, 'Unselected file-source'):
+                recipe.reject_unselected_file_source({'manifest.json': json.dumps(value).encode()})
+        from native_idf61_qualification import admit_product
+        for proof in ({}, {'file_source_enabled': True}):
+            with self.assertRaisesRegex(ValueError, 'final native file-source selection'):
+                admit_product(SOURCES, Path('/unused.elf'), BEFORE, BEFORE, proof)
+        self.assertNotIn('risc_file_source_abi', recipe.BOUNDARY_SYMBOLS)
+        self.assertIn('risc_tcp_listener_abi', recipe.BOUNDARY_SYMBOLS)
+        self.assertIn('risc_entropy_abi', recipe.BOUNDARY_SYMBOLS)
+
+    def test_every_selected_backend_marker_must_be_allocated_and_exact(self):
+        import check_runtime_store_admission as admission
+        with mock.patch.object(admission, 'native_symbol_bytes', return_value=b'\x01\0\0\0'):
+            recipe.verify_selected_backend_markers(b'controlled-elf')
+        for missing in recipe.BOUNDARY_SYMBOLS:
+            def marker(raw, name):
+                if name == missing:
+                    raise ValueError('Missing or ambiguous native row marker: ' + name)
+                return b'\x01\0\0\0'
+            with self.subTest(missing=missing), mock.patch.object(admission, 'native_symbol_bytes', side_effect=marker), self.assertRaisesRegex(ValueError, 'Missing or ambiguous'):
+                recipe.verify_selected_backend_markers(b'controlled-elf')
+            with self.subTest(mutated=missing), mock.patch.object(admission, 'native_symbol_bytes', return_value=b'\x02\0\0\0'), self.assertRaisesRegex(ValueError, 'Native public backend missing'):
+                recipe.verify_selected_backend_markers(b'controlled-elf')
+
+    def test_released_installed_settings_fixture_keeps_counted_journals(self):
+        from native_idf61_qualification import x4_fixture, SD_ELF_TIMEOUT_SECONDS
+        self.assertEqual(SD_ELF_TIMEOUT_SECONDS, 300)
+        self.assertIs(json.loads(BEFORE['boot.json'])['installation']['settings_sd'], True)
+        source = x4_fixture((SOURCES['image_helper'] / 'tests/runtime_store_admission.cpp').read_text(), ROOT, SOURCES['sdk'])
+        for name in ('journalRead', 'journalWrite', 'legacyNamespace'):
+            line = next(line for line in source.splitlines() if 'kv.' + name + '=' in line)
+            self.assertIn('++storageCalls', line)
+            self.assertIn('return RISC_KEY_VALUE_IO', line)
+        self.assertNotIn('#define STORE_ADMISSION_FILE_SOURCE', source)
+
     def test_effective_profile_overrides_rejected(self):
         from native_idf61_provenance import compiler_definitions
         expected = {'RISC_PROVIDER_CAPACITY': '40', 'RISC_INSTALLED_APP_CAPACITY': '64'}

@@ -11,6 +11,9 @@ import re
 import shutil
 import subprocess
 import tempfile
+import time
+
+SD_ELF_TIMEOUT_SECONDS = 300
 
 
 def require(condition, message):
@@ -46,6 +49,13 @@ bool bind(RiscBoot::Runtime& runtime) {
  h.sdmmcOpen=[](uint8_t,uint8_t,uint8_t,uint32_t,risc_sdmmc_card_info_v1*){++hardwareCalls;return false;};
  h.sdmmcRead=[](uint64_t,uint32_t,void*){++hardwareCalls;return false;};h.sdmmcWrite=[](uint64_t,uint32_t,const void*){++hardwareCalls;return false;};h.sdmmcSync=[](){++hardwareCalls;return false;};h.sdmmcClose=[](){++hardwareCalls;return false;};
 ''')
+    source = replace_once(source, 'const RiscBoot::KeyValueBackend kv{', 'RiscBoot::KeyValueBackend kv{')
+    source = replace_once(source, '  RiscCpu::Port port(hardware());', """  // Released X4 installation.settings_sd requires the existing journal API.
+  // Presence only: every I/O callback is counted and must remain uncalled.
+  kv.journalRead=[](void*,uint32_t,void*,uint32_t,uint32_t*)->int32_t{++storageCalls;return RISC_KEY_VALUE_IO;};
+  kv.journalWrite=[](void*,uint32_t,const void*,uint32_t)->int32_t{++storageCalls;return RISC_KEY_VALUE_IO;};
+  kv.legacyNamespace=[](void*,uint32_t,bool*)->int32_t{++storageCalls;return RISC_KEY_VALUE_IO;};
+  RiscCpu::Port port(hardware());""")
     return source
 
 
@@ -56,13 +66,14 @@ def admit_product(sources, native, before, after, native_proof, sanitized=False)
     contract = json.loads((product / 'docs/native-idf61/released-baseline.json').read_bytes())
     old_root, old_composition, old_header = admission.ROOT, admission.native_composition, verify.cohort_admission_header
     old_run, old_sanitize = subprocess.run, os.environ.get('SANITIZE')
+    require(native_proof.get('file_source_enabled') is False, 'X4 host admission requires the final native file-source selection')
     commands = []
     def composition(selected_runtime, elf, profile, rows):
         require(Path(selected_runtime) == runtime and elf == native and rows == 24 and
                 Path(profile) == product / 'profiles/native-idf61.cmake', 'Wrong native host composition')
         return dict(bounds={'RISC_INSTALLED_APP_CAPACITY': 64, 'RISC_PROVIDER_CAPACITY': 40,
                             'RISC_APP_POLICY_ROWS': 24, 'RISC_APP_REQUIREMENT_ROWS': 24},
-                    store_abi=2, file_source_enabled=True, runtime_commit=run_head(runtime),
+                    store_abi=2, file_source_enabled=False, runtime_commit=run_head(runtime),
                     native_layout=native_proof['native_layout'], product_profile_sha256=sha(Path(profile).read_bytes()))
     def header(*args, **kwargs):
         generated = old_header(*args, **kwargs)
@@ -248,15 +259,17 @@ def admit_sd(sources, native, files, contract, sanitized=False):
             image = root / 'candidate.elf'
             image.write_bytes(data)
             environment = {**os.environ, 'ASAN_OPTIONS': os.environ.get('ASAN_OPTIONS', 'detect_leaks=0')}
+            started = time.monotonic()
             subprocess.run([str(root / 'strict'), 'app' if role == 'application' else 'driver', str(image), *sorted(symbols)],
-                           check=True, timeout=60, capture_output=True, env=environment)
+                           check=True, timeout=SD_ELF_TIMEOUT_SECONDS, capture_output=True, env=environment)
             require(image.read_bytes() == data, 'SD admission changed payload')
-            results.append(dict(path=name, sha256=sha(data), role=role, imports=sorted(symbols),
+            results.append(dict(path=name, sha256=sha(data), elapsed_seconds=round(time.monotonic()-started, 6), role=role, imports=sorted(symbols),
                                 compiled_public_exports={key: hex(exports[key]) for key in sorted(symbols)},
                                 strict_admission=True, wrong_role_rejected=True, unsafe_operation_rejected=True,
                                 each_missing_import_rejected=True))
     require(len(results) == contract['sd']['elf_count'] == 49, 'Incomplete released SD admission')
     return dict(elf_count=len(results), native_elf_sha256=sha(native), sanitized=sanitized,
+                per_elf_timeout_seconds=SD_ELF_TIMEOUT_SECONDS,
                 production_header_sha256=sha(header.encode()), strict_fixture_sha256=sha(fixture),
                 results=results, device_msc_provider_retained=True, target_instructions_executed=False,
                 hardware_tested=False)

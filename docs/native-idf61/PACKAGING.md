@@ -144,7 +144,7 @@ python3 minimal/test/run_native_idf61_boot_test.py
 SANITIZE=1 python3 minimal/test/run_native_idf61_boot_test.py
 ```
 
-The source checkpoint passed 24 packaging tests and 12 shared provenance tests,
+The source checkpoint passed 27 packaging tests and 14 shared provenance tests,
 including the 496-case model,
 the exact profile/settings/partition checks, and all 72 GPIO1/readiness cases
 normally and under ASan/UBSan. Final native linked proof and new-native-bound
@@ -191,3 +191,11 @@ proofs with 96 bytes of DRAM margin, then correctly stopped before qualification
 on an SDK-generated Ninja phony alias. The producer now records and expands
 proven aliases without exempting real linker inputs. This diagnostic link is
 not a fully qualified candidate; controlled CI must be rerun on the new sources.
+
+The selected-backend correction is documented in [BACKEND-SELECTION.md](BACKEND-SELECTION.md).
+The controlled producer also pins the official GCC15 generic and ESP32-S3 GCC/C++
+wrappers plus the S3 dynamic configuration library. It checks their exact version,
+target and multilib identity before building; qualification checks every expanded
+compile command against those pinned paths. Generic drivers require an explicit
+S3 configuration; the official S3 wrappers may not override theirs. Compiler
+cache, child-tool, configuration and ambient Xtensa overrides are rejected.

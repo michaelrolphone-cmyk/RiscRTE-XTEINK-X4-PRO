@@ -20,13 +20,13 @@ import sys
 import tempfile
 import zipfile
 import native_idf61_build as controlled_build
-from native_idf61_provenance import effective_sdkconfig, compiler_definitions, local_module, expand_response_files
+from native_idf61_provenance import effective_sdkconfig, compiler_definitions, local_module, expand_response_files, compiler_family, compiler_command
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / 'docs/native-idf61/released-baseline.json'
 SDK_REVISION = 'fff9895c82d744c7237be8847347bdd1b07c6643'
 REQUIRED_ROLES = {'product', 'runtime', 'system', 'drivers', 'sdk', 'image_helper'}
-BOUNDARY_SYMBOLS = ('risc_tcp_listener_abi', 'risc_entropy_abi', 'risc_file_source_abi', 'risc_sdmmc_host_abi')
+BOUNDARY_SYMBOLS = ('risc_tcp_listener_abi', 'risc_entropy_abi', 'risc_sdmmc_host_abi')
 ARTIFACT_KEYS = {'firmware_bin', 'firmware_elf', 'firmware_map', 'bootloader', 'partitions',
                  'sdkconfig', 'compile_commands', 'project_description', 'flasher_args',
                  'bootloader_elf', 'bootloader_compile_commands', 'bootloader_sdkconfig', 'x4_selection',
@@ -115,6 +115,40 @@ def setup_modules(sources):
     return importlib.import_module('prepare_preserving_update'), importlib.import_module('read_only_spiffs')
 
 
+def capabilities(value):
+    if isinstance(value, dict):
+        if 'capability' in value:
+            yield value['capability']
+        for item in value.values():
+            yield from capabilities(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from capabilities(item)
+
+
+def reject_unselected_file_source(files):
+    # file.open is the released SD-volume workflow. file.open.source is a
+    # separate opt-in scratch backend and is not selected for this product.
+    for name, raw in files.items():
+        if name.endswith('.json'):
+            require('file.open.source' not in capabilities(json.loads(raw)),
+                    'Unselected file-source capability in released X4 payload: ' + name)
+
+
+def verify_selected_backend_markers(elf_bytes):
+    import check_runtime_store_admission as admission
+    for name in BOUNDARY_SYMBOLS:
+        require(admission.native_symbol_bytes(elf_bytes, name) == b'\x01\0\0\0',
+                'Native public backend missing: ' + name)
+
+
+def x4_backend_selection(symbols, labels):
+    require('risc_file_source_abi' not in symbols and
+            not any(label.startswith('RiscFileSource::') for label in labels),
+            'Unselected X4 native file-source backend linked')
+    return dict(file_source_enabled=False)
+
+
 def baseline_bytes(path, contract, sources):
     update, spiffs = setup_modules(sources)
     image = path.read_bytes()
@@ -128,6 +162,7 @@ def baseline_bytes(path, contract, sources):
     require(actual == contract['files'], 'Released payload inventory differs')
     require(json.loads(store['cohort.json'])['source_revision'] == contract['source_revision'], 'Released source differs')
     reject_private(store, sources['runtime'])
+    reject_unselected_file_source(store)
     return image, native, store
 
 
@@ -153,6 +188,7 @@ def released_sd_bytes(raw, contract, runtime):
             require(len(data) == row['bytes'] and sha(data) == row['sha256'], 'Released SD payload differs: ' + name)
             files[name] = data
     reject_private(files, runtime)
+    reject_unselected_file_source(files)
     require(sum(name.endswith('.elf') for name in files) == sd['elf_count'], 'Incomplete SD ELF inventory')
     require(any(name.startswith('Drivers/usb-device-msc-esp32s3/') and name.endswith('.elf') for name in files), 'Device-MSC SD provider missing')
     return files
@@ -231,6 +267,7 @@ def freeze(sources, build, compiler, output, candidate_version):
     lock = dict(schema=1, publication_enabled=False, candidate_version=candidate_version,
                 baseline_contract_sha256=sha(CONTRACT.read_bytes()), sources=pins, native_files=files,
                 compiler=dict(version=version, sha256=sha(compiler.read_bytes())),
+                compiler_family=compiler_family(compiler),
                 status='frozen-inputs-only-not-qualified')
     output.write_bytes(encoded(lock))
     return lock
@@ -284,6 +321,7 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
     demangler = compiler.with_name('xtensa-esp-elf-c++filt')
     labels = run(demangler, input=('\n'.join(symbols) + '\n').encode()).decode().splitlines()
     require(not arduino_runtime_symbols(labels), 'Arduino runtime symbol linked')
+    backend_selection = x4_backend_selection(symbols, labels)
     for wanted, prefix in {'RuntimeStreams::(anonymous namespace)::registry': '.dram',
                            'vPortEvaluateYieldFromISR': '.iram', 'risc_elf_clock_gettime32': '.flash.text'}.items():
         matches = [symbol for name, symbol in zip(labels, symbols.values()) if name == wanted]
@@ -304,11 +342,13 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
         require(set(re.findall(rb'RTE_SOURCE=([^\x00\s]+)', blobs[key])) == {lock['sources']['runtime']['revision'].encode()}, 'Ambiguous Runtime identity')
     for name, prefix in (('risc_app_policy_rows', 'RISC_APP_POLICY_ROWS'), ('risc_app_requirement_rows', 'RISC_APP_REQUIREMENT_ROWS')):
         require(admission.native_symbol_bytes(blobs['firmware_elf'], name) == (prefix + ':24\0').encode(), 'Native policy bounds changed')
-    for name in BOUNDARY_SYMBOLS:
-        require(admission.native_symbol_bytes(blobs['firmware_elf'], name) == b'\x01\0\0\0', 'Native public backend missing: ' + name)
+    verify_selected_backend_markers(blobs['firmware_elf'])
     require(('risc_native_settings_admission' in symbols) == (contract['product'] == 'x4'), 'Product settings backend selection changed')
     require(('risc_usb_phy_resource_enabled' in symbols) == (contract['product'] == 'x4'), 'USB PHY selection changed')
     require(admission.native_symbol_bytes(blobs['firmware_elf'], 'risc_installed_app_capacity') == (64).to_bytes(4, 'little'), 'Native installed-app capacity differs')
+    family = compiler_family(compiler)
+    require(lock.get('compiler_family') == family and family['gcc']['sha256'] == lock['compiler']['sha256'],
+            'Compiler family differs from frozen lock')
     compile_rows = json.loads(blobs['compile_commands']) + json.loads(blobs['bootloader_compile_commands'])
     require(compile_rows, 'Empty native compilation database')
     source_files = {}
@@ -340,11 +380,10 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
             source_files['generated/' + source.relative_to(build.resolve()).as_posix()] = sha(source.read_bytes())
         command = row.get('command') or shlex.join(row['arguments'])
         arguments = expand_response_files(shlex.split(command), build, row['directory'], blobs, lock['native_files'])
-        actual_compiler = Path(arguments[1] if Path(arguments[0]).name == 'ccache' else arguments[0]).resolve()
-        require(actual_compiler.parent == compiler.resolve().parent and actual_compiler.name in
-                ('xtensa-esp-elf-gcc', 'xtensa-esp-elf-g++'), 'Compilation did not use the pinned native compiler family')
+        compiler_command(arguments, compiler, family)
         if source.is_relative_to(sources['runtime'] / 'src'):
-            compiler_definitions(arguments, definitions)
+            defined = compiler_definitions(arguments, definitions)
+            require(defined.get('RISC_NATIVE_FILE_SOURCE', '0') == '0', 'Unselected X4 native file-source backend compiled')
             runtime_rows.append(command)
     overlays = [Path(row['file']).resolve() for row in compile_rows if Path(row['file']).name == 'X4EarlyBoot.cpp']
     require(len(overlays) == 1 and overlays[0] == (ROOT / 'minimal/native/X4EarlyBoot.cpp').resolve(), 'Exact committed X4 startup overlay must be compiled')
@@ -364,7 +403,7 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
     bootlog = memory.proof(blobs['firmware_elf'])
     require(bootlog['input_kind'] == 'final-elf' and bootlog['copied_bytes_external'] == 4528,
             'Final native bootlog placement proof required')
-    return blobs, dict(x4_startup=startup, x4_bootlog_memory=bootlog, effective_config=effective_config, app_descriptor=desc, native_layout=verify_native_store_abi(blobs['firmware_elf'], 2),
+    return blobs, dict(**backend_selection, x4_startup=startup, x4_bootlog_memory=bootlog, effective_config=effective_config, app_descriptor=desc, native_layout=verify_native_store_abi(blobs['firmware_elf'], 2),
                        radio_iq=prove(blobs['firmware_elf'], contract['target']),
                        public_export_count=len(public_exports(elf)), source_files=source_files,
                        arduino_core_linked=False, ordinary_app_payloads_rebuilt=False,

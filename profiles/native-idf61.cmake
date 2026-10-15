@@ -28,6 +28,7 @@ set(RISC_NATIVE_COMPILE_OPTIONS -fstack-usage
 set(RISC_NATIVE_LINK_OPTIONS
     "-Wl,-u,risc_paired_store_abi" "-Wl,-u,risc_runtime_update_version"
     "-Wl,-u,risc_sdmmc_host_abi" "-Wl,-u,risc_installed_app_capacity"
+    "-Wl,-u,risc_tcp_listener_abi" "-Wl,-u,risc_entropy_abi"
     "-Wl,--wrap=esp_panic_handler" "-Wl,-u,risc_native_failure_evidence_abi"
     "-Wl,-u,risc_x4_native_composition_identity"
     "-Wl,-u,risc_x4_native_source_identity" "-Wl,-u,risc_x4_native_ready"

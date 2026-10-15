@@ -33,6 +33,9 @@ file(WRITE "${CMAKE_BINARY_DIR}/profile.txt" "target=${RISC_NATIVE_TARGET}\\npar
     assert set(release['composition_link_flags']) <= links
     assert {flag for flag in release['flags'] if flag.startswith('-Wl,-u,')} <= links
     assert '-Wl,-u,risc_x4_native_ready' in links
+    assert {'-Wl,-u,risc_tcp_listener_abi', '-Wl,-u,risc_entropy_abi'} <= links
+    assert not any('risc_file_source_abi' in link for link in links)
+    assert not any(flag.startswith('RISC_NATIVE_FILE_SOURCE=') for flag in expected)
     assert '-fstack-usage' in profile['compile'].split(';')
     assert profile['sources'] == str(ROOT / 'minimal/native/X4EarlyBoot.cpp')
     partitions = Path(profile['partitions']).read_bytes()
