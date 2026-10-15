@@ -1,0 +1,33 @@
+X4 firmware 0.1.121 complete SD package
+
+Back up the SD card first. Extract X4-0.1.121-Complete-SD-Keep-Existing.zip,
+then copy its Apps, Drivers and fonts folders into the root of the existing
+SD card. Merge folders and replace matching package files. Do not erase,
+format, replace the whole card, or delete files absent from this archive.
+
+The archive supplies all 18 external apps, 31 external driver images,
+18 matching application manifests and 10 bundled font/license files.
+It includes the exact paths selected by firmware 0.1.121. It is suitable
+for filling the firmware-required software on an otherwise empty card too.
+Books, ROMs and other personal content are not included.
+
+Existing books, ROMs, saves, settings, installed additional apps and other
+user files are preserved only if the files are merged as described above.
+The archive contains no settings, credentials, AppData or reset actions.
+Safely eject the card/USB transfer after the copy completes, then restart
+the X4 if the applications are not immediately available.
+
+This is an SD-file package only. It does not flash firmware or update an
+older firmware installation. Do not flash the factory image to install
+these SD files: the separately published factory image erases internal data.
+The firmware version remains 0.1.121. Earlier changed-file overlays alone
+are not a complete card package.
+
+SHA256SUMS-complete-sd.txt verifies the download and sidecar files.
+X4-0.1.121-Complete-SD-Manifest.json lists every card path, size and SHA-256.
+The archive contains no new executable bytes: all app/driver/font binaries
+come from the pinned delivered packages or exact .121 internal fallbacks.
+All application manifests are copied byte-for-byte from the .121 boot store.
+
+Software/hash and production ELF-admission checks are recorded separately.
+No device was flashed and no physical card/app smoke test was performed.

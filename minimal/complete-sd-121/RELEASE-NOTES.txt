@@ -1,0 +1,7 @@
+Crash reports are saved durably and can be exported to SD. When the eight-report
+queue is full, older reports are preserved and new native evidence stays
+unacknowledged.
+
+Adds a complete matching SD software package containing all external apps,
+drivers, app manifests and bundled fonts required by X4 0.1.121. This supplies
+the older packages absent from the cumulative changed-file overlay.

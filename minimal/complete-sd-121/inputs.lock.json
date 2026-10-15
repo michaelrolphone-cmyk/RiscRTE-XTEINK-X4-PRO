@@ -1,0 +1,123 @@
+{
+  "schema": "riscrte.x4.complete-sd-inputs",
+  "schema_version": 1,
+  "firmware_version": "0.1.121",
+  "firmware_source": "3ac013bd21815bf18e42466b656dbc333665bf6b",
+  "firmware_release_tag": "test-t064-crash-0.1.121",
+  "runtime_source": "a91edf3fada6a559ec107186dd163d0c8da10d29",
+  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+  "repository_id": 1408146704,
+  "inputs": {
+    "base87": {
+      "file": "X4-0.1.87-SD-OVERLAY-KEEP-EXISTING.zip",
+      "bytes": 5334469,
+      "sha256": "0d5564302d6c37949633938a160da6aa9fc15e43049fa3ca77a702774bc5f7de",
+      "release_tag": "firmware-v0.1.87-test.1",
+      "url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/firmware-v0.1.87-test.1/X4-0.1.87-SD-OVERLAY-KEEP-EXISTING.zip"
+    },
+    "overlay120": {
+      "file": "X4-0.1.120-Cumulative-Changed-SD-Keep-Existing.zip",
+      "bytes": 1031644,
+      "sha256": "eda159ac74e9b01b0cc28b633486b3bbffe68365cfcc7b13b2d06783786d8958",
+      "release_tag": "test-t060-gameboy-0.1.120",
+      "url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-t060-gameboy-0.1.120/X4-0.1.120-Cumulative-Changed-SD-Keep-Existing.zip"
+    },
+    "firmware121": {
+      "file": "X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin",
+      "bytes": 16777216,
+      "sha256": "48145adc023a334885207100ce29596edef3f02c07a6d830ca53e3ab1fbf5993",
+      "release_tag": "test-t064-crash-0.1.121",
+      "url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-t064-crash-0.1.121/X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin"
+    },
+    "recovered103": {
+      "file": "recovered-103-apps.zip",
+      "bytes": 1480456,
+      "sha256": "5987996465066ec0e2b23044e117762e87366c15a121b0e8203ac27ed14dcefb",
+      "original_archive": "X4-0.1.103-Settings-Combined-Changed-SD.zip",
+      "original_archive_sha256": "9a9eb58b683ee65f0b64cbf249c9d69c1e7a96ccfe72eebd5cd52cc1241ef530",
+      "source": "Five byte-identical application ELFs recovered from previously delivered 0.1.103 SD package; selected by boot hash and original 0.1.111 app inventory."
+    }
+  },
+  "apps": {
+    "ble_scanner": {
+      "sha256": "2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c",
+      "size": 162860
+    },
+    "points_in_time": {
+      "sha256": "cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d",
+      "size": 264532
+    },
+    "calculator": {
+      "sha256": "b18e7746b475ef4fb965b4aeb84ee1d56d52ccf608f7c708adf02a2566fbd2d3",
+      "size": 138876
+    },
+    "stopwatch": {
+      "sha256": "38815777c30764737436e806922f80632353c58c4248ea8dfc59b3dc4c4b75aa",
+      "size": 142268
+    },
+    "countdown": {
+      "sha256": "3bcc882c7e85c5c45dc54f45fb02fe4f51d972d759e2c13b83c2d07ad58f7e84",
+      "size": 146368
+    },
+    "ble_touchpad": {
+      "sha256": "4138f2364aca210d02a81dc7427c1665fa1ba89af1c76650b39e851b704550ec",
+      "size": 155212
+    },
+    "ble_buttons": {
+      "sha256": "2f0e6e69182b9a71a35471a35093ff69b2b26955c87032132650ed7d4895d1fd",
+      "size": 159340,
+      "identity_source": "official-0.1.120-cumulative-SD"
+    },
+    "waterfall": {
+      "sha256": "f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1",
+      "size": 284800
+    },
+    "gameboy": {
+      "sha256": "e802dda3a9756a578441e35fdea3a3801bb852875f1a194f0b2318cc65426453",
+      "size": 171360,
+      "identity_source": "official-0.1.120-cumulative-SD"
+    },
+    "model_viewer": {
+      "sha256": "24b73fff728355ab88e5b34f9eae1caeb9442bbbc36240bd6bc8c29f0708fed0",
+      "size": 39284
+    },
+    "hollow_trail": {
+      "sha256": "465d71581bb7655b9e2ec5de5c94b09a8fb3375f916c148497b15b431bdbfdbb",
+      "size": 449580
+    },
+    "ebook-reader": {
+      "sha256": "395eb0ad04b1c86b26f713b2c82e7d3f2a7a26dd802778bf4d355a5b55b351b2",
+      "size": 1918724
+    },
+    "daily-digest": {
+      "sha256": "72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa",
+      "size": 27656
+    },
+    "timecard": {
+      "sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53",
+      "size": 175412
+    },
+    "contexts": {
+      "sha256": "60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9",
+      "size": 96896
+    },
+    "lists": {
+      "sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c",
+      "size": 41524
+    },
+    "obd-dashboard": {
+      "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c",
+      "size": 77504
+    },
+    "obd-test": {
+      "sha256": "9acdf0593b4b3131f4341dbece0e2b178412df16c94abf17bc4657bfd852ec0e",
+      "size": 81280,
+      "identity_source": "official-0.1.120-cumulative-SD"
+    }
+  },
+  "expected_output": {
+    "file": "X4-0.1.121-Complete-SD-Keep-Existing.zip",
+    "bytes": 10844318,
+    "sha256": "2b6dce3efb468f3cd728b50707e0c9552d84e225b65e2b27e683d3d726bc6cef"
+  }
+}

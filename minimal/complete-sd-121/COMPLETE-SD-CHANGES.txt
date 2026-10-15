@@ -1,0 +1,5 @@
+Adds the complete SD software package for X4 0.1.121.
+
+Includes every external app and driver selected by the firmware, plus the
+bundled fonts and matching app manifests. This fills the older packages
+that were missing when only the cumulative changed-file overlay was used.

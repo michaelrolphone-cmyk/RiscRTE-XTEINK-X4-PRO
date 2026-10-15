@@ -1,0 +1,19 @@
+Original firmware qualification and installation record follows. The complete SD
+package added on 2026-10-15 supersedes the partial cumulative .120 overlay for
+fresh or incomplete cards. See COMPLETE-SD-INSTRUCTIONS.txt for SD installation.
+Firmware binaries and their existing release assets are unchanged.
+
+Cumulative X4 0.1.121 T064 durable crash reports, based on exact 0.1.120.
+
+Preserve all eight queued reports when storage is full; never evict an older report to acknowledge a new one.
+
+Existing native firmware, partition layout and every non-Home application are byte-preserved. X4 keeps the existing cumulative .120 SD package, including GameBoy and OBDTest; no T064 SD replacement is needed.
+
+Reports are saved in the internal AppData spool `/appdata/n0000003e/crash-spool.bin`. This path is not automatically exposed through USB. A qualified filesystem readback/extraction is required for internal retrieval; use the included `extract_crash_spool.py` on the recovered spool. SD export writes verified copies to `/CrashReports/` and retries when media returns, including after USB export ends.
+
+The queue holds eight reports. A full queue preserves existing entries and leaves new native evidence unacknowledged. The report is acknowledged only after every page was presented and its exact text was durably saved. This does not promise unlimited history or survival of RTC evidence across loss of power before durable capture.
+
+Normal and ASan/UBSan spool, archive, session, renderer and actual paginated Home tests passed. RGB pixel/native-height regressions passed across 362 golden frames. Full source-bound Runtime admission passed for 43 X4, 62 Waveshare and 59 T-Watch ELFs, with exact-baseline preserving-update fault tests. X4 target CI reproduced the deployed baseline and two identical candidate builds. No device was flashed or hardware-tested.
+
+Use the matching preserving kit for an installed device. The factory BIN overwrites saved data. Evidence and checksums are attached.
+

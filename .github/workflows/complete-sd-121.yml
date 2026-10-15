@@ -1,0 +1,112 @@
+name: X4 0.1.121 complete SD package
+on:
+  push:
+    branches: [release/x4-121-complete-sd]
+    paths:
+      - minimal/complete-sd-121/**
+      - .github/workflows/complete-sd-121.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: x4-121-complete-sd
+  cancel-in-progress: false
+env:
+  PRODUCT_REPOSITORY: michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO
+  RELEASE_TAG: test-t064-crash-0.1.121
+  PYTHONDONTWRITEBYTECODE: '1'
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      checksums: ${{ steps.digest.outputs.sha256 }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: a91edf3fada6a559ec107186dd163d0c8da10d29
+          path: .source/runtime
+          persist-credentials: false
+      - name: Download exact official release inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir inputs
+          gh release download firmware-v0.1.87-test.1 --repo "$PRODUCT_REPOSITORY" --pattern X4-0.1.87-SD-OVERLAY-KEEP-EXISTING.zip --dir inputs
+          gh release download test-t060-gameboy-0.1.120 --repo "$PRODUCT_REPOSITORY" --pattern X4-0.1.120-Cumulative-Changed-SD-Keep-Existing.zip --dir inputs
+          gh release download "$RELEASE_TAG" --repo "$PRODUCT_REPOSITORY" --pattern X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin --dir inputs
+      - name: Test closure, input rejection and no-user-data merge
+        run: |
+          python3 minimal/complete-sd-121/test_complete_sd.py \
+            --base87 inputs/X4-0.1.87-SD-OVERLAY-KEEP-EXISTING.zip \
+            --overlay120 inputs/X4-0.1.120-Cumulative-Changed-SD-Keep-Existing.zip \
+            --firmware121 inputs/X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin \
+            --runtime .source/runtime
+      - name: Assemble complete card twice and admit every ELF
+        run: |
+          set -euo pipefail
+          for out in dist/first dist/repeat; do
+            python3 minimal/complete-sd-121/build_complete_sd.py \
+              --base87 inputs/X4-0.1.87-SD-OVERLAY-KEEP-EXISTING.zip \
+              --overlay120 inputs/X4-0.1.120-Cumulative-Changed-SD-Keep-Existing.zip \
+              --firmware121 inputs/X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin \
+              --runtime .source/runtime --output "$out" --source-revision "$GITHUB_SHA"
+          done
+          diff -r dist/first dist/repeat
+          python3 minimal/complete-sd-121/verify_complete_sd.py \
+            --runtime .source/runtime \
+            --firmware inputs/X4-0.1.121-T064-Crash-Reports-factory-erases-data-0x0.bin \
+            --output dist/first
+          (cd dist/first && sha256sum --check --strict SHA256SUMS-complete-sd.txt)
+      - name: Bind publication to verified assets
+        id: digest
+        run: echo "sha256=$(sha256sum dist/first/SHA256SUMS-complete-sd.txt | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-complete-sd-${{ github.sha }}
+          path: dist/first/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+  publish:
+    needs: package
+    if: github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/release/x4-121-complete-sd'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: x4-complete-sd-${{ github.sha }}
+          path: assets
+      - name: Verify assets and add to the existing firmware release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_CHECKSUMS: ${{ needs.package.outputs.checksums }}
+        run: |
+          set -euo pipefail
+          cd assets
+          echo "$EXPECTED_CHECKSUMS  SHA256SUMS-complete-sd.txt" | sha256sum --check --strict
+          sha256sum --check --strict SHA256SUMS-complete-sd.txt
+          test "$(gh api "repos/$PRODUCT_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq .object.sha)" = 3ac013bd21815bf18e42466b656dbc333665bf6b
+          gh release view "$RELEASE_TAG" --repo "$PRODUCT_REPOSITORY" --json assets --jq '.assets[].name' > ../existing-assets.txt
+          mkdir ../readback
+          for file in *; do
+            if grep -Fqx "$file" ../existing-assets.txt; then
+              gh release download "$RELEASE_TAG" --repo "$PRODUCT_REPOSITORY" --pattern "$file" --dir ../readback
+              cmp "$file" "../readback/$file"
+            else
+              gh release upload "$RELEASE_TAG" "$file" --repo "$PRODUCT_REPOSITORY"
+              gh release download "$RELEASE_TAG" --repo "$PRODUCT_REPOSITORY" --pattern "$file" --dir ../readback
+              cmp "$file" "../readback/$file"
+            fi
+          done
+          gh release edit "$RELEASE_TAG" --repo "$PRODUCT_REPOSITORY" --notes-file RELEASE-NOTES.txt
+          (cd ../readback && sha256sum --check --strict SHA256SUMS-complete-sd.txt)
