@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "qualification_enabled": false,
+  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+  "source_revision": "93ee386b7e23628f3776edc6cfd2805cf675d649",
+  "source_tree": "014a47e12262db66137223c901dab337b0c2a0ad",
+  "original_root": "/__w/_temp/x4-provision-123-93ee386b7e23628f3776edc6cfd2805cf675d649",
+  "run": {
+    "id": 38971323967,
+    "attempt": 1,
+    "job_id": 117210123637,
+    "workflow_id": 387116635,
+    "workflow": ".github/workflows/native-provision-123.yml",
+    "workflow_sha256": "ce06a3a2af4cf9e93d1bf7eb5f8a3497a04663ae6fae2340add07c10d1eb9f24",
+    "repository_id": 1408146704,
+    "event": "pull_request",
+    "pull_request": 45,
+    "head_branch": "work/x4-bootstrap-0.1.123",
+    "conclusion": "failure"
+  },
+  "artifact": {
+    "id": 12077257848,
+    "name": "x4-native-provision-123-reproducibility-93ee386b7e23628f3776edc6cfd2805cf675d649",
+    "bytes": 782287221,
+    "sha256": "7cf8f88057a6a83d00e05861f3b24f6d481bcce7e4c0f1eba1613b19024098d7"
+  }
+}

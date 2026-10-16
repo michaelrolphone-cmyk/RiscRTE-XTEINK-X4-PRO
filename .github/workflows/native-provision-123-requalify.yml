@@ -1,0 +1,200 @@
+name: X4 0.1.123 archived-byte qualification
+on:
+  push:
+    branches: [work/x4-qualification-recovery-123]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Export bounded inputs or qualify the unchanged archived bytes
+        type: choice
+        options: [extract, qualify]
+        default: extract
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: x4-archived-qualification-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  requalify:
+    if: github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    container: espressif/idf:v6.1@sha256:81893c71bb5e570088901f21def8684c25cd2a9020281bd01b843a7655edb18c
+    env:
+      QUALIFIER_SHA: ${{ github.sha }}
+      REQUESTED_MODE: ${{ inputs.mode }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      CCACHE_DISABLE: '1'
+      IDF_CCACHE_ENABLE: '0'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Clone exact separate qualification source
+        run: |
+          set -euo pipefail
+          apt-get update
+          apt-get install -y --no-install-recommends git ca-certificates g++ libssl-dev
+          export RECOVERY_ROOT="$RUNNER_TEMP/x4-requalify-$QUALIFIER_SHA"
+          test ! -e "$RECOVERY_ROOT"
+          mkdir -p "$RECOVERY_ROOT"/{logs,metadata}
+          echo "RECOVERY_ROOT=$RECOVERY_ROOT" >> "$GITHUB_ENV"
+          git init --quiet "$RECOVERY_ROOT/qualifier"
+          git -C "$RECOVERY_ROOT/qualifier" remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
+          git -C "$RECOVERY_ROOT/qualifier" fetch --no-tags --depth=1 origin "$QUALIFIER_SHA"
+          git -C "$RECOVERY_ROOT/qualifier" checkout --quiet --detach FETCH_HEAD
+          test "$(git -C "$RECOVERY_ROOT/qualifier" rev-parse HEAD)" = "$QUALIFIER_SHA"
+          python - <<'PY'
+          import os,sys
+          from pathlib import Path
+          root=Path(os.environ['RECOVERY_ROOT'])
+          sys.path.insert(0,str(root/'qualifier/scripts'))
+          import native_provision_archive as archive
+          c=archive.contract()
+          mode=os.environ.get('REQUESTED_MODE') or ('qualify' if c['qualification_enabled'] else 'extract')
+          archive.require(mode in ('extract','qualify') and (mode=='extract' or c['qualification_enabled']),
+                          'Full requalification is not enabled in the reviewed source')
+          with open(os.environ['GITHUB_ENV'],'a') as out:
+              print('RECOVERY_MODE='+mode,file=out)
+              print('ORIGINAL_ROOT='+c['original_root'],file=out)
+          PY
+          cp "$RECOVERY_ROOT/qualifier/.github/workflows/native-provision-123-requalify.yml" "$RECOVERY_ROOT/metadata/workflow.yml"
+          git -C "$RECOVERY_ROOT/qualifier" show -s --format='%H %T' > "$RECOVERY_ROOT/metadata/qualifier-identity.txt"
+          git -C "$RECOVERY_ROOT/qualifier" status --porcelain=v1 --untracked-files=all > "$RECOVERY_ROOT/metadata/qualifier-status.txt"
+          git -C "$RECOVERY_ROOT/qualifier" archive --format=tar HEAD | gzip -1 > "$RECOVERY_ROOT/metadata/qualifier-source.tar.gz"
+      - name: Archive recovery guard tests
+        run: |
+          set -euo pipefail
+          python "$RECOVERY_ROOT/qualifier/tests/test_native_provision_archive.py" 2>&1 | tee "$RECOVERY_ROOT/logs/archive-tests.log"
+      - name: Verify exact producer attempt and download original ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python "$RECOVERY_ROOT/qualifier/scripts/native_provision_archive.py" fetch \
+            --output "$RECOVERY_ROOT/evidence" 2>&1 | tee "$RECOVERY_ROOT/logs/archive-download.log"
+      - name: Export bounded original admission inputs
+        run: |
+          set -euo pipefail
+          python "$RECOVERY_ROOT/qualifier/scripts/native_provision_archive.py" extract \
+            --archive "$RECOVERY_ROOT/evidence/reproducibility-evidence.zip" \
+            --metadata-dir "$RECOVERY_ROOT/evidence" --small --output "$RECOVERY_ROOT/admission-inputs" \
+            2>&1 | tee "$RECOVERY_ROOT/logs/archive-small.log"
+      - name: Upload bounded original admission inputs
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-native-provision-123-admission-inputs-${{ env.QUALIFIER_SHA }}
+          path: |
+            ${{ env.RECOVERY_ROOT }}/admission-inputs/
+            ${{ env.RECOVERY_ROOT }}/evidence/*.json
+            ${{ env.RECOVERY_ROOT }}/evidence/workflow.yml
+            ${{ env.RECOVERY_ROOT }}/metadata/
+            ${{ env.RECOVERY_ROOT }}/logs/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
+      - name: Restore unchanged producer archive at original paths
+        if: env.RECOVERY_MODE == 'qualify'
+        run: |
+          set -euo pipefail
+          python "$RECOVERY_ROOT/qualifier/scripts/native_provision_archive.py" extract \
+            --archive "$RECOVERY_ROOT/evidence/reproducibility-evidence.zip" \
+            --metadata-dir "$RECOVERY_ROOT/evidence" --output "$ORIGINAL_ROOT" \
+            2>&1 | tee "$RECOVERY_ROOT/logs/archive-restore.log"
+      - name: Restore exact source and compiler custody without building
+        if: env.RECOVERY_MODE == 'qualify'
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          test "$IDF_PATH" = /opt/esp/idf
+          test "$(git -C "$IDF_PATH" rev-parse HEAD)" = fff9895c82d744c7237be8847347bdd1b07c6643
+          python -m pip install platformio==6.1.19 pyelftools==0.32 Pillow==11.3.0
+          test "$HOME" = /github/home
+          pio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'
+          python - <<'PY'
+          import json,os,re,subprocess
+          from pathlib import Path
+          root=Path(os.environ['ORIGINAL_ROOT'])
+          lock=json.loads((root/'build/native-build-evidence/source-lock.json').read_bytes())
+          qualifier=Path(os.environ['RECOVERY_ROOT'])/'qualifier'
+          inputs=json.loads((qualifier/'docs/native-provision-123/source-inputs.json').read_bytes())
+          repos={role:row['repository'] for role,row in inputs['sources'].items()}
+          repos['product']=os.environ['GITHUB_REPOSITORY']
+          assert set(lock['sources'])==set(repos)|{'sdk'}
+          for role,repo in sorted(repos.items()):
+              assert re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo)
+              revision=lock['sources'][role]['revision']
+              assert re.fullmatch(r'[0-9a-f]{40}',revision)
+              path=root/'sources'/role
+              assert not path.exists()
+              subprocess.run(['git','init','--quiet',str(path)],check=True)
+              subprocess.run(['git','-C',str(path),'remote','add','origin','https://github.com/'+repo+'.git'],check=True)
+              subprocess.run(['git','-C',str(path),'fetch','--no-tags','--depth=1','origin',revision],check=True)
+              subprocess.run(['git','-C',str(path),'checkout','--quiet','--detach','FETCH_HEAD'],check=True)
+              assert subprocess.check_output(['git','-C',str(path),'rev-parse','HEAD'],text=True).strip()==revision
+              assert subprocess.check_output(['git','-C',str(path),'rev-parse','HEAD^{tree}'],text=True).strip()==lock['sources'][role]['tree']
+              subprocess.run(['git','-C',str(path),'submodule','update','--init','--recursive','--depth=1'],check=True)
+          subprocess.run(['git','-C',str(qualifier),'fetch','--no-tags','--depth=1','origin',
+                          lock['sources']['product']['revision']],check=True)
+          subprocess.run(['git','-C',str(qualifier),'fetch','--no-tags','--depth=1','origin',
+                          'c9ecac4058ead7a82b0f74560ac5b19f0b858b3f'],check=True)
+          PY
+      - name: Qualification-only host regression gates
+        if: env.RECOVERY_MODE == 'qualify'
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          cd "$RECOVERY_ROOT/qualifier"
+          export RISCRTE_RUNTIME_ROOT="$ORIGINAL_ROOT/sources/runtime"
+          {
+            python tests/test_native_provision_requalify.py
+            python tests/test_native_provision_candidate.py --runtime "$ORIGINAL_ROOT/sources/runtime" \
+              --image-helper "$ORIGINAL_ROOT/sources/image_helper" --baseline "$ORIGINAL_ROOT/inputs/baseline.bin"
+            python tests/test_native_idf61_provenance.py
+          } 2>&1 | tee "$RECOVERY_ROOT/logs/requalification-controls.log"
+      - name: Qualify exact archived native and package bytes without rebuilding
+        if: env.RECOVERY_MODE == 'qualify'
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          cd "$RECOVERY_ROOT/qualifier"
+          python scripts/native_provision_requalify.py \
+            --archive "$RECOVERY_ROOT/evidence/reproducibility-evidence.zip" \
+            --metadata-dir "$RECOVERY_ROOT/evidence" --restored-root "$ORIGINAL_ROOT" \
+            --output "$RECOVERY_ROOT/candidate" 2>&1 | tee "$RECOVERY_ROOT/logs/requalification.log"
+      - name: Upload recovered candidate delivery assets
+        if: env.RECOVERY_MODE == 'qualify'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-native-provision-123-candidate-${{ env.QUALIFIER_SHA }}
+          path: ${{ env.RECOVERY_ROOT }}/candidate/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
+      - name: Upload bounded recovery qualification and source evidence
+        if: env.RECOVERY_MODE == 'qualify'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-native-provision-123-qualification-${{ env.QUALIFIER_SHA }}
+          path: |
+            ${{ env.RECOVERY_ROOT }}/candidate/qualification.json
+            ${{ env.RECOVERY_ROOT }}/candidate/source-lock.json
+            ${{ env.RECOVERY_ROOT }}/candidate/SHA256SUMS
+            ${{ env.RECOVERY_ROOT }}/candidate/serial-product-*.json
+            ${{ env.RECOVERY_ROOT }}/candidate/feed/*.json
+            ${{ env.RECOVERY_ROOT }}/candidate/archive-recovery.json
+            ${{ env.RECOVERY_ROOT }}/candidate/archive-contract.json
+            ${{ env.RECOVERY_ROOT }}/candidate/original-build-closure.json
+            ${{ env.RECOVERY_ROOT }}/candidate/original-package-build-receipt.json
+            ${{ env.RECOVERY_ROOT }}/evidence/*.json
+            ${{ env.RECOVERY_ROOT }}/evidence/workflow.yml
+            ${{ env.RECOVERY_ROOT }}/metadata/
+            ${{ env.RECOVERY_ROOT }}/logs/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
