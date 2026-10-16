@@ -581,8 +581,16 @@ def verify_remote(api, release, files, c, *, draft):
             name = safe_name(row['name'], flat=True)
             expected = ({k: c['artifacts']['reproducibility'][k] for k in ('bytes', 'sha256')}
                         if name == REPRODUCIBILITY else record(files[name]))
+            urls = {BASE + name}
+            if draft:
+                # GitHub drafts may expose an untagged alias. It is metadata
+                # only: draft bytes still come from the authenticated asset ID.
+                prefix = 'https://github.com/' + REPOSITORY + '/releases/tag/'
+                html = release.get('html_url', '')
+                if html.startswith(prefix) and re.fullmatch(r'untagged-[0-9a-f]+', html[len(prefix):]):
+                    urls.add(prefix.replace('/tag/', '/download/') + html[len(prefix):] + '/' + name)
             require(row['state'] == 'uploaded' and row['size'] == expected['bytes'] and
-                    row.get('browser_download_url') == BASE + name, 'Remote asset size/URL differs')
+                    positive(row['id']) and row.get('browser_download_url') in urls, 'Remote asset size/URL differs')
             if row.get('digest') is not None:
                 require(row['digest'] == 'sha256:' + expected['sha256'], 'Remote asset digest differs')
             path = Path(temporary) / name

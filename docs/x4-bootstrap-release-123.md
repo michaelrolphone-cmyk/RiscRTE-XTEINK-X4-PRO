@@ -86,3 +86,25 @@ installation.
 Run `PYTHONDONTWRITEBYTECODE=1 python3 tests/test_x4_bootstrap_publication.py`.
 The tests use synthetic bytes and a fake API, never firmware builds, GitHub
 mutations or hardware. Existing .122 recipes and provenance are untouched.
+
+## Exact existing-draft recovery
+
+A deliberately reviewed `release/x4-bootstrap-123/resume.json` selects the
+separate resume job and disables new staging and ordinary publication. It binds
+the original failed publisher commit/tree, workflow hash, run/attempt and three
+job IDs, both original staging artifacts, exact existing release ID/tag/commit,
+and all asset IDs, names, sizes and SHA-256 values. The transport contract and
+existing assets remain byte-identical to the original publication attempt.
+
+GitHub draft asset metadata can use an `untagged-<hex>` URL. That exact
+repository-local alias is accepted only as draft metadata; authenticated asset
+IDs supply the bytes. Public URLs must use the reserved final tag.
+
+Resume downloads and hashes the original full staging ZIP, streams its exact
+flat asset set to a new directory with size/type/digest bounds, and rechecks the
+ZIP hash. The embedded original reproducibility ZIP stays opaque. It verifies
+all existing draft bytes and repeats the asset-ID checks before its sole write:
+a PATCH of the pinned release ID from draft to public prerelease. There is no
+asset upload, replacement, deletion, new tag or new release operation. It then
+checks every final public URL and byte without credentials and checks asset IDs
+again. Already-public, changed or incomplete targets fail closed.

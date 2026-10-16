@@ -7,6 +7,8 @@ on:
       - '.github/workflows/x4-bootstrap-release-123.yml'
       - 'scripts/publish_x4_bootstrap.py'
       - 'scripts/x4_bootstrap_recovery_provenance.py'
+      - 'scripts/resume_x4_bootstrap.py'
+      - 'tests/test_x4_bootstrap_resume.py'
       - 'tests/test_x4_bootstrap_recovery_publication.py'
       - 'tests/test_x4_bootstrap_publication.py'
       - 'release/x4-bootstrap-123/**'
@@ -15,6 +17,8 @@ on:
       - '.github/workflows/x4-bootstrap-release-123.yml'
       - 'scripts/publish_x4_bootstrap.py'
       - 'scripts/x4_bootstrap_recovery_provenance.py'
+      - 'scripts/resume_x4_bootstrap.py'
+      - 'tests/test_x4_bootstrap_resume.py'
       - 'tests/test_x4_bootstrap_recovery_publication.py'
       - 'tests/test_x4_bootstrap_publication.py'
       - 'release/x4-bootstrap-123/**'
@@ -37,6 +41,7 @@ jobs:
     outputs:
       finalized: ${{ steps.pins.outputs.finalized }}
       publication_enabled: ${{ steps.pins.outputs.publication_enabled }}
+      resume_enabled: ${{ steps.pins.outputs.resume_enabled }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -44,6 +49,7 @@ jobs:
           persist-credentials: false
       - run: python3 tests/test_x4_bootstrap_publication.py
       - run: python3 tests/test_x4_bootstrap_recovery_publication.py
+      - run: python3 tests/test_x4_bootstrap_resume.py
       - id: pins
         run: |
           python3 - <<'PY'
@@ -57,13 +63,23 @@ jobs:
               p.final_contract(c)
           else:
               p.require(c['publication_enabled'] is False and bool(c.get('disabled_reason')), 'Incomplete contract must be disabled')
+          resume_path = Path('release/x4-bootstrap-123/resume.json')
+          resume_enabled = False
+          if resume_path.exists():
+              import resume_x4_bootstrap as resume
+              r = p.decode(resume_path.read_bytes())
+              p.require(type(r.get('enabled')) is bool, 'Explicit resume gate required')
+              if r['enabled']:
+                  resume.validate_contract(r, c)
+                  resume_enabled = True
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              print('resume_enabled=' + str(resume_enabled).lower(), file=out)
               print('finalized=' + str(c['finalized']).lower(), file=out)
               print('publication_enabled=' + str(c['publication_enabled']).lower(), file=out)
           PY
   stage:
     needs: guards
-    if: needs.guards.outputs.finalized == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
+    if: needs.guards.outputs.resume_enabled != 'true' && needs.guards.outputs.finalized == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     outputs:
@@ -102,7 +118,7 @@ jobs:
           retention-days: 30
   publish:
     needs: [guards, stage]
-    if: needs.guards.outputs.publication_enabled == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
+    if: needs.guards.outputs.resume_enabled != 'true' && needs.guards.outputs.publication_enabled == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
@@ -125,3 +141,23 @@ jobs:
           set -euo pipefail
           python3 scripts/publish_x4_bootstrap.py publish --contract "$CONTRACT" --publisher-sha "$GITHUB_SHA" \
             --output release-assets --checksum-sha "$CHECKSUM_SHA"
+  resume:
+    needs: guards
+    if: needs.guards.outputs.resume_enabled == 'true' && needs.guards.outputs.publication_enabled == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify exact existing draft bytes, promote pinned release ID and verify public bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 scripts/resume_x4_bootstrap.py --contract "$CONTRACT" --publisher-sha "$GITHUB_SHA" \
+            --resume release/x4-bootstrap-123/resume.json --output original-release-assets
