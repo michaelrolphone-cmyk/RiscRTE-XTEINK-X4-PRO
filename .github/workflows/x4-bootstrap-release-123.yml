@@ -6,12 +6,16 @@ on:
     paths:
       - '.github/workflows/x4-bootstrap-release-123.yml'
       - 'scripts/publish_x4_bootstrap.py'
+      - 'scripts/x4_bootstrap_recovery_provenance.py'
+      - 'tests/test_x4_bootstrap_recovery_publication.py'
       - 'tests/test_x4_bootstrap_publication.py'
       - 'release/x4-bootstrap-123/**'
   pull_request:
     paths:
       - '.github/workflows/x4-bootstrap-release-123.yml'
       - 'scripts/publish_x4_bootstrap.py'
+      - 'scripts/x4_bootstrap_recovery_provenance.py'
+      - 'tests/test_x4_bootstrap_recovery_publication.py'
       - 'tests/test_x4_bootstrap_publication.py'
       - 'release/x4-bootstrap-123/**'
 permissions:
@@ -39,6 +43,7 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
       - run: python3 tests/test_x4_bootstrap_publication.py
+      - run: python3 tests/test_x4_bootstrap_recovery_publication.py
       - id: pins
         run: |
           python3 - <<'PY'
@@ -69,7 +74,7 @@ jobs:
           ref: ${{ github.sha }}
           persist-credentials: false
       - id: transport
-        name: Verify official successful source run and exact split artifact bytes
+        name: Verify exact producer and qualification runs and unchanged artifact bytes
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

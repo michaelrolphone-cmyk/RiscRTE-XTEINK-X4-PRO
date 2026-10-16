@@ -22,6 +22,7 @@ import time
 import urllib.parse
 import urllib.request
 import zipfile
+import x4_bootstrap_recovery_provenance as recovery
 
 REPOSITORY = 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO'
 VERSION = '0.1.123'
@@ -137,7 +138,8 @@ def final_contract(c, publish=False):
     for role, row in c['artifacts'].items():
         require(set(row) == {'id', 'name', 'bytes', 'sha256'} and positive(row['id']) and
                 positive(row['bytes']) and hex_value(row['sha256']) and
-                row['name'] == 'x4-native-provision-123-' + role + '-' + c['source_revision'] and
+                row['name'] == 'x4-native-provision-123-' + role + '-' + (c['qualification_recovery']['source_revision']
+                    if 'qualification_recovery' in c and role != 'reproducibility' else c['source_revision']) and
                 row['bytes'] <= (MAX_EVIDENCE if role == 'reproducibility' else MAX_ARCHIVE), 'Invalid artifact pin')
     require(len({row['id'] for row in c['artifacts'].values()}) == 3, 'Duplicate artifact IDs')
     for key in ('qualification_sha256', 'baseline_sha256', 'source_inputs_sha256', 'candidate_checksums_sha256'):
@@ -149,10 +151,14 @@ def final_contract(c, publish=False):
             all(valid_record(row) for row in c['feed_files'].values()), 'Missing exact feed inventory')
     for name in c['feed_files']:
         safe_name(name)
+    if 'qualification_recovery' in c:
+        recovery.contract(c, MAX_ARCHIVE)
     return c
 
 
 def verify_ci(c, run, jobs, artifacts, commit, workflow):
+    if 'qualification_recovery' in c:
+        return recovery.verify_original(c, run, jobs, artifacts, commit, workflow, STEPS)
     expected = c['run']
     require(run['id'] == expected['id'] and run['run_attempt'] == expected['attempt'] and
             run['workflow_id'] == expected['workflow_id'] and run['path'] == WORKFLOW and
@@ -319,6 +325,8 @@ def verify_candidate(c, files, evidence, baseline, source_inputs):
         require(evidence['source-evidence/' + role + '-identity.txt'].decode().strip() ==
                 row['revision'] + ' ' + row['tree'] and not evidence['source-evidence/' + role + '-status.txt'].strip(),
                 'Unclean or mismatched archived source: ' + role)
+    if 'qualification_recovery' in c:
+        recovery.verify_candidate(c, files, evidence, q, lock, decode)
     closure = q['build_closure']
     require(closure['sources'] == lock['sources'] and closure['fresh_build'] is True and
             closure['same_process_qualification'] is True and closure['compile_jobs'] == 1 and
@@ -354,6 +362,8 @@ def verify_candidate(c, files, evidence, baseline, source_inputs):
             q['unchanged_store_payloads'] == 101, 'Native/payload preservation qualification missing')
     required = NATIVE | {'qualification.json', 'source-lock.json', 'SHA256SUMS',
                          'serial-product-normal.json', 'serial-product-sanitized.json'}
+    if 'qualification_recovery' in c:
+        required |= recovery.EXTRA_FILES
     require({name for name in files if not name.startswith(('feed/', 'store/'))} == required,
             'Unexpected candidate delivery output')
     store = {name[6:]: raw for name, raw in files.items() if name.startswith('store/')}
@@ -446,8 +456,11 @@ def official_inputs(api, c):
     commit = api.json(prefix + '/commits/' + c['source_revision'])
     workflow = source_file(api, c['source_revision'], WORKFLOW)
     verify_ci(c, run, jobs, artifacts, commit, workflow)
-    return {'ci-run.json': encoded(run), 'ci-jobs.json': encoded(jobs),
-            'ci-artifacts.json': encoded(artifacts), 'source-commit.json': encoded(commit)}
+    result = {'ci-run.json': encoded(run), 'ci-jobs.json': encoded(jobs),
+              'ci-artifacts.json': encoded(artifacts), 'source-commit.json': encoded(commit)}
+    if 'qualification_recovery' in c:
+        result.update(recovery.official_inputs(api, c, source_file, encoded))
+    return result
 
 
 def verify_output(output, checksum_sha, publisher_sha):
@@ -468,6 +481,8 @@ def verify_output(output, checksum_sha, publisher_sha):
             record(files[REPRODUCIBILITY]) == {k: c['artifacts']['reproducibility'][k] for k in ('bytes', 'sha256')} and
             release['assets'] ==
             {k: record(v) for k, v in files.items() if k not in ('release.json', 'SHA256SUMS')}, 'Output custody differs')
+    require(release.get('qualification_recovery') == c.get('qualification_recovery'),
+            'Staged recovery identity differs')
     require(b'erases internal saved settings and data' in files['RELEASE-NOTES.txt'], 'Factory erasure warning missing')
     return c, files
 
@@ -497,6 +512,9 @@ def stage(contract_path, publisher_sha, output, api=None):
         assets.update(feed)
         assets.update({name: files[name] for name in ('qualification.json', 'source-lock.json',
                                                      'serial-product-normal.json', 'serial-product-sanitized.json')})
+        if 'qualification_recovery' in c:
+            recovery.verify_source_delta(files, metadata, decode)
+            assets.update({name: files[name] for name in recovery.EXTRA_FILES})
         assets.update(metadata)
         assets.update({'candidate-evidence.zip': archives['candidate'], 'qualification-evidence.zip': archives['qualification'],
                        'transport-contract.json': contract_bytes, 'feed-receipt.json': files['feed/receipt.json']})
@@ -522,9 +540,15 @@ def stage(contract_path, publisher_sha, output, api=None):
         "The original candidate, qualification and complete reproducibility ZIPs are copied byte-for-byte.\n"
         "A later paired firmware/full-payload release requires confirmed installation of this bootstrap.\n\n"
         "Feed: " + BASE + "native-packages-v1.json\n").encode()
+    if 'qualification_recovery' in c:
+        assets['RELEASE-NOTES.txt'] += ("\nThe native producer completed compilation but its original preserving-transition qualification failed.\n"
+            "A separate successful qualification run verifies these unchanged archived native/package bytes.\n"
+            "Factory bootstrap self-admission passed; the unsupported .122-to-.123 preserving transition remains rejected.\n"
+            "Original producer receipts remain unchanged; archive-recovery.json records later-process custody and no rebuild.\n").encode()
     assets['release.json'] = encoded(dict(schema=1, release_tag=TAG, publisher_revision=publisher_sha,
         compiled_product_revision=c['source_revision'], producer_run=c['run'], artifacts=c['artifacts'],
         rebuilt=False, evidence_repacked=False, limits=LIMITS,
+        **({'qualification_recovery': c['qualification_recovery']} if 'qualification_recovery' in c else {}),
         assets={**{k: record(v) for k, v in sorted(assets.items())}, REPRODUCIBILITY: file_record(output / REPRODUCIBILITY)}))
     checksums = {k: sha(v) for k, v in assets.items()}
     checksums[REPRODUCIBILITY] = sha(output / REPRODUCIBILITY)
