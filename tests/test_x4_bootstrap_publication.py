@@ -580,6 +580,20 @@ class PublicationTests(unittest.TestCase):
                 p.publish(contract, PUBLISHER, output, checksum, api)
             self.assertFalse(any(row[0] in ('POST', 'COMMAND') for row in api.calls))
 
+    def test_staging_review_upload_is_exact_and_separate_from_full_evidence(self):
+        text = (ROOT / '.github/workflows/x4-bootstrap-release-123.yml').read_text()
+        stage = text.split('  stage:\n', 1)[1].split('  publish:\n', 1)[0]
+        review = stage.split('      - name: Upload bounded staging-review metadata\n', 1)[1]
+        paths = review.split('          path: |\n', 1)[1].split('          if-no-files-found:', 1)[0]
+        self.assertEqual(paths.split(), ['release-assets/release.json', 'release-assets/SHA256SUMS',
+                                        'release-assets/transport-contract.json', 'release-assets/RELEASE-NOTES.txt'])
+        self.assertIn('name: x4-bootstrap-staging-review-${{ github.sha }}', review)
+        self.assertIn('if-no-files-found: error', review)
+        self.assertIn('actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02', review)
+        self.assertIn('name: x4-bootstrap-publication-${{ github.sha }}', stage)
+        self.assertIn('path: release-assets/*', stage)
+        self.assertNotIn('staging-review', text.split('  publish:\n', 1)[1])
+
     def test_workflow_has_no_native_build_and_separate_write_gate(self):
         text = (ROOT / '.github/workflows/x4-bootstrap-release-123.yml').read_text()
         self.assertIn('contents: write', text)

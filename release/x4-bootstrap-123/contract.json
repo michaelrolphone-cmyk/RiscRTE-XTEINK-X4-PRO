@@ -1,32 +1,321 @@
 {
-  "schema": 1,
-  "finalized": false,
-  "publication_enabled": false,
-  "disabled_reason": "Awaiting a successful exact-source native run, independent qualification review, and immutable artifact/source/feed pins. Failed run 38965239367 is not eligible.",
-  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
-  "version": "0.1.123",
-  "release_tag": "test-native-provision-0.1.123",
-  "publication_branch": "work/x4-bootstrap-release-123",
-  "feed_base_url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-native-provision-0.1.123/",
-  "source_revision": null,
-  "source_tree": null,
-  "sources": {},
-  "run": {
-    "id": null,
-    "attempt": null,
-    "workflow_id": null,
-    "job_id": null,
-    "event": null,
-    "pull_request": null,
-    "head_branch": null,
-    "workflow_path": ".github/workflows/native-provision-123.yml",
-    "workflow_sha256": null
+  "artifacts": {
+    "candidate": {
+      "bytes": 18671916,
+      "id": 12079421007,
+      "name": "x4-native-provision-123-candidate-6ff97dac5f119307a0ae63db5d2e11d09ea49516",
+      "sha256": "46abd267dab88865a4245a74f1a4508afc251bb596d657b8ae3b41224fc353fd"
+    },
+    "qualification": {
+      "bytes": 15183321,
+      "id": 12079366310,
+      "name": "x4-native-provision-123-qualification-6ff97dac5f119307a0ae63db5d2e11d09ea49516",
+      "sha256": "8a015219008075e2f07d1a908bb2b7b69fa4adca7f41a997ea7493a5ea609fc3"
+    },
+    "reproducibility": {
+      "bytes": 782287221,
+      "id": 12077257848,
+      "name": "x4-native-provision-123-reproducibility-93ee386b7e23628f3776edc6cfd2805cf675d649",
+      "sha256": "7cf8f88057a6a83d00e05861f3b24f6d481bcce7e4c0f1eba1613b19024098d7"
+    }
   },
-  "artifacts": {},
-  "qualification_sha256": null,
-  "baseline_sha256": null,
-  "source_inputs_sha256": null,
-  "candidate_checksums_sha256": null,
-  "candidate_artifacts": {},
-  "feed_files": {}
+  "baseline_sha256": "604f3526ecd6a90040e63550f5ccf39214f677ed3c95096bb5f44e604cfd647e",
+  "candidate_artifacts": {
+    "X4-0.1.121-Complete-SD-Keep-Existing.zip": {
+      "bytes": 10844318,
+      "sha256": "2b6dce3efb468f3cd728b50707e0c9552d84e225b65e2b27e683d3d726bc6cef"
+    },
+    "bootloader.bin": {
+      "bytes": 22640,
+      "sha256": "198a677a9d0874caa34b8ae32ef03b1f5f4f251eee6977a93a909cf64d66c67e"
+    },
+    "factory-candidate-erases-data-0x0.bin": {
+      "bytes": 16777216,
+      "sha256": "85d197fb4ea6f1bdf2f02705b701c7e6667362a20cb856672c46b49fd51265b0"
+    },
+    "firmware.bin": {
+      "bytes": 1804976,
+      "sha256": "cf8e376ebf1f92142d2ff8bdf8bbabfea2579cd8598548202b64728065da4a13"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "475bd8da863027242a38a6401d45ee2251084037e92b19631f6468ad5ae5efc9"
+    },
+    "store.bin": {
+      "bytes": 5308416,
+      "sha256": "8d38a77bdb3dd1439e8736d9c0363798f20803e02b44fc1aa5dab578207c4adc"
+    }
+  },
+  "candidate_checksums_sha256": "a0edcc87dae727698a594e381991b16c6d39a621e8e169a18ea3b1984b4e41ae",
+  "disabled_reason": "Staging only. Publication awaits exact staged transport verification and independent approval.",
+  "feed_base_url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-native-provision-0.1.123/",
+  "feed_files": {
+    "COMPLETE": {
+      "bytes": 29,
+      "sha256": "c7c3c5fb0cc0b54420586d83142a6667efde2a7b1ded0ff46b9c403348bca26c"
+    },
+    "SHA256SUMS": {
+      "bytes": 4906,
+      "sha256": "a8dec5f0fb63ed3a34437d98c7790f91533cb898f7b71e1e094eaf4689434c0e"
+    },
+    "assets/bootfs-8d38a77bdb3dd1439e8736d9c0363798f20803e02b44fc1aa5dab578207c4adc.bin": {
+      "bytes": 5308416,
+      "sha256": "8d38a77bdb3dd1439e8736d9c0363798f20803e02b44fc1aa5dab578207c4adc"
+    },
+    "assets/image-0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4.elf": {
+      "bytes": 14068,
+      "sha256": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4"
+    },
+    "assets/image-0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d.elf": {
+      "bytes": 5724,
+      "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d"
+    },
+    "assets/image-124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4.elf": {
+      "bytes": 63284,
+      "sha256": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4"
+    },
+    "assets/image-3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4.elf": {
+      "bytes": 34800,
+      "sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4"
+    },
+    "assets/image-448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50.elf": {
+      "bytes": 43692,
+      "sha256": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50"
+    },
+    "assets/image-47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58.elf": {
+      "bytes": 6752,
+      "sha256": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58"
+    },
+    "assets/image-49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4.elf": {
+      "bytes": 9308,
+      "sha256": "49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4"
+    },
+    "assets/image-589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842.elf": {
+      "bytes": 264572,
+      "sha256": "589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842"
+    },
+    "assets/image-6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555.elf": {
+      "bytes": 125480,
+      "sha256": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555"
+    },
+    "assets/image-643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7.elf": {
+      "bytes": 179308,
+      "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7"
+    },
+    "assets/image-747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507.elf": {
+      "bytes": 5212,
+      "sha256": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507"
+    },
+    "assets/image-79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b.elf": {
+      "bytes": 5704,
+      "sha256": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b"
+    },
+    "assets/image-81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341.elf": {
+      "bytes": 2284,
+      "sha256": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341"
+    },
+    "assets/image-8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9.elf": {
+      "bytes": 6120,
+      "sha256": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9"
+    },
+    "assets/image-8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03.elf": {
+      "bytes": 29800,
+      "sha256": "8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03"
+    },
+    "assets/image-86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2.elf": {
+      "bytes": 9824,
+      "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2"
+    },
+    "assets/image-8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9.elf": {
+      "bytes": 7692,
+      "sha256": "8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9"
+    },
+    "assets/image-8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122.elf": {
+      "bytes": 471156,
+      "sha256": "8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122"
+    },
+    "assets/image-937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe.elf": {
+      "bytes": 7172,
+      "sha256": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe"
+    },
+    "assets/image-98a8fb34f5c30a41c7437b2baa2464ed7a6581bfedd823cf7272a9dbb3a88e5d.elf": {
+      "bytes": 179032,
+      "sha256": "98a8fb34f5c30a41c7437b2baa2464ed7a6581bfedd823cf7272a9dbb3a88e5d"
+    },
+    "assets/image-9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461.elf": {
+      "bytes": 34892,
+      "sha256": "9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461"
+    },
+    "assets/image-b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c.elf": {
+      "bytes": 4124,
+      "sha256": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c"
+    },
+    "assets/image-bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1.elf": {
+      "bytes": 5356,
+      "sha256": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1"
+    },
+    "assets/image-c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a.elf": {
+      "bytes": 29676,
+      "sha256": "c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a"
+    },
+    "assets/image-c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b.elf": {
+      "bytes": 5816,
+      "sha256": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b"
+    },
+    "assets/image-cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998.elf": {
+      "bytes": 9820,
+      "sha256": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998"
+    },
+    "assets/image-d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d.elf": {
+      "bytes": 38156,
+      "sha256": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
+    },
+    "assets/image-e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a.elf": {
+      "bytes": 19400,
+      "sha256": "e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a"
+    },
+    "assets/image-f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da.elf": {
+      "bytes": 3048,
+      "sha256": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da"
+    },
+    "assets/image-f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8.elf": {
+      "bytes": 56516,
+      "sha256": "f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8"
+    },
+    "assets/image-fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5.elf": {
+      "bytes": 4320,
+      "sha256": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5"
+    },
+    "native-packages-v1.json": {
+      "bytes": 23515,
+      "sha256": "d140f9eb3fc866259c095e5ee6b8daa33b5f03a85ec831f910f2450afe9acb18"
+    },
+    "receipt.json": {
+      "bytes": 5734,
+      "sha256": "b89b0830500adfe58401bf7473144b2ae4b1df2082006eec57adda523555d113"
+    }
+  },
+  "finalized": true,
+  "publication_branch": "work/x4-bootstrap-release-123",
+  "publication_enabled": false,
+  "qualification_recovery": {
+    "admission_inputs_artifact": {
+      "bytes": 15540571,
+      "id": 12079275948,
+      "name": "x4-native-provision-123-admission-inputs-6ff97dac5f119307a0ae63db5d2e11d09ea49516",
+      "sha256": "f6185ce9155539cd6dc9648fbddcba480052bd2a1abd5fd1472e11925ee3a29d"
+    },
+    "archive_contract_sha256": "b9ccd3711cb3784130c6674674b46c341260958d653921030d6c4713cea6cf8e",
+    "custody_receipt_sha256": "e0e7febf87cfabb18a0023d92b5934f85a6f764d6cb1f79142289804ec4e1845",
+    "mode": "verified-ci-archive-later-process-qualification",
+    "producer_qualification_artifact": {
+      "bytes": 10784874,
+      "id": 12076644197,
+      "name": "x4-native-provision-123-qualification-93ee386b7e23628f3776edc6cfd2805cf675d649",
+      "sha256": "d6a432258dbeac2511d3f5bfc5e34dc48acf4b34bce9c69c186fd7b77505c5bc"
+    },
+    "run": {
+      "attempt": 1,
+      "event": "push",
+      "head_branch": "work/x4-qualification-recovery-123",
+      "id": 38975633046,
+      "job_id": 117224269041,
+      "workflow_id": 387173641,
+      "workflow_path": ".github/workflows/native-provision-123-requalify.yml",
+      "workflow_sha256": "b80eed7c26ef0b0269f76c14f6e61289e246db5af2bc524b7734427ac1d5331e"
+    },
+    "schema": 1,
+    "source_revision": "6ff97dac5f119307a0ae63db5d2e11d09ea49516",
+    "source_tree": "9069500a47add2b73b79d2e3359e25905e2403c0"
+  },
+  "qualification_sha256": "f3b3ab8b706de517ef1c1358a732c8ec258833f5a96684681991d67a92698331",
+  "release_tag": "test-native-provision-0.1.123",
+  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+  "run": {
+    "attempt": 1,
+    "event": "pull_request",
+    "head_branch": "work/x4-bootstrap-0.1.123",
+    "id": 38971323967,
+    "job_id": 117210123637,
+    "pull_request": 45,
+    "workflow_id": 387116635,
+    "workflow_path": ".github/workflows/native-provision-123.yml",
+    "workflow_sha256": "ce06a3a2af4cf9e93d1bf7eb5f8a3497a04663ae6fae2340add07c10d1eb9f24"
+  },
+  "schema": 1,
+  "source_inputs_sha256": "28008a21d351d89f066d2eb85d8c0363255c7f56b4e87efec169ab6bdc12e490",
+  "source_revision": "93ee386b7e23628f3776edc6cfd2805cf675d649",
+  "source_tree": "014a47e12262db66137223c901dab337b0c2a0ad",
+  "sources": {
+    "drivers": {
+      "revision": "5890721073ebabd781d5d278e447c761947a5c58",
+      "submodules": [],
+      "tree": "884416cb8ec2f95edcfc945a4a996f3dbca317c6"
+    },
+    "image_helper": {
+      "revision": "74f7491dc470b92dfa41fce41bf0c500f3714a94",
+      "submodules": [],
+      "tree": "e1418b6940d8b8df6b6a82057968b5074a96f2c6"
+    },
+    "product": {
+      "revision": "93ee386b7e23628f3776edc6cfd2805cf675d649",
+      "submodules": [],
+      "tree": "014a47e12262db66137223c901dab337b0c2a0ad"
+    },
+    "reader": {
+      "revision": "c98e4222048244b1e729869ed47aa99130025fd3",
+      "submodules": [],
+      "tree": "a5ee3231bf2de0cea3d484765cd5aa639721a4a8"
+    },
+    "runtime": {
+      "revision": "6a3b3d46f5b2857eacc6e9863799dec1f466b036",
+      "submodules": [],
+      "tree": "a5cc849726698c8651aa503af788b938bca28ec2"
+    },
+    "sdk": {
+      "revision": "fff9895c82d744c7237be8847347bdd1b07c6643",
+      "submodules": [
+        "24c60e243580c7868f4334a1ba3123481fe1aa48 components/bootloader/subproject/components/micro-ecc/micro-ecc (v1.1)",
+        "98c6de2d5411a7297dbba00387dfca2bcc44fd18 components/bt/controller/lib_esp32 (98c6de2)",
+        "6a5c0b8bfca1a2e984e89431b8ebf9b521dad5ea components/bt/controller/lib_esp32c2/esp32c2-bt-lib (heads/main)",
+        "0a08c4b32f3666003080b662a1a61794da24ff0f components/bt/controller/lib_esp32c3_family (heads/master)",
+        "ac7885ea2fc76e56a814d10120812ccacf101f0b components/bt/controller/lib_esp32c5/esp32c5-bt-lib (ac7885e)",
+        "eee922eaa95770d567f0939cc3d56c712a6ecf65 components/bt/controller/lib_esp32c6/esp32c6-bt-lib (eee922e)",
+        "e0bb64a28b90247a349fbfc03a204df9194e40a1 components/bt/controller/lib_esp32h2/esp32h2-bt-lib (e0bb64a)",
+        "f4ce5d581a264fb5bf4c1b6ed473c45ad91f9db7 components/bt/controller/lib_esp32h4/esp32h4-bt-lib (f4ce5d5)",
+        "7f20740dd66ee774ffce5db0b55507892551aa31 components/bt/controller/lib_esp32s31/esp32s31-bt-lib (7f20740)",
+        "8af29109827eb9e3bc636b2a1ae6596fdfacaf4a components/bt/esp_ble_audio/lib/lib (8af2910)",
+        "f6c62bfa32759da7c44459bd6b40079cce93c94b components/bt/esp_ble_mesh/lib/lib (f6c62bf)",
+        "139cada0ae932957fa06ba37d17e3c9c2c95c773 components/bt/host/nimble/nimble (nimble_1_6_0_tag-439-g139cada0a)",
+        "eeecc49ce8af123cf8ad40efdb9673e37b56230f components/cmock/CMock (v2.5.2-2-geeecc49)",
+        "71b47be7c950f1bf5f7e5303779fa99a16224bb6 components/cmock/CMock/vendor/c_exception (v1.3.1-13-g71b47be)",
+        "cf949f45ca6d172a177b00da21310607b97bc7a7 components/cmock/CMock/vendor/unity (v2.5.1)",
+        "ddc56fa524a38df3098d2f36475fbe3eefe9b4f4 components/esp_coex/lib (heads/main)",
+        "5695f4f38108658bc4a33e4712c1ebcb34911434 components/esp_phy/lib (heads/master)",
+        "7cd4d7b2b4acc38aead43b029ac9409c3eba9c54 components/esp_wifi/lib (remotes/origin/feature/ftm_support_stage2-579-g7cd4d7b2)",
+        "2867f6883a12920b1969ff9624c0ab0e4185c2ce components/heap/tlsf (remotes/origin/master-48-g2867f68)",
+        "c6f2f878e7b0f86033214b85547d579be43351e3 components/lwip/lwip (heads/2.2.0-esp)",
+        "a2b32072ea898afc1ed5b6caf6931e36028c91d6 components/mbedtls/mbedtls (mbedtls-4.1.0-22-ga2b32072ea)",
+        "4dd715391cfb2cf4d06825a17294514024e4dc12 components/openthread/lib (4dd7153)",
+        "b678a4f63b6f9397d1a0fa8f31e5b8e0271a4d00 components/openthread/openthread (thread-reference-20250612-1270-gb678a4f63)",
+        "e185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df components/openthread/openthread/third_party/mbedtls/repo (v3.6.5)",
+        "457996474728cb8e968ed21953b72f74d2f536b2 components/openthread/openthread/third_party/mbedtls/repo/framework (mbedtls-4.0.0_tf-psa-crypto-1.0.0)",
+        "abc67a11c6db271bedbb9f58be85d6f4e2ea8389 components/protobuf-c/protobuf-c (v1.4.1)",
+        "ad902cadceb39d0825a97e25ecb5867641f606ba components/spiffs/spiffs (0.2-265-gad902ca)",
+        "bf560290f6020737eafaa8b5cbd2177c3956c03f components/unity/unity (v2.6.0_RC1)"
+      ],
+      "tree": "e6a5e4865e2027f1f0cef5da09f254d65c5cec22"
+    },
+    "system": {
+      "revision": "0651a55513b0aa0dff1b6a9072303def08a97378",
+      "submodules": [],
+      "tree": "8cbe597072c60d6d8a54d852e953b9ee876db12e"
+    },
+    "utilities": {
+      "revision": "e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d",
+      "submodules": [],
+      "tree": "39a1fdef3719dddbd9ebfd9fb3750e15c856223c"
+    }
+  },
+  "version": "0.1.123"
 }

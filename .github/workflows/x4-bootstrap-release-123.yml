@@ -88,6 +88,18 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 30
+      - name: Upload bounded staging-review metadata
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-bootstrap-staging-review-${{ github.sha }}
+          path: |
+            release-assets/release.json
+            release-assets/SHA256SUMS
+            release-assets/transport-contract.json
+            release-assets/RELEASE-NOTES.txt
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
   publish:
     needs: [guards, stage]
     if: needs.guards.outputs.publication_enabled == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
