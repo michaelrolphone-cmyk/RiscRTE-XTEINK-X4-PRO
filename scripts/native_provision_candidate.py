@@ -26,7 +26,7 @@ CONTRACT = ROOT / 'docs/native-provision-123/released-baseline.json'
 SDK_REVISION = 'fff9895c82d744c7237be8847347bdd1b07c6643'
 REQUIRED_ROLES = {'product', 'runtime', 'system', 'drivers', 'sdk', 'image_helper', 'reader', 'utilities'}
 BOUNDARY_SYMBOLS = ('risc_tcp_listener_abi', 'risc_entropy_abi', 'risc_sdmmc_host_abi')
-ARTIFACT_KEYS = {'firmware_bin', 'firmware_elf', 'firmware_map', 'bootloader', 'partitions',
+ARTIFACT_KEYS = {'platform_capacity_receipt', 'platform_capacity_source', 'platform_capacity_32', 'platform_capacity_40', 'firmware_bin', 'firmware_elf', 'firmware_map', 'bootloader', 'partitions',
                  'sdkconfig', 'compile_commands', 'project_description', 'flasher_args',
                  'bootloader_elf', 'bootloader_compile_commands', 'bootloader_sdkconfig', 'x4_selection',
                  'sdkconfig_json', 'sdkconfig_header', 'bootloader_sdkconfig_header',
@@ -233,7 +233,10 @@ def artifact_paths(build):
     require(Path(project['config_file']).resolve() == (build / 'sdkconfig').resolve(), 'Build must own the exact selected sdkconfig')
     app = Path(flash['app']['file'])
     require(not app.is_absolute(), 'Flash descriptor app must be relative')
-    return dict(firmware_bin=app.as_posix(), firmware_elf=app.with_suffix('.elf').as_posix(),
+    return dict(platform_capacity_receipt='platform-capacity-probe/receipt.json',
+                platform_capacity_source='platform-capacity-probe/probe.cpp',
+                platform_capacity_32='platform-capacity-probe/capacity-32.o',
+                platform_capacity_40='platform-capacity-probe/capacity-40.o', firmware_bin=app.as_posix(), firmware_elf=app.with_suffix('.elf').as_posix(),
                 firmware_map=app.with_suffix('.map').as_posix(), bootloader=flash['bootloader']['file'],
                 partitions=flash['partition-table']['file'], sdkconfig='sdkconfig',
                 compile_commands='compile_commands.json', project_description='project_description.json',
@@ -404,12 +407,62 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
             'Final native bootlog placement proof required')
     require(any(name.startswith('RiscProvisionRequest::bind(') for name in labels), 'Selected native provision-request backend missing')
     require(any(name.startswith('RiscPackageVolume::bind(') for name in labels), 'Selected native internal package-volume backend missing')
+    capacity = verify_platform_capacity(elf)
+    capacity['target_object_measurement'] = verify_platform_capacity_probe(blobs, sources, build)
     serial = verify_serial(sources, build, compiler, lock, blobs)
-    return blobs, dict(serial_files=serial, **backend_selection, linked_memory=linked_memory(elf, blobs['firmware_map']), x4_startup=startup, x4_bootlog_memory=bootlog, effective_config=effective_config, app_descriptor=desc, native_layout=verify_native_store_abi(blobs['firmware_elf'], 2),
+    return blobs, dict(serial_files=serial, platform_capacity=capacity, **backend_selection, linked_memory=linked_memory(elf, blobs['firmware_map']), x4_startup=startup, x4_bootlog_memory=bootlog, effective_config=effective_config, app_descriptor=desc, native_layout=verify_native_store_abi(blobs['firmware_elf'], 2),
                        radio_iq=prove(blobs['firmware_elf'], contract['target']),
                        public_export_count=len(public_exports(elf)), source_files=source_files,
                        arduino_core_linked=False, ordinary_app_payloads_rebuilt=True,
                        unselected_usb_host_controller=False, elf_bin_identical=True)
+
+
+def verify_platform_capacity(elf):
+    name = 'risc_platform_capacity'
+    table = elf.get_section_by_name('.symtab')
+    matches = table.get_symbol_by_name(name) if table else None
+    require(matches and len(matches) == 1 and isinstance(matches[0]['st_shndx'], int),
+            'Missing/ambiguous linked platform capacity marker')
+    symbol = matches[0]; section = elf.get_section(symbol['st_shndx'])
+    offset, size = symbol['st_value'] - section['sh_addr'], symbol['st_size']
+    expected = b'RISC_PLATFORM_CAPACITY:40\0'
+    require(section['sh_flags'] & 2 and section['sh_type'] != 'SHT_NOBITS' and
+            size == len(expected) and offset >= 0 and section.data()[offset:offset + size] == expected,
+            'Final native platform capacity is not the selected 40')
+    return {'value': 40, 'symbol': name, 'address': symbol['st_value'], 'section': section.name,
+            'bytes': size, 'sha256': sha(expected)}
+
+
+
+def verify_platform_capacity_probe(blobs, sources, build):
+    from elftools.elf.elffile import ELFFile
+    probe_path = sources['runtime'] / 'test/compile_runtime_platform_capacity_target.py'
+    require(probe_path.resolve().is_relative_to(sources['runtime'].resolve()), 'Capacity probe escaped Runtime source')
+    spec = importlib.util.spec_from_file_location('runtime_capacity_probe', probe_path)
+    probe = importlib.util.module_from_spec(spec); spec.loader.exec_module(probe)
+    receipt = json.loads(blobs['platform_capacity_receipt'])
+    row, compiler, flags = probe.compile_inputs(build / 'compile_commands.json')
+    require(receipt['compile_database_sha256'] == sha(blobs['compile_commands']) and
+            receipt['compiler_sha256'] == sha(Path(compiler).read_bytes()) and
+            receipt['source_sha256'] == {name: sha((sources['runtime'] / name).read_bytes()) for name in probe.SOURCES} and
+            blobs['platform_capacity_source'] == probe.PROBE.encode() and
+            receipt['probe_sha256'] == sha(blobs['platform_capacity_source']), 'Capacity probe input identity differs')
+    for capacity in (32, 40):
+        raw = blobs['platform_capacity_' + str(capacity)]
+        profile = receipt['profiles'][str(capacity)]
+        expected = [compiler, *flags, '-DRISC_PLATFORM_CAPACITY=' + str(capacity), '-c',
+                    str(build / 'platform-capacity-probe/probe.cpp'), '-o',
+                    str(build / ('platform-capacity-probe/capacity-' + str(capacity) + '.o'))]
+        obj = ELFFile(io.BytesIO(raw)); table = obj.get_section_by_name('.symtab')
+        sizes = table.get_symbol_by_name('runtime_object_size_probe') if table else None
+        require(obj['e_machine'] == 'EM_XTENSA' and obj.elfclass == 32 and sizes and len(sizes) == 1 and
+                profile['runtime_object_bytes'] == sizes[0]['st_size'] and
+                profile['object_sha256'] == sha(raw) and profile['command'] == expected and
+                table.get_symbol_by_name('heap_caps_malloc'), 'Native capacity object/command proof differs')
+    require(receipt['additional_runtime_bytes'] == 960 ==
+            receipt['profiles']['40']['runtime_object_bytes'] - receipt['profiles']['32']['runtime_object_bytes'],
+            'Native capacity object growth differs')
+    return receipt
 
 
 def verify_serial(sources, build, compiler, lock, blobs):

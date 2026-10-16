@@ -18,7 +18,7 @@
     },
     "runtime": {
       "repository": "michaelrolphone-cmyk/RiscRTE",
-      "revision": "ae03a6780d1c45e0eaf02c6194fe13f0c6cd2c45"
+      "revision": "3d9766892331f264601251e811ef06f7838ddf4a"
     },
     "system": {
       "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",

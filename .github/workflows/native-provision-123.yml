@@ -99,6 +99,7 @@ jobs:
           . "$IDF_PATH/export.sh"
           exec > >(tee "$NATIVE_ROOT/logs/host-tests.log") 2>&1
           cd "$NATIVE_ROOT/sources/product"
+          export RISCRTE_RUNTIME_ROOT="$NATIVE_ROOT/sources/runtime"
           command -v cmake
           python tests/test_native_provision_candidate.py --runtime "$NATIVE_ROOT/sources/runtime" \
             --image-helper "$NATIVE_ROOT/sources/image_helper" --baseline "$NATIVE_ROOT/inputs/baseline.bin"
@@ -121,6 +122,9 @@ jobs:
           . "$IDF_PATH/export.sh"
           exec > >(tee "$NATIVE_ROOT/logs/serial-host.log") 2>&1
           cd "$NATIVE_ROOT/sources/runtime"
+          mkdir "$NATIVE_ROOT/platform-capacity"
+          RECEIPT="$NATIVE_ROOT/platform-capacity/normal.json" python test/run_runtime_platform_capacity_test.py
+          RECEIPT="$NATIVE_ROOT/platform-capacity/sanitized.json" SANITIZE=1 ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 python test/run_runtime_platform_capacity_test.py
           for script in run_runtime_checkpoint_api_test.sh run_serial_native_provider_test.sh run_serial_files_test.sh run_serial_files_client_test.sh run_native_serial_files_transport_test.sh; do
             bash "test/$script"
             SANITIZE=1 ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 bash "test/$script"
@@ -183,9 +187,11 @@ jobs:
             ${{ env.NATIVE_ROOT }}/candidate/serial-product-*.json
             ${{ env.NATIVE_ROOT }}/candidate/feed/*.json
             ${{ env.NATIVE_ROOT }}/build/qualification/**/*.json
+            ${{ env.NATIVE_ROOT }}/build/platform-capacity-probe/receipt.json
             ${{ env.NATIVE_ROOT }}/build/native-build-evidence/source-lock.json
             ${{ env.NATIVE_ROOT }}/build-packages/package-build-receipt.json
             ${{ env.NATIVE_ROOT }}/serial-product/
+            ${{ env.NATIVE_ROOT }}/platform-capacity/
             ${{ env.NATIVE_ROOT }}/metadata/
             ${{ env.NATIVE_ROOT }}/logs/
             ${{ env.NATIVE_ROOT }}/source-evidence/*-identity.txt
@@ -219,6 +225,7 @@ jobs:
             ${{ env.NATIVE_ROOT }}/serial-storage-normal/
             ${{ env.NATIVE_ROOT }}/serial-storage-sanitized/
             ${{ env.NATIVE_ROOT }}/serial-product/
+            ${{ env.NATIVE_ROOT }}/platform-capacity/
             ${{ env.NATIVE_ROOT }}/inputs/
             ${{ env.NATIVE_ROOT }}/metadata/
             ${{ env.NATIVE_ROOT }}/logs/

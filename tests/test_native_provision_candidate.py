@@ -3,6 +3,7 @@
 import argparse
 import copy
 import importlib.util
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -78,6 +79,44 @@ def startup_receipt(runtime, sanitized=False):
 
 
 class Controls(unittest.TestCase):
+    def test_linked_platform_capacity_marker(self):
+        from elftools.elf.elffile import ELFFile
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            for capacity in (32, 40):
+                source = root / 'marker.c'; obj = root / 'marker.o'
+                source.write_text('const char risc_platform_capacity[]="RISC_PLATFORM_CAPACITY:' + str(capacity) + '";\n')
+                subprocess.run(['cc', '-c', str(source), '-o', str(obj)], check=True)
+                elf = ELFFile(io.BytesIO(obj.read_bytes()))
+                if capacity == 40:
+                    self.assertEqual(candidate.verify_platform_capacity(elf)['value'], 40)
+                else:
+                    with self.assertRaises(ValueError): candidate.verify_platform_capacity(elf)
+
+    def test_retained_sd_graph_receipt_requires_exact_bytes_and_no_io(self):
+        import native_provision_qualification as q
+        before = {'sd/driver.elf': b'retained target ELF',
+                  'sd/manifest.json': p.encoded({'id': 'x4pro-sd', 'version': '0.2.23',
+                      'provides': [{'capability': 'storage.volume', 'api': 1}]}),
+                  'boot.json': p.encoded({'drivers': [{'manifest': 'sd/manifest.json', 'instance_id': 9}]})}
+        result = {'retained_sd_serial_graph_bound': True, 'hardware_calls': 0, 'storage_calls': 0,
+                  'platform_count': 34, 'bound_platform_count': 32,
+                  'runtime_owned_platforms': [{'capability': name, 'api': 1, 'scope': 0, 'instance': 0}
+                      for name in ('platform.realtime', 'platform.installation')]}
+        proof = q.retained_sd_receipt(before, before, result)
+        self.assertTrue(proof['production_graph_binding_passed'])
+        self.assertFalse(proof['provider_activated'])
+        self.assertFalse(proof['target_instructions_executed'])
+        for changed in (dict(result, retained_sd_serial_graph_bound=False),
+                        dict(result, hardware_calls=1), dict(result, storage_calls=1),
+                        dict(result, platform_count=33), dict(result, bound_platform_count=31),
+                        dict(result, runtime_owned_platforms=[])):
+            with self.assertRaises(ValueError): q.retained_sd_receipt(before, before, changed)
+        for name in ('sd/driver.elf', 'sd/manifest.json'):
+            with self.assertRaises(ValueError): q.retained_sd_receipt(before, dict(before, **{name: b'changed'}), result)
+        changed = dict(before, **{'boot.json': p.encoded({'drivers': [{'manifest': 'sd/manifest.json', 'instance_id': 12}]})})
+        with self.assertRaises(ValueError): q.retained_sd_receipt(before, changed, result)
+
     def test_serial_product_receipt_validation(self):
         for sanitized in (False, True):
             self.assertEqual(serial.validate_receipt(startup_receipt(Path('/runtime'), sanitized), Path('/runtime'), sanitized),
@@ -212,6 +251,8 @@ class Controls(unittest.TestCase):
         self.assertIn('RISC_NATIVE_SERIAL_FILES=1', profile)
         self.assertIn('RISC_NATIVE_SERIAL_SD_INSTANCE=9', profile)
         self.assertIn('RISC_APP_POLICY_ROWS=32', profile)
+        self.assertIn('RISC_PLATFORM_CAPACITY=40', profile)
+        self.assertIn('-Wl,-u,risc_platform_capacity', profile)
         self.assertIn('RISC_APP_REQUIREMENT_ROWS=24', profile)
         self.assertIn('RISC_NATIVE_SETTINGS_HEADER "${CMAKE_CURRENT_LIST_DIR}/native-idf61-settings.h"', profile)
         self.assertIn('partitions-native-idf61.csv', profile)
@@ -246,9 +287,14 @@ class Controls(unittest.TestCase):
             command = ['c++', '-std=c++17', '-fsyntax-only', '-DRISC_NATIVE_ESP_IDF=1',
                        '-DRISC_RUNTIME_ATOMIC_KEY_VALUE=1', '-DRISC_APP_POLICY_ROWS=32',
                        '-DRISC_APP_REQUIREMENT_ROWS=24', '-DSTORE_ADMISSION_APP_DATA',
-                       '-DRISC_PAIRED_APP_DATA=1', '-include', ROOT / 'profiles/native-idf61-settings.h',
+                       '-DRISC_PAIRED_APP_DATA=1', '-DRISC_PLATFORM_CAPACITY=40', *q.SERIAL_GRAPH_FLAGS,
+                       '-include', ROOT / 'profiles/native-idf61-settings.h',
                        *['-I' + str(i) for i in includes], path]
             subprocess.run(list(map(str, command)), check=True)
+            # Signature-only callback; actual target ELF admission is CI-gated.
+            (Path(temp) / 'cohort_elf_admission.h').write_text(
+                'namespace CohortElf { static bool file(void*,const char*,bool){return false;} }\n')
+            subprocess.run(list(map(str, [*command, '-DSTORE_ADMISSION_COHORT', '-I' + temp])), check=True)
 
 
 if __name__ == '__main__':

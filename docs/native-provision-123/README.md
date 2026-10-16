@@ -21,6 +21,8 @@ from a historical build. Only these six internal files may change:
   missing Wi-Fi namespace 6 grant and update only the catalog service's
   content-addressed SD9 mirror path. Home has 25 grants; the existing supported
   native bound is explicitly 32 policy slots, with 24 requirement slots.
+  The preserved native platform graph requires 34 registered tables, so this
+  product explicitly selects 40 platform slots. Runtime's default stays 32.
 - `cohort.json`: exact new product/Runtime/native image binding.
 
 The other 101 internal files, including retained Settings 1.3.29, remain exactly
@@ -44,7 +46,7 @@ identities. There is no catalog, package, manifest or firmware-flashing policy i
 RTEF1. Ordinary file writes preserve unrelated paths. The candidate fails closed
 if the pinned Runtime still has the legacy hard-coded SD12 binding.
 
-Runtime `ae03a6780d1c45e0eaf02c6194fe13f0c6cd2c45` contains the product-owned
+Runtime `3d9766892331f264601251e811ef06f7838ddf4a` contains the product-owned
 selector and its production startup tests. CI runs the actual Runtime startup
 suite normally and with ASan/UBSan, preserving both receipts. Qualification
 requires and hash-locks their exact command/source identities, both X4SD9 and
@@ -53,6 +55,23 @@ configurations. Missing, changed, wrong-source or unsanitized receipts fail
 closed. These tests use synthetic storage; they do not qualify the retained X4
 driver or physical hardware. Final native compile definitions and linked
 workspace placement are separate required gates.
+
+The 43-ELF admission fixture separately prepares the actual candidate graph and
+calls production `NativeSerialStorage::bindSd` with retained `sd/driver.elf` and
+`sd/manifest.json` (x4pro-sd 0.2.23, instance 9). Its SD-only namespace 12 must be
+selected while its provider session remains unbound and native hardware/storage
+counters remain zero. The fixture explicitly admits its host metadata roots;
+there is no ambient filesystem fallback. Both normal and sanitized admission
+receipts include the retained ELF/manifest hashes. This proves graph selection
+and target ELF admission without acquiring a provider grant, executing target
+instructions, mounting media or testing physical hardware. Historical source
+build provenance of that retained ELF remains unestablished.
+
+Final qualification checks the allocated `risc_platform_capacity` marker for
+40, verifies matching compile definitions and records native linked RAM margins.
+The default32/explicit40 Runtime regression exercises exact registration and
+complete preparation limits normally and with ASan/UBSan. No platform is dropped
+to fit the graph, and capacity selection does not grant new authority.
 
 ## Build and evidence
 
@@ -97,3 +116,11 @@ accurate erasure warning. Any subsequent firmware/full-payload paired release
 must wait for confirmed user installation of that bootstrap. Source/host success,
 a complete CI candidate, publication and installed-device verification are
 separate gates.
+
+The exact selected native compile database also produces two bounded Runtime
+size/allocation probes (capacity 32 and 40). Their source, target objects and
+receipt are frozen in controlled build evidence. Qualification rechecks their
+commands, compiler/source hashes, Xtensa ELF symbol sizes and +960-byte delta.
+The allocation is the existing paired `NativeRuntime` PSRAM-only retained object;
+it does not fall back to internal heap. These object measurements do not replace
+the final linked memory/IQ proof or hardware heap measurements.

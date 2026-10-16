@@ -57,6 +57,10 @@ def main():
     build.parent.mkdir(parents=True, exist_ok=True)
     for command in commands:
         subprocess.run(command, env=env, check=True)
+    # These two bounded probes reuse the completed product's exact target flags.
+    # Preserve their objects and receipt before freezing controlled build evidence.
+    subprocess.run([sys.executable, str(sources['runtime'] / 'test/compile_runtime_platform_capacity_target.py'),
+                    str(build / 'compile_commands.json'), str(build / 'platform-capacity-probe')], env=env, check=True)
     proof = collect_build_proof(recipe, sources, build, compiler, pins, commands, env, tools)
     args.native_build, args.compiler, args.output = build, compiler, output
     args.lock = build / 'native-build-evidence/source-lock.json'

@@ -14,6 +14,11 @@ import tempfile
 import time
 
 SD_ELF_TIMEOUT_SECONDS = 300
+SERIAL_GRAPH_FLAGS = ['-DRISC_NATIVE_SERIAL_FILES=1', '-DRISC_NATIVE_SERIAL_SD=1',
+                      '-DRISC_NATIVE_SERIAL_BOOT_FILES=0', '-DRISC_NATIVE_SERIAL_APPDATA_FILES=0',
+                      '-DRISC_NATIVE_SERIAL_SD_PROVIDER="x4pro-sd"', '-DRISC_NATIVE_SERIAL_SD_INSTANCE=9']
+SERIAL_GRAPH_SOURCES = ['src/ports/esp32s3/NativeSerialStorage.cpp',
+                        'src/ports/esp32s3/NativeSerialFiles.cpp', 'src/runtime/serial/Files.cpp']
 
 
 def require(condition, message):
@@ -32,7 +37,8 @@ def replace_once(text, old, new):
 
 def x4_fixture(source, product, sdk):
     source = '#include "experimental/native_replica/NativeAtomicKeyValue.h"\n' + source
-    source = replace_once(source, 'bool bind(RiscBoot::Runtime& runtime) {', '''using RC=RiscExperimental::NativeReplicaCore;
+    source = replace_once(source, 'bool bind(RiscBoot::Runtime& runtime) {', '''static size_t boundPlatformCount=0;
+using RC=RiscExperimental::NativeReplicaCore;
 using AE=RiscExperimental::NativeAtomicKeyValue;
 static RC core1(1,{}, {}, {}),core6(6,{}, {}, {});
 static AE endpoint1(core1,{nullptr,[](void*){return true;},[](void*){++storageCalls;return false;},[](void*){++storageCalls;return false;},[](void*){++storageCalls;return false;},[](void*){++storageCalls;return -1;}});
@@ -43,6 +49,7 @@ bool bind(RiscBoot::Runtime& runtime) {
  for(const auto& writer:writers)if(!runtime.registerAtomicKeyValue(writer.app,writer.ns,writer.ns==6?endpoint6:endpoint1))return false;
  for(uint32_t ns:{1u,6u})if(!runtime.registerAtomicKeyValueReadThrough(ns,ns==6?endpoint6:endpoint1)||!runtime.registerKeyValueAvailability(ns,{nullptr,[](void*,uint32_t,risc_key_value_availability_state_v1*)->int32_t{++storageCalls;return RISC_KEY_VALUE_IO;}}))return false;
 ''')
+    source = replace_once(source, '  return true;\n}\nRiscCpu::Hardware hardware()', '  boundPlatformCount=runtime.platformCount_;\n  return true;\n}\nRiscCpu::Hardware hardware()')
     source = replace_once(source, '  RiscCpu::Hardware h{};', '''  RiscCpu::Hardware h{};
  static RiscStorage::Worker mailbox;
  static RiscCpu::StorageWorkBackend worker{&mailbox,[](){return true;},[](){return false;},[](uint32_t){++hardwareCalls;}};h.storageWork=&worker;
@@ -59,7 +66,80 @@ bool bind(RiscBoot::Runtime& runtime) {
     source = '#include <RiscProvisionRequestV1.h>\n#include <RiscInternalPackageVolumeV1.h>\n' + source
     source = replace_once(source, '  if (!cpu->bind(runtime)) return false;',
         '  if (!cpu->bind(runtime)) return false;\n' + (product / 'tests/native_provision_admission_fixture.inc').read_text())
+    # Only register the admitted provider identity. Do not acquire/activate a
+    # graph grant, execute Xtensa code, prepare media or enter the endpoint.
+    source = replace_once(source, '#undef private',
+        '#undef private\n#include "ports/esp32s3/NativeSerialStorageBinding.h"\n#include "test/RuntimeFileFixture.h"')
+    source = replace_once(source, '  RiscBoot::Runtime runtime(runtimePort);', '''#ifdef STORE_ADMISSION_COHORT
+  RiscTest::FileSources metadataFiles({std::string(argv[1]),std::string(argv[2])},owner,owner);
+#else
+  RiscTest::FileSources metadataFiles({std::string(argv[1])},owner,owner);
+#endif
+  runtimePort.files=metadataFiles.sources();
+  RiscBoot::Runtime runtime(runtimePort);''')
+    source = replace_once(source, 'int main(int argc, char** argv) {', '''extern "C" int64_t esp_timer_get_time(){++hardwareCalls;return 0;}
+extern "C" bool xPortInIsrContext(){++hardwareCalls;return false;}
+static void printPlatformReceipt(const RiscBoot::Runtime& runtime) {
+  printf("{\\\"platform_count\\\":%zu,\\\"bound_platform_count\\\":%zu,\\\"runtime_owned_platforms\\\":[",runtime.platformCount_,boundPlatformCount);
+  for(size_t i=boundPlatformCount;i<runtime.platformCount_;++i){
+    const auto& p=runtime.platforms_[i];
+    printf("%s{\\\"capability\\\":\\\"%s\\\",\\\"api\\\":%u,\\\"scope\\\":%u,\\\"instance\\\":%llu}",i==boundPlatformCount?"":",",p.capability,p.api,unsigned(p.scope),(unsigned long long)p.id);
+  }
+  printf("],");
+}
+static bool bindRetainedSd(RiscBoot::Runtime& runtime) {
+  namespace S=RiscCpu::NativeSerialStorage;
+  if(!S::prepare(owner,owner) || !S::bindSd(runtime,owner,owner))return false;
+  const auto* admission=S::admission();
+  return admission && admission->count==1 && admission->ready() &&
+    admission->namespaces[0].id==12 && admission->namespaces[0].writable &&
+    admission->namespaces[0].files==&S::sdFiles() &&
+    !S::sdFiles().bound() && !S::sdFiles().retained();
+}
+int main(int argc, char** argv) {''')
+    source = replace_once(source,
+        '  const bool validated=prepared && runtime.validateCohort(candidate,argv[2],CohortElf::file,&admitted);',
+        '''  const bool validated=prepared && runtime.validateCohort(candidate,argv[2],CohortElf::file,&admitted);
+  const bool retainedSdGraphBound=validated && bindRetainedSd(candidate);
+  if(validated && !retainedSdGraphBound)return 4;
+  printPlatformReceipt(validated?candidate:runtime);''')
+    source = replace_once(source, '  // Runtime errors are constant diagnostics, with no input text or credentials.',
+        '''  const bool retainedSdGraphBound=prepared && bindRetainedSd(runtime);
+  if(prepared && !retainedSdGraphBound)return 4;
+  printPlatformReceipt(runtime);
+  // Runtime errors are constant diagnostics, with no input text or credentials.''')
+    prefix = r'printf("{\"prepared\":%s,'
+    require(source.count(prefix) == 2, 'Retained SD graph receipt anchors changed')
+    source = source.replace(prefix, r'printf("\"retained_sd_serial_graph_bound\":%s,\"prepared\":%s,')
+    source = replace_once(source, '         prepared?"true":"false",validated?',
+        '         retainedSdGraphBound?"true":"false",prepared?"true":"false",validated?')
+    source = replace_once(source, '         prepared ? "true" : "false", runtime.error()',
+        '         retainedSdGraphBound?"true":"false",prepared ? "true" : "false", runtime.error()')
     return source
+
+
+def retained_sd_receipt(before, after, result):
+    require(result.get('retained_sd_serial_graph_bound') is True and not result['hardware_calls'] and
+            not result['storage_calls'], 'Retained SD serial graph binding failed or performed I/O')
+    expected_additions = [{'capability': name, 'api': 1, 'scope': 0, 'instance': 0}
+                          for name in ('platform.realtime', 'platform.installation')]
+    require(result.get('platform_count') == 34 and result.get('bound_platform_count') == 32 and
+            result.get('runtime_owned_platforms') == expected_additions, 'Unexpected actual platform composition')
+    names = ('sd/driver.elf', 'sd/manifest.json')
+    require(all(before[name] == after[name] for name in names), 'Retained SD artifact changed')
+    manifest = json.loads(after['sd/manifest.json'])
+    require(manifest['id'] == 'x4pro-sd' and manifest['version'] == '0.2.23' and
+            manifest['provides'] == [{'capability': 'storage.volume', 'api': 1}], 'Wrong retained SD manifest')
+    rows = [r for r in json.loads(after['boot.json'])['drivers'] if r['manifest'] == 'sd/manifest.json']
+    require(len(rows) == 1 and rows[0]['instance_id'] == 9, 'Wrong retained SD boot instance')
+    return {'provider': manifest['id'], 'provider_version': manifest['version'], 'instance': 9,
+            'wire_namespace': 12, 'capability': 'storage.volume', 'api': 1,
+            'files': {name: {'bytes': len(after[name]), 'sha256': sha(after[name])} for name in names},
+            'platform_count': result['platform_count'], 'bound_platform_count': result['bound_platform_count'],
+            'runtime_owned_platforms': result['runtime_owned_platforms'],
+            'production_graph_binding_passed': True, 'provider_activated': False,
+            'target_instructions_executed': False, 'hardware_tested': False,
+            'historical_driver_build_provenance': 'not established; exact released bytes retained'}
 
 
 def admit_product(sources, native, before, after, native_proof, sanitized=False):
@@ -75,7 +155,8 @@ def admit_product(sources, native, before, after, native_proof, sanitized=False)
     def composition(selected_runtime, elf, profile, rows):
         require(Path(selected_runtime) == runtime and elf == native and rows == 32 and
                 Path(profile) == product / 'profiles/native-provision-123.cmake', 'Wrong native host composition')
-        return dict(bounds={'RISC_INSTALLED_APP_CAPACITY': 64, 'RISC_PROVIDER_CAPACITY': 40,
+        require(native_proof.get('platform_capacity', {}).get('value') == 40, 'Native platform capacity proof missing')
+        return dict(bounds={'RISC_INSTALLED_APP_CAPACITY': 64, 'RISC_PROVIDER_CAPACITY': 40, 'RISC_PLATFORM_CAPACITY': 40,
                             'RISC_APP_POLICY_ROWS': 32, 'RISC_APP_REQUIREMENT_ROWS': 24},
                     store_abi=2, file_source_enabled=False, runtime_commit=run_head(runtime),
                     native_layout=native_proof['native_layout'], product_profile_sha256=sha(Path(profile).read_bytes()))
@@ -91,7 +172,10 @@ def admit_product(sources, native, before, after, native_proof, sanitized=False)
             if command[0] == 'c++' and contract['product'] == 'x4':
                 command = [command[0], '-DRISC_RUNTIME_ATOMIC_KEY_VALUE=1', '-include',
                            str(product / 'profiles/native-idf61-settings.h'), '-I' + str(runtime), '-I' + str(runtime / 'test/native_nvs_shim'),
-                           '-Wno-unused-function', '-Wno-unused-but-set-variable', *command[1:]]
+                           '-I' + str(runtime / 'test/native_sleep_diagnostics_idf6_shim'),
+                           '-I' + str(runtime / 'test/native_platform_shim'),
+                           '-Wno-unused-function', '-Wno-unused-but-set-variable', *SERIAL_GRAPH_FLAGS,
+                           *[str(runtime / name) for name in SERIAL_GRAPH_SOURCES], *command[1:]]
             commands.append([str(x) for x in command])
         return old_run(command, *args, **kwargs)
     try:
@@ -110,8 +194,9 @@ def admit_product(sources, native, before, after, native_proof, sanitized=False)
             result = admission.admit_cohort(runtime, native, before, after, app_policy_rows=32,
                                             native_profile=product / 'profiles/native-provision-123.cmake')
             result.update(sanitized=sanitized, fixture_sha256=sha(source.encode()), helper_adapter_sha256=sha(helper_source.encode()),
-                          hardware_calls=0, storage_calls=0, target_instructions_executed=False)
+                          commands=commands, target_instructions_executed=False)
             require(result['elf_count'] == contract['elf_count'], 'Released ELF inventory not completely admitted')
+            result['retained_sd_graph_binding'] = retained_sd_receipt(before, after, result)
             return result
     finally:
         admission.ROOT, admission.native_composition, verify.cohort_admission_header = old_root, old_composition, old_header

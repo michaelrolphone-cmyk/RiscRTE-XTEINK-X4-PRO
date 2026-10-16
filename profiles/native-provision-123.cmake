@@ -13,7 +13,7 @@ set(RISC_NATIVE_DEFINITIONS
     RISC_ENABLE_SDMMC=1 RISC_ENABLE_USB_PHY=1
     RISC_NATIVE_DIAGNOSTIC_OBSERVER=1
     RISC_APP_POLICY_ROWS=32 RISC_APP_REQUIREMENT_ROWS=24 RISC_APP_IMAGE_CACHE=1
-    RISC_PROVIDER_CAPACITY=40 RISC_INSTALLED_APP_CAPACITY=64
+    RISC_PROVIDER_CAPACITY=40 RISC_INSTALLED_APP_CAPACITY=64 RISC_PLATFORM_CAPACITY=40
     RISC_NATIVE_TCP_LISTENER=1 RISC_NATIVE_ENTROPY=1
     RISC_RETAINED_WAKE_BYTES=512 RISC_NATIVE_FAILURE_EVIDENCE=1
     BOARD_XTEINK_X4_PRO=1 RISC_NATIVE_PACKAGE_VOLUME=1
@@ -34,6 +34,7 @@ set(RISC_NATIVE_LINK_OPTIONS
     "-Wl,-u,risc_paired_store_abi" "-Wl,-u,risc_runtime_update_version"
     "-Wl,-u,risc_sdmmc_host_abi" "-Wl,-u,risc_installed_app_capacity"
     "-Wl,-u,risc_tcp_listener_abi" "-Wl,-u,risc_entropy_abi"
+    "-Wl,-u,risc_platform_capacity"
     "-Wl,--wrap=esp_panic_handler" "-Wl,-u,risc_native_failure_evidence_abi"
     "-Wl,-u,risc_x4_native_composition_identity"
     "-Wl,-u,risc_x4_native_source_identity" "-Wl,-u,risc_x4_native_ready"
