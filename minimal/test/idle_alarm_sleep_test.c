@@ -6,6 +6,7 @@
 #include "native_utc_alarm_service_test.c"
 #undef main
 #include <setjmp.h>
+#include <stdlib.h>
 #include "PortableAppSleep.h"
 #include "PortableDeskClockApp.h"
 #include "PortableSleepPolicy.h"
@@ -19,6 +20,7 @@
 static const char *h_route,*h_case;
 static bool h_stop,h_dark,h_panel,h_touch,h_sd,h_pending;
 static unsigned h_grants,h_acquires,h_releases,h_brightness,h_light_calls,h_deep_calls;
+static unsigned h_saved_level,h_level,h_brightness_values[4];
 static unsigned h_prepares,h_steps,h_statuses,h_resumes,h_restore,h_clears,h_notices,h_tokens[8];
 static alarm_sleep_v1 h_ticket;
 static alarm_service_descriptor_v2 h_service;
@@ -52,8 +54,24 @@ static int32_t h_resume(void*c,const alarm_sleep_v1*in){(void)c;h_safe();assert(
 static bool h_health(risc_runtime_health_v1*out){h_io();out->uptime_ms=(uint32_t)ms;return true;}
 static void h_yield(uint32_t n){h_safe();ms+=n;}
 static bool h_key(void*c,bool*down){(void)c;h_io();if(h_is("key-retained")){h_stop=true;return false;}*down=h_is("held") || (h_is("cancel-prepared")&&h_panel);return true;}
-static bool h_bright(void*c,uint16_t n,uint16_t scale){(void)c;h_safe();assert(scale==100);h_brightness++;h_dark=!n;if(n&&h_is("restore-failure")){h_stop=true;return false;}return true;}
-unsigned portable_quick_brightness(void){h_io();assert(!h_timer());return h_is("off")?0:40;}
+static bool h_bright(void*c,uint16_t n,uint16_t scale){
+ (void)c;h_safe();assert(scale==100&&n<=100&&h_brightness<4);
+ h_brightness_values[h_brightness++]=n;
+ /* A failed setter does not prove a changed physical level, including OFF.
+  * Both hardware and actual alarm-provider I/O are forbidden from this point. */
+ if(h_brightness==2&&h_is("restore-failure")){h_stop=true;forbid=true;return false;}
+ h_level=n;h_dark=!n;return true;
+}
+unsigned portable_quick_brightness(void){h_io();assert(!h_timer());return h_saved_level;}
+static void h_check_brightness(unsigned cycles){
+ assert(h_level==h_saved_level);
+ assert(h_brightness==cycles*2);
+ assert(h_dark==(h_saved_level==0));
+ for(unsigned n=0;n<cycles;n++){
+  assert(h_brightness_values[2*n]==0);
+  assert(h_brightness_values[2*n+1]==h_saved_level);
+ }
+}
 static int32_t h_light(void*c,uint32_t n,risc_light_sleep_result_v1*out){(void)c;(void)out;h_io();assert(h_dark&&h_panel&&h_touch&&h_sd&&sleep_ticket_valid);if(h_is("near")||h_is("future"))assert(n==(h_is("near")?1u:(h_ticket.deadline-h_ticket.rtc_seconds-1u)*1000u));h_light_calls++;
  if(h_is("refused"))return RISC_LIGHT_SLEEP_BUSY;
  if(h_is("native-unsupported"))return RISC_LIGHT_SLEEP_UNSUPPORTED;
@@ -145,13 +163,21 @@ static void h_setup(void){epoch=INT64_C(946684800)+date(2026,10,5,12,0,0);boot(t
  if(h_is("step-retained"))read_result=RISC_REALTIME_CONTEXT;
  if(h_is("storage-retained"))get_result=RISC_BOUND_KEY_VALUE_CONTEXT;
 }
-int main(int argc,char**argv){assert(argc==2);h_route="light";h_case=argv[1];h_setup();
+int main(int argc,char**argv){assert(argc==2||argc==3);h_route="light";h_case=argv[1];
+ h_saved_level=h_is("off")?0:40;
+ if(argc==3){assert(!h_is("off"));assert(!strcmp(argv[2],"0")||!strcmp(argv[2],"40")||!strcmp(argv[2],"73"));h_saved_level=(unsigned)strtoul(argv[2],NULL,10);}
+ h_level=h_saved_level;h_dark=!h_level;h_setup();
  bool malformed=alarm_service_descriptor(&h_service.base)==NULL;
  const portable_idle_sleep_ui ui={&h_service,h_ui_begin,h_ui_restore};
  int result=h_is("no-ui")?portable_app_idle_sleep(&h_runtime,&h_display.history.base,NULL,&h_service.base):
   portable_app_idle_sleep_with_ui(&h_runtime,&h_display.history.base,NULL,&h_service.base,&ui);
  if(h_stop){
   assert(result==-2&&(h_grants||h_is("ui-restore-retained")));
+  if(h_is("restore-failure")){
+   assert(h_brightness==2&&h_brightness_values[0]==0&&h_brightness_values[1]==h_saved_level);
+   assert(h_dark&&h_level==0&&h_grants==6&&!h_releases);
+   assert(!h_panel&&!h_touch&&!h_sd&&h_ui_visible&&!h_ui_restore_calls);
+  }
   if(h_is("panel-retained"))assert(h_ui_begin_calls==1&&h_ui_visible&&!h_ui_restore_calls);
   if(h_is("acquire-retained")||h_is("wifi-retained")||h_is("bt-retained")||h_is("prepare-retained"))assert(!h_ui_begin_calls);
   printf("%s retained with no subsequent I/O; pre-sleep image may remain=%u PASS\n",h_case,h_ui_visible);return 0;
@@ -163,10 +189,12 @@ int main(int argc,char**argv){assert(argc==2);h_route="light";h_case=argv[1];h_s
  else if(h_is("refused")||h_is("native-unsupported")){assert(h_light_calls==1&&!h_resumes&&result==0);}
  else if(h_is("descriptor-changed")){assert(h_light_calls==1&&!h_resumes&&result==-1);}
  else {assert(h_light_calls==1&&h_resumes==1);assert(result==((h_is("resume-rtc")||h_is("resume-backward")||h_is("ticket-stale"))?-1:1));}
- if(h_is("repeat")){alarm_sleep_v1 prior=h_ticket;assert(portable_app_idle_sleep(&h_runtime,&h_display.history.base,NULL,&h_service.base)==1);assert(h_resumes==2&&h_light_calls==2&&!h_grants);assert(alarm_service_resume(client,&prior)==ALARM_STALE);}
+ bool untouched=malformed||h_is("unsupported-resume")||h_is("ui-refused")||h_is("due")||h_is("held");
+ h_check_brightness(untouched?0:1);
+ if(h_is("repeat")){alarm_sleep_v1 prior=h_ticket;assert(portable_app_idle_sleep(&h_runtime,&h_display.history.base,NULL,&h_service.base)==1);assert(h_resumes==2&&h_light_calls==2&&!h_grants);assert(alarm_service_resume(client,&prior)==ALARM_STALE);h_check_brightness(2);}
  if(h_is("off"))assert(h_dark);
  if(h_is("no-ui"))assert(!h_ui_begin_calls&&!h_ui_restore_calls);
  else if(h_is("ui-refused"))assert(h_ui_begin_calls==1&&!h_ui_restore_calls);
  else assert(h_ui_begin_calls==h_ui_restore_calls);
- assert(provider->quiesce());printf("%s actual alarm provider + reversible idle helper PASS\n",h_case);return 0;
+ assert(provider->quiesce());printf("%s level=%u actual alarm provider + reversible idle helper PASS\n",h_case,h_saved_level);return 0;
 }
