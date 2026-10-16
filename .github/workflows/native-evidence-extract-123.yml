@@ -1,0 +1,38 @@
+name: Extract existing X4 0.1.123 failed link evidence
+on:
+  push:
+    branches: [work/x4-evidence-extract-123]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  extract:
+    if: github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Validate bounded extraction controls
+        run: python -B tests/test_extract_native_ci_evidence.py
+      - name: Read and verify exact existing artifact, then extract bounded files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          gh api repos/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/actions/artifacts/12075952814 > artifact.json
+          python "$GITHUB_WORKSPACE/scripts/extract_native_ci_evidence.py" --help > /dev/null
+          gh api repos/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/actions/artifacts/12075952814/zip > artifact.zip
+          python "$GITHUB_WORKSPACE/scripts/extract_native_ci_evidence.py" artifact.zip artifact.json selected
+      - name: Preserve bounded exact linked evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-failed-link-evidence-38967581920-e78a6734688a01b81108e54a172cc124960ff8ce
+          path: ${{ runner.temp }}/selected/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
