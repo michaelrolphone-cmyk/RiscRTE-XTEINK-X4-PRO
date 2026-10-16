@@ -1,0 +1,3 @@
+Excluded linker-emitted trailing R_XTENSA_NONE entries: 1
+Native ELF structural validation tests passed
+Paper default clock: target structural validation and imports/exports passed

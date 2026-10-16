@@ -30,3 +30,11 @@ host=['--desk-clock','--sparse-start','--desk-lock-home','--desk-points-face','-
 cmd=list(map(str,[sys.executable,system/'scripts/build_paper_clock.py',*host,'--output-dir',r/'home']))
 (r/'command.json').write_text(json.dumps({'command':cmd,'extra_define':'PORTABLE_ALARM_BUSY_DEFER'},indent=2)+'\n')
 subprocess.run(cmd,check=True,env=dict(os.environ,NATIVE_APP_CC=str(wrapper)))
+# The compiler wrapper contributes to the actual target profile. Keep it in
+# the downstream evidence consumed by host-composition qualification as well.
+evidence_path=r/'home/build-evidence.json'
+evidence=json.loads(evidence_path.read_text())
+extra='-DPORTABLE_ALARM_BUSY_DEFER'
+if extra not in evidence['build_defines']:evidence['build_defines'].append(extra)
+evidence['compiler_wrapper_defines']=[extra]
+evidence_path.write_text(json.dumps(evidence,indent=2)+'\n')

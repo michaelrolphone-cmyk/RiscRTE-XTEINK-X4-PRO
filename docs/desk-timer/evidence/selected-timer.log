@@ -1,0 +1,3 @@
+normal: RF-only resident Home TIMER, 408-byte reuse and terminal fences PASS
+asan-ubsan: RF-only resident Home TIMER, 408-byte reuse and terminal fences PASS
+64 actual RF-only resident TIMER cases PASS

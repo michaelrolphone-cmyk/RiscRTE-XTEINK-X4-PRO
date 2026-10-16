@@ -1,0 +1,1 @@
+PASS: 896 injected-minute updates, seven faces, two orientations, 32 cycles and refresh-counter rollover; normal/ASan+UBSan byte-identical
