@@ -1,0 +1,68 @@
+name: X4 idle frontlight qualification
+on:
+  push:
+    branches: [main, test/x4-idle-frontlight-levels-20261016]
+    paths:
+      - minimal/apps/portable_idle_sleep.c
+      - minimal/test/idle_alarm_sleep_test.c
+      - minimal/test/run_idle_alarm_sleep_test.py
+      - minimal/interfaces/**
+      - .github/workflows/idle-frontlight-qualification.yml
+  pull_request:
+    paths:
+      - minimal/apps/portable_idle_sleep.c
+      - minimal/test/idle_alarm_sleep_test.c
+      - minimal/test/run_idle_alarm_sleep_test.py
+      - minimal/interfaces/**
+      - .github/workflows/idle-frontlight-qualification.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-levels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+          ref: 09400a550562ca9568ac7ab664ba3222eeedf2c8
+          path: deps/system
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: a91edf3fada6a559ec107186dd163d0c8da10d29
+          path: deps/runtime
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Utilities
+          ref: dcbad832cff91f7988a8e43d84725650b9815953
+          fetch-depth: 0
+          path: deps/utilities
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: c98e4222048244b1e729869ed47aa99130025fd3
+          path: deps/reader
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compose source-owned driver extensions
+        run: |
+          mkdir -p evidence/driver-sdk
+          cp -a deps/reader/sdk/driver/. evidence/driver-sdk/
+          cp -a minimal/interfaces/. evidence/driver-sdk/
+      - name: Qualify exact levels and negative controls (normal and ASan/UBSan)
+        run: |
+          set -o pipefail
+          python minimal/test/run_idle_alarm_sleep_test.py --system deps/system --runtime deps/runtime --utilities deps/utilities --driver-sdk evidence/driver-sdk --output evidence/idle-frontlight | tee evidence/qualification.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: x4-idle-frontlight-qualification
+          path: |
+            evidence/idle-frontlight/receipt.json
+            evidence/qualification.log
+          if-no-files-found: error
+          retention-days: 30
