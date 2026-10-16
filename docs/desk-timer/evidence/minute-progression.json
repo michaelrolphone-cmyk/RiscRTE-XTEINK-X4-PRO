@@ -1,0 +1,16 @@
+{
+  "process_cases": 896,
+  "faces": 7,
+  "orientations": 2,
+  "cycles_per_face": 32,
+  "minute_step_seconds": 60,
+  "refresh_counter_period": 30,
+  "normal_sanitized_pixels_and_records": "identical",
+  "timer_proof_sha256": "2f6a9a6c024c4183fca7fc7737eefa97c65236990c468c26c806423cd83f2619",
+  "fixture_sha256": {
+    "normal": "8891c61e9afc7e3328e2a7df9685b7944b9d8a5297ff554d6613f9dd9e8f234e",
+    "asan-ubsan": "8a4004f593d880342bb36419dc3e321bbcde53380fa69c17275c22279233e596"
+  },
+  "hardware": "not run",
+  "boundary": "Actual delivered Home source; injected next-minute RTC, synthetic provider/sleep callbacks. Programmed sleep interval and CLEAN intent are not measured."
+}
