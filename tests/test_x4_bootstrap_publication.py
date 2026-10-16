@@ -165,6 +165,8 @@ class FakeGithub:
         self.corrupt_readback = False
         self.bad_source = False
         self.public_unavailable = False
+        self.mutate_evidence_on_create = False
+        self.mutate_evidence_on_upload = False
 
     def json(self, endpoint, method='GET', body=None):
         self.calls.append((method, endpoint, body))
@@ -233,11 +235,15 @@ class FakeGithub:
             assert self.tag['object']['sha'] == self.f['c']['source_revision']
             assert '--draft' in args and '--verify-tag' in args
             self.release = dict(id=1, tag_name=p.TAG, draft=True, prerelease=True)
+            if self.mutate_evidence_on_create:
+                (Path(args[args.index('--notes-file') + 1]).parent / p.REPRODUCIBILITY).write_bytes(b'changed after verification')
         elif args[:2] == ('release', 'upload'):
             assert '--clobber' not in args
             for path in args[3:args.index('--repo')]:
                 path = Path(path)
                 assert path.name not in self.assets
+                if self.mutate_evidence_on_upload and path.name == p.REPRODUCIBILITY:
+                    path.write_bytes(b'changed during upload')
                 self.assets[path.name] = path.read_bytes()
         elif args[:2] == ('release', 'edit'):
             self.release['draft'] = False
@@ -447,13 +453,41 @@ class PublicationTests(unittest.TestCase):
             p.verify_output(output, checksum, PUBLISHER)
             self.assertEqual((output / 'candidate-evidence.zip').read_bytes(), self.f['archives']['candidate'])
             self.assertEqual((output / 'qualification-evidence.zip').read_bytes(), self.f['archives']['qualification'])
+            self.assertEqual((output / p.REPRODUCIBILITY).read_bytes(), self.f['archives']['reproducibility'])
             self.assertEqual((output / p.SD).read_bytes(), self.f['files'][p.SD])
             self.assertEqual((output / 'native-packages-v1.json').read_bytes(), self.f['files']['feed/native-packages-v1.json'])
             notes = (output / 'RELEASE-NOTES.txt').read_text()
             self.assertIn('erases internal saved settings and data', notes)
             self.assertIn('do not format the card or delete unrelated', notes)
             self.assertFalse(any(row[0] in ('POST', 'COMMAND') for row in api.calls))
-            self.assertEqual(sum(row[0] == 'DOWNLOAD' for row in api.calls), 2)
+            self.assertEqual(sum(row[0] == 'DOWNLOAD' for row in api.calls), 3)
+
+    def test_reproducibility_is_opaque_streamed_and_not_loaded_in_memory(self):
+        # The fixture's reproducibility bytes deliberately are not a ZIP. They
+        # must be preserved opaquely and never be passed to the ZIP parser.
+        original = Path.read_bytes
+        def read_small(path):
+            if path.name == p.REPRODUCIBILITY:
+                raise AssertionError('Complete evidence must be streamed, never read_bytes()')
+            return original(path)
+        with tempfile.TemporaryDirectory() as directory, patch.object(Path, 'read_bytes', read_small):
+            _, _, output, checksum = self.stage_fixture(Path(directory))
+            _, files = p.verify_output(output, checksum, PUBLISHER)
+            self.assertIsInstance(files[p.REPRODUCIBILITY], Path)
+            self.assertEqual(p.file_record(files[p.REPRODUCIBILITY]), p.record(self.f['archives']['reproducibility']))
+
+    def test_complete_evidence_digest_and_bound_fail_closed(self):
+        self.f['archives']['reproducibility'] = b'wrong'
+        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(ValueError, 'reproducibility artifact digest'):
+            self.stage_fixture(Path(directory))
+        c = copy.deepcopy(self.f['c']); c['artifacts']['reproducibility']['bytes'] = p.MAX_EVIDENCE + 1
+        with self.assertRaisesRegex(ValueError, 'artifact pin'): p.final_contract(c)
+
+    def test_streaming_file_hash_and_size_bound(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'opaque'; path.write_bytes(b'original evidence')
+            self.assertEqual(p.file_record(path), p.record(b'original evidence'))
+            with self.assertRaisesRegex(ValueError, 'bound'): p.file_record(path, limit=2)
 
     def test_mismatched_downloaded_artifact_rejected(self):
         self.f['archives']['candidate'] += b'changed'
@@ -477,7 +511,7 @@ class PublicationTests(unittest.TestCase):
             self.assertEqual(api.tag['object']['sha'], self.f['c']['source_revision'])
             self.assertNotEqual(api.tag['object']['sha'], PUBLISHER)
             self.assertFalse(api.release['draft'])
-            self.assertEqual(sum(row[0] == 'DOWNLOAD' for row in api.calls), 2 + len(api.assets))
+            self.assertEqual(sum(row[0] == 'DOWNLOAD' for row in api.calls), 3 + len(api.assets))
             self.assertEqual(sum(row[0] == 'PUBLIC' for row in api.calls), len(api.assets))
             commands = [row[1] for row in api.calls if row[0] == 'COMMAND']
             self.assertEqual([row[1] for row in commands], ['create', 'upload', 'edit'])
@@ -501,6 +535,18 @@ class PublicationTests(unittest.TestCase):
             self.assertTrue(api.release['draft'])
             self.assertFalse(any(row[0] == 'COMMAND' and row[1][:2] == ('release', 'edit') for row in api.calls))
 
+    def test_complete_evidence_mutation_after_verification_never_publishes(self):
+        for when in ('create', 'upload'):
+            with self.subTest(when=when), tempfile.TemporaryDirectory() as directory, self.environment():
+                contract, api, output, checksum = self.stage_fixture(Path(directory), enabled=True)
+                setattr(api, 'mutate_evidence_on_' + when, True)
+                with self.assertRaises(ValueError):
+                    p.publish(contract, PUBLISHER, output, checksum, api)
+                self.assertTrue(api.release['draft'])
+                self.assertFalse(any(row[0] == 'COMMAND' and row[1][:2] == ('release', 'edit') for row in api.calls))
+                if when == 'create':
+                    self.assertFalse(api.assets)
+
     def test_authenticated_success_does_not_mask_unavailable_public_feed(self):
         with tempfile.TemporaryDirectory() as directory, self.environment():
             contract, api, output, checksum = self.stage_fixture(Path(directory), enabled=True)
@@ -508,7 +554,7 @@ class PublicationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Public URL unavailable'):
                 p.publish(contract, PUBLISHER, output, checksum, api)
             self.assertFalse(api.release['draft'])
-            self.assertEqual(sum(row[0] == 'DOWNLOAD' for row in api.calls), 2 + len(api.assets))
+            self.assertEqual(sum(row[0] == 'DOWNLOAD' for row in api.calls), 3 + len(api.assets))
             self.assertEqual(sum(row[0] == 'PUBLIC' for row in api.calls), 1)
 
     def test_public_transport_rejects_wrong_origin_before_network(self):

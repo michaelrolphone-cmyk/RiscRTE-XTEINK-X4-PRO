@@ -35,10 +35,12 @@ size and hash; merge/replace matching paths without deleting unrelated files.
    inventory. Artifact hashes refer to the original downloaded ZIP bytes.
 3. Set `finalized: true` with `publication_enabled: false`. Push to the dedicated
    publisher branch to run guards and bounded transport without release writes.
-   Stage verifies live official API provenance and downloads only qualification
-   and candidate artifacts (each at most 512 MiB). The reproducibility archive's
-   ID/size/API digest is pinned and verified, but that larger archive is not
-   downloaded or republished by this bounded transport.
+   Stage verifies live official API provenance. Qualification and candidate
+   archives each have a 512 MiB transport bound and bounded ZIP inspection. The
+   complete reproducibility ZIP has a separate compressed-byte bound strictly
+   below 2 GiB. It is streamed, SHA-256 checked and retained byte-for-byte as
+   `reproducibility-evidence.zip`, without expansion or repacking. This preserves
+   the full source/SDK/build evidence beyond the original Actions retention.
 4. Review the staged exact bytes and warning. Publication is a separate approved
    change of `publication_enabled` to true. Do not modify qualification or feed
    files to make a failing check pass. A mismatched shape must be investigated.
@@ -47,7 +49,8 @@ size and hash; merge/replace matching paths without deleting unrelated files.
    a draft prerelease. It uploads without `--clobber`, verifies the entire asset
    inventory and redownloads every byte before making the draft public. It then
    redownloads and verifies every public release asset again without credentials,
-   directly from its frozen HTTPS URL (HTTPS-only redirects, bounded bytes/time).
+   directly from its frozen HTTPS URL (HTTPS-only redirects, bounded bytes/time). Large evidence readback is streamed; it is never loaded
+   as a single in-memory value or extracted.
    The public check cannot be satisfied by authenticated API access. API errors fail
    closed. No cleanup, replacement, deletion or automatic resume is attempted.
 

@@ -14,6 +14,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 import stat
 import subprocess
 import tempfile
@@ -46,6 +47,8 @@ STEPS = ('Product host and current Home integration gates',
          'Upload candidate delivery assets', 'Upload complete reproducibility evidence')
 MAX_ARCHIVE = 512 * 1024**2
 MAX_EXPANSION = 1024 * 1024**2
+MAX_EVIDENCE = 2 * 1024**3 - 1  # GitHub individual release assets must be smaller than 2 GiB.
+REPRODUCIBILITY = 'reproducibility-evidence.zip'
 
 
 def require(ok, message):
@@ -53,12 +56,25 @@ def require(ok, message):
         raise ValueError(message)
 
 
+def file_record(path, limit=MAX_EVIDENCE):
+    require(path.is_file() and not path.is_symlink() and 0 < path.stat().st_size <= limit,
+            'Evidence is missing, nonregular or exceeds bound')
+    digest, count = hashlib.sha256(), 0
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            count += len(block)
+            require(count <= limit, 'Evidence exceeds streaming byte bound')
+            digest.update(block)
+    require(count == path.stat().st_size, 'Evidence size changed while hashing')
+    return dict(bytes=count, sha256=digest.hexdigest())
+
+
 def sha(raw):
-    return hashlib.sha256(raw).hexdigest()
+    return file_record(raw)['sha256'] if isinstance(raw, Path) else hashlib.sha256(raw).hexdigest()
 
 
 def record(raw):
-    return dict(bytes=len(raw), sha256=sha(raw))
+    return file_record(raw) if isinstance(raw, Path) else dict(bytes=len(raw), sha256=sha(raw))
 
 
 def encoded(value):
@@ -121,7 +137,8 @@ def final_contract(c, publish=False):
     for role, row in c['artifacts'].items():
         require(set(row) == {'id', 'name', 'bytes', 'sha256'} and positive(row['id']) and
                 positive(row['bytes']) and hex_value(row['sha256']) and
-                row['name'] == 'x4-native-provision-123-' + role + '-' + c['source_revision'], 'Invalid artifact pin')
+                row['name'] == 'x4-native-provision-123-' + role + '-' + c['source_revision'] and
+                row['bytes'] <= (MAX_EVIDENCE if role == 'reproducibility' else MAX_ARCHIVE), 'Invalid artifact pin')
     require(len({row['id'] for row in c['artifacts'].values()}) == 3, 'Duplicate artifact IDs')
     for key in ('qualification_sha256', 'baseline_sha256', 'source_inputs_sha256', 'candidate_checksums_sha256'):
         require(hex_value(c[key]), 'Unresolved digest: ' + key)
@@ -405,7 +422,7 @@ class Github:
             require(response.status == 200, 'Public download did not succeed')
             for block in iter(lambda: response.read(1024 * 1024), b''):
                 count += len(block)
-                require(count <= max_bytes and time.monotonic() - start <= 180,
+                require(count <= max_bytes and time.monotonic() - start <= (900 if max_bytes > MAX_ARCHIVE else 180),
                         'Public download exceeds byte/time bound')
                 output.write(block)
 
@@ -440,14 +457,16 @@ def verify_output(output, checksum_sha, publisher_sha):
     for path in output.iterdir():
         safe_name(path.name, flat=True)
         require(path.is_file() and not path.is_symlink(), 'Nonregular release asset')
-        files[path.name] = path.read_bytes()
+        files[path.name] = path if path.name == REPRODUCIBILITY else path.read_bytes()
     require(sha(files['SHA256SUMS']) == checksum_sha, 'Staged checksum identity differs')
     verify_sums(files['SHA256SUMS'], {k: v for k, v in files.items() if k != 'SHA256SUMS'})
     release = decode(files['release.json'])
     c = final_contract(decode(files['transport-contract.json']))
     require(release['publisher_revision'] == publisher_sha and release['compiled_product_revision'] == c['source_revision'] and
             release['release_tag'] == TAG and release['rebuilt'] is False and release['evidence_repacked'] is False and
-            release['limits'] == LIMITS and release['assets'] ==
+            release['limits'] == LIMITS and REPRODUCIBILITY in files and
+            record(files[REPRODUCIBILITY]) == {k: c['artifacts']['reproducibility'][k] for k in ('bytes', 'sha256')} and
+            release['assets'] ==
             {k: record(v) for k, v in files.items() if k not in ('release.json', 'SHA256SUMS')}, 'Output custody differs')
     require(b'erases internal saved settings and data' in files['RELEASE-NOTES.txt'], 'Factory erasure warning missing')
     return c, files
@@ -481,6 +500,15 @@ def stage(contract_path, publisher_sha, output, api=None):
         assets.update(metadata)
         assets.update({'candidate-evidence.zip': archives['candidate'], 'qualification-evidence.zip': archives['qualification'],
                        'transport-contract.json': contract_bytes, 'feed-receipt.json': files['feed/receipt.json']})
+        # Preserve the full original archive beyond Actions retention. Treat it
+        # as opaque bytes: never open/extract/repack the SDK/build evidence ZIP.
+        pin = c['artifacts']['reproducibility']
+        complete = Path(temporary) / REPRODUCIBILITY
+        api.download('repos/' + REPOSITORY + '/actions/artifacts/%d/zip' % pin['id'], complete, pin['bytes'])
+        require(file_record(complete) == {k: pin[k] for k in ('bytes', 'sha256')},
+                'Complete reproducibility artifact digest differs')
+        output.mkdir(parents=True)
+        shutil.move(str(complete), output / REPRODUCIBILITY)
     assets['RELEASE-NOTES.txt'] = ("X4 0.1.123 native ESP-IDF 6.1 provisioning bootstrap candidate\n\n"
         "Software-qualified; hardware testing is pending.\n"
         "WARNING: flashing factory-candidate-erases-data-0x0.bin at 0x0 erases internal saved settings and data.\n"
@@ -491,14 +519,16 @@ def stage(contract_path, publisher_sha, output, api=None):
         "do not format the card or delete unrelated books, ROMs, saves or settings.\n"
         "Individual feed mirrors retain their admitted paths and exact bytes. Ordinary file writes preserve unrelated paths.\n"
         "The selected device-MSC SD workflow is retained. RTEF1 is not a firmware flashing or package installer protocol.\n"
-        "The original candidate and qualification ZIPs are copied byte-for-byte. Reproducibility artifact custody is pinned in the contract.\n"
+        "The original candidate, qualification and complete reproducibility ZIPs are copied byte-for-byte.\n"
         "A later paired firmware/full-payload release requires confirmed installation of this bootstrap.\n\n"
         "Feed: " + BASE + "native-packages-v1.json\n").encode()
     assets['release.json'] = encoded(dict(schema=1, release_tag=TAG, publisher_revision=publisher_sha,
         compiled_product_revision=c['source_revision'], producer_run=c['run'], artifacts=c['artifacts'],
-        rebuilt=False, evidence_repacked=False, limits=LIMITS, assets={k: record(v) for k, v in sorted(assets.items())}))
-    assets['SHA256SUMS'] = ''.join(sha(raw) + '  ' + name + '\n' for name, raw in sorted(assets.items())).encode()
-    output.mkdir(parents=True)
+        rebuilt=False, evidence_repacked=False, limits=LIMITS,
+        assets={**{k: record(v) for k, v in sorted(assets.items())}, REPRODUCIBILITY: file_record(output / REPRODUCIBILITY)}))
+    checksums = {k: sha(v) for k, v in assets.items()}
+    checksums[REPRODUCIBILITY] = sha(output / REPRODUCIBILITY)
+    assets['SHA256SUMS'] = ''.join(digest + '  ' + name + '\n' for name, digest in sorted(checksums.items())).encode()
     for name, raw in assets.items():
         safe_name(name, flat=True)
         (output / name).write_bytes(raw)
@@ -525,17 +555,19 @@ def verify_remote(api, release, files, c, *, draft):
     with tempfile.TemporaryDirectory(prefix='x4-bootstrap-readback-') as temporary:
         for row in assets:
             name = safe_name(row['name'], flat=True)
-            require(row['state'] == 'uploaded' and row['size'] == len(files[name]) and
+            expected = ({k: c['artifacts']['reproducibility'][k] for k in ('bytes', 'sha256')}
+                        if name == REPRODUCIBILITY else record(files[name]))
+            require(row['state'] == 'uploaded' and row['size'] == expected['bytes'] and
                     row.get('browser_download_url') == BASE + name, 'Remote asset size/URL differs')
             if row.get('digest') is not None:
-                require(row['digest'] == 'sha256:' + sha(files[name]), 'Remote asset digest differs')
+                require(row['digest'] == 'sha256:' + expected['sha256'], 'Remote asset digest differs')
             path = Path(temporary) / name
             if draft:
-                api.download('repos/' + REPOSITORY + '/releases/assets/%d' % row['id'], path, len(files[name]),
+                api.download('repos/' + REPOSITORY + '/releases/assets/%d' % row['id'], path, expected['bytes'],
                              accept='application/octet-stream')
             else:
-                api.public_download(row['browser_download_url'], path, len(files[name]))
-            require(path.read_bytes() == files[name], 'Redownloaded release bytes differ: ' + name)
+                api.public_download(row['browser_download_url'], path, expected['bytes'])
+            require(file_record(path) == expected, 'Redownloaded release bytes differ: ' + name)
 
 
 def publish(contract_path, publisher_sha, output, checksum_sha, api=None):
@@ -548,6 +580,8 @@ def publish(contract_path, publisher_sha, output, checksum_sha, api=None):
     require(c == approved and files['transport-contract.json'] == contract_path.read_bytes(), 'Staged contract differs')
     api = api or Github()
     official_inputs(api, c)  # Recheck official successful source/run/artifact metadata before mutation.
+    expected_evidence = {k: c['artifacts']['reproducibility'][k] for k in ('bytes', 'sha256')}
+    require(file_record(files[REPRODUCIBILITY]) == expected_evidence, 'Local complete evidence changed before publication')
     no_existing_target(api)
     ref = api.json('repos/' + REPOSITORY + '/git/refs', method='POST',
                    body={'ref': 'refs/tags/' + TAG, 'sha': c['source_revision']})
@@ -557,6 +591,7 @@ def publish(contract_path, publisher_sha, output, checksum_sha, api=None):
     api.command('release', 'create', TAG, '--repo', REPOSITORY, '--verify-tag', '--target', c['source_revision'],
                 '--draft', '--prerelease', '--latest=false', '--title', 'X4 0.1.123 native provisioning bootstrap (hardware pending)',
                 '--notes-file', str(output / 'RELEASE-NOTES.txt'))
+    require(file_record(files[REPRODUCIBILITY]) == expected_evidence, 'Local complete evidence changed before upload')
     api.command('release', 'upload', TAG, *[str(output / name) for name in sorted(files)], '--repo', REPOSITORY)
     # The tag-name endpoint is documented for published releases. Authenticated
     # listings include drafts; bind the unique created release ID before upload verification.
