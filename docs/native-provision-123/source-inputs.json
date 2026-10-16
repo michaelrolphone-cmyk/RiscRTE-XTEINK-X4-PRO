@@ -1,0 +1,33 @@
+{
+  "candidate_version": "0.1.123",
+  "feed_base_url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-native-provision-0.1.123/",
+  "publication_enabled": false,
+  "schema": 1,
+  "sources": {
+    "drivers": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Drivers",
+      "revision": "5890721073ebabd781d5d278e447c761947a5c58"
+    },
+    "image_helper": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-T-Watch-S3",
+      "revision": "74f7491dc470b92dfa41fce41bf0c500f3714a94"
+    },
+    "reader": {
+      "repository": "michaelrolphone-cmyk/T5S3-Reader",
+      "revision": "c98e4222048244b1e729869ed47aa99130025fd3"
+    },
+    "runtime": {
+      "repository": "michaelrolphone-cmyk/RiscRTE",
+      "revision": "6a3b3d46f5b2857eacc6e9863799dec1f466b036"
+    },
+    "system": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-System-Apps",
+      "revision": "0651a55513b0aa0dff1b6a9072303def08a97378"
+    },
+    "utilities": {
+      "repository": "michaelrolphone-cmyk/RiscRTE-Utilities",
+      "revision": "e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d"
+    }
+  },
+  "time_server": "pool.ntp.org"
+}
