@@ -99,7 +99,10 @@ def main():
         path.write_text(source)
         mutation_sources[name] = path
     env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0', UBSAN_OPTIONS='halt_on_error=1')
-    runs, negatives, inputs, commands = [], [], {}, []
+    inputs = {path: digest(path) for path in (Path(__file__).resolve(),
+              args.system / 'scripts/portable_idle_build.py',
+              args.system / 'scripts/portable_alarm_build.py')}
+    runs, negatives, commands = [], [], []
     for sanitized in (False, True):
         mode = 'sanitized' if sanitized else 'normal'
         flags = ['-std=c11', '-O1', '-g', '-Wall', '-Wextra', '-Werror',
@@ -151,10 +154,11 @@ def main():
                         negatives.append({'mode': mode, 'mutation': name, 'case': case,
                                           'level': level, 'result': 'rejected by level/count assertion',
                                           'diagnostic': result.stderr.strip()})
-    for path in (Path(__file__).resolve(), args.system / 'scripts/portable_idle_build.py',
-                 args.system / 'scripts/portable_alarm_build.py'):
-        inputs[path] = digest(path)
-    assert all(digest(path) == value for path, value in inputs.items()), 'Test input changed during matrix'
+    for path, value in inputs.items():
+        if digest(path) != value:
+            raise RuntimeError('Test input changed during matrix: ' + str(path))
+    if helper.read_text() != original:
+        raise RuntimeError('Production source must remain unchanged')
     revisions = {}
     for name, path in [('x4', ROOT), ('system', args.system), ('runtime', args.runtime),
                        ('utilities', args.utilities)]:
@@ -170,7 +174,6 @@ def main():
         'commands': commands, 'runs': runs, 'negative_controls': negatives,
     }
     (out / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
-    assert helper.read_text() == original, 'Production source must remain unchanged'
     print(f'{len(runs)} normal/sanitizer scenarios + {len(negatives)} rejected negative controls PASS')
 
 

@@ -5,7 +5,6 @@ This is test-only qualification of the unchanged production
 service via its production test fixture. Hardware and Runtime calls are fixtures;
 the saved brightness input is controlled by the test. This does not qualify a
 physical panel, preference persistence, the full resident UI, or deep/GPIO wake.
-No package, firmware version, Runtime source, or release bytes change.
 
 ## Assertions
 
@@ -51,6 +50,4 @@ instead of overlaying every raw Reader driver header. It builds host tests only.
 
 `receipt.json` records the production helper hash, exact compiler dependencies
 and their hashes, compiler commands, positive outcomes and the negative-control
-assertion diagnostics. CI runs on the PR and on changed `main`, and uploads only
-this receipt and the text log. Release producer identity and delivered Home byte
-hash evidence remain separate from this additive test commit.
+assertion diagnostics. CI runs on the PR and on changed `main`.
