@@ -197,7 +197,7 @@
   },
   "finalized": true,
   "publication_branch": "work/x4-bootstrap-release-123",
-  "publication_enabled": false,
+  "publication_enabled": true,
   "qualification_recovery": {
     "admission_inputs_artifact": {
       "bytes": 15540571,
