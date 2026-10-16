@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "finalized": false,
+  "publication_enabled": false,
+  "disabled_reason": "Awaiting a successful exact-source native run, independent qualification review, and immutable artifact/source/feed pins. Failed run 38965239367 is not eligible.",
+  "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+  "version": "0.1.123",
+  "release_tag": "test-native-provision-0.1.123",
+  "publication_branch": "work/x4-bootstrap-release-123",
+  "feed_base_url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-native-provision-0.1.123/",
+  "source_revision": null,
+  "source_tree": null,
+  "sources": {},
+  "run": {
+    "id": null,
+    "attempt": null,
+    "workflow_id": null,
+    "job_id": null,
+    "event": null,
+    "pull_request": null,
+    "head_branch": null,
+    "workflow_path": ".github/workflows/native-provision-123.yml",
+    "workflow_sha256": null
+  },
+  "artifacts": {},
+  "qualification_sha256": null,
+  "baseline_sha256": null,
+  "source_inputs_sha256": null,
+  "candidate_checksums_sha256": null,
+  "candidate_artifacts": {},
+  "feed_files": {}
+}

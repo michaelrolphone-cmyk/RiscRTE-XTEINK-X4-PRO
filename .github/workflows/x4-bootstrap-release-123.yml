@@ -1,0 +1,110 @@
+# Transport exact qualified CI bytes. No native build or hardware operation.
+name: X4 0.1.123 guarded bootstrap publication
+on:
+  push:
+    branches: [work/x4-bootstrap-release-123]
+    paths:
+      - '.github/workflows/x4-bootstrap-release-123.yml'
+      - 'scripts/publish_x4_bootstrap.py'
+      - 'tests/test_x4_bootstrap_publication.py'
+      - 'release/x4-bootstrap-123/**'
+  pull_request:
+    paths:
+      - '.github/workflows/x4-bootstrap-release-123.yml'
+      - 'scripts/publish_x4_bootstrap.py'
+      - 'tests/test_x4_bootstrap_publication.py'
+      - 'release/x4-bootstrap-123/**'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: x4-bootstrap-release-0.1.123
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  CONTRACT: release/x4-bootstrap-123/contract.json
+jobs:
+  guards:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      finalized: ${{ steps.pins.outputs.finalized }}
+      publication_enabled: ${{ steps.pins.outputs.publication_enabled }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: python3 tests/test_x4_bootstrap_publication.py
+      - id: pins
+        run: |
+          python3 - <<'PY'
+          import os, sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          import publish_x4_bootstrap as p
+          c = p.decode(Path(os.environ['CONTRACT']).read_bytes())
+          p.require(type(c.get('finalized')) is bool and type(c.get('publication_enabled')) is bool, 'Explicit gates required')
+          if c['finalized']:
+              p.final_contract(c)
+          else:
+              p.require(c['publication_enabled'] is False and bool(c.get('disabled_reason')), 'Incomplete contract must be disabled')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              print('finalized=' + str(c['finalized']).lower(), file=out)
+              print('publication_enabled=' + str(c['publication_enabled']).lower(), file=out)
+          PY
+  stage:
+    needs: guards
+    if: needs.guards.outputs.finalized == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      checksum_sha: ${{ steps.transport.outputs.checksum_sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - id: transport
+        name: Verify official successful source run and exact split artifact bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          digest=$(python3 scripts/publish_x4_bootstrap.py stage --contract "$CONTRACT" --publisher-sha "$GITHUB_SHA" --output release-assets)
+          echo "checksum_sha=$digest" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-bootstrap-publication-${{ github.sha }}
+          path: release-assets/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+  publish:
+    needs: [guards, stage]
+    if: needs.guards.outputs.publication_enabled == 'true' && github.event_name == 'push' && github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO' && github.ref == 'refs/heads/work/x4-bootstrap-release-123'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: x4-bootstrap-publication-${{ github.sha }}
+          path: release-assets
+      - name: Create source-exact draft, verify all uploaded bytes, publish and verify again
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHECKSUM_SHA: ${{ needs.stage.outputs.checksum_sha }}
+        run: |
+          set -euo pipefail
+          python3 scripts/publish_x4_bootstrap.py publish --contract "$CONTRACT" --publisher-sha "$GITHUB_SHA" \
+            --output release-assets --checksum-sha "$CHECKSUM_SHA"
