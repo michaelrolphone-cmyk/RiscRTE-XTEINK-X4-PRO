@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "qualification_enabled": false,
+  "qualification_enabled": true,
   "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
   "source_revision": "93ee386b7e23628f3776edc6cfd2805cf675d649",
   "source_tree": "014a47e12262db66137223c901dab337b0c2a0ad",

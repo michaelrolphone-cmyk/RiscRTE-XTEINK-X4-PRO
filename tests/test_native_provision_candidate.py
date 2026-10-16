@@ -79,6 +79,44 @@ def startup_receipt(runtime, sanitized=False):
 
 
 class Controls(unittest.TestCase):
+    def test_factory_self_admission_and_preserving_rejection(self):
+        import native_provision_qualification as q
+        store_digest = lambda files: p.sha(p.encoded({name: p.sha(data) for name, data in files.items()}))
+        grant = {'capability': 'storage.key-value', 'api': 1, 'instance_id': 6}
+        boot = {'app_capabilities': [{'manifest': 'default.json', 'grants': []},
+                                    {'manifest': 'other.json', 'grants': [grant]}]}
+        before = {'boot.json': p.encoded(boot), 'default.elf': b'old ELF'}
+        boot['app_capabilities'][0]['grants'].append(grant)
+        after = {'boot.json': p.encoded(boot), 'default.elf': b'new ELF'}
+        for fault in (None, 'negative-accepted', 'negative-elf', 'negative-io',
+                      'control-rejected', 'factory-digest', 'factory-incomplete'):
+            calls = []
+            def admit(active, candidate, expected):
+                index = len(calls); calls.append((active, candidate, expected))
+                result = dict(prepared=True, cohort_validated=expected,
+                              elf_count=43 if expected else 0, hardware_calls=0, storage_calls=0,
+                              active_store_sha256=store_digest(active), candidate_store_sha256=store_digest(candidate))
+                if index == 0:
+                    if fault == 'negative-accepted': result['cohort_validated'] = True
+                    if fault == 'negative-elf': result['elf_count'] = 1
+                    if fault == 'negative-io': result['storage_calls'] = 1
+                if index == 1 and fault == 'control-rejected': result['cohort_validated'] = False
+                if index == 2:
+                    if fault == 'factory-digest': result['active_store_sha256'] = '0' * 64
+                    if fault == 'factory-incomplete': result['elf_count'] = 42
+                return result
+            if fault:
+                with self.assertRaises(ValueError): q.factory_admission(admit, before, after, 43, store_digest)
+            else:
+                result = q.factory_admission(admit, before, after, 43, store_digest)
+                self.assertEqual(result['mode'], 'factory-bootstrap-self-admission')
+                self.assertTrue(result['preserving_transition']['expected_rejection'])
+                self.assertFalse(result['preserving_transition']['control_packaged'])
+                self.assertEqual([call[2] for call in calls], [False, True, True])
+                self.assertEqual(calls[2][:2], (after, after))
+                self.assertEqual(json.loads(calls[1][1]['boot.json'])['app_capabilities'][0]['grants'], [])
+                self.assertEqual(json.loads(after['boot.json'])['app_capabilities'][0]['grants'], [grant])
+
     def test_all_linked_owner_workspaces_are_required(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp); tool = root / 'test/prove_native_serial_workspace.py'

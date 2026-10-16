@@ -301,6 +301,101 @@ class Controls(unittest.TestCase):
         self.assertIn('actions: read', text)
         self.assertIn('branches: [work/x4-qualification-recovery-123]', text)
 
+    def staging_fixture(self):
+        original = self.root / 'original'; original.mkdir()
+        (original / 'metadata').mkdir()
+        (original / 'metadata/workflow.yml').write_bytes(self.metadata['workflow'])
+        candidate = self.root / 'candidate'; candidate.mkdir()
+        for name in ('qualification.json', 'source-lock.json', 'SHA256SUMS', 'serial-product-normal.json',
+                     'serial-product-sanitized.json', 'archive-recovery.json', 'archive-contract.json',
+                     'original-build-closure.json', 'original-package-build-receipt.json'):
+            (candidate / name).write_bytes(name.encode())
+        (candidate / 'feed').mkdir(); (candidate / 'feed/catalog.json').write_bytes(b'{}')
+        qualifier = self.root / 'qualifier-metadata'; qualifier.mkdir()
+        for name in ('workflow.yml', 'qualifier-identity.txt', 'qualifier-status.txt', 'qualifier-source.tar.gz'):
+            (qualifier / name).write_bytes(b'new qualifier bytes')
+        logs = self.root / 'recovery-logs'; logs.mkdir(); (logs / 'run.log').write_bytes(b'recovery')
+        proof = self.proof()
+        proof = a.VerifiedArchive(a._TOKEN, proof.contract, proof.archive, proof.metadata, proof.receipt,
+                                 {'metadata/workflow.yml': a.file_record(original / 'metadata/workflow.yml')})
+        (self.evidence / 'reproducibility-evidence.zip').write_bytes(b'opaque original archive skipped here')
+        return proof, original, candidate, qualifier, logs
+
+    def test_staged_evidence_preserves_paths_and_separates_qualifier(self):
+        proof, original, candidate, qualifier, logs = self.staging_fixture()
+        before = (original / 'metadata/workflow.yml').read_bytes()
+        with mock.patch.object(a, 'verify_restored', return_value=proof), \
+             mock.patch.object(a, 'qualification_original_names', return_value=set(proof.inventory)):
+            result = a.stage_qualification(proof, original, candidate, qualifier, logs, self.evidence, self.root / 'staged')
+        staged = self.root / 'staged'
+        self.assertEqual((staged / 'metadata/workflow.yml').read_bytes(), before)
+        self.assertEqual((staged / 'qualifier-metadata/workflow.yml').read_bytes(), b'new qualifier bytes')
+        self.assertEqual((staged / 'candidate/archive-contract.json').read_bytes(), b'archive-contract.json')
+        self.assertFalse((staged / 'recovery-api/reproducibility-evidence.zip').exists())
+        self.assertEqual((original / 'metadata/workflow.yml').read_bytes(), before)
+        self.assertIn('candidate/feed/catalog.json', result['files'])
+        self.assertFalse(result['original_archive_repacked'])
+
+    def test_staged_evidence_is_bounded_disjoint_and_complete(self):
+        proof, original, candidate, qualifier, logs = self.staging_fixture()
+        with mock.patch.object(a, 'verify_restored', return_value=proof), \
+             mock.patch.object(a, 'qualification_original_names', return_value=set(proof.inventory)):
+            with self.assertRaises(ValueError):
+                a.stage_qualification(proof, original, candidate, qualifier, logs, self.evidence, original / 'inside')
+            with mock.patch.object(a, 'MAX_QUALIFICATION', 1):
+                with self.assertRaises(ValueError):
+                    a.stage_qualification(proof, original, candidate, qualifier, logs, self.evidence, self.root / 'oversize')
+            self.assertFalse((self.root / 'oversize').exists())
+            (candidate / 'archive-contract.json').unlink()
+            with self.assertRaises(ValueError):
+                a.stage_qualification(proof, original, candidate, qualifier, logs, self.evidence, self.root / 'missing')
+
+    def test_original_qualification_selection_requires_source_and_workflow_closure(self):
+        with self.assertRaises(ValueError):
+            a.qualification_original_names({'metadata/workflow.yml': {}})
+        source = (a.ROOT / 'scripts/native_provision_archive.py').read_text()
+        for name in ('build/native-build-evidence/source-lock.json', 'source-evidence/sdk-submodules.txt',
+                     'metadata/source-rows.txt', 'metadata/workflow.yml', 'build/riscrte_native.elf'):
+            self.assertIn(name, source)
+
+    def test_failure_diagnostics_are_bounded_streamed_and_non_authoritative(self):
+        _, _, _, qualifier, logs = self.staging_fixture()
+        target = self.root / 'debug'
+        with mock.patch.object(Path, 'read_bytes', side_effect=AssertionError('Diagnostics must stream')):
+            rows = a.stage_debug(qualifier, logs, self.evidence, target)
+        self.assertNotIn('recovery-api/reproducibility-evidence.zip', rows)
+        self.assertFalse((target / 'recovery-api/reproducibility-evidence.zip').exists())
+        receipt = json.loads((target / 'diagnostics-only.json').read_bytes())
+        self.assertTrue(receipt['diagnostics_only'])
+        self.assertFalse(receipt['qualification_authority'])
+        self.assertEqual(receipt['files'], rows)
+        self.assertEqual((target / 'recovery-logs/run.log').read_bytes(), b'recovery')
+
+    def test_failure_diagnostics_reject_bounds_aliases_and_unexpected_members(self):
+        _, _, _, qualifier, logs = self.staging_fixture()
+        for limit in ('MAX_DEBUG', 'MAX_DEBUG_FILES'):
+            with mock.patch.object(a, limit, 1), self.assertRaises(ValueError):
+                a.stage_debug(qualifier, logs, self.evidence, self.root / limit)
+            self.assertFalse((self.root / limit).exists())
+        with self.assertRaises(ValueError):
+            a.stage_debug(qualifier, logs, self.evidence, qualifier / 'inside')
+        (logs / 'alias.log').symlink_to(logs / 'run.log')
+        with self.assertRaises(ValueError):
+            a.stage_debug(qualifier, logs, self.evidence, self.root / 'alias-debug')
+        self.assertFalse((self.root / 'alias-debug').exists())
+
+    def test_failure_only_upload_follows_all_qualification_steps(self):
+        text = (a.ROOT / '.github/workflows/native-provision-123-requalify.yml').read_text()
+        stage = text.index('      - name: Stage bounded failure diagnostics\n')
+        upload = text.index('      - name: Upload bounded failure diagnostics without qualification authority\n')
+        self.assertGreater(stage, text.index('      - name: Upload bounded recovery qualification and source evidence\n'))
+        for block in (text[stage:upload], text[upload:]):
+            self.assertIn("if: ${{ failure() && env.RECOVERY_ROOT != '' }}", block)
+            self.assertNotIn('always()', block)
+            self.assertNotIn('reproducibility-evidence.zip', block)
+        self.assertIn('path: ${{ env.RECOVERY_ROOT }}/failure-diagnostics/', text[upload:])
+        self.assertEqual(text.count('name: x4-native-provision-123-recovery-debug-'), 1)
+
 
 if __name__ == '__main__':
     unittest.main()

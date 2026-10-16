@@ -107,13 +107,18 @@ def verify_packages(proof, sources):
     require(actual == proof.receipt['files'], 'Package output changed after build')
     for row in proof.receipt['compilers'].values():
         require(sha(Path(row['path']).read_bytes()) == row['sha256'], 'Package compiler changed')
-    values = {'default.elf': (proof.root / 'home-build/home/default.elf').read_bytes(),
-              'default.json': (proof.root / 'home-build/home/default.json').read_bytes(),
-              'installed-apps/driver.elf': (proof.root / 'service/driver.elf').read_bytes(),
-              'installed-apps/manifest.json': (proof.root / 'service/manifest.json').read_bytes()}
+    return package_values(proof.root)
+
+
+def package_values(root):
+    """Validate selected package bytes after the caller establishes custody."""
+    values = {'default.elf': (root / 'home-build/home/default.elf').read_bytes(),
+              'default.json': (root / 'home-build/home/default.json').read_bytes(),
+              'installed-apps/driver.elf': (root / 'service/driver.elf').read_bytes(),
+              'installed-apps/manifest.json': (root / 'service/manifest.json').read_bytes()}
     require(len(values['default.elf']) == 623060 and sha(values['default.elf']) == HOME_SHA,
             'Home differs from independently reproduced current GCC8 selection')
-    evidence = json.loads((proof.root / 'service/build.json').read_bytes())
+    evidence = json.loads((root / 'service/build.json').read_bytes())
     cfg = config()
     require(evidence['elf_sha256'] == sha(values['installed-apps/driver.elf']) and
             evidence['service_version'] == '0.15.0' and evidence['internal_packages'] is True and

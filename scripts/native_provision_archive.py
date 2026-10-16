@@ -29,6 +29,9 @@ MAX_EXPANSION = 8 * 1024**3
 MAX_MEMBER = 1024**3
 MAX_MEMBERS = 50000
 MAX_SMALL = 64 * 1024**2
+MAX_QUALIFICATION = 256 * 1024**2
+MAX_DEBUG = 64 * 1024**2
+MAX_DEBUG_FILES = 1000
 CHUNK = 1024**2
 SMALL_FILES = frozenset({
     'build-packages/home-build/home/default.elf',
@@ -384,19 +387,145 @@ def load_verified(archive, metadata_dir, restored_root, contract_path=CONTRACT):
     return verify_restored(verify_local(contract_path, archive, metadata_dir), restored_root)
 
 
+def qualification_original_names(inventory):
+    required = {
+        'build/native-build-evidence/source-lock.json', 'build/compile_commands.json',
+        'build/riscrte_native.elf', 'build/riscrte_native.map',
+        'build/config/sdkconfig.h', 'build/config/sdkconfig.json',
+        'build/platform-capacity-probe/probe.cpp', 'build/platform-capacity-probe/receipt.json',
+        'build/platform-capacity-probe/capacity-32.o', 'build/platform-capacity-probe/capacity-40.o',
+        'build-packages/package-build-receipt.json',
+        'metadata/workflow.yml', 'metadata/source-rows.txt', 'metadata/sdk-tools.json',
+        'metadata/input-urls.json', 'source-evidence/sdk-submodules.txt', 'source-evidence/SHA256SUMS',
+        'serial-product/normal.json', 'serial-product/sanitized.json',
+        'platform-capacity/normal.json', 'platform-capacity/sanitized.json',
+    }
+    for role in ('product', 'runtime', 'system', 'drivers', 'sdk', 'image_helper', 'reader', 'utilities'):
+        required.update('source-evidence/' + role + '-' + suffix + '.txt' for suffix in ('identity', 'status'))
+    require(required <= set(inventory), 'Required original bounded evidence is missing')
+    return required | {name for name in inventory if name.startswith(('build/toolchain/', 'logs/')) or
+                       name.startswith('build/qualification/') and name.endswith('.json')}
+
+
+def stage_qualification(proof, restored_root, candidate, qualifier_metadata, recovery_logs, metadata_dir, output):
+    """Build one bounded evidence root without common-ancestor path expansion."""
+    proof = verify_restored(proof, restored_root)
+    output = no_symlink(output)
+    roots = [no_symlink(p) for p in (restored_root, candidate, qualifier_metadata, recovery_logs, metadata_dir)]
+    require(not output.exists() and all(not output.is_relative_to(p) and not p.is_relative_to(output) for p in roots),
+            'Bounded evidence output must be new and disjoint')
+    rows = {name: (Path(restored_root) / name, proof.inventory[name])
+            for name in qualification_original_names(proof.inventory)}
+    candidate_names = {'qualification.json', 'source-lock.json', 'SHA256SUMS',
+                       'serial-product-normal.json', 'serial-product-sanitized.json',
+                       'archive-recovery.json', 'archive-contract.json',
+                       'original-build-closure.json', 'original-package-build-receipt.json'}
+    require(all((Path(candidate) / name).is_file() for name in candidate_names), 'Recovery receipts are incomplete')
+    candidate_names.update(p.relative_to(candidate).as_posix() for p in (Path(candidate) / 'feed').glob('*.json'))
+    for name in sorted(candidate_names):
+        path = no_symlink(Path(candidate) / name)
+        rows['candidate/' + name] = (path, file_record_allow_empty(path))
+    require((Path(qualifier_metadata) / 'workflow.yml').is_file() and
+            (Path(qualifier_metadata) / 'qualifier-identity.txt').is_file() and
+            (Path(qualifier_metadata) / 'qualifier-status.txt').is_file() and
+            (Path(qualifier_metadata) / 'qualifier-source.tar.gz').is_file(), 'Separate qualifier identity/source missing')
+    for prefix, source in (('qualifier-metadata', qualifier_metadata), ('recovery-logs', recovery_logs),
+                           ('recovery-api', metadata_dir)):
+        for path in sorted(Path(source).iterdir()):
+            # Keep the original 782 MB ZIP separate and verbatim. The publisher
+            # retrieves it by its original producer artifact ID and digest.
+            if prefix == 'recovery-api' and path.name == 'reproducibility-evidence.zip':
+                continue
+            require(path.is_file() and not path.is_symlink(), 'Unexpected evidence member')
+            name = prefix + '/' + path.name; safe_path(name)
+            rows[name] = (path, file_record_allow_empty(path))
+    staged = {name: expected for name, (_, expected) in sorted(rows.items())}
+    receipt = {'schema': 1, 'original_archive': proof.contract['artifact'],
+               'source_revision': proof.contract['source_revision'], 'files': staged,
+               'original_archive_repacked': False, 'native_rebuilt': False, 'packages_rebuilt': False}
+    receipt_bytes = encoded(receipt)
+    require(len(rows) < 5000 and sum(record['bytes'] for _, record in rows.values()) + len(receipt_bytes) <= MAX_QUALIFICATION,
+            'Bounded qualification evidence exceeds limit')
+    output.mkdir(parents=True)
+    for name, (source, expected) in sorted(rows.items()):
+        safe_path(name)
+        target = output / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        count = 0
+        with source.open('rb') as src, target.open('xb') as dst:
+            for block in iter(lambda: src.read(CHUNK), b''):
+                count += len(block)
+                require(count <= expected['bytes'], 'Evidence grew during staging: ' + name)
+                dst.write(block)
+        require(file_record_allow_empty(target) == file_record_allow_empty(source) == expected,
+                'Evidence changed during staging: ' + name)
+    require((output / 'metadata/workflow.yml').read_bytes() == proof.metadata['workflow'],
+            'Original workflow identity was replaced by qualifier workflow')
+    (output / 'qualification-evidence.json').write_bytes(receipt_bytes)
+    return receipt
+
+
+def stage_debug(qualifier_metadata, recovery_logs, metadata_dir, output):
+    """Preserve bounded failure diagnostics, without granting qualification authority."""
+    output = no_symlink(output)
+    roots = [no_symlink(p) for p in (qualifier_metadata, recovery_logs, metadata_dir)]
+    require(not output.exists() and all(not output.is_relative_to(p) and not p.is_relative_to(output) for p in roots),
+            'Diagnostic output must be new and disjoint')
+    rows = {}
+    for prefix, source in zip(('qualifier-metadata', 'recovery-logs', 'recovery-api'), roots):
+        if not source.exists():
+            continue
+        require(source.is_dir(), 'Diagnostic input is not a directory')
+        for path in sorted(source.iterdir()):
+            if prefix == 'recovery-api' and path.name == 'reproducibility-evidence.zip':
+                continue
+            allowed = (path.suffix == '.log' if prefix == 'recovery-logs' else
+                       path.name in {'workflow.yml', 'qualifier-identity.txt', 'qualifier-status.txt',
+                                     'qualifier-source.tar.gz'} if prefix == 'qualifier-metadata' else
+                       path.suffix == '.json' or path.name == 'workflow.yml')
+            require(allowed and path.is_file() and not path.is_symlink(), 'Unexpected diagnostic member')
+            name = prefix + '/' + path.name; safe_path(name)
+            require(path.stat().st_size <= MAX_DEBUG, 'Diagnostic member exceeds bound')
+            rows[name] = (path, file_record_allow_empty(path))
+    inventory = {name: expected for name, (_, expected) in sorted(rows.items())}
+    receipt = encoded({'schema': 1, 'diagnostics_only': True, 'qualification_authority': False,
+                       'original_archive_included': False, 'files': inventory})
+    require(rows and len(rows) < MAX_DEBUG_FILES and
+            sum(row['bytes'] for _, row in rows.values()) + len(receipt) <= MAX_DEBUG,
+            'Diagnostic evidence exceeds bound')
+    output.mkdir(parents=True)
+    for name, (source, expected) in sorted(rows.items()):
+        target = output / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        count = 0
+        with source.open('rb') as src, target.open('xb') as dst:
+            for block in iter(lambda: src.read(CHUNK), b''):
+                count += len(block)
+                require(count <= expected['bytes'], 'Diagnostic input grew during staging')
+                dst.write(block)
+        require(file_record_allow_empty(target) == file_record_allow_empty(source) == expected,
+                'Diagnostic input changed during staging')
+    (output / 'diagnostics-only.json').write_bytes(receipt)
+    return inventory
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('operation', choices=('fetch', 'extract'))
+    parser.add_argument('operation', choices=('fetch', 'extract', 'stage-evidence', 'stage-debug'))
     parser.add_argument('--contract', type=Path, default=CONTRACT)
     parser.add_argument('--archive', type=Path)
     parser.add_argument('--metadata-dir', type=Path)
+    parser.add_argument('--restored-root', type=Path)
+    parser.add_argument('--candidate', type=Path)
+    parser.add_argument('--qualifier-metadata', type=Path)
+    parser.add_argument('--logs', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--small', action='store_true')
     args = parser.parse_args()
     if args.operation == 'fetch':
         require(not args.small and args.archive is None and args.metadata_dir is None, 'Unexpected fetch arguments')
         fetch(contract(args.contract), args.output)
-    else:
+    elif args.operation == 'extract':
         require(args.archive is not None and args.metadata_dir is not None, 'Archive and official metadata are required')
         proof = verify_local(args.contract, args.archive, args.metadata_dir)
         require(args.small or str(args.output.absolute()) == proof.contract['original_root'], 'Full restoration must use original root')
@@ -407,6 +536,18 @@ def main():
         target = args.metadata_dir / ('small-custody.json' if args.small else 'archive-custody.json')
         with target.open('xb') as output:
             output.write(encoded(receipt))
+    elif args.operation == 'stage-evidence':
+        require(not args.small and all((args.archive, args.metadata_dir, args.restored_root,
+                args.candidate, args.qualifier_metadata, args.logs)), 'Complete recovery evidence inputs required')
+        proof = verify_local(args.contract, args.archive, args.metadata_dir)
+        stage_qualification(proof, args.restored_root, args.candidate, args.qualifier_metadata,
+                            args.logs, args.metadata_dir, args.output)
+    else:
+        require(not args.small and all((args.metadata_dir, args.qualifier_metadata, args.logs)),
+                'Diagnostic source directories are required')
+        stage_debug(args.qualifier_metadata, args.logs, args.metadata_dir, args.output)
+        print('Failure diagnostics preserved; this output confers no qualification authority.')
+        return
     print('Archived producer bytes verified; no native/package build or device access.')
 
 

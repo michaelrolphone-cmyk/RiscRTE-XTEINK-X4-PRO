@@ -204,14 +204,14 @@ def verify_x4_startup(blobs, build, compiler, lock, sources):
     require(selection['sdk_source'] == SDK_REVISION, 'X4 SDK selection differs')
     for name, digest in selection.items():
         if name.startswith('sha256:'):
-            path = safe_path(ROOT, name[len('sha256:'):])
+            path = safe_path(sources['product'], name[len('sha256:'):])
             require(sha(path.read_bytes()) == digest, 'X4 selection input differs: ' + str(path))
     for key in ('firmware_bin', 'firmware_elf'):
         require(b'X4_VERSION=0.1.123-provision-candidate' in blobs[key], 'Wrong X4 native successor version')
         require(b'RISC_RUNTIME_VERSION:0.4.7\0' in blobs[key], 'X4 successor requires Runtime 0.4.7')
     with tempfile.TemporaryDirectory(prefix='x4-native-startup-') as tmp:
         output = Path(tmp) / 'proof.json'
-        run(sys.executable, ROOT / 'minimal/test/verify_native_idf61_target.py',
+        run(sys.executable, sources['product'] / 'minimal/test/verify_native_idf61_target.py',
             '--elf', safe_path(build, lock['native_files']['firmware_elf']['path']),
             '--selection', safe_path(build, lock['native_files']['x4_selection']['path']),
             '--objdump', compiler.with_name('xtensa-esp-elf-objdump'), '--output', output)
@@ -356,7 +356,7 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
     source_files = {}
     roots = sorted(sources.items(), key=lambda item: len(str(item[1])), reverse=True)
     runtime_rows = []
-    profile = (ROOT / 'profiles/native-provision-123.cmake').read_text()
+    profile = (sources['product'] / 'profiles/native-provision-123.cmake').read_text()
     definitions = dict(flag.split('=', 1) for flag in re.findall(r'\b(?:RISC_[A-Z0-9_]+|BOARD_XTEINK_X4_PRO)=\d+\b', profile))
     definitions.update(RISC_NATIVE_SERIAL_SD_PROVIDER='\"x4pro-sd\"', RISC_NATIVE_ESP_IDF='1', RISC_TARGET='\"' + contract['target'] + '\"')
     for row in compile_rows:
@@ -388,7 +388,7 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
             require(defined.get('RISC_NATIVE_FILE_SOURCE', '0') == '0', 'Unselected X4 native file-source backend compiled')
             runtime_rows.append(command)
     overlays = [Path(row['file']).resolve() for row in compile_rows if Path(row['file']).name == 'X4EarlyBoot.cpp']
-    require(len(overlays) == 1 and overlays[0] == (ROOT / 'minimal/native/X4EarlyBoot.cpp').resolve(), 'Exact committed X4 startup overlay must be compiled')
+    require(len(overlays) == 1 and overlays[0] == (sources['product'] / 'minimal/native/X4EarlyBoot.cpp').resolve(), 'Exact committed X4 startup overlay must be compiled')
     require(runtime_rows, 'Resident Runtime compilation rows missing')
     require(not re.search(r'framework-arduino|libFrameworkArduino|/cores/esp32/', blobs['firmware_map'].decode(errors='replace')), 'Arduino linked into map')
     require('RISC_NATIVE_PROVIDER_POLICY_HEADER' not in ' '.join(runtime_rows), 'Unselected private USB controller policy present')
@@ -399,7 +399,7 @@ def verify_native(lock, sources, build, compiler, contract, baseline):
             run(sys.executable, '-m', 'esptool', '--chip', 'esp32s3', 'elf2image', '--flash-mode', 'dio', '--flash-freq', '80m', '--flash-size', '16MB', '--min-rev-full', '0', '--max-rev-full', '99', *extra, '-o', out, safe_path(build, lock['native_files'][executable]['path']))
             require(out.read_bytes() == blobs[binary], 'ELF/BIN correspondence differs: ' + binary)
     startup = verify_x4_startup(blobs, build, compiler, lock, sources)
-    spec = importlib.util.spec_from_file_location('x4_bootlog_memory', ROOT / 'minimal/test/verify_native_idf61_bootlog_memory.py')
+    spec = importlib.util.spec_from_file_location('x4_bootlog_memory', sources['product'] / 'minimal/test/verify_native_idf61_bootlog_memory.py')
     memory = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(memory)
     bootlog = memory.proof(blobs['firmware_elf'])
@@ -528,19 +528,26 @@ def make_images(baseline, firmware, bootloader, packed):
     return bytes(candidate), transition
 
 
-def qualify(args, sources, *, build_proof=None, package_proof=None):
+def qualify(args, sources, *, build_proof=None, package_proof=None, archived_evidence=None):
     require(Path(controlled_build.__file__).resolve() == ROOT / 'scripts/native_idf61_build.py',
             'Controlled producer must come from this product checkout')
-    controlled_build.validate_build_proof(build_proof, sources, args.native_build, args.compiler)
     from native_provision_payloads import verify_packages, preservation_receipt, write_feed
-    packages = verify_packages(package_proof, sources)
+    def verify_custody(lock=None):
+        if archived_evidence is not None:
+            from native_provision_requalify import validate_archived_evidence
+            require(build_proof is None and package_proof is None, 'Mixed fresh/archive authority')
+            return validate_archived_evidence(archived_evidence, sources, args.native_build, args.compiler, lock)
+        closure = controlled_build.validate_build_proof(build_proof, sources, args.native_build, args.compiler, lock)
+        return closure, verify_packages(package_proof, sources)
+    build_closure, packages = verify_custody()
     contract = json.loads(CONTRACT.read_bytes())
     lock = json.loads(args.lock.read_bytes())
-    require(lock.get('package_build') == package_proof.receipt, 'Package lock differs')
+    require(lock.get('package_build') == (archived_evidence.package_receipt if archived_evidence is not None else package_proof.receipt), 'Package lock differs')
     require(lock.get('schema') == 1 and lock.get('publication_enabled') is False, 'Only unreleased candidate locks accepted')
     require(lock['baseline_contract_sha256'] == sha(CONTRACT.read_bytes()), 'Released baseline contract differs')
     require(lock['candidate_version'] == contract['successor_version'] == '0.1.123', 'Frozen X4 successor version differs')
-    build_closure = controlled_build.validate_build_proof(build_proof, sources, args.native_build, args.compiler, lock)
+    build_closure, checked_packages = verify_custody(lock)
+    require(checked_packages == packages, 'Package custody changed')
     verify_sources(lock, sources)
     require(not args.output.exists(), 'Qualification output must be new')
     baseline, old_native, before = baseline_bytes(args.baseline, contract, sources)
@@ -562,7 +569,8 @@ def qualify(args, sources, *, build_proof=None, package_proof=None):
     require(admission['elf_count'] == admission_sanitized['elf_count'] == contract['elf_count'], 'Incomplete product ELF admission')
     preservation = qualification.preservation_model(baseline, transition, contract['factory_sha256'])
     checked_artifacts(lock, args.native_build)
-    controlled_build.validate_build_proof(build_proof, sources, args.native_build, args.compiler, lock)
+    _, checked_packages = verify_custody(lock)
+    require(checked_packages == packages, 'Package custody changed')
     verify_sources(lock, sources)
     args.output.mkdir(parents=True)
     assets = {'factory-candidate-erases-data-0x0.bin': factory, 'firmware.bin': blobs['firmware_bin'],
@@ -574,7 +582,7 @@ def qualify(args, sources, *, build_proof=None, package_proof=None):
                   hardware_tested=False, device_accessed=False, version_reserved_by_recipe=False,
                   factory_erases_data=True, preserving_update_kit_emitted=False,
                   preserving_sdk_migration_eligible=False,
-                  preserving_sdk_migration_blocker='Exact deployed bootloader plus candidate boot, health confirmation and rollback are hardware-pending.',
+                  preserving_sdk_migration_blocker='Runtime rejects the .122-to-.123 persisted namespace-authority expansion. Factory installation erases saved data; bootloader, health and rollback hardware checks also remain pending.',
                   input_lock=lock, input_lock_sha256=sha(args.lock.read_bytes()), native=native_proof,
                   build_closure=build_closure, packing=packing, admission=admission, admission_sanitized=admission_sanitized,
                   sd_admission=sd_admission, sd_admission_sanitized=sd_admission_sanitized,
@@ -586,7 +594,10 @@ def qualify(args, sources, *, build_proof=None, package_proof=None):
                   feed_publication_pending=True,
                   artifacts={name: {'bytes': len(data), 'sha256': sha(data)} for name, data in assets.items()})
     report['feed'] = write_feed(sources, after, packed, blobs['firmware_bin'], args.output)
-    verify_packages(package_proof, sources)
+    _, checked_packages = verify_custody(lock)
+    require(checked_packages == packages, 'Package custody changed')
+    if archived_evidence is not None:
+        report['qualification_recovery'] = archived_evidence.receipt
     from native_provision_serial import verify_receipts
     startup = verify_receipts(lock, sources)
     for mode, row in startup['runs'].items():

@@ -142,6 +142,47 @@ def retained_sd_receipt(before, after, result):
             'historical_driver_build_provenance': 'not established; exact released bytes retained'}
 
 
+def factory_admission(run_cohort, before, after, elf_count, store_digest):
+    """Factory admission and a causal negative control for the old cohort."""
+    import copy
+    boot = json.loads(after['boot.json'])
+    old_boot = json.loads(before['boot.json'])
+    grant = {'capability': 'storage.key-value', 'api': 1, 'instance_id': 6}
+    home = [row for row in boot['app_capabilities'] if row['manifest'] == 'default.json']
+    old_home = [row for row in old_boot['app_capabilities'] if row['manifest'] == 'default.json']
+    require(len(home) == len(old_home) == 1 and grant in home[0]['grants'] and
+            grant not in old_home[0]['grants'] and 'cohort_migration' not in old_boot,
+            'Expected factory-only namespace authority change missing')
+    require(any(row['manifest'] != 'default.json' and grant in row['grants']
+                for row in old_boot['app_capabilities']), 'Namespace 6 was not already owned')
+    rejected = run_cohort(before, after, False)
+    require(rejected['prepared'] and not rejected['cohort_validated'] and rejected['elf_count'] == 0 and
+            not rejected['hardware_calls'] and not rejected['storage_calls'],
+            'Preserving transition was not rejected before ELF admission')
+    # Change exactly the new grant in a disposable metadata control. Actual
+    # packaged bytes retain the reviewed factory bootstrap grant unchanged.
+    control_boot = copy.deepcopy(boot)
+    next(row for row in control_boot['app_capabilities'] if row['manifest'] == 'default.json')['grants'].remove(grant)
+    control = dict(after, **{'boot.json': (json.dumps(control_boot, sort_keys=True, indent=2) + '\n').encode()})
+    authority_control = run_cohort(before, control, True)
+    require(authority_control['prepared'] and authority_control['cohort_validated'] and
+            authority_control['elf_count'] == elf_count and not authority_control['hardware_calls'] and
+            not authority_control['storage_calls'], 'Authority-only control did not admit every ELF')
+    result = run_cohort(after, after, True)
+    require(result['prepared'] and result['cohort_validated'] and not result['hardware_calls'] and
+            not result['storage_calls'] and result['elf_count'] == elf_count and result['active_store_sha256'] ==
+            result['candidate_store_sha256'] == store_digest(after), 'Factory self-admission digest/count differs')
+    require(rejected['active_store_sha256'] == store_digest(before) and
+            rejected['candidate_store_sha256'] == result['candidate_store_sha256'], 'Negative transition digest differs')
+    result['mode'] = 'factory-bootstrap-self-admission'
+    result['preserving_transition'] = dict(rejected, expected_rejection=True,
+        reason='Existing paper_clock gains already-owned storage.key-value namespace 6 without migration authority.',
+        runtime_guard='src/bootstrap/CohortRuntime.inc: used && !owned; !migrating',
+        authority_only_control=authority_control,
+        control_packaged=False)
+    return result
+
+
 def admit_product(sources, native, before, after, native_proof, sanitized=False):
     import check_runtime_store_admission as admission
     helper_source = (sources['image_helper'] / 'scripts/check_runtime_store_admission.py').read_text()
@@ -191,8 +232,11 @@ def admit_product(sources, native, before, after, native_proof, sanitized=False)
             (root / 'tests/runtime_store_admission.cpp').write_text(source)
             shutil.copyfile(helper / 'tests/app_data_admission_backend.h', root / 'tests/app_data_admission_backend.h')
             admission.ROOT = root
-            result = admission.admit_cohort(runtime, native, before, after, app_policy_rows=32,
-                                            native_profile=product / 'profiles/native-provision-123.cmake')
+            result = factory_admission(
+                lambda active, candidate, expected: admission.admit_cohort(
+                    runtime, native, active, candidate, expected_valid=expected, app_policy_rows=32,
+                    native_profile=product / 'profiles/native-provision-123.cmake'),
+                before, after, contract['elf_count'], admission.store_digest)
             result.update(sanitized=sanitized, fixture_sha256=sha(source.encode()), helper_adapter_sha256=sha(helper_source.encode()),
                           commands=commands, target_instructions_executed=False)
             require(result['elf_count'] == contract['elf_count'], 'Released ELF inventory not completely admitted')
@@ -301,7 +345,9 @@ def preservation_model(baseline, candidate, digest):
                 ready[rows[-1][1]:rows[-1][1]+len(rows[-1][2])] = rows[-1][2]
                 protected(snapshot, ready, receipt['preserved_ranges'])
                 require(pair(ready, 1-bank, geometry)[1:] == (firmware, store), 'Selected native/store pair differs')
-    return dict(passed=True, cases=len(cases), both_active_banks=True, both_selector_sectors=True,
+    return dict(passed=True, scope='byte-range-and-fault-order-only',
+                preserving_transition_eligible=False, namespace_authority_tested=False,
+                cases=len(cases), both_active_banks=True, both_selector_sectors=True,
                 fresh_exact_baseline_readback_required=True, nvs_and_appdata_preserved=True,
                 unassigned_gap_and_trailing_flash_preserved=True,
                 separate_selection_written_last=True, target_instructions_executed=False,

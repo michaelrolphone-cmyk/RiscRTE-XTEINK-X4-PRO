@@ -86,6 +86,12 @@ only in GitHub CI. The same process builds both packages, captures tool/source
 and output hashes, performs a fresh one-job native build, checks dependency
 custody, binds the final ELF/BIN, and runs production 43-internal/49-SD ELF
 admission normally and with sanitizers. Detached receipts cannot authorize output.
+Factory qualification self-admits the complete .123 store, with equal active and
+candidate digests. The .122-to-.123 preserving transition must be rejected before
+ELF callbacks: Home newly uses already-owned namespace 6 without migration
+authority. A disposable control removing only that new grant must admit all 43
+ELFs, proving the specific authority boundary. The actual package retains its
+reviewed factory grant. All three checks run normally and with sanitizers.
 The final report includes native RAM section placement/margins, GPIO1/startup,
 bootlog/IQ, and external serial workspace placement.
 
@@ -107,8 +113,11 @@ archives. All three names include the exact product commit.
 The generated factory is explicitly named
 `factory-candidate-erases-data-0x0.bin`: flashing it erases internal saved data.
 Its unchanged partition geometry does not make factory flashing non-erasing.
-The offline preservation model checks NVS, app-data, inactive-bank ordering,
-unassigned flash and trailing bytes; it is not hardware evidence or an installer.
+The offline byte-range/fault-order model checks NVS, app-data, inactive-bank
+ordering, unassigned flash and trailing bytes. It does not test namespace
+authority, establish preserving-update eligibility, or provide an installer.
+The production Runtime intentionally rejects the .122-to-.123 preserving
+transition independently of pending hardware checks.
 No preserving flash kit is emitted and no device is accessed.
 
 After qualification, this candidate may serve as the initial bootstrap with its
@@ -124,3 +133,26 @@ commands, compiler/source hashes, Xtensa ELF symbol sizes and +960-byte delta.
 The allocation is the existing paired `NativeRuntime` PSRAM-only retained object;
 it does not fall back to internal heap. These object measurements do not replace
 the final linked memory/IQ proof or hardware heap measurements.
+
+## Qualification-only archive recovery
+
+The completed native link from producer `93ee386b7e23628f3776edc6cfd2805cf675d649`
+and Runtime `6a3b3d46f5b2857eacc6e9863799dec1f466b036` is reused unchanged by the
+separate recovery workflow. Its exact original run, attempt, job and full
+reproducibility archive digest/size are pinned in `archive-input.json`. Native
+and package build commands are never invoked during recovery.
+
+Recovery authenticates official artifact/run/job metadata and the whole archive,
+restores original absolute paths, and checks every restored byte plus original
+build dependencies, source trees, tool hashes and complete package inventory.
+Original source-lock, build-closure and package receipts are copied unchanged.
+The permitted qualifier-only source delta is checked and hash-recorded separately.
+Existing target probes and final linked IQ/workspace proofs are rechecked without
+compiling or relinking target objects. Host qualification may compile host tests.
+
+`archive-recovery.json` explicitly identifies the later qualification commit/run,
+original compiled producer and artifact custody. It records no fresh build or
+same-process qualification claim for recovery. `qualification.json` carries the
+same object, and `cohort.json` continues to identify the original compiled
+producer. Publication must bind the successful qualification run separately
+from the original native run and immutable complete reproducibility archive.

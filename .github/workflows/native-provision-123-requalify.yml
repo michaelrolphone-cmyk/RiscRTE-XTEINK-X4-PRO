@@ -175,26 +175,39 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           compression-level: 6
+      - name: Stage bounded original and recovery qualification evidence
+        if: env.RECOVERY_MODE == 'qualify'
+        run: |
+          set -euo pipefail
+          python "$RECOVERY_ROOT/qualifier/scripts/native_provision_archive.py" stage-evidence \
+            --archive "$RECOVERY_ROOT/evidence/reproducibility-evidence.zip" \
+            --metadata-dir "$RECOVERY_ROOT/evidence" --restored-root "$ORIGINAL_ROOT" \
+            --candidate "$RECOVERY_ROOT/candidate" --qualifier-metadata "$RECOVERY_ROOT/metadata" \
+            --logs "$RECOVERY_ROOT/logs" --output "$RECOVERY_ROOT/qualification-evidence"
       - name: Upload bounded recovery qualification and source evidence
         if: env.RECOVERY_MODE == 'qualify'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: x4-native-provision-123-qualification-${{ env.QUALIFIER_SHA }}
-          path: |
-            ${{ env.RECOVERY_ROOT }}/candidate/qualification.json
-            ${{ env.RECOVERY_ROOT }}/candidate/source-lock.json
-            ${{ env.RECOVERY_ROOT }}/candidate/SHA256SUMS
-            ${{ env.RECOVERY_ROOT }}/candidate/serial-product-*.json
-            ${{ env.RECOVERY_ROOT }}/candidate/feed/*.json
-            ${{ env.RECOVERY_ROOT }}/candidate/archive-recovery.json
-            ${{ env.RECOVERY_ROOT }}/candidate/archive-contract.json
-            ${{ env.RECOVERY_ROOT }}/candidate/original-build-closure.json
-            ${{ env.RECOVERY_ROOT }}/candidate/original-package-build-receipt.json
-            ${{ env.RECOVERY_ROOT }}/evidence/*.json
-            ${{ env.RECOVERY_ROOT }}/evidence/workflow.yml
-            ${{ env.RECOVERY_ROOT }}/metadata/
-            ${{ env.RECOVERY_ROOT }}/logs/
+          path: ${{ env.RECOVERY_ROOT }}/qualification-evidence/
           include-hidden-files: true
           if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
+      - name: Stage bounded failure diagnostics
+        if: ${{ failure() && env.RECOVERY_ROOT != '' }}
+        run: |
+          set -euo pipefail
+          python "$RECOVERY_ROOT/qualifier/scripts/native_provision_archive.py" stage-debug \
+            --metadata-dir "$RECOVERY_ROOT/evidence" --qualifier-metadata "$RECOVERY_ROOT/metadata" \
+            --logs "$RECOVERY_ROOT/logs" --output "$RECOVERY_ROOT/failure-diagnostics"
+      - name: Upload bounded failure diagnostics without qualification authority
+        if: ${{ failure() && env.RECOVERY_ROOT != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: x4-native-provision-123-recovery-debug-${{ env.QUALIFIER_SHA }}
+          path: ${{ env.RECOVERY_ROOT }}/failure-diagnostics/
+          include-hidden-files: true
+          if-no-files-found: warn
           retention-days: 30
           compression-level: 6
