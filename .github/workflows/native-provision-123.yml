@@ -188,6 +188,10 @@ jobs:
             ${{ env.NATIVE_ROOT }}/candidate/feed/*.json
             ${{ env.NATIVE_ROOT }}/build/qualification/**/*.json
             ${{ env.NATIVE_ROOT }}/build/platform-capacity-probe/receipt.json
+            ${{ env.NATIVE_ROOT }}/build/compile_commands.json
+            ${{ env.NATIVE_ROOT }}/build/config/sdkconfig.h
+            ${{ env.NATIVE_ROOT }}/build/config/sdkconfig.json
+            ${{ env.NATIVE_ROOT }}/build/toolchain/
             ${{ env.NATIVE_ROOT }}/build/native-build-evidence/source-lock.json
             ${{ env.NATIVE_ROOT }}/build-packages/package-build-receipt.json
             ${{ env.NATIVE_ROOT }}/serial-product/
