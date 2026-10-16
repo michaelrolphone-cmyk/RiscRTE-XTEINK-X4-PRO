@@ -472,9 +472,10 @@ def verify_serial(sources, build, compiler, lock, blobs):
     tool = sources['runtime'] / 'test/prove_native_serial_workspace.py'
     output = run(sys.executable, tool,
                  safe_path(build, lock['native_files']['firmware_elf']['path']),
-                 '--workspace', 'endpoint', '--workspace', 'provider', '--external', '1',
+                 '--workspace', 'endpoint', '--workspace', 'provider',
+                 '--workspace', 'sessions', '--workspace', 'provision', '--external', '1',
                  '--objdump', compiler.with_name('xtensa-esp-elf-objdump')).decode()
-    require('Serial endpoint:' in output and 'Serial provider:' in output,
+    require(all('Serial ' + name + ':' in output for name in ('endpoint', 'provider', 'sessions', 'provision')),
             'Incomplete final linked serial placement proof')
     return dict(firmware_elf_sha256=sha(blobs['firmware_elf']),
                 tool_sha256=sha(tool.read_bytes()), output=output,

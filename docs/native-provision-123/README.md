@@ -46,7 +46,7 @@ identities. There is no catalog, package, manifest or firmware-flashing policy i
 RTEF1. Ordinary file writes preserve unrelated paths. The candidate fails closed
 if the pinned Runtime still has the legacy hard-coded SD12 binding.
 
-Runtime `60f88c1f541402898dd567d2d4f3b0ea598be918` contains the product-owned
+Runtime `6a3b3d46f5b2857eacc6e9863799dec1f466b036` contains the product-owned
 selector and its production startup tests. CI runs the actual Runtime startup
 suite normally and with ASan/UBSan, preserving both receipts. Qualification
 requires and hash-locks their exact command/source identities, both X4SD9 and

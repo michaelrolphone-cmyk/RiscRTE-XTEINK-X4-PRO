@@ -79,6 +79,27 @@ def startup_receipt(runtime, sanitized=False):
 
 
 class Controls(unittest.TestCase):
+    def test_all_linked_owner_workspaces_are_required(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); tool = root / 'test/prove_native_serial_workspace.py'
+            tool.parent.mkdir(); tool.write_text('synthetic source identity')
+            lock = {'native_files': {'firmware_elf': {'path': 'firmware.elf'}}}
+            (root / 'firmware.elf').write_bytes(b'fixture ELF')
+            names = ('endpoint', 'provider', 'sessions', 'provision')
+            for missing in (None, *names):
+                output = ''.join('Serial ' + name + ': PASS\n' for name in names if name != missing).encode()
+                with mock.patch.object(serial, 'verify_receipts', return_value={'selection': {}}), \
+                     mock.patch.object(candidate, 'run', return_value=output) as run:
+                    call = lambda: candidate.verify_serial({'runtime': root}, root,
+                        Path('/tools/xtensa-esp-elf-gcc'), lock, {'firmware_elf': b'fixture ELF'})
+                    if missing:
+                        with self.assertRaises(ValueError): call()
+                    else:
+                        self.assertFalse(call()['hardware_tested'])
+                    args = list(run.call_args.args)
+                    for name in names:
+                        self.assertIn(['--workspace', name], [args[i:i+2] for i in range(len(args)-1)])
+
     def test_linked_platform_capacity_marker(self):
         from elftools.elf.elffile import ELFFile
         with tempfile.TemporaryDirectory() as temp:

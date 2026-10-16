@@ -189,6 +189,8 @@ jobs:
             ${{ env.NATIVE_ROOT }}/build/qualification/**/*.json
             ${{ env.NATIVE_ROOT }}/build/platform-capacity-probe/receipt.json
             ${{ env.NATIVE_ROOT }}/build/compile_commands.json
+            ${{ env.NATIVE_ROOT }}/build/riscrte_native.elf
+            ${{ env.NATIVE_ROOT }}/build/riscrte_native.map
             ${{ env.NATIVE_ROOT }}/build/config/sdkconfig.h
             ${{ env.NATIVE_ROOT }}/build/config/sdkconfig.json
             ${{ env.NATIVE_ROOT }}/build/toolchain/
