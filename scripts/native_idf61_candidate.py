@@ -194,6 +194,18 @@ def released_sd_bytes(raw, contract, runtime):
     return files
 
 
+def verify_runtime_version(blobs, runtime):
+    """Match both linked identities to the exact source consumed by IDF CMake."""
+    versions = re.findall(r'^version[ \t]*=[ \t]*(.*)$',
+                          (runtime / 'platformio.ini').read_text(), re.M)
+    require(len(versions) == 1 and re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', versions[0]),
+            'Expected exactly one source-bound Runtime version')
+    expected = versions[0].encode()
+    for key in ('firmware_bin', 'firmware_elf'):
+        require(set(re.findall(rb'RISC_RUNTIME_VERSION:([^\x00]+)', blobs[key])) == {expected},
+                'X4 Runtime version differs from the locked Runtime source')
+
+
 def verify_x4_startup(blobs, build, compiler, lock, sources):
     """Run the existing final-linked GPIO1/readiness proof on these exact bytes."""
     text = blobs['x4_selection'].decode()
@@ -207,9 +219,9 @@ def verify_x4_startup(blobs, build, compiler, lock, sources):
         if name.startswith('sha256:'):
             path = safe_path(ROOT, name[len('sha256:'):])
             require(sha(path.read_bytes()) == digest, 'X4 selection input differs: ' + str(path))
+    verify_runtime_version(blobs, sources['runtime'])
     for key in ('firmware_bin', 'firmware_elf'):
         require(b'X4_VERSION=0.1.122-idf61-candidate' in blobs[key], 'Wrong X4 native successor version')
-        require(b'RISC_RUNTIME_VERSION:0.4.0\0' in blobs[key], 'X4 successor requires Runtime 0.4.0')
     with tempfile.TemporaryDirectory(prefix='x4-native-startup-') as tmp:
         output = Path(tmp) / 'proof.json'
         run(sys.executable, ROOT / 'minimal/test/verify_native_idf61_target.py',
