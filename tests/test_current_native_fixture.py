@@ -35,7 +35,7 @@ class SourceBoundFixture(unittest.TestCase):
             qualification.source_bound_header('changed header')
 
 class SourceBoundVersion(unittest.TestCase):
-    def test_linked_version_requires_exact_source_and_unique_markers(self):
+    def test_linked_version_requires_exact_source_identity_values(self):
         import tempfile
         import native_idf61_candidate as recipe
         with tempfile.TemporaryDirectory() as tmp:
@@ -44,8 +44,9 @@ class SourceBoundVersion(unittest.TestCase):
             good = b'RISC_RUNTIME_VERSION:0.4.7\0'
             blobs = dict(firmware_bin=good, firmware_elf=good)
             recipe.verify_runtime_version(blobs, root)
+            recipe.verify_runtime_version(dict(firmware_bin=good, firmware_elf=good + good), root)
             for key in blobs:
-                for bad in (b'', b'RISC_RUNTIME_VERSION:0.4.0\0', good + good):
+                for bad in (b'', b'RISC_RUNTIME_VERSION:0.4.0\0', good + b'RISC_RUNTIME_VERSION:0.4.0\0'):
                     with self.subTest(key=key, bad=bad), self.assertRaises(ValueError):
                         recipe.verify_runtime_version({**blobs, key: bad}, root)
             for config in ('', 'version = invalid\n', 'version = 0.4.7\nversion = invalid\n'):

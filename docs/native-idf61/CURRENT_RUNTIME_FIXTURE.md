@@ -10,7 +10,7 @@ RuntimeFileImage before unchanged production ELF role/import admission. Metadata
 reads are host fixture reads; hardware and product storage callbacks must remain
 zero. Neither Xtensa instructions nor device hardware are exercised.
 
-The X4 qualifier, where applicable, compares exactly one linked Runtime version in
+The X4 qualifier, where applicable, compares the linked Runtime version identity values in
 both ELF and BIN against the version in the locked Runtime source, as consumed by
 IDF CMake. Candidate product identity, final linked startup mutations, strict SD
 admission, immutable baseline payloads, IQ placement and source custody remain

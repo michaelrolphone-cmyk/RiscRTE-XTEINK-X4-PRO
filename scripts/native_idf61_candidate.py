@@ -202,7 +202,7 @@ def verify_runtime_version(blobs, runtime):
             'Expected exactly one source-bound Runtime version')
     expected = versions[0].encode()
     for key in ('firmware_bin', 'firmware_elf'):
-        require(re.findall(rb'RISC_RUNTIME_VERSION:([^\x00]+)', blobs[key]) == [expected],
+        require(set(re.findall(rb'RISC_RUNTIME_VERSION:([^\x00]+)', blobs[key])) == {expected},
                 'X4 Runtime version differs from the locked Runtime source')
 
 
