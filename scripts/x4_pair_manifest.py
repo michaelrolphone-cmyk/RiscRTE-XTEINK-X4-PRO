@@ -191,6 +191,8 @@ def check_qualification(admission, qualification, raw, factory, archive, files, 
     require(type(native['bytes']) is int and 0 < native['bytes'] <= 0x260000, 'Invalid qualified native size')
     embedded = factory[0x10000:0x10000 + native['bytes']]
     require(record(embedded) == native and NATIVE_MARKER.encode() in embedded, 'Qualified native identity differs inside factory')
+    require(set(re.findall(rb'X4_SOURCE=([^\x00\s]+)', embedded)) == {commit.encode()}, 'Embedded native product source differs or is ambiguous')
+    require(set(re.findall(rb'RTE_SOURCE=([^\x00\s]+)', embedded)) == {admission['runtime_revision'].encode()}, 'Embedded native runtime source differs or is ambiguous')
     checked_inventory(files, qualification['sd_preservation']['files'])
     for key in ('admission', 'admission_sanitized'):
         mapping = qualification[key]['retained_sd_graph_binding']

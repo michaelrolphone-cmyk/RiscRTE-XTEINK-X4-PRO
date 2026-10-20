@@ -321,8 +321,10 @@ class PairTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'native marker missing'):
             p.check_qualification(admission, {}, b'{}', b'.123', b'zip', self.files)
 
-    def candidate_evidence(self):
-        native = p.NATIVE_MARKER.encode() + b'\x00synthetic-unit-test-native'
+    def candidate_evidence(self, native=None):
+        if native is None:
+            native = (p.NATIVE_MARKER.encode() + b'\x00X4_SOURCE=' + b'a' * 40 +
+                      b'\x00RTE_SOURCE=' + p.RUNTIME_REVISION.encode() + b'\x00synthetic-unit-test-native')
         factory = bytearray(16 * 1024 * 1024)
         factory[0x10000:0x10000 + len(native)] = native
         factory = bytes(factory)
@@ -383,6 +385,26 @@ class PairTests(unittest.TestCase):
             p.check_qualification(a, q, qraw + b' ', factory, archive, self.files, require_hardware_revision=False)
         with self.assertRaisesRegex(ValueError, 'factory differs'):
             p.check_qualification(a, q, qraw, factory[:-1] + b'x', archive, self.files, require_hardware_revision=False)
+
+    def test_native_product_source_is_not_just_json_identity(self):
+        a, q, _, factory, archive, _ = self.candidate_evidence()
+        a['source_commit']='b'*40
+        q['input_lock']['sources']['product']['revision']='b'*40
+        raw=p.canonical(q);a['qualification']=p.record(raw)
+        with self.assertRaisesRegex(ValueError, 'Embedded native product source'):
+            p.check_qualification(a,q,raw,factory,archive,self.files,require_hardware_revision=False)
+
+    def test_native_source_markers_missing_conflicting_or_mismatched_rejected(self):
+        native=(p.NATIVE_MARKER.encode()+b'\x00X4_SOURCE='+b'a'*40+
+                b'\x00RTE_SOURCE='+p.RUNTIME_REVISION.encode()+b'\x00')
+        for name,expected in ((b'X4_SOURCE=',b'a'*40),(b'RTE_SOURCE=',p.RUNTIME_REVISION.encode())):
+            for changed in (native.replace(name,b'NOT_SOURCE='),
+                            native.replace(name+expected,name+b'b'*40),
+                            native+name+b'c'*40+b'\x00'):
+                with self.subTest(name=name,changed=changed[-42:]):
+                    a,q,raw,factory,archive,_=self.candidate_evidence(changed)
+                    with self.assertRaisesRegex(ValueError, 'Embedded native .* source'):
+                        p.check_qualification(a,q,raw,factory,archive,self.files,require_hardware_revision=False)
 
     def test_final_qualification_requires_independently_admitted_hardware_revision(self):
         a, q, qraw, factory, archive, _ = self.candidate_evidence()
