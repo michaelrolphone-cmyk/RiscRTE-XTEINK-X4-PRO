@@ -145,3 +145,18 @@ artifact/member/payload byte identity, and produces `draft.json` deterministical
 It performs no networking or device I/O and has no finalize/execute mode. Run its
 negative controls and then `--check` against a freshly verified remote commit.
 The workflow supplies the exact sources and artifact; no firmware rebuild occurs.
+
+With the pinned Runtime checkout and candidate Actions ZIP available locally:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python docs/native-update-procedure/bind.py \
+  --matrix /path/to/pinned-runtime --artifact /path/to/candidate.zip --check
+PYTHONDONTWRITEBYTECODE=1 python docs/native-update-procedure/test_binding.py \
+  --matrix /path/to/pinned-runtime --artifact /path/to/candidate.zip
+```
+
+These checks authenticate neither a device nor trust-context authority. They compare
+exact pinned bytes and reject altered source, archive, inventory, order, routing and
+false preservation claims. The generated unexecuted draft must fail the existing
+shared report checker. `draft.json` is not a new acceptance validator or an executable
+operation plan; actual operation choices and all observed evidence stay null.
