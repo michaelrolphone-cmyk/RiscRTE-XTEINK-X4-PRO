@@ -1,0 +1,62 @@
+# Preparation checks only: no release, installation, Catalog mutation or firmware build.
+name: X4 update procedure binding
+on:
+  push:
+    branches: [work/x4-update-procedure-draft-20261022]
+    paths:
+      - 'docs/native-update-procedure/**'
+      - '.github/workflows/x4-update-procedure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  bind:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Fetch exact procedure source and pinned shared matrix
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init product
+          git -C product remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
+          git -C product fetch --depth=1 origin "$GITHUB_SHA"
+          git -C product checkout --detach FETCH_HEAD
+          test "$(git -C product rev-parse HEAD)" = "$GITHUB_SHA"
+          git init matrix
+          git -C matrix remote add origin https://github.com/michaelrolphone-cmyk/RiscRTE.git
+          git -C matrix fetch --depth=1 origin b3a846b5252c00a849c560ced936b1ce4baab260
+          git -C matrix checkout --detach FETCH_HEAD
+          test "$(git -C matrix rev-parse HEAD)" = b3a846b5252c00a849c560ced936b1ce4baab260
+      - name: Read exact existing preparation artifact, never rebuild or substitute
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/39363726868" > run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12238683883" > artifact.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          lock=json.loads(Path('product/docs/native-update-procedure/inputs.json').read_text())
+          run=json.loads(Path('run.json').read_text())
+          artifact=json.loads(Path('artifact.json').read_text())
+          assert run['head_sha']==lock['product']['revision'] and run['conclusion']=='success'
+          assert artifact['id']==lock['artifact']['artifact_id'] and not artifact['expired']
+          assert artifact['workflow_run']['head_sha']==lock['product']['revision']
+          assert artifact['workflow_run']['id']==lock['artifact']['run_id']
+          assert artifact['digest']=='sha256:'+lock['artifact']['sha256']
+          PY
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12238683883/zip" > candidate.zip
+      - name: Check source-bound draft and adapter negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 product/docs/native-update-procedure/bind.py --matrix matrix --artifact candidate.zip --check
+          python3 product/docs/native-update-procedure/test_binding.py --matrix matrix --artifact candidate.zip
+          git -C product diff --exit-code
+          test -z "$(git -C product status --porcelain)"
+          echo 'Preparation binding only.46 cases/85 variants remain unexecuted; hardware not tested.' >> "$GITHUB_STEP_SUMMARY"
