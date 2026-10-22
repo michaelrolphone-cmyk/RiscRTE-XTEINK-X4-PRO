@@ -60,6 +60,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python3 product/tests/test_native_paired_workflow_composition.py
           python3 product/docs/native-update-procedure/bind.py --matrix matrix --artifact candidate.zip --check
           python3 product/docs/native-update-procedure/test_binding.py --matrix matrix --artifact candidate.zip
           git -C product diff --exit-code

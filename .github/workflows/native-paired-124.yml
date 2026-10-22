@@ -4,15 +4,6 @@ name: X4 0.1.124 paired candidate preparation only
 on:
   push:
     branches: [work/x4-paired-0.1.124]
-  pull_request:
-    paths:
-      - scripts/native_paired*
-      - scripts/x4_pair_manifest.py
-      - profiles/native-paired-124.cmake
-      - docs/native-paired-124/**
-      - tests/test_native_paired*
-      - tests/test_x4_pair*
-      - .github/workflows/native-paired-124.yml
   workflow_dispatch:
 permissions:
   contents: read
