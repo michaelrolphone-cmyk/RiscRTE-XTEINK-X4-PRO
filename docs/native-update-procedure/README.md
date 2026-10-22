@@ -41,8 +41,9 @@ These hashes establish preparation byte identity only.
 4. Nonfixture manifest/container and ordinary frozen-schema semantic validation;
    the source producer's `finalize` prerequisites still apply. Do not copy the
    fixture release ID 1, `fixture-unspecified`, or self-asserted trusted context.
-5. Approved test destinations, backups, independent observations and supported
-   recovery details. Protect real user data. Public source/result examples must
+5. Approved test destinations, independent observations, and recorded backup/recovery
+   status and limitations under the supported product procedure. Protect real user
+   data as specified by the shared matrix. Public source/result examples must
    not contain private settings, identifiers or actual user-file content.
 6. A separate authorized hardware execution and review. This package cannot clear
    any gate, even when all preparation checks pass.
@@ -160,3 +161,9 @@ exact pinned bytes and reject altered source, archive, inventory, order, routing
 false preservation claims. The generated unexecuted draft must fail the existing
 shared report checker. `draft.json` is not a new acceptance validator or an executable
 operation plan; actual operation choices and all observed evidence stay null.
+
+Source revision and Actions artifact labels are established by the exact remote
+checkout and official workflow metadata in CI, not authenticated by an offline
+checksum comparison. The lock is reviewable input, not a trusted hardware context.
+Direct raw-byte comparisons also bind factory, SD ZIP and qualification receipt to
+the producer's admission identities and the factory to the fixture manifest.

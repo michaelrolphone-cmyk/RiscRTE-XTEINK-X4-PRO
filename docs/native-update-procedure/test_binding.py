@@ -33,6 +33,25 @@ class BindingTests(unittest.TestCase):
         self.assertEqual(len(PAYLOAD), 78)
         self.assertEqual(sum(map(len, PAYLOAD.values())), 11006894)
 
+    def test_lock_expectation_mutations_rejected(self):
+        for key, value in [('version', '0.1.125'), ('provider', 'sdmmc-fatfs'),
+                           ('provider_instance', 12), ('declared_settings_effect', 'preserved'),
+                           ('declared_external_volume_effect', 'preserved'),
+                           ('installed_bootstrap', {'confirmed': True}), ('hardware_results', 'pass')]:
+            with self.subTest(field=key):
+                changed = copy.deepcopy(LOCK); changed['candidate'][key] = value
+                with self.assertRaises(ValueError):
+                    bind.audit(changed, bind.PRODUCT, ARGS.matrix, RAW)
+
+    def test_pinned_identity_mutations_rejected(self):
+        for section, key, value in [('shared', 'revision', '0' * 40),
+                                     ('product', 'revision', '0' * 40),
+                                     ('artifact', 'artifact_id', 1), ('artifact', 'run_id', 1)]:
+            with self.subTest(field=key):
+                changed = copy.deepcopy(LOCK); changed[section][key] = value
+                with self.assertRaises(ValueError):
+                    bind.audit(changed, bind.PRODUCT, ARGS.matrix, RAW)
+
     def test_actual_archive_tamper_rejected(self):
         with self.assertRaisesRegex(ValueError, 'Actions artifact'):
             bind.audit(LOCK, bind.PRODUCT, ARGS.matrix, RAW[:-1] + bytes([RAW[-1] ^ 1]))
@@ -40,6 +59,28 @@ class BindingTests(unittest.TestCase):
     def test_actual_archive_truncation_rejected(self):
         with self.assertRaisesRegex(ValueError, 'Actions artifact'):
             bind.audit(LOCK, bind.PRODUCT, ARGS.matrix, RAW[:-1])
+
+    def test_factory_tamper_with_rehashed_outer_lock_rejected(self):
+        def packed(members):
+            buffer = io.BytesIO()
+            with zipfile.ZipFile(buffer, 'w') as archive:
+                for name, raw in members.items(): archive.writestr(name, raw)
+            return buffer.getvalue()
+        changed_members = dict(MEMBERS)
+        name = 'factory-candidate-erases-data-0x0.bin'
+        changed_members[name] = bytes([MEMBERS[name][0] ^ 1]) + MEMBERS[name][1:]
+        container_name = LOCK['candidate']['fixture_manifest_member'].replace('.json', '.zip')
+        container = bind.zip_members(MEMBERS[container_name])
+        container['firmware/' + name] = changed_members[name]
+        changed_members[container_name] = packed(container)
+        changed_raw = packed(changed_members)
+        changed = copy.deepcopy(LOCK)
+        changed['artifact'].update(bytes=len(changed_raw), sha256=bind.digest(changed_raw))
+        for member in (name, container_name):
+            changed['artifact']['members'][member] = {
+                'bytes': len(changed_members[member]), 'sha256': bind.digest(changed_members[member])}
+        with self.assertRaisesRegex(ValueError, 'Admission/raw-member identity mismatch'):
+            bind.audit(changed, bind.PRODUCT, ARGS.matrix, changed_raw)
 
     def test_source_pin_tamper_rejected(self):
         changed = copy.deepcopy(LOCK)

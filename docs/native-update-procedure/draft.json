@@ -3612,7 +3612,6 @@
       "actual_device_identifier": null,
       "actual_hardware_revision": null,
       "actual_provider_bounds": null,
-      "approved_destinations_and_backups": null,
       "authorized_hardware_run": null,
       "device_observation_timestamp": null,
       "fresh_catalog_release_and_plan": null,
@@ -3622,7 +3621,8 @@
       "nonfixture_manifest_and_container": null,
       "published_release_and_asset_readback": null,
       "reviewed_nonfixture_trust": null,
-      "supported_recovery": null
+      "supported_recovery": null,
+      "test_destinations_and_backup_recovery_status": null
     }
   }
 }

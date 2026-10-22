@@ -63,7 +63,8 @@ def check_plan(manifest, expected):
             'Unsupported prepared order')
     install = manifest['firmware']['install']
     require(install['method_id'] == expected['flash_method'], 'Flash method mismatch')
-    require(install['settings_effect'] == 'erased', 'Settings-erasure disclosure mismatch')
+    require(install['settings_effect'] == expected['declared_settings_effect'] == 'erased', 'Settings-erasure disclosure mismatch')
+    require(expected['declared_external_volume_effect'] == 'unknown', 'External flash expectation mismatch')
     require(install['volume_effects'] == [{'volume': expected['logical_volume'], 'effect': 'unknown',
                                          'evidence': install['volume_effects'][0]['evidence']}],
             'External flash effect cannot be promoted to preserved')
@@ -83,6 +84,10 @@ def check_plan(manifest, expected):
 
 
 def audit(lock, product, matrix, raw):
+    require(lock['product']['revision'] == 'ee832b0c16c26f76dd15a27e318d61c478d38d3c' and
+            lock['shared']['revision'] == 'b3a846b5252c00a849c560ced936b1ce4baab260', 'Pinned source identity mismatch')
+    require(lock['artifact']['artifact_id'] == 12238683883 and lock['artifact']['run_id'] == 39363726868,
+            'Pinned Actions identity mismatch')
     checked_files(product, lock['product']['files'])
     shared = matrix / lock['shared']['directory']
     checked_files(shared, lock['shared']['files'])
@@ -99,6 +104,14 @@ def audit(lock, product, matrix, raw):
             admission['ci']['source_commit'] == lock['product']['revision'] and
             admission['ci']['run_id'] == lock['artifact']['run_id'], 'Build/source identity mismatch')
     require(admission['runtime_revision'] == candidate['runtime_revision'], 'Runtime mismatch')
+    require(admission['version'] == candidate['version'] == '0.1.124', 'Candidate version mismatch')
+    require(candidate['provider'] == 'x4pro-sd' and candidate['provider_instance'] == 9,
+            'Provider expectation/source mismatch')
+    require(candidate['declared_settings_effect'] == 'erased' and
+            candidate['declared_external_volume_effect'] == 'unknown', 'Declared flash expectation mismatch')
+    require(all(candidate[k] is None for k in ['installed_bootstrap', 'actual_release', 'actual_catalog',
+                                               'trusted_board_context', 'hardware_results']),
+            'Preparation cannot establish final admission')
     require(not admission['publication_enabled'] and not admission['hardware_tested'] and
             not qualification['device_accessed'] and not qualification['hardware_tested'] and
             qualification['status'] == 'software-qualified-candidate-hardware-pending',
@@ -106,6 +119,11 @@ def audit(lock, product, matrix, raw):
     require(admission['payload_files'] == candidate['payload_files'], 'Admission inventory mismatch')
     require(admission['factory'] == candidate['factory'] and admission['sd_archive'] == candidate['sd_archive'] and
             admission['qualification'] == candidate['qualification'], 'Candidate identity mismatch')
+    for name, identity in [('factory-candidate-erases-data-0x0.bin', admission['factory']),
+                           ('X4-0.1.124-Complete-SD-Keep-Existing.zip', admission['sd_archive']),
+                           ('qualification.json', admission['qualification'])]:
+        require({'bytes': len(members[name]), 'sha256': digest(members[name])} == identity,
+                'Admission/raw-member identity mismatch: ' + name)
     payload = zip_members(members['X4-0.1.124-Complete-SD-Keep-Existing.zip'])
     check_payload(payload, candidate['payload_files'])
     baseline = load((product / 'docs/native-paired-124/released-baseline.json').read_bytes())['sd']['files']
@@ -113,6 +131,9 @@ def audit(lock, product, matrix, raw):
             'Baseline77 content changed')
     manifest = load(members[candidate['fixture_manifest_member']])
     check_plan(manifest, candidate)
+    factory_row = manifest['firmware']['artifacts'][0]
+    require({'bytes': factory_row['bytes'], 'sha256': factory_row['sha256']} == admission['factory'],
+            'Manifest/admission factory mismatch')
     container = zip_members(members[candidate['fixture_manifest_member'].replace('.json', '.zip')])
     require(load(container['manifest.json']) == manifest, 'Container manifest mismatch')
     for row in manifest['payload']['files']:
@@ -170,7 +191,7 @@ def draft(lock, matrix, template):
             'actual_device_identifier', 'actual_hardware_revision', 'published_release_and_asset_readback',
             'fresh_catalog_release_and_plan', 'reviewed_nonfixture_trust', 'hello_and_namespaces_before',
             'hello_and_namespaces_after', 'actual_provider_bounds', 'supported_recovery',
-            'approved_destinations_and_backups', 'nonfixture_manifest_and_container', 'authorized_hardware_run']},
+            'test_destinations_and_backup_recovery_status', 'nonfixture_manifest_and_container', 'authorized_hardware_run']},
         'scenario_records_required': ['clean-create78', 'baseline77-plus-new1-explicit-plan', 'repeat-present78'],
         'scenario_operation_examples_are_not_live_selection': True,
         'sentinel_stages_required': ['F0', 'F1', 'fresh-post-flash-S0', 'per-interval-S0', 'per-interval-S1', 'post-restart-S2'],
