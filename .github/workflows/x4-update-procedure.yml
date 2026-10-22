@@ -6,6 +6,10 @@ on:
     paths:
       - 'docs/native-update-procedure/**'
       - '.github/workflows/x4-update-procedure.yml'
+  pull_request:
+    paths:
+      - docs/native-update-procedure/**
+      - .github/workflows/x4-update-procedure.yml
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,6 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
+      PRODUCT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       PYTHONDONTWRITEBYTECODE: '1'
       GH_TOKEN: ${{ github.token }}
     steps:
@@ -24,9 +29,9 @@ jobs:
           set -euo pipefail
           git init product
           git -C product remote add origin "https://github.com/$GITHUB_REPOSITORY.git"
-          git -C product fetch --depth=1 origin "$GITHUB_SHA"
+          git -C product fetch --depth=1 origin "$PRODUCT_SHA"
           git -C product checkout --detach FETCH_HEAD
-          test "$(git -C product rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git -C product rev-parse HEAD)" = "$PRODUCT_SHA"
           git init matrix
           git -C matrix remote add origin https://github.com/michaelrolphone-cmyk/RiscRTE.git
           git -C matrix fetch --depth=1 origin b3a846b5252c00a849c560ced936b1ce4baab260
