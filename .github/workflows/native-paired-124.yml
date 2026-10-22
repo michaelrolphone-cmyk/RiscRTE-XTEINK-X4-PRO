@@ -1,0 +1,306 @@
+# Build-only preparation: no release, catalog mutation, merge, tag or device I/O.
+# Installed-bootstrap evidence remains required before public candidate publication.
+name: X4 0.1.124 paired candidate preparation only
+on:
+  push:
+    branches: [work/x4-paired-0.1.124]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: x4-paired-124-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  qualify:
+    if: github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    container: espressif/idf:v6.1@sha256:81893c71bb5e570088901f21def8684c25cd2a9020281bd01b843a7655edb18c
+    env:
+      PRODUCT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      SDK_SOURCE: fff9895c82d744c7237be8847347bdd1b07c6643
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      CCACHE_DISABLE: '1'
+      IDF_CCACHE_ENABLE: '0'
+      CMAKE_BUILD_PARALLEL_LEVEL: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Clone exact independent clean source roots
+        run: |
+          set -euo pipefail
+          export NATIVE_ROOT="$RUNNER_TEMP/x4-paired-124-$PRODUCT_SHA"
+          echo "NATIVE_ROOT=$NATIVE_ROOT" >> "$GITHUB_ENV"
+          test ! -e "$NATIVE_ROOT"
+          mkdir -p "$NATIVE_ROOT"/{sources,inputs,metadata,logs}
+          exec > >(tee "$NATIVE_ROOT/logs/setup.log") 2>&1
+          apt-get update
+          apt-get install -y --no-install-recommends git curl ca-certificates libssl-dev g++
+          clone_source() {
+            local repository="$1" revision="$2" destination="$3"
+            [[ "$revision" =~ ^[0-9a-f]{40}$ ]]
+            git init --quiet "$destination"
+            git -C "$destination" remote add origin "https://github.com/$repository.git"
+            git -C "$destination" fetch --no-tags --depth=1 origin "$revision"
+            git -C "$destination" checkout --quiet --detach FETCH_HEAD
+            test "$(git -C "$destination" rev-parse HEAD)" = "$revision"
+            git -C "$destination" submodule update --init --recursive --depth=1
+          }
+          clone_source "$GITHUB_REPOSITORY" "$PRODUCT_SHA" "$NATIVE_ROOT/sources/product"
+          # Historical identity is read only by the frozen-history host gate.
+          git -C "$NATIVE_ROOT/sources/product" fetch --no-tags --depth=1 origin c9ecac4058ead7a82b0f74560ac5b19f0b858b3f
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['NATIVE_ROOT'])
+          pins=json.loads((root/'sources/product/docs/native-paired-124/source-inputs.json').read_bytes())
+          with (root/'metadata/source-rows.txt').open('w') as f:
+              for role,row in sorted(pins['sources'].items()):
+                  print(role,row['repository'],row['revision'],file=f)
+          PY
+          while read -r role repository revision; do
+            clone_source "$repository" "$revision" "$NATIVE_ROOT/sources/$role"
+          done < "$NATIVE_ROOT/metadata/source-rows.txt"
+          git -C "$NATIVE_ROOT/sources/runtime" fetch --no-tags --depth=1 origin 908355b0509907c05a6dc47a1ccc8e078d6e23b0
+          mkdir "$NATIVE_ROOT/metadata/frozen-schema"
+          for name in validate.py manifest.schema.json descriptor.schema.json context.schema.json; do
+            git -C "$NATIVE_ROOT/sources/runtime" show "908355b0509907c05a6dc47a1ccc8e078d6e23b0:docs/catalog-payload/1.0.0/$name" > "$NATIVE_ROOT/metadata/frozen-schema/$name"
+          done
+          echo "X4_PAIR_SCHEMA=$NATIVE_ROOT/metadata/frozen-schema" >> "$GITHUB_ENV"
+          echo "X4_PAIR_BASELINE_INPUTS=$NATIVE_ROOT/inputs" >> "$GITHUB_ENV"
+          . "$IDF_PATH/export.sh"
+          test "$(git -C "$IDF_PATH" rev-parse HEAD)" = "$SDK_SOURCE"
+          python -m pip install platformio==6.1.19 pyelftools==0.32 Pillow==11.3.0 jsonschema==4.25.1
+          pio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'
+          cp "$IDF_PATH/tools/tools.json" "$NATIVE_ROOT/metadata/sdk-tools.json"
+          cp "$NATIVE_ROOT/sources/product/.github/workflows/native-paired-124.yml" "$NATIVE_ROOT/metadata/workflow.yml"
+      - name: Download and audit the immutable .123 factory and matching complete SD
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/inputs.log") 2>&1
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          root=Path(os.environ['NATIVE_ROOT'])
+          c=json.loads((root/'sources/product/docs/native-paired-124/released-baseline.json').read_bytes())
+          rows=[(c['baseline_factory_url'],'baseline.bin',c['factory_sha256']),
+                ('https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/releases/download/test-t064-crash-0.1.121/'+c['sd']['filename'],'complete-sd.zip',c['sd']['sha256'])]
+          import hashlib
+          for url,name,digest in rows:
+              target=root/'inputs'/name
+              subprocess.run(['curl','--fail','--show-error','--silent','--location','--retry','3','--proto','=https','--proto-redir','=https',url,'--output',str(target)],check=True)
+              assert hashlib.sha256(target.read_bytes()).hexdigest()==digest
+          (root/'inputs/factory-candidate-erases-data-0x0.bin').write_bytes((root/'inputs/baseline.bin').read_bytes())
+          (root/'inputs/X4-0.1.121-Complete-SD-Keep-Existing.zip').write_bytes((root/'inputs/complete-sd.zip').read_bytes())
+          (root/'metadata/input-urls.json').write_text(json.dumps(rows,indent=2)+'\n')
+          PY
+      - name: Product host and current Home integration gates
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/host-tests.log") 2>&1
+          cd "$NATIVE_ROOT/sources/product"
+          export RISCRTE_RUNTIME_ROOT="$NATIVE_ROOT/sources/runtime"
+          command -v cmake
+          python tests/test_native_paired_candidate.py --runtime "$NATIVE_ROOT/sources/runtime" \
+            --image-helper "$NATIVE_ROOT/sources/image_helper" --baseline "$NATIVE_ROOT/inputs/baseline.bin" \
+            --sd-archive "$NATIVE_ROOT/inputs/complete-sd.zip"
+          python tests/test_native_provision_candidate.py --runtime "$NATIVE_ROOT/sources/runtime" --image-helper "$NATIVE_ROOT/sources/image_helper"
+          python tests/test_x4_pair_manifest.py
+          python tests/test_native_idf61_provenance.py
+          python minimal/test/native_idf61_profile_test.py
+          python minimal/test/run_native_idf61_boot_test.py
+          SANITIZE=1 ASAN_OPTIONS=detect_leaks=0 python minimal/test/run_native_idf61_boot_test.py
+          python "$NATIVE_ROOT/sources/system/scripts/test_home_provision.py" --runtime "$NATIVE_ROOT/sources/runtime" \
+            --x4 "$NATIVE_ROOT/sources/product" --sdk "$NATIVE_ROOT/sources/reader/sdk/driver" \
+            --utilities "$NATIVE_ROOT/sources/utilities" --output "$NATIVE_ROOT/home-host"
+          export RUNTIME_REPO="$NATIVE_ROOT/sources/runtime"
+          for script in test_automatic_foreground.sh test_installed_apps_automatic.sh test_installed_apps_boot_profile.sh; do
+            bash "$NATIVE_ROOT/sources/system/scripts/$script"
+            SANITIZE=1 SANITIZERS=address,undefined ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+              bash "$NATIVE_ROOT/sources/system/scripts/$script"
+          done
+      - name: Generic serial protocol storage and custody host gates
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/serial-host.log") 2>&1
+          cd "$NATIVE_ROOT/sources/runtime"
+          mkdir "$NATIVE_ROOT/platform-capacity"
+          RECEIPT="$NATIVE_ROOT/platform-capacity/normal.json" python test/run_runtime_platform_capacity_test.py
+          RECEIPT="$NATIVE_ROOT/platform-capacity/sanitized.json" SANITIZE=1 ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 python test/run_runtime_platform_capacity_test.py
+          for script in run_runtime_checkpoint_api_test.sh run_serial_native_provider_test.sh run_serial_files_test.sh run_serial_files_client_test.sh run_native_serial_files_transport_test.sh; do
+            bash "test/$script"
+            SANITIZE=1 ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 bash "test/$script"
+          done
+          BUILD_DIR="$NATIVE_ROOT/serial-storage-normal" python test/run_native_serial_storage_test.py
+          BUILD_DIR="$NATIVE_ROOT/serial-storage-sanitized" SANITIZE=1 ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 python test/run_native_serial_storage_test.py
+          mkdir "$NATIVE_ROOT/serial-product"
+          RECEIPT="$NATIVE_ROOT/serial-product/normal.json" SANITIZE=0 python test/run_native_serial_product_storage_test.py
+          RECEIPT="$NATIVE_ROOT/serial-product/sanitized.json" SANITIZE=1 ASAN_OPTIONS=detect_leaks=0:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 python test/run_native_serial_product_storage_test.py
+      - name: Fresh .124 packages and native build with complete qualification
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/controlled-build.log") 2>&1
+          args=(--source "product=$NATIVE_ROOT/sources/product" --source "sdk=$IDF_PATH")
+          while read -r role repository revision; do args+=(--source "$role=$NATIVE_ROOT/sources/$role"); done < "$NATIVE_ROOT/metadata/source-rows.txt"
+          python "$NATIVE_ROOT/sources/product/scripts/native_paired_build.py" "${args[@]}" \
+            --compiler "$(command -v xtensa-esp-elf-gcc)" \
+            --home-compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" \
+            --serial-product-normal "$NATIVE_ROOT/serial-product/normal.json" \
+            --serial-product-sanitized "$NATIVE_ROOT/serial-product/sanitized.json" \
+            --baseline "$NATIVE_ROOT/inputs/baseline.bin" --sd-archive "$NATIVE_ROOT/inputs/complete-sd.zip" \
+            --candidate-version 0.1.124 --native-build "$NATIVE_ROOT/build" --output "$NATIVE_ROOT/candidate"
+      - name: Full prepared payload host transport regression
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          cd "$NATIVE_ROOT/sources/product"
+          digest=$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["sd_archive"]["sha256"])' "$NATIVE_ROOT/candidate/pair-admission.json")
+          for mode in normal sanitized; do
+            flags=(); test "$mode" = normal || flags+=(--sanitize)
+            TMPDIR="$RUNNER_TEMP" python tests/test_x4_paired_transport.py \
+              --runtime "$NATIVE_ROOT/sources/runtime" \
+              --sd-archive "$NATIVE_ROOT/candidate/X4-0.1.124-Complete-SD-Keep-Existing.zip" \
+              --expected-sha256 "$digest" --expected-files 78 --profile profiles/native-paired-124.cmake \
+              --receipt "$NATIVE_ROOT/candidate/payload-transport-$mode.json" "${flags[@]}"
+          done
+      - name: Prepare noninstallable exact-byte paired manifest drafts
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          for operation in create replace; do
+            python "$NATIVE_ROOT/sources/product/scripts/x4_pair_manifest.py" prepare-candidate \
+              --schema "$X4_PAIR_SCHEMA" \
+              --factory "$NATIVE_ROOT/candidate/factory-candidate-erases-data-0x0.bin" \
+              --sd-archive "$NATIVE_ROOT/candidate/X4-0.1.124-Complete-SD-Keep-Existing.zip" \
+              --admission "$NATIVE_ROOT/candidate/pair-admission.json" \
+              --qualification "$NATIVE_ROOT/candidate/qualification.json" \
+              --output "$NATIVE_ROOT/candidate/pair-$operation" --operation "$operation"
+          done
+          # Explicit fixture assumption: every baseline path exists and only the new mirror is absent.
+          # This is not a live-card decision or an installation instruction.
+          python - <<'PYTHON'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['NATIVE_ROOT']); candidate=root/'candidate'
+          before=json.loads((root/'sources/product/docs/native-paired-124/released-baseline.json').read_bytes())['sd']['files']
+          after=json.loads((candidate/'pair-admission.json').read_bytes())['payload_files']
+          plan={name:('replace' if name in before else 'create') for name in sorted(after)}
+          assert len(plan)==78 and list(plan.values()).count('create')==1
+          (candidate/'baseline-present-fixture-operation-plan.json').write_text(json.dumps(plan,indent=2,sort_keys=True)+'\n')
+          PYTHON
+          python "$NATIVE_ROOT/sources/product/scripts/x4_pair_manifest.py" prepare-candidate \
+            --schema "$X4_PAIR_SCHEMA" \
+            --factory "$NATIVE_ROOT/candidate/factory-candidate-erases-data-0x0.bin" \
+            --sd-archive "$NATIVE_ROOT/candidate/X4-0.1.124-Complete-SD-Keep-Existing.zip" \
+            --admission "$NATIVE_ROOT/candidate/pair-admission.json" \
+            --qualification "$NATIVE_ROOT/candidate/qualification.json" \
+            --output "$NATIVE_ROOT/candidate/pair-baseline-present" --operation selected \
+            --operation-plan "$NATIVE_ROOT/candidate/baseline-present-fixture-operation-plan.json"
+      - name: Native artifact and workspace checks
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/final-linked.log") 2>&1
+          python "$NATIVE_ROOT/sources/runtime/test/native_firmware_idf6_test.py" --build "$NATIVE_ROOT/build"
+          python "$NATIVE_ROOT/sources/runtime/test/compile_native_serial_files_target.py" "$NATIVE_ROOT/build/compile_commands.json" "$NATIVE_ROOT/build/qualification/serial-target"
+          python "$NATIVE_ROOT/sources/runtime/scripts/native_idf_iq_link.py" verify --elf "$NATIVE_ROOT/build/riscrte_native.elf" \
+            --target esp32s3-16mb-appdata-iq --output "$NATIVE_ROOT/build/qualification/iq-linked.json"
+      - name: Index complete preparation outputs
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import hashlib,os
+          from pathlib import Path
+          root=Path(os.environ['NATIVE_ROOT'])/'candidate'
+          (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.relative_to(root).as_posix()+'\n' for p in sorted(root.rglob('*')) if p.is_file() and p!=root/'SHA256SUMS'))
+          PYTHON
+      - name: Preserve exact source SDK baseline package and build evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          test -d "$NATIVE_ROOT"
+          mkdir -p "$NATIVE_ROOT/source-evidence"
+          for source in "$NATIVE_ROOT"/sources/*; do
+            test -d "$source/.git" || continue
+            role=$(basename "$source")
+            git -C "$source" status --porcelain=v1 --untracked-files=all > "$NATIVE_ROOT/source-evidence/$role-status.txt"
+            git -C "$source" show -s --format='%H %T' > "$NATIVE_ROOT/source-evidence/$role-identity.txt"
+            git -C "$source" archive --format=tar HEAD | gzip -1 > "$NATIVE_ROOT/source-evidence/$role-source.tar.gz"
+          done
+          git -C "$IDF_PATH" status --porcelain=v1 --untracked-files=all > "$NATIVE_ROOT/source-evidence/sdk-status.txt"
+          git -C "$IDF_PATH" show -s --format='%H %T' > "$NATIVE_ROOT/source-evidence/sdk-identity.txt"
+          git -C "$IDF_PATH" submodule status --recursive > "$NATIVE_ROOT/source-evidence/sdk-submodules.txt"
+          tar --exclude=.git -czf "$NATIVE_ROOT/source-evidence/sdk-source.tar.gz" -C "$IDF_PATH" .
+          (cd "$NATIVE_ROOT/source-evidence" && sha256sum *.tar.gz > SHA256SUMS)
+      - name: Upload bounded qualification and startup receipts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: x4-native-paired-124-qualification-${{ env.PRODUCT_SHA }}
+          path: |
+            ${{ env.NATIVE_ROOT }}/candidate/pair-admission.json
+            ${{ env.NATIVE_ROOT }}/candidate/qualification.json
+            ${{ env.NATIVE_ROOT }}/candidate/source-lock.json
+            ${{ env.NATIVE_ROOT }}/candidate/SHA256SUMS
+            ${{ env.NATIVE_ROOT }}/candidate/serial-product-*.json
+            ${{ env.NATIVE_ROOT }}/candidate/feed/*.json
+            ${{ env.NATIVE_ROOT }}/build/qualification/**/*.json
+            ${{ env.NATIVE_ROOT }}/build/platform-capacity-probe/receipt.json
+            ${{ env.NATIVE_ROOT }}/build/compile_commands.json
+            ${{ env.NATIVE_ROOT }}/build/riscrte_native.elf
+            ${{ env.NATIVE_ROOT }}/build/riscrte_native.map
+            ${{ env.NATIVE_ROOT }}/build/config/sdkconfig.h
+            ${{ env.NATIVE_ROOT }}/build/config/sdkconfig.json
+            ${{ env.NATIVE_ROOT }}/build/toolchain/
+            ${{ env.NATIVE_ROOT }}/build/native-build-evidence/source-lock.json
+            ${{ env.NATIVE_ROOT }}/build-packages/package-build-receipt.json
+            ${{ env.NATIVE_ROOT }}/serial-product/
+            ${{ env.NATIVE_ROOT }}/platform-capacity/
+            ${{ env.NATIVE_ROOT }}/metadata/
+            ${{ env.NATIVE_ROOT }}/logs/
+            ${{ env.NATIVE_ROOT }}/source-evidence/*-identity.txt
+            ${{ env.NATIVE_ROOT }}/source-evidence/*-status.txt
+            ${{ env.NATIVE_ROOT }}/source-evidence/sdk-submodules.txt
+            ${{ env.NATIVE_ROOT }}/source-evidence/SHA256SUMS
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
+      - name: Upload unreleased preparation assets (not install instructions)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: x4-native-paired-124-candidate-${{ env.PRODUCT_SHA }}
+          path: ${{ env.NATIVE_ROOT }}/candidate/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 6
+      - name: Upload complete reproducibility evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: x4-native-paired-124-reproducibility-${{ env.PRODUCT_SHA }}
+          path: |
+            ${{ env.NATIVE_ROOT }}/candidate/
+            ${{ env.NATIVE_ROOT }}/build/
+            ${{ env.NATIVE_ROOT }}/build-packages/
+            ${{ env.NATIVE_ROOT }}/home-host/
+            ${{ env.NATIVE_ROOT }}/serial-storage-normal/
+            ${{ env.NATIVE_ROOT }}/serial-storage-sanitized/
+            ${{ env.NATIVE_ROOT }}/serial-product/
+            ${{ env.NATIVE_ROOT }}/platform-capacity/
+            ${{ env.NATIVE_ROOT }}/inputs/
+            ${{ env.NATIVE_ROOT }}/metadata/
+            ${{ env.NATIVE_ROOT }}/logs/
+            ${{ env.NATIVE_ROOT }}/source-evidence/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 1
