@@ -19,10 +19,17 @@ shutil.copytree(a.system/'lib/PortableApps/include',sdk,dirs_exist_ok=True)
 shutil.copytree(a.system/'lib/PortableApps/time',out/'time',dirs_exist_ok=True)
 for path in (a.utilities/'lib/Alarm/include').glob('*.h'):shutil.copyfile(path,sdk/path.name)
 for path in canonical.glob('*.h'):shutil.copyfile(path,sdk/path.name)
+power_sdk=[]
 for name in ('RiscDisplayPowerV1.h','RiscPowerSleepV1.h'):
- source=a.watch/'sdk/driver'/name
- if (sdk/name).exists():assert (sdk/name).read_bytes()==source.read_bytes(),name
- else:shutil.copyfile(source,sdk/name)
+ source=a.watch/'sdk/driver'/name;selected=source.read_bytes();prior=(sdk/name).read_bytes() if (sdk/name).exists() else None
+ if prior is not None and prior!=selected:
+  # Reader's experimental-unpublished TPS lease table uses the same name.
+  # It is not the selected sleep provider. Accept only that exact frozen input.
+  assert name=='RiscDisplayPowerV1.h' and prior==(a.reader/'sdk/driver'/name).read_bytes()
+  assert b'uint64_t *grant' in prior and b'prepare_deep_sleep' not in prior
+ (sdk/name).write_bytes(selected)
+ power_sdk.append({'header':name,'selected':'Watch/sdk/driver','selected_sha256':hashlib.sha256(selected).hexdigest(),'unselected_sha256':hashlib.sha256(prior).hexdigest() if prior is not None else None})
+(out/'power-sdk-selection.json').write_text(json.dumps(power_sdk,indent=2)+'\n')
 sources=[root/'minimal/drivers'/name/'driver.c' for name in ('x4pro_home_power','x4pro_home_display_power')]
 cases='happy missing-binding enrolled-unavailable held-key key-retained clock-backwards light-read light-off panel-refused panel-retained panel-unknown storage-prepare storage-commit media-unavailable storage-retained panel-restore light-restore native-retained native-zero native-unknown'.split()
 runs=[]
