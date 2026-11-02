@@ -7,7 +7,14 @@ for name in ('runtime','reader','watch','system','utilities','output'):p.add_arg
 p.add_argument('--compiler',type=Path)
 a=p.parse_args();root=Path(__file__).resolve().parents[2];out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
 canonical=out/'canonical';sdk=out/'include';sdk.mkdir(exist_ok=True)
-subprocess.run([sys.executable,str(root/'minimal/scripts/prepare_sdk.py'),'--runtime',str(a.runtime),'--reader',str(a.reader),'--output',str(canonical)],check=True)
+# The selected Runtime owns the append-only provider descriptor; Reader's
+# frozen copy predates its service suffix. Overlay exactly that one identity,
+# then keep the existing strict composer for every other shared header.
+reader_sdk=out/'reader-sdk';shutil.copytree(a.reader/'sdk/driver',reader_sdk/'sdk/driver',dirs_exist_ok=True)
+name='RiscProviderV2.h';old=(a.reader/'sdk/driver'/name).read_bytes();selected=(a.runtime/'sdk/driver'/name).read_bytes()
+(reader_sdk/'sdk/driver'/name).write_bytes(selected)
+(out/'provider-sdk-selection.json').write_text(json.dumps({'header':name,'selected':'Runtime/sdk/driver','selected_sha256':hashlib.sha256(selected).hexdigest(),'reader_frozen_sha256':hashlib.sha256(old).hexdigest()},indent=2)+'\n')
+subprocess.run([sys.executable,str(root/'minimal/scripts/prepare_sdk.py'),'--runtime',str(a.runtime),'--reader',str(reader_sdk),'--output',str(canonical)],check=True)
 shutil.copytree(a.system/'lib/PortableApps/include',sdk,dirs_exist_ok=True)
 shutil.copytree(a.system/'lib/PortableApps/time',out/'time',dirs_exist_ok=True)
 for path in (a.utilities/'lib/Alarm/include').glob('*.h'):shutil.copyfile(path,sdk/path.name)
