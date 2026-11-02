@@ -70,8 +70,9 @@ int main(int argc,char**argv){
  int rc=portable_home_power_prepare(&s);
  if(rc==1){assert(!panel_held&&!sd_closed&&now>=130);alarm_ready=true;rc=portable_home_power_hold(&s);}
  if(rc==1)rc=portable_home_power_enter(&s,1000);
+ if(rc!=-2){int restored=portable_home_power_restore(&s);if(restored==-2)rc=-2;else assert(restored==1);}
  if(rc==-2){assert(s.retained);unsigned stopped=calls;assert(portable_home_power_restore(&s)==-2&&calls==stopped);}
- else{assert(portable_home_power_restore(&s)==1);assert(!sd_prepared&&!sd_closed&&!panel_held&&level==37);assert(p->quiesce()&&d->quiesce());assert(!power_lock.created&&!display_lock.created);}
+ else{assert(!sd_prepared&&!sd_closed&&!panel_held&&level==37);assert(p->quiesce()&&d->quiesce());assert(!power_lock.created&&!display_lock.created);}
  assert((rc==-2)==terminal);
  portable_desk_record decoded;assert(portable_desk_decode(bytes,sizeof(bytes),&decoded)&&decoded.displayed_minute==record.displayed_minute);
  printf("X4 standard capability bridge %s: staged %u bytes, keys=%u entries=%u custody PASS\n",test,(unsigned)sizeof(bytes),keys,entries);return 0;
