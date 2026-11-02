@@ -33,7 +33,7 @@ for name in ('RiscDisplayPowerV1.h','RiscPowerSleepV1.h'):
 (out/'power-sdk-selection.json').write_text(json.dumps(power_sdk,indent=2)+'\n')
 sources=[root/'minimal/drivers'/(name+('_singleton' if a.singleton else ''))/'driver.c' for name in ('x4pro_home_power','x4pro_home_display_power')]
 cases='preprepare-pending light-entry light-entry-retained light-entry-refused light-entry-expired happy missing-binding enrolled-unavailable held-key key-retained clock-backwards light-read light-off panel-refused panel-retained panel-unknown storage-prepare storage-commit media-unavailable storage-retained panel-restore light-restore native-retained native-zero native-unknown'.split()
-if a.singleton:cases+=['coordination-absent','coordination-malformed','coordination-owner-busy','coordination-owner-retained']
+if a.singleton:cases+=["coordination-absent","coordination-malformed","coordination-owner-busy","coordination-owner-retained","enter-owner-deep","enter-owner-light","enter-owner-display","enter-owner-display-resume","enter-take-deep","enter-take-light","enter-take-display","enter-take-display-resume","enter-take-nested","enter-take-nested-unknown","enter-owner-display-unknown"]
 runs=[]
 for mode in ('normal','sanitized'):
  directory=out/mode;directory.mkdir(exist_ok=True)

@@ -69,7 +69,7 @@ static bool pending(void *unused,bool *out){
 static int32_t timed(void *unused,uint32_t duration){
  (void)unused;if(retained)return RISC_DEEP_SLEEP_RETAINED;
  if(!duration||duration>RISC_TIMED_SLEEP_MAX_MS)return RISC_DEEP_SLEEP_INVALID;
- if(!enter())return RISC_DEEP_SLEEP_CONTEXT;
+ if(!enter())return retained?RISC_DEEP_SLEEP_RETAINED:RISC_DEEP_SLEEP_CONTEXT;
  int32_t rc=prepared?power->deep_sleep_for(power->power.context,duration):RISC_DEEP_SLEEP_BUSY;
  if(rc>=0||rc==RISC_DEEP_SLEEP_RETAINED||rc<RISC_DEEP_SLEEP_UNSUPPORTED){retained=true;return RISC_DEEP_SLEEP_RETAINED;}
  return leave()?rc:RISC_DEEP_SLEEP_RETAINED;
@@ -80,7 +80,7 @@ static int32_t timed(void *unused,uint32_t duration){
 static int32_t light_for(void *unused,uint32_t duration,risc_light_sleep_result_v1 *out){
  (void)unused;if(retained)return RISC_LIGHT_SLEEP_RETAINED;
  if(duration>RISC_TIMED_SLEEP_MAX_MS)return RISC_LIGHT_SLEEP_INVALID;
- if(!enter())return RISC_LIGHT_SLEEP_CONTEXT;
+ if(!enter())return retained?RISC_LIGHT_SLEEP_RETAINED:RISC_LIGHT_SLEEP_CONTEXT;
  int32_t rc=RISC_LIGHT_SLEEP_BUSY;
  if(prepared&&!light_display_touched){
   uint64_t before=clock_api->monotonic_ms(clock_api->context);

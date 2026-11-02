@@ -51,7 +51,7 @@ static bool prepare(void *unused){
  return leave();
 }
 static int32_t hold(void *unused){
- (void)unused;if(retained)return RISC_DEEP_SLEEP_RETAINED;if(!enter())return RISC_DEEP_SLEEP_CONTEXT;
+ (void)unused;if(retained)return RISC_DEEP_SLEEP_RETAINED;if(!enter())return retained?RISC_DEEP_SLEEP_RETAINED:RISC_DEEP_SLEEP_CONTEXT;
  int32_t rc=RISC_DEEP_SLEEP_BUSY;
  if(dark&&!panel_touched&&!storage_touched){
   panel_touched=true;int32_t status=panel->prepare(output->context,RISC_DISPLAY_POWER_MAX_BUDGET_MS);
@@ -64,7 +64,7 @@ static int32_t hold(void *unused){
  return leave()?rc:RISC_DEEP_SLEEP_RETAINED;
 }
 static int32_t resume_status(void *unused){
- (void)unused;if(retained)return RISC_DEEP_SLEEP_RETAINED;if(!enter())return RISC_DEEP_SLEEP_CONTEXT;
+ (void)unused;if(retained)return RISC_DEEP_SLEEP_RETAINED;if(!enter())return retained?RISC_DEEP_SLEEP_RETAINED:RISC_DEEP_SLEEP_CONTEXT;
  if(storage_touched){
   int32_t rc=storage->resume_sleep(storage->terminal.power.volume.base.context);
   if(rc!=RISC_STORAGE_SLEEP_READY&&rc!=RISC_STORAGE_SLEEP_MEDIA_UNAVAILABLE)return fence();

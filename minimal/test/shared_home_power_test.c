@@ -34,10 +34,12 @@ static int32_t shared_create(void*c,uint64_t*out){
  *out=0;return X4_COORDINATION_BUSY;
 }
 static lock_state*shared_state(uint64_t t){assert(t==1||t==2);return t==1?&display_lock:&power_lock;}
-static int32_t shared_take(void*c,uint64_t t){(void)c;return take(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_BUSY;}
+static bool inject;static uint64_t inject_token;static bool inject_owner;static int32_t injected_result;
+static int32_t shared_take(void*c,uint64_t t){(void)c;if(inject&&!inject_owner&&t==inject_token){safe();terminal=true;return injected_result;}return take(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_BUSY;}
 static int32_t shared_unlock(void*c,uint64_t t){(void)c;return unlock(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_RETAINED;}
 static int32_t shared_destroy(void*c,uint64_t t){(void)c;return destroy(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_RETAINED;}
 static int32_t shared_owner(void*c){
+ if(inject&&inject_owner){safe();terminal=true;return injected_result;}
  if(which("coordination-owner-busy")){safe();return X4_COORDINATION_BUSY;}
  if(which("coordination-owner-retained")){safe();terminal=true;return X4_COORDINATION_RETAINED;}
  return owner(c)?X4_COORDINATION_OK:X4_COORDINATION_BUSY;
@@ -120,6 +122,28 @@ int main(int argc,char**argv){
 #endif
  assert(d->start(dd,dc)&&p->start(pd,pc));
  portable_home_power s={.power=p->capability,.display=d->capability};
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(!strncmp(test,"enter-",6)){
+  const risc_power_sleep_api_v1 *pa=p->capability;
+  const risc_display_power_api_v1 *da=d->capability;
+  bool nested=strstr(test,"nested")!=NULL;
+  if(nested){assert(da->prepare_sleep(da->context));assert(pa->prepare_sleep(pa->context));alarm_ready=true;}
+  inject=true;inject_owner=strstr(test,"owner")!=NULL;
+  inject_token=(strstr(test,"display")||nested)?1:2;
+  injected_result=strstr(test,"unknown")?-99:X4_COORDINATION_RETAINED;
+  int32_t result;
+  if(nested||strstr(test,"light")){risc_light_sleep_result_v1 wake={.struct_size=sizeof(wake)};result=pa->light_sleep_for(pa->context,1000,&wake);}
+  else if(strstr(test,"resume"))result=da->resume_status(da->context);
+  else if(strstr(test,"display"))result=da->prepare_deep_sleep(da->context);
+  else result=pa->deep_sleep_for(pa->context,1000);
+  assert(result==RISC_DEEP_SLEEP_RETAINED&&terminal);
+  unsigned stopped=calls;
+  assert(!(nested||inject_token==2?p->quiesce():d->quiesce()));
+  assert(calls==stopped);
+  puts("First terminal coordination result propagated without cleanup PASS");return 0;
+ }
+#endif
+
  if(which("enrolled-unavailable")){s.enrolled_wake_sources=true;assert(!portable_home_power_supported(&s));assert(p->quiesce()&&d->quiesce());return 0;}
  if(which("preprepare-pending")){bool pending=true;assert(s.power->sleep_wake_pending(s.power->context,&pending)&&!pending);assert(p->quiesce()&&d->quiesce());puts("Nonacknowledging cancellation before preparation PASS");return 0;}
  bool light_case=!strncmp(test,"light-entry",11);
