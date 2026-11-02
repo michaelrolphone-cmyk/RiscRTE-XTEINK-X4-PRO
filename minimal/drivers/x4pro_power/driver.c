@@ -26,34 +26,39 @@ static bool leave(void) {
  * native provider lock. No extra native sync slot and no PSRAM atomics. */
 static struct {uint64_t token;bool held;} coordination_locks[X4_POWER_COORDINATION_MAX_LOCKS];
 static uint64_t coordination_generation;
-static bool coordination_owner(void*c){
- (void)c;return started&&!closing&&!retained&&sync_api&&sync_api->is_owner(sync_api->context);
+static int32_t coordination_owner(void*c){
+ (void)c;if(retained)return X4_COORDINATION_RETAINED;
+ return started&&!closing&&sync_api&&sync_api->is_owner(sync_api->context)?X4_COORDINATION_OK:X4_COORDINATION_BUSY;
 }
-static bool coordination_create(void*c,uint64_t*out){
- (void)c;if(out)*out=0;if(!out||!started||closing||!enter())return false;
- bool ok=false;uint64_t token=0;
+static int32_t coordination_create(void*c,uint64_t*out){
+ (void)c;if(out)*out=0;if(!out)return X4_COORDINATION_INVALID;
+ int32_t state=coordination_owner(NULL);if(state!=X4_COORDINATION_OK)return state;
+ if(!enter())return retained?X4_COORDINATION_RETAINED:X4_COORDINATION_BUSY;
+ int32_t result=X4_COORDINATION_BUSY;uint64_t token=0;
  if(coordination_generation!=UINT64_MAX)
   for(size_t i=0;i<X4_POWER_COORDINATION_MAX_LOCKS;i++)if(!coordination_locks[i].token){
-   token=++coordination_generation;coordination_locks[i].token=token;ok=true;break;
+   token=++coordination_generation;coordination_locks[i].token=token;result=X4_COORDINATION_OK;break;
   }
- if(!leave())return false;
- if(ok)*out=token;
- return ok;
+ if(!leave())return X4_COORDINATION_RETAINED;
+ if(result==X4_COORDINATION_OK)*out=token;
+ return result;
 }
-static bool coordination_change(uint64_t token,unsigned action){
- if(!token||!started||closing||!enter())return false;
- bool ok=false;
+static int32_t coordination_change(uint64_t token,unsigned action){
+ if(!token)return X4_COORDINATION_INVALID;
+ int32_t state=coordination_owner(NULL);if(state!=X4_COORDINATION_OK)return state;
+ if(!enter())return retained?X4_COORDINATION_RETAINED:X4_COORDINATION_BUSY;
+ int32_t result=X4_COORDINATION_INVALID;
  for(size_t i=0;i<X4_POWER_COORDINATION_MAX_LOCKS;i++)if(coordination_locks[i].token==token){
-  if(action==0&&!coordination_locks[i].held){coordination_locks[i].held=true;ok=true;}
-  if(action==1&&coordination_locks[i].held){coordination_locks[i].held=false;ok=true;}
-  if(action==2&&!coordination_locks[i].held){coordination_locks[i].token=0;ok=true;}
+  if(action==0){if(!coordination_locks[i].held){coordination_locks[i].held=true;result=X4_COORDINATION_OK;}else result=X4_COORDINATION_BUSY;}
+  if(action==1&&coordination_locks[i].held){coordination_locks[i].held=false;result=X4_COORDINATION_OK;}
+  if(action==2){if(!coordination_locks[i].held){coordination_locks[i].token=0;result=X4_COORDINATION_OK;}else result=X4_COORDINATION_BUSY;}
   break;
  }
- return leave()&&ok;
+ return leave()?result:X4_COORDINATION_RETAINED;
 }
-static bool coordination_take(void*c,uint64_t t){(void)c;return coordination_change(t,0);}
-static bool coordination_unlock(void*c,uint64_t t){(void)c;return coordination_change(t,1);}
-static bool coordination_destroy(void*c,uint64_t t){(void)c;return coordination_change(t,2);}
+static int32_t coordination_take(void*c,uint64_t t){(void)c;return coordination_change(t,0);}
+static int32_t coordination_unlock(void*c,uint64_t t){(void)c;return coordination_change(t,1);}
+static int32_t coordination_destroy(void*c,uint64_t t){(void)c;return coordination_change(t,2);}
 static const x4_power_coordination_api_v1 coordination_api={1,sizeof(coordination_api),NULL,
  coordination_owner,coordination_create,coordination_take,coordination_unlock,coordination_destroy};
 

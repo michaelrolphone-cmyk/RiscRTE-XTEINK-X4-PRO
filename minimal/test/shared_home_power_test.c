@@ -27,17 +27,22 @@ static bool destroy(void*c,uint64_t token){safe();lock_state*s=c;assert(token==1
 static const risc_provider_sync_api_v1 psync={1,sizeof(psync),&power_lock,owner,create,take,unlock,destroy};
 static const risc_provider_sync_api_v1 dsync={1,sizeof(dsync),&display_lock,owner,create,take,unlock,destroy};
 #else
-static bool shared_create(void*c,uint64_t*out){
+static int32_t shared_create(void*c,uint64_t*out){
  (void)c;uint64_t unused=0;
- if(!display_lock.created){bool ok=create(&display_lock,&unused);*out=ok?1:0;return ok;}
- if(!power_lock.created){bool ok=create(&power_lock,&unused);*out=ok?2:0;return ok;}
- *out=0;return false;
+ if(!display_lock.created){bool ok=create(&display_lock,&unused);*out=ok?1:0;return ok?X4_COORDINATION_OK:X4_COORDINATION_RETAINED;}
+ if(!power_lock.created){bool ok=create(&power_lock,&unused);*out=ok?2:0;return ok?X4_COORDINATION_OK:X4_COORDINATION_RETAINED;}
+ *out=0;return X4_COORDINATION_BUSY;
 }
 static lock_state*shared_state(uint64_t t){assert(t==1||t==2);return t==1?&display_lock:&power_lock;}
-static bool shared_take(void*c,uint64_t t){(void)c;return take(shared_state(t),1);}
-static bool shared_unlock(void*c,uint64_t t){(void)c;return unlock(shared_state(t),1);}
-static bool shared_destroy(void*c,uint64_t t){(void)c;return destroy(shared_state(t),1);}
-static const x4_power_coordination_api_v1 shared_sync={1,sizeof(shared_sync),NULL,owner,shared_create,shared_take,shared_unlock,shared_destroy};
+static int32_t shared_take(void*c,uint64_t t){(void)c;return take(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_BUSY;}
+static int32_t shared_unlock(void*c,uint64_t t){(void)c;return unlock(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_RETAINED;}
+static int32_t shared_destroy(void*c,uint64_t t){(void)c;return destroy(shared_state(t),1)?X4_COORDINATION_OK:X4_COORDINATION_RETAINED;}
+static int32_t shared_owner(void*c){
+ if(which("coordination-owner-busy")){safe();return X4_COORDINATION_BUSY;}
+ if(which("coordination-owner-retained")){safe();terminal=true;return X4_COORDINATION_RETAINED;}
+ return owner(c)?X4_COORDINATION_OK:X4_COORDINATION_BUSY;
+}
+static const x4_power_coordination_api_v1 shared_sync={1,sizeof(shared_sync),NULL,shared_owner,shared_create,shared_take,shared_unlock,shared_destroy};
 #endif
 static uint64_t ticks(void*c){(void)c;safe();return which("clock-backwards")&&keys>1?1:now;}
 static void delay(void*c,uint32_t ms){(void)c;safe();assert(!panel_held&&!sd_closed&&ms==5);now+=ms;}
@@ -108,6 +113,8 @@ int main(int argc,char**argv){
  size_t pc=sizeof(pd)/sizeof(pd[0]),dc=sizeof(dd)/sizeof(dd[0]);
  if(which("missing-binding")){assert(!p->start(pd,pc-1)&&!d->start(dd,dc-1));puts("missing typed binding refused PASS");return 0;}
 #ifdef X4_HOME_BRIDGE_SINGLETON
+ if(which("coordination-owner-busy")){assert(!d->start(dd,dc)&&!p->start(pd,pc));assert(d->quiesce()&&p->quiesce());return 0;}
+ if(which("coordination-owner-retained")){assert(!d->start(dd,dc));unsigned stopped=calls;assert(!d->quiesce()&&calls==stopped);return 0;}
  if(which("coordination-absent")){xpower.deep.power.struct_size=sizeof(x4_power_deep_v1);assert(!d->start(dd,dc)&&!p->start(pd,pc));return 0;}
  if(which("coordination-malformed")){xpower.coordination_tag=0;assert(!d->start(dd,dc)&&!p->start(pd,pc));return 0;}
 #endif

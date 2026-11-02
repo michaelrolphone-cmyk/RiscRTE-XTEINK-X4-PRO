@@ -23,16 +23,23 @@ static const home_coordination_api *sync_api;
 static const risc_platform_clock_api_v1 *clock_api;
 static uint64_t mutex;
 static bool started,prepared,retained;
-static bool enter(void){
 #ifdef X4_HOME_BRIDGE_SINGLETON
- if(retained||!started||!sync_api)return false;
- if(!sync_api->is_owner(sync_api->context)||!sync_api->try_lock(sync_api->context,mutex)){retained=true;return false;}
- return true;
-#else
- return !retained&&started&&sync_api&&sync_api->is_owner(sync_api->context)&&sync_api->try_lock(sync_api->context,mutex);
-#endif
+static bool coordination_result(int32_t rc){
+ if(rc==X4_COORDINATION_OK)return true;
+ if(rc!=X4_COORDINATION_BUSY)retained=true;
+ return false;
 }
+static bool enter(void){
+ if(retained||!started||!sync_api)return false;
+ if(!coordination_result(sync_api->owner(sync_api->context)))return false;
+ return coordination_result(sync_api->try_lock(sync_api->context,mutex));
+}
+static bool leave(void){if(sync_api->unlock(sync_api->context,mutex)!=X4_COORDINATION_OK){retained=true;return false;}return true;}
+#else
+static bool enter(void){return !retained&&started&&sync_api&&sync_api->is_owner(sync_api->context)&&sync_api->try_lock(sync_api->context,mutex);}
 static bool leave(void){if(!sync_api->unlock(sync_api->context,mutex)){retained=true;return false;}return true;}
+#endif
+
 static bool prepare(void *unused){
  (void)unused;if(!enter())return false;
  bool ok=false,down=true;uint64_t began=clock_api->monotonic_ms(clock_api->context),neutral=began,previous=began;
@@ -121,16 +128,35 @@ static bool start(const risc_provider_dependency_v1 *deps,size_t count){
 #ifndef X4_HOME_BRIDGE_SINGLETON
  if(!hw||hw->api_version!=1||hw->struct_size<sizeof(*hw)||hw->instance_id!=17)return false;
 #endif
- if(!d||d->api_version!=1||d->struct_size<RISC_DISPLAY_POWER_RESUME_STATUS_SIZE||!d->prepare_deep_sleep||!d->resume_status||!p||!p->power.read_key||!p->power.light_sleep||!s||s->api_version!=1||s->struct_size<sizeof(*s)||!s->create||!s->destroy||!s->try_lock||!s->unlock||!s->is_owner||!s->is_owner(s->context)||!t||t->api_version!=1||t->struct_size<sizeof(*t)||!t->monotonic_ms||!t->sleep_ms)return false;
+ if(!d||d->api_version!=1||d->struct_size<RISC_DISPLAY_POWER_RESUME_STATUS_SIZE||!d->prepare_deep_sleep||!d->resume_status||!p||!p->power.read_key||!p->power.light_sleep||!s||s->api_version!=1||s->struct_size<sizeof(*s)||!s->create||!s->destroy||!s->try_lock||!s->unlock
+#ifndef X4_HOME_BRIDGE_SINGLETON
+ ||!s->is_owner||!s->is_owner(s->context)
+#endif
+||!t||t->api_version!=1||t->struct_size<sizeof(*t)||!t->monotonic_ms||!t->sleep_ms)return false;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(!coordination_result(s->owner(s->context)))return false;
+#endif
  power=p;display_power=d;sync_api=s;clock_api=t;
- if(!s->create(s->context,&mutex)||!mutex){retained=true;return false;}started=true;return true;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ int32_t created=s->create(s->context,&mutex);
+ if(created!=X4_COORDINATION_OK){if(created!=X4_COORDINATION_BUSY||mutex)retained=true;return false;}
+ if(!mutex){retained=true;return false;}
+#else
+ if(!s->create(s->context,&mutex)||!mutex){retained=true;return false;}
+#endif
+ started=true;return true;
 }
 static bool quiesce(void){
  if(retained||prepared||light_display_touched)return false;
  if(!mutex)return true;
  if(!enter())return false;
  started=false;
- if(!leave()||!sync_api->destroy(sync_api->context,mutex)){retained=true;return false;}
+ if(!leave())return false;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(sync_api->destroy(sync_api->context,mutex)!=X4_COORDINATION_OK){retained=true;return false;}
+#else
+ if(!sync_api->destroy(sync_api->context,mutex)){retained=true;return false;}
+#endif
  mutex=0;power=NULL;display_power=NULL;sync_api=NULL;clock_api=NULL;return true;
 }
 static void stop(void){}
