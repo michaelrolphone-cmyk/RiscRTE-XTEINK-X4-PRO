@@ -27,9 +27,6 @@ file(WRITE "${CMAKE_BINARY_DIR}/profile.txt" "target=${RISC_NATIVE_TARGET}\\npar
     assert profile['target'] == 'esp32s3-16mb-appdata-iq'
     expected = {flag[2:] for flag in release['flags'] if flag.startswith('-DRISC_') and not flag.startswith('-DRISC_TARGET=')}
     expected |= {key + '=' + str(value) for key, value in release['composition_definitions'].items()}
-    # Shared Home adds declared optional contracts, not a host-only capacity.
-    expected -= {'RISC_APP_POLICY_ROWS=24', 'RISC_APP_REQUIREMENT_ROWS=24'}
-    expected |= {'RISC_APP_POLICY_ROWS=32', 'RISC_APP_REQUIREMENT_ROWS=32'}
     assert set(profile['definitions'].split(';')) == expected
     assert not any(flag.startswith(('ARDUINO', 'CONFIG_')) for flag in expected)
     links = set(profile['links'].split(';'))
