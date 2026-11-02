@@ -1,7 +1,7 @@
 name: Shared Home standard power bridge
 on:
   pull_request:
-    paths: ['minimal/drivers/x4pro_home_power/**', 'minimal/drivers/x4pro_home_display_power/**', 'minimal/test/shared_home_power_test.c', 'minimal/scripts/test_shared_home_power.py', '.github/workflows/shared-home-power.yml']
+    paths: ['minimal/drivers/x4pro_home_power/**', 'minimal/drivers/x4pro_home_display_power/**', 'minimal/drivers/x4pro_home_power_singleton/**', 'minimal/drivers/x4pro_home_display_power_singleton/**', 'minimal/test/shared_home_power_test.c', 'minimal/drivers/x4pro_power/**', 'minimal/test/power_coordination_test.c', 'minimal/test/run_power_test.sh', 'minimal/scripts/test_shared_home_power.py', '.github/workflows/shared-home-power.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -54,7 +54,9 @@ jobs:
       - name: Owning bridge host and target qualification
         run: |
           python minimal/scripts/test_shared_home_power.py --runtime deps/runtime --reader deps/reader --watch deps/watch --system deps/system --utilities deps/utilities --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output qualification/bridge
+          python minimal/scripts/test_shared_home_power.py --runtime deps/runtime --reader deps/reader --watch deps/watch --system deps/system --utilities deps/utilities --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --singleton --output qualification/singleton
           RISCRTE_RUNTIME_ROOT="$PWD/deps/runtime" bash minimal/test/run_power_test.sh
+          SANITIZE=1 RISCRTE_RUNTIME_ROOT="$PWD/deps/runtime" bash minimal/test/run_power_test.sh
       - name: Exact source archives
         if: always()
         run: |

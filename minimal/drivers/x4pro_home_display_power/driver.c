@@ -1,3 +1,6 @@
+#ifdef X4_HOME_BRIDGE_SINGLETON
+#include "../x4pro_power/X4PowerCoordinationV1.h"
+#endif
 /* Provider-owned physical closure for the selected retained X4 display.
  * TIMER needs panel/frontlight/storage, not touch, navigation, RTC or radios.
  * App owns record staging, foreground consumer drains and alarm reconciliation. */
@@ -53,18 +56,40 @@ static int32_t resume_status(void *unused){
 }
 static bool resume(void*c){return resume_status(c)==0;}
 static bool start(const risc_provider_dependency_v1 *deps,size_t count){
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(started||mutex||retained||!deps||count!=4)return false;
+#else
  if(started||mutex||retained||!deps||count!=5)return false;
  const risc_hardware_device_v1 *hw=NULL;
+#endif
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ const x4_power_v1 *coordination_power=NULL;
+#endif
  const risc_display_output_api_v1*d=NULL;const risc_storage_volume_api_v1_sleep*v=NULL;const risc_frontlight_api_v1*f=NULL;const risc_provider_sync_api_v1*s=NULL;
  for(size_t i=0;i<count;i++){if(!deps[i].api||deps[i].api_version!=1||!deps[i].capability_id)return false;
+#ifndef X4_HOME_BRIDGE_SINGLETON
   if(!strcmp(deps[i].capability_id,"hardware.device")&&!hw)hw=deps[i].api;
-  else if(!strcmp(deps[i].capability_id,"display.output")&&!d)d=deps[i].api;
+  else
+#endif
+  if(!strcmp(deps[i].capability_id,"display.output")&&!d)d=deps[i].api;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+  else if(!strcmp(deps[i].capability_id,X4_POWER_CAPABILITY)&&!coordination_power)coordination_power=deps[i].api;
+#endif
   else if(!strcmp(deps[i].capability_id,"storage.volume")&&!v)v=risc_storage_volume_sleep(deps[i].api);
   else if(!strcmp(deps[i].capability_id,"display.frontlight")&&!f)f=deps[i].api;
-  else if(!strcmp(deps[i].capability_id,"platform.sync")&&!s)s=deps[i].api;else return false;
+#ifndef X4_HOME_BRIDGE_SINGLETON
+  else if(!strcmp(deps[i].capability_id,"platform.sync")&&!s)s=deps[i].api;
+#endif
+  else return false;
  }
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ s=x4_power_coordination(coordination_power);
+#endif
  const risc_display_output_api_v1_power*p=risc_display_output_power(d);
- if(!hw||hw->api_version!=1||hw->struct_size<sizeof(*hw)||hw->instance_id!=3||!p||!v||!f||f->api_version!=1||f->struct_size<sizeof(*f)||!f->get_level||!f->set_level||!s||s->api_version!=1||s->struct_size<sizeof(*s)||!s->create||!s->destroy||!s->try_lock||!s->unlock||!s->is_owner||!s->is_owner(s->context))return false;
+#ifndef X4_HOME_BRIDGE_SINGLETON
+ if(!hw||hw->api_version!=1||hw->struct_size<sizeof(*hw)||hw->instance_id!=3)return false;
+#endif
+ if(!p||!v||!f||f->api_version!=1||f->struct_size<sizeof(*f)||!f->get_level||!f->set_level||!s||s->api_version!=1||s->struct_size<sizeof(*s)||!s->create||!s->destroy||!s->try_lock||!s->unlock||!s->is_owner||!s->is_owner(s->context))return false;
  output=d;panel=p;storage=v;frontlight=f;sync_api=s;
  if(!s->create(s->context,&mutex)||!mutex){retained=true;return false;}started=true;return true;
 }
@@ -78,5 +103,10 @@ static bool quiesce(void){
 }
 static void stop(void){}
 static const risc_display_power_api_v1 api={1,sizeof(api),NULL,prepare,resume,hold,resume_status};
-static const risc_driver_v2 driver={2,sizeof(driver),"x4pro-home-display-power",RISC_DISPLAY_POWER_CAPABILITY,1,&api,start,stop,quiesce};
+#ifdef X4_HOME_BRIDGE_SINGLETON
+#define X4_HOME_BRIDGE_ID "x4pro-home-display-power-singleton"
+#else
+#define X4_HOME_BRIDGE_ID "x4pro-home-display-power"
+#endif
+static const risc_driver_v2 driver={2,sizeof(driver),X4_HOME_BRIDGE_ID,RISC_DISPLAY_POWER_CAPABILITY,1,&api,start,stop,quiesce};
 __attribute__((visibility("default"))) const risc_driver_v2 *t5_driver_get(uint32_t abi){return abi==2?&driver:NULL;}

@@ -7,7 +7,7 @@
 #include <RiscDisplayOutputPowerV1.h>
 #include <RiscStorageVolumeV1.h>
 #include <RiscFrontlightV1.h>
-#include "../drivers/x4pro_power/X4PowerDeepV1.h"
+#include "../drivers/x4pro_power/X4PowerCoordinationV1.h"
 #include "PortableHomePower.h"
 #include "PortableDeskClock.h"
 extern const risc_driver_v2 *x4_home_power_get(uint32_t);
@@ -23,8 +23,22 @@ static bool create(void*c,uint64_t*out){safe();lock_state*s=c;assert(!s->created
 static bool take(void*c,uint64_t token){safe();lock_state*s=c;assert(token==1&&s->created&&!s->locked);s->locked=true;return true;}
 static bool unlock(void*c,uint64_t token){safe();lock_state*s=c;assert(token==1&&s->locked);s->locked=false;return true;}
 static bool destroy(void*c,uint64_t token){safe();lock_state*s=c;assert(token==1&&s->created&&!s->locked);s->created=false;return true;}
+#ifndef X4_HOME_BRIDGE_SINGLETON
 static const risc_provider_sync_api_v1 psync={1,sizeof(psync),&power_lock,owner,create,take,unlock,destroy};
 static const risc_provider_sync_api_v1 dsync={1,sizeof(dsync),&display_lock,owner,create,take,unlock,destroy};
+#else
+static bool shared_create(void*c,uint64_t*out){
+ (void)c;uint64_t unused=0;
+ if(!display_lock.created){bool ok=create(&display_lock,&unused);*out=ok?1:0;return ok;}
+ if(!power_lock.created){bool ok=create(&power_lock,&unused);*out=ok?2:0;return ok;}
+ *out=0;return false;
+}
+static lock_state*shared_state(uint64_t t){assert(t==1||t==2);return t==1?&display_lock:&power_lock;}
+static bool shared_take(void*c,uint64_t t){(void)c;return take(shared_state(t),1);}
+static bool shared_unlock(void*c,uint64_t t){(void)c;return unlock(shared_state(t),1);}
+static bool shared_destroy(void*c,uint64_t t){(void)c;return destroy(shared_state(t),1);}
+static const risc_provider_sync_api_v1 shared_sync={1,sizeof(shared_sync),NULL,owner,shared_create,shared_take,shared_unlock,shared_destroy};
+#endif
 static uint64_t ticks(void*c){(void)c;safe();return which("clock-backwards")&&keys>1?1:now;}
 static void delay(void*c,uint32_t ms){(void)c;safe();assert(!panel_held&&!sd_closed&&ms==5);now+=ms;}
 static const risc_platform_clock_api_v1 clock_api={1,sizeof(clock_api),NULL,ticks,delay};
@@ -41,7 +55,11 @@ static int32_t deep(void*c,uint32_t ms){(void)c;safe();assert(staged&&alarm_read
  if(which("native-unknown")){terminal=true;return -99;}
  return RISC_DEEP_SLEEP_BUSY;
 }
+#ifdef X4_HOME_BRIDGE_SINGLETON
+static x4_power_coordination_v1 xpower={{{1,sizeof(xpower),NULL,key,light},X4_POWER_DEEP_TAG,1,deep},X4_POWER_COORDINATION_TAG,1,&shared_sync};
+#else
 static const x4_power_deep_v1 xpower={{1,sizeof(xpower),NULL,key,light},X4_POWER_DEEP_TAG,1,deep};
+#endif
 static bool seed(void*c,risc_display_frame_v1 f){(void)c;(void)f;return true;}
 static int32_t panel_prepare(void*c,uint32_t budget){(void)c;safe();assert(alarm_ready&&(staged||!strncmp(test,"light-entry",11))&&budget==1500&&!panel_held&&!sd_closed);
  if(which("panel-retained")||which("panel-unknown")){terminal=true;return which("panel-retained")?RISC_DISPLAY_POWER_RETAINED:-99;}
@@ -61,14 +79,39 @@ static const risc_storage_volume_api_v1_sleep storage={.terminal={.power={.volum
 static bool get_light(void*c,uint16_t*out,uint16_t*max){(void)c;safe();if(which("light-read")){terminal=true;return false;}*out=level;*max=100;return true;}
 static bool set_light(void*c,uint16_t value,uint16_t max){(void)c;safe();assert(max==100);if(which("light-off")||(which("light-restore")&&value)){terminal=true;return false;}level=value;return true;}
 static const risc_frontlight_api_v1 frontlight={1,sizeof(frontlight),NULL,set_light,get_light};
+#ifndef X4_HOME_BRIDGE_SINGLETON
 static const risc_hardware_device_v1 power_hw={.api_version=1,.struct_size=sizeof(power_hw),.instance_id=17},panel_hw={.api_version=1,.struct_size=sizeof(panel_hw),.instance_id=3};
+#endif
 int main(int argc,char**argv){
  assert(argc==2);test=argv[1];const risc_driver_v2*p=x4_home_power_get(2),*d=x4_home_display_get(2);
- risc_provider_dependency_v1 pd[]={{"hardware.device",1,&power_hw},{"x4.power",1,&xpower},{"platform.sync",1,&psync},{"platform.clock",1,&clock_api},{RISC_DISPLAY_POWER_CAPABILITY,1,d->capability}};
- risc_provider_dependency_v1 dd[]={{"hardware.device",1,&panel_hw},{"display.output",1,&panel},{"storage.volume",1,&storage},{"display.frontlight",1,&frontlight},{"platform.sync",1,&dsync}};
+ risc_provider_dependency_v1 pd[]={
+#ifndef X4_HOME_BRIDGE_SINGLETON
+{"hardware.device",1,&power_hw},
+#endif
+{"x4.power",1,&xpower},
+#ifndef X4_HOME_BRIDGE_SINGLETON
+{"platform.sync",1,&psync},
+#endif
+{"platform.clock",1,&clock_api},{RISC_DISPLAY_POWER_CAPABILITY,1,d->capability}};
+ risc_provider_dependency_v1 dd[]={
+#ifndef X4_HOME_BRIDGE_SINGLETON
+{"hardware.device",1,&panel_hw},
+#endif
+{"display.output",1,&panel},{"storage.volume",1,&storage},{"display.frontlight",1,&frontlight},
+#ifdef X4_HOME_BRIDGE_SINGLETON
+{"x4.power",1,&xpower}
+#else
+{"platform.sync",1,&dsync}
+#endif
+};
  assert(!strcmp(p->capability_id,"power.sleep")&&!strcmp(d->capability_id,"display.power"));
- if(which("missing-binding")){assert(!p->start(pd,3)&&!d->start(dd,4));puts("missing typed binding refused PASS");return 0;}
- assert(d->start(dd,5)&&p->start(pd,5));
+ size_t pc=sizeof(pd)/sizeof(pd[0]),dc=sizeof(dd)/sizeof(dd[0]);
+ if(which("missing-binding")){assert(!p->start(pd,pc-1)&&!d->start(dd,dc-1));puts("missing typed binding refused PASS");return 0;}
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(which("coordination-absent")){xpower.deep.power.struct_size=sizeof(x4_power_deep_v1);assert(!d->start(dd,dc)&&!p->start(pd,pc));return 0;}
+ if(which("coordination-malformed")){xpower.coordination_tag=0;assert(!d->start(dd,dc)&&!p->start(pd,pc));return 0;}
+#endif
+ assert(d->start(dd,dc)&&p->start(pd,pc));
  portable_home_power s={.power=p->capability,.display=d->capability};
  if(which("enrolled-unavailable")){s.enrolled_wake_sources=true;assert(!portable_home_power_supported(&s));assert(p->quiesce()&&d->quiesce());return 0;}
  if(which("preprepare-pending")){bool pending=true;assert(s.power->sleep_wake_pending(s.power->context,&pending)&&!pending);assert(p->quiesce()&&d->quiesce());puts("Nonacknowledging cancellation before preparation PASS");return 0;}

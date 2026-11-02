@@ -1,3 +1,6 @@
+#ifdef X4_HOME_BRIDGE_SINGLETON
+#include "../x4pro_power/X4PowerCoordinationV1.h"
+#endif
 /* Provider-owned standard capability bridge. Underlying x4.power owns GPIO3
  * and board keepalive; no physical identity escapes power.sleep. */
 #include "../x4pro_power/X4PowerDeepV1.h"
@@ -79,18 +82,33 @@ static int32_t light_for(void *unused,uint32_t duration,risc_light_sleep_result_
 static int32_t light(void*c,risc_light_sleep_result_v1*out){return light_for(c,0,out);}
 static int32_t untimed(void*c){(void)c;return RISC_DEEP_SLEEP_UNSUPPORTED;}
 static bool start(const risc_provider_dependency_v1 *deps,size_t count){
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(started||mutex||retained||!deps||count!=3)return false;
+#else
  if(started||mutex||retained||!deps||count!=5)return false;
  const risc_hardware_device_v1 *hw=NULL;
+#endif
  const risc_display_power_api_v1*d=NULL;
  const x4_power_deep_v1 *p=NULL;const risc_provider_sync_api_v1*s=NULL;const risc_platform_clock_api_v1*t=NULL;
  for(size_t i=0;i<count;i++){if(!deps[i].api||deps[i].api_version!=1||!deps[i].capability_id)return false;
+#ifndef X4_HOME_BRIDGE_SINGLETON
   if(!strcmp(deps[i].capability_id,"hardware.device")&&!hw)hw=deps[i].api;
-  else if(!strcmp(deps[i].capability_id,X4_POWER_CAPABILITY)&&!p)p=x4_power_deep(deps[i].api);
+  else
+#endif
+  if(!strcmp(deps[i].capability_id,X4_POWER_CAPABILITY)&&!p)p=x4_power_deep(deps[i].api);
   else if(!strcmp(deps[i].capability_id,RISC_DISPLAY_POWER_CAPABILITY)&&!d)d=deps[i].api;
+#ifndef X4_HOME_BRIDGE_SINGLETON
   else if(!strcmp(deps[i].capability_id,"platform.sync")&&!s)s=deps[i].api;
+#endif
   else if(!strcmp(deps[i].capability_id,"platform.clock")&&!t)t=deps[i].api;else return false;
  }
- if(!hw||hw->api_version!=1||hw->struct_size<sizeof(*hw)||hw->instance_id!=17||!d||d->api_version!=1||d->struct_size<RISC_DISPLAY_POWER_RESUME_STATUS_SIZE||!d->prepare_deep_sleep||!d->resume_status||!p||!p->power.read_key||!p->power.light_sleep||!s||s->api_version!=1||s->struct_size<sizeof(*s)||!s->create||!s->destroy||!s->try_lock||!s->unlock||!s->is_owner||!s->is_owner(s->context)||!t||t->api_version!=1||t->struct_size<sizeof(*t)||!t->monotonic_ms||!t->sleep_ms)return false;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ s=x4_power_coordination(p?&p->power:NULL);
+#endif
+#ifndef X4_HOME_BRIDGE_SINGLETON
+ if(!hw||hw->api_version!=1||hw->struct_size<sizeof(*hw)||hw->instance_id!=17)return false;
+#endif
+ if(!d||d->api_version!=1||d->struct_size<RISC_DISPLAY_POWER_RESUME_STATUS_SIZE||!d->prepare_deep_sleep||!d->resume_status||!p||!p->power.read_key||!p->power.light_sleep||!s||s->api_version!=1||s->struct_size<sizeof(*s)||!s->create||!s->destroy||!s->try_lock||!s->unlock||!s->is_owner||!s->is_owner(s->context)||!t||t->api_version!=1||t->struct_size<sizeof(*t)||!t->monotonic_ms||!t->sleep_ms)return false;
  power=p;display_power=d;sync_api=s;clock_api=t;
  if(!s->create(s->context,&mutex)||!mutex){retained=true;return false;}started=true;return true;
 }
@@ -104,5 +122,10 @@ static bool quiesce(void){
 }
 static void stop(void){}
 static const risc_power_sleep_api_v1 api={.api_version=1,.struct_size=RISC_POWER_TIMED_DEEP_SLEEP_SIZE,.prepare_sleep=prepare,.resume=resume,.light_sleep=light,.deep_sleep=untimed,.light_sleep_for=light_for,.sleep_wake_pending=pending,.deep_sleep_for=timed};
-static const risc_driver_v2 driver={2,sizeof(driver),"x4pro-home-power",RISC_POWER_SLEEP_CAPABILITY,1,&api,start,stop,quiesce};
+#ifdef X4_HOME_BRIDGE_SINGLETON
+#define X4_HOME_BRIDGE_ID "x4pro-home-power-singleton"
+#else
+#define X4_HOME_BRIDGE_ID "x4pro-home-power"
+#endif
+static const risc_driver_v2 driver={2,sizeof(driver),X4_HOME_BRIDGE_ID,RISC_POWER_SLEEP_CAPABILITY,1,&api,start,stop,quiesce};
 __attribute__((visibility("default"))) const risc_driver_v2 *t5_driver_get(uint32_t abi){return abi==2?&driver:NULL;}

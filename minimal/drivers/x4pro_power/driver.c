@@ -1,5 +1,5 @@
 /* X4 owns GPIO3 explicitly; no Watch PMU layout or raw pin authority escapes. */
-#include "X4PowerDeepV1.h"
+#include "X4PowerCoordinationV1.h"
 #include "../x4pro_board_power/X4BoardKeepaliveV1.h"
 #include <RiscProviderV2.h>
 #include <RiscHardwareConfigV1.h>
@@ -21,6 +21,42 @@ static bool leave(void) {
     if(!sync_api->unlock(sync_api->context,lock)){retained=true;return false;}
     return true;
 }
+
+/* Independent logical locks; every mutation is protected by the existing
+ * native provider lock. No extra native sync slot and no PSRAM atomics. */
+static struct {uint64_t token;bool held;} coordination_locks[RISC_PROVIDER_SYNC_MAX_LOCKS];
+static uint64_t coordination_generation;
+static bool coordination_owner(void*c){
+ (void)c;return started&&!closing&&!retained&&sync_api&&sync_api->is_owner(sync_api->context);
+}
+static bool coordination_create(void*c,uint64_t*out){
+ (void)c;if(out)*out=0;if(!out||!started||closing||!enter())return false;
+ bool ok=false;uint64_t token=0;
+ if(coordination_generation!=UINT64_MAX)
+  for(size_t i=0;i<RISC_PROVIDER_SYNC_MAX_LOCKS;i++)if(!coordination_locks[i].token){
+   token=++coordination_generation;coordination_locks[i].token=token;ok=true;break;
+  }
+ if(!leave())return false;
+ if(ok)*out=token;
+ return ok;
+}
+static bool coordination_change(uint64_t token,unsigned action){
+ if(!token||!started||closing||!enter())return false;
+ bool ok=false;
+ for(size_t i=0;i<RISC_PROVIDER_SYNC_MAX_LOCKS;i++)if(coordination_locks[i].token==token){
+  if(action==0&&!coordination_locks[i].held){coordination_locks[i].held=true;ok=true;}
+  if(action==1&&coordination_locks[i].held){coordination_locks[i].held=false;ok=true;}
+  if(action==2&&!coordination_locks[i].held){coordination_locks[i].token=0;ok=true;}
+  break;
+ }
+ return leave()&&ok;
+}
+static bool coordination_take(void*c,uint64_t t){(void)c;return coordination_change(t,0);}
+static bool coordination_unlock(void*c,uint64_t t){(void)c;return coordination_change(t,1);}
+static bool coordination_destroy(void*c,uint64_t t){(void)c;return coordination_change(t,2);}
+static const risc_provider_sync_api_v1 coordination_api={1,sizeof(coordination_api),NULL,
+ coordination_owner,coordination_create,coordination_take,coordination_unlock,coordination_destroy};
+
 static bool sample(bool *down) {
     bool high;uint64_t now=clock_api->monotonic_ms(clock_api->context);
     if(now==UINT64_MAX || now<sampled_at || !gpio->read(gpio->context,token,&high)) {
@@ -133,6 +169,7 @@ static bool quiesce(void) {
     if(retained)return false;
     if(!lock)return !token;
     if(!enter())return false;
+    for(size_t i=0;i<RISC_PROVIDER_SYNC_MAX_LOCKS;i++)if(coordination_locks[i].token){(void)leave();return false;}
     closing=true;started=false;neutral=false;
     bool ok=!token || gpio->release(gpio->context,token);
     if(ok)token=0;
@@ -141,6 +178,6 @@ static bool quiesce(void) {
     lock=0;gpio=NULL;sync_api=NULL;clock_api=NULL;board_power=NULL;return true;
 }
 static void stop(void){}
-static const x4_power_deep_v1 api={{1,sizeof(api),NULL,read_key,light_sleep},X4_POWER_DEEP_TAG,1,deep_sleep_for};
+static const x4_power_coordination_v1 api={{{1,sizeof(api),NULL,read_key,light_sleep},X4_POWER_DEEP_TAG,1,deep_sleep_for},X4_POWER_COORDINATION_TAG,1,&coordination_api};
 static const risc_driver_v2 driver={2,sizeof(driver),"x4pro-power",X4_POWER_CAPABILITY,1,&api,start,stop,quiesce};
 __attribute__((visibility("default"))) const risc_driver_v2 *t5_driver_get(uint32_t abi){return abi==2?&driver:NULL;}
