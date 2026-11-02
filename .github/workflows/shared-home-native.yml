@@ -1,0 +1,91 @@
+name: Shared Home X4 native firmware
+on:
+  pull_request:
+    paths: ['profiles/native-shared-home.cmake', 'scripts/build_shared_home_native.py', 'minimal/test/shared_home_native_profile_test.py', '.github/workflows/shared-home-native.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: shared-home-native-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    container: espressif/idf:v6.1@sha256:81893c71bb5e570088901f21def8684c25cd2a9020281bd01b843a7655edb18c
+    env:
+      PRODUCT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      RUNTIME_SHA: 0052d1fc42e9cfc82d626c5a247d460919c87935
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      CCACHE_DISABLE: '1'
+      IDF_CCACHE_ENABLE: '0'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Exact owning product, Runtime and SDK sources
+        run: |
+          set -euo pipefail
+          apt-get update
+          apt-get install -y --no-install-recommends git ca-certificates g++ libssl-dev
+          export HOME_NATIVE_ROOT="$RUNNER_TEMP/shared-home-native-$PRODUCT_SHA"
+          echo "HOME_NATIVE_ROOT=$HOME_NATIVE_ROOT" >> "$GITHUB_ENV"
+          test ! -e "$HOME_NATIVE_ROOT"
+          mkdir -p "$HOME_NATIVE_ROOT"/{sources,logs,metadata}
+          for row in "product $GITHUB_REPOSITORY $PRODUCT_SHA" "runtime michaelrolphone-cmyk/RiscRTE $RUNTIME_SHA"; do
+            read -r role repo revision <<< "$row"
+            target="$HOME_NATIVE_ROOT/sources/$role"
+            git init --quiet "$target"
+            git -C "$target" remote add origin "https://github.com/$repo.git"
+            git -C "$target" fetch --no-tags --depth=1 origin "$revision"
+            git -C "$target" checkout --quiet --detach FETCH_HEAD
+            test "$(git -C "$target" rev-parse HEAD)" = "$revision"
+            git -C "$target" submodule update --init --recursive --depth=1
+          done
+          . "$IDF_PATH/export.sh"
+          test "$(git -C "$IDF_PATH" rev-parse HEAD)" = fff9895c82d744c7237be8847347bdd1b07c6643
+          python -m pip install pyelftools==0.32
+      - name: Actual profile and composition boundary
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          cd "$HOME_NATIVE_ROOT/sources/product"
+          export RISCRTE_RUNTIME_ROOT="$HOME_NATIVE_ROOT/sources/runtime"
+          python minimal/test/native_idf61_profile_test.py
+          python minimal/test/shared_home_native_profile_test.py
+          python minimal/test/native_composition_test.py
+      - name: Fresh full native build and exact linked row proof
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          python "$HOME_NATIVE_ROOT/sources/product/scripts/build_shared_home_native.py" \
+            --source "product=$HOME_NATIVE_ROOT/sources/product" \
+            --source "runtime=$HOME_NATIVE_ROOT/sources/runtime" --source "sdk=$IDF_PATH" \
+            --compiler "$(command -v xtensa-esp-elf-gcc)" \
+            --native-build "$HOME_NATIVE_ROOT/build" --output "$HOME_NATIVE_ROOT/artifacts" \
+            2>&1 | tee "$HOME_NATIVE_ROOT/logs/build.log"
+          python "$HOME_NATIVE_ROOT/sources/runtime/test/native_firmware_idf6_test.py" --build "$HOME_NATIVE_ROOT/build"
+          python "$HOME_NATIVE_ROOT/sources/runtime/test/compile_runtime_platform_capacity_target.py" "$HOME_NATIVE_ROOT/build/compile_commands.json" "$HOME_NATIVE_ROOT/platform-capacity"
+      - name: Exact source and build receipts
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME_NATIVE_ROOT/metadata"
+          for role in product runtime; do
+            git -C "$HOME_NATIVE_ROOT/sources/$role" archive HEAD | gzip -n > "$HOME_NATIVE_ROOT/metadata/$role-source.tar.gz"
+            git -C "$HOME_NATIVE_ROOT/sources/$role" show -s --format='%H %T' > "$HOME_NATIVE_ROOT/metadata/$role-identity.txt"
+          done
+          git -C "$IDF_PATH" show -s --format='%H %T' > "$HOME_NATIVE_ROOT/metadata/sdk-identity.txt"
+          git -C "$IDF_PATH" submodule status --recursive > "$HOME_NATIVE_ROOT/metadata/sdk-submodules.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shared-home-x4-native-${{ env.PRODUCT_SHA }}
+          path: |
+            ${{ env.HOME_NATIVE_ROOT }}/artifacts/
+            ${{ env.HOME_NATIVE_ROOT }}/metadata/
+            ${{ env.HOME_NATIVE_ROOT }}/logs/
+            ${{ env.HOME_NATIVE_ROOT }}/platform-capacity/
+          if-no-files-found: error
+          retention-days: 30
