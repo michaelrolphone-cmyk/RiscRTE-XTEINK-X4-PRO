@@ -24,7 +24,7 @@ static bool leave(void) {
 
 /* Independent logical locks; every mutation is protected by the existing
  * native provider lock. No extra native sync slot and no PSRAM atomics. */
-static struct {uint64_t token;bool held;} coordination_locks[RISC_PROVIDER_SYNC_MAX_LOCKS];
+static struct {uint64_t token;bool held;} coordination_locks[X4_POWER_COORDINATION_MAX_LOCKS];
 static uint64_t coordination_generation;
 static bool coordination_owner(void*c){
  (void)c;return started&&!closing&&!retained&&sync_api&&sync_api->is_owner(sync_api->context);
@@ -33,7 +33,7 @@ static bool coordination_create(void*c,uint64_t*out){
  (void)c;if(out)*out=0;if(!out||!started||closing||!enter())return false;
  bool ok=false;uint64_t token=0;
  if(coordination_generation!=UINT64_MAX)
-  for(size_t i=0;i<RISC_PROVIDER_SYNC_MAX_LOCKS;i++)if(!coordination_locks[i].token){
+  for(size_t i=0;i<X4_POWER_COORDINATION_MAX_LOCKS;i++)if(!coordination_locks[i].token){
    token=++coordination_generation;coordination_locks[i].token=token;ok=true;break;
   }
  if(!leave())return false;
@@ -43,7 +43,7 @@ static bool coordination_create(void*c,uint64_t*out){
 static bool coordination_change(uint64_t token,unsigned action){
  if(!token||!started||closing||!enter())return false;
  bool ok=false;
- for(size_t i=0;i<RISC_PROVIDER_SYNC_MAX_LOCKS;i++)if(coordination_locks[i].token==token){
+ for(size_t i=0;i<X4_POWER_COORDINATION_MAX_LOCKS;i++)if(coordination_locks[i].token==token){
   if(action==0&&!coordination_locks[i].held){coordination_locks[i].held=true;ok=true;}
   if(action==1&&coordination_locks[i].held){coordination_locks[i].held=false;ok=true;}
   if(action==2&&!coordination_locks[i].held){coordination_locks[i].token=0;ok=true;}
@@ -54,7 +54,7 @@ static bool coordination_change(uint64_t token,unsigned action){
 static bool coordination_take(void*c,uint64_t t){(void)c;return coordination_change(t,0);}
 static bool coordination_unlock(void*c,uint64_t t){(void)c;return coordination_change(t,1);}
 static bool coordination_destroy(void*c,uint64_t t){(void)c;return coordination_change(t,2);}
-static const risc_provider_sync_api_v1 coordination_api={1,sizeof(coordination_api),NULL,
+static const x4_power_coordination_api_v1 coordination_api={1,sizeof(coordination_api),NULL,
  coordination_owner,coordination_create,coordination_take,coordination_unlock,coordination_destroy};
 
 static bool sample(bool *down) {
@@ -169,7 +169,7 @@ static bool quiesce(void) {
     if(retained)return false;
     if(!lock)return !token;
     if(!enter())return false;
-    for(size_t i=0;i<RISC_PROVIDER_SYNC_MAX_LOCKS;i++)if(coordination_locks[i].token){(void)leave();return false;}
+    for(size_t i=0;i<X4_POWER_COORDINATION_MAX_LOCKS;i++)if(coordination_locks[i].token){(void)leave();return false;}
     closing=true;started=false;neutral=false;
     bool ok=!token || gpio->release(gpio->context,token);
     if(ok)token=0;

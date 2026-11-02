@@ -16,11 +16,24 @@ static const risc_display_output_api_v1 *output;
 static const risc_display_output_api_v1_power *panel;
 static const risc_storage_volume_api_v1_sleep *storage;
 static const risc_frontlight_api_v1 *frontlight;
-static const risc_provider_sync_api_v1 *sync_api;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+typedef x4_power_coordination_api_v1 home_coordination_api;
+#else
+typedef risc_provider_sync_api_v1 home_coordination_api;
+#endif
+static const home_coordination_api *sync_api;
 static uint64_t mutex;
 static bool started,retained,dark,panel_touched,storage_touched;
 static uint16_t saved_level,saved_maximum;
-static bool enter(void){return !retained&&started&&sync_api&&sync_api->is_owner(sync_api->context)&&sync_api->try_lock(sync_api->context,mutex);}
+static bool enter(void){
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(retained||!started||!sync_api)return false;
+ if(!sync_api->is_owner(sync_api->context)||!sync_api->try_lock(sync_api->context,mutex)){retained=true;return false;}
+ return true;
+#else
+ return !retained&&started&&sync_api&&sync_api->is_owner(sync_api->context)&&sync_api->try_lock(sync_api->context,mutex);
+#endif
+}
 static bool leave(void){if(!sync_api->unlock(sync_api->context,mutex)){retained=true;return false;}return true;}
 static int32_t fence(void){retained=true;return RISC_DEEP_SLEEP_RETAINED;}
 static bool prepare(void *unused){
@@ -65,7 +78,7 @@ static bool start(const risc_provider_dependency_v1 *deps,size_t count){
 #ifdef X4_HOME_BRIDGE_SINGLETON
  const x4_power_v1 *coordination_power=NULL;
 #endif
- const risc_display_output_api_v1*d=NULL;const risc_storage_volume_api_v1_sleep*v=NULL;const risc_frontlight_api_v1*f=NULL;const risc_provider_sync_api_v1*s=NULL;
+ const risc_display_output_api_v1*d=NULL;const risc_storage_volume_api_v1_sleep*v=NULL;const risc_frontlight_api_v1*f=NULL;const home_coordination_api*s=NULL;
  for(size_t i=0;i<count;i++){if(!deps[i].api||deps[i].api_version!=1||!deps[i].capability_id)return false;
 #ifndef X4_HOME_BRIDGE_SINGLETON
   if(!strcmp(deps[i].capability_id,"hardware.device")&&!hw)hw=deps[i].api;

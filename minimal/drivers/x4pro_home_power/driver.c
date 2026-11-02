@@ -14,11 +14,24 @@
 static const x4_power_deep_v1 *power;
 static const risc_display_power_api_v1 *display_power;
 static bool light_display_touched;
-static const risc_provider_sync_api_v1 *sync_api;
+#ifdef X4_HOME_BRIDGE_SINGLETON
+typedef x4_power_coordination_api_v1 home_coordination_api;
+#else
+typedef risc_provider_sync_api_v1 home_coordination_api;
+#endif
+static const home_coordination_api *sync_api;
 static const risc_platform_clock_api_v1 *clock_api;
 static uint64_t mutex;
 static bool started,prepared,retained;
-static bool enter(void){return !retained&&started&&sync_api&&sync_api->is_owner(sync_api->context)&&sync_api->try_lock(sync_api->context,mutex);}
+static bool enter(void){
+#ifdef X4_HOME_BRIDGE_SINGLETON
+ if(retained||!started||!sync_api)return false;
+ if(!sync_api->is_owner(sync_api->context)||!sync_api->try_lock(sync_api->context,mutex)){retained=true;return false;}
+ return true;
+#else
+ return !retained&&started&&sync_api&&sync_api->is_owner(sync_api->context)&&sync_api->try_lock(sync_api->context,mutex);
+#endif
+}
 static bool leave(void){if(!sync_api->unlock(sync_api->context,mutex)){retained=true;return false;}return true;}
 static bool prepare(void *unused){
  (void)unused;if(!enter())return false;
@@ -89,7 +102,7 @@ static bool start(const risc_provider_dependency_v1 *deps,size_t count){
  const risc_hardware_device_v1 *hw=NULL;
 #endif
  const risc_display_power_api_v1*d=NULL;
- const x4_power_deep_v1 *p=NULL;const risc_provider_sync_api_v1*s=NULL;const risc_platform_clock_api_v1*t=NULL;
+ const x4_power_deep_v1 *p=NULL;const home_coordination_api*s=NULL;const risc_platform_clock_api_v1*t=NULL;
  for(size_t i=0;i<count;i++){if(!deps[i].api||deps[i].api_version!=1||!deps[i].capability_id)return false;
 #ifndef X4_HOME_BRIDGE_SINGLETON
   if(!strcmp(deps[i].capability_id,"hardware.device")&&!hw)hw=deps[i].api;

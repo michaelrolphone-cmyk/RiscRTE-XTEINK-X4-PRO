@@ -37,7 +37,7 @@ static lock_state*shared_state(uint64_t t){assert(t==1||t==2);return t==1?&displ
 static bool shared_take(void*c,uint64_t t){(void)c;return take(shared_state(t),1);}
 static bool shared_unlock(void*c,uint64_t t){(void)c;return unlock(shared_state(t),1);}
 static bool shared_destroy(void*c,uint64_t t){(void)c;return destroy(shared_state(t),1);}
-static const risc_provider_sync_api_v1 shared_sync={1,sizeof(shared_sync),NULL,owner,shared_create,shared_take,shared_unlock,shared_destroy};
+static const x4_power_coordination_api_v1 shared_sync={1,sizeof(shared_sync),NULL,owner,shared_create,shared_take,shared_unlock,shared_destroy};
 #endif
 static uint64_t ticks(void*c){(void)c;safe();return which("clock-backwards")&&keys>1?1:now;}
 static void delay(void*c,uint32_t ms){(void)c;safe();assert(!panel_held&&!sd_closed&&ms==5);now+=ms;}
