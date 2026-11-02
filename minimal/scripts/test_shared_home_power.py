@@ -31,7 +31,7 @@ for name in ('RiscDisplayPowerV1.h','RiscPowerSleepV1.h'):
  power_sdk.append({'header':name,'selected':'Watch/sdk/driver','selected_sha256':hashlib.sha256(selected).hexdigest(),'unselected_sha256':hashlib.sha256(prior).hexdigest() if prior is not None else None})
 (out/'power-sdk-selection.json').write_text(json.dumps(power_sdk,indent=2)+'\n')
 sources=[root/'minimal/drivers'/name/'driver.c' for name in ('x4pro_home_power','x4pro_home_display_power')]
-cases='happy missing-binding enrolled-unavailable held-key key-retained clock-backwards light-read light-off panel-refused panel-retained panel-unknown storage-prepare storage-commit media-unavailable storage-retained panel-restore light-restore native-retained native-zero native-unknown'.split()
+cases='preprepare-pending light-entry light-entry-retained light-entry-refused light-entry-expired happy missing-binding enrolled-unavailable held-key key-retained clock-backwards light-read light-off panel-refused panel-retained panel-unknown storage-prepare storage-commit media-unavailable storage-retained panel-restore light-restore native-retained native-zero native-unknown'.split()
 runs=[]
 for mode in ('normal','sanitized'):
  directory=out/mode;directory.mkdir(exist_ok=True)

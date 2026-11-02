@@ -29,7 +29,12 @@ static uint64_t ticks(void*c){(void)c;safe();return which("clock-backwards")&&ke
 static void delay(void*c,uint32_t ms){(void)c;safe();assert(!panel_held&&!sd_closed&&ms==5);now+=ms;}
 static const risc_platform_clock_api_v1 clock_api={1,sizeof(clock_api),NULL,ticks,delay};
 static bool key(void*c,bool*out){(void)c;safe();keys++;if(which("key-retained")){terminal=true;return false;}*out=which("held-key");return true;}
-static int32_t light(void*c,uint32_t ms,risc_light_sleep_result_v1*out){(void)c;(void)ms;(void)out;safe();return RISC_LIGHT_SLEEP_UNSUPPORTED;}
+static int32_t light(void*c,uint32_t ms,risc_light_sleep_result_v1*out){
+ (void)c;safe();assert(!staged&&alarm_ready&&panel_held&&sd_closed&&level==0&&ms==1000);entries++;
+ if(which("light-entry-retained")){terminal=true;return RISC_LIGHT_SLEEP_RETAINED;}
+ if(which("light-entry-refused"))return RISC_LIGHT_SLEEP_BUSY;
+ out->struct_size=sizeof(*out);return RISC_LIGHT_SLEEP_OK;
+}
 static int32_t deep(void*c,uint32_t ms){(void)c;safe();assert(staged&&alarm_ready&&panel_held&&sd_closed&&level==0&&ms==1000);entries++;
  if(which("native-retained")){terminal=true;return RISC_DEEP_SLEEP_RETAINED;}
  if(which("native-zero")){terminal=true;return 0;}
@@ -38,9 +43,10 @@ static int32_t deep(void*c,uint32_t ms){(void)c;safe();assert(staged&&alarm_read
 }
 static const x4_power_deep_v1 xpower={{1,sizeof(xpower),NULL,key,light},X4_POWER_DEEP_TAG,1,deep};
 static bool seed(void*c,risc_display_frame_v1 f){(void)c;(void)f;return true;}
-static int32_t panel_prepare(void*c,uint32_t budget){(void)c;safe();assert(alarm_ready&&staged&&budget==1500&&!panel_held&&!sd_closed);
+static int32_t panel_prepare(void*c,uint32_t budget){(void)c;safe();assert(alarm_ready&&(staged||!strncmp(test,"light-entry",11))&&budget==1500&&!panel_held&&!sd_closed);
  if(which("panel-retained")||which("panel-unknown")){terminal=true;return which("panel-retained")?RISC_DISPLAY_POWER_RETAINED:-99;}
  if(which("panel-refused"))return RISC_DISPLAY_POWER_BUSY;
+ if(which("light-entry-expired"))now+=1001;
  panel_held=true;return 0;
 }
 static int32_t panel_resume(void*c,uint32_t budget){(void)c;safe();assert(!sd_closed&&budget==1500);
@@ -58,17 +64,23 @@ static const risc_frontlight_api_v1 frontlight={1,sizeof(frontlight),NULL,set_li
 static const risc_hardware_device_v1 power_hw={.api_version=1,.struct_size=sizeof(power_hw),.instance_id=17},panel_hw={.api_version=1,.struct_size=sizeof(panel_hw),.instance_id=3};
 int main(int argc,char**argv){
  assert(argc==2);test=argv[1];const risc_driver_v2*p=x4_home_power_get(2),*d=x4_home_display_get(2);
- risc_provider_dependency_v1 pd[]={{"hardware.device",1,&power_hw},{"x4.power",1,&xpower},{"platform.sync",1,&psync},{"platform.clock",1,&clock_api}};
+ risc_provider_dependency_v1 pd[]={{"hardware.device",1,&power_hw},{"x4.power",1,&xpower},{"platform.sync",1,&psync},{"platform.clock",1,&clock_api},{RISC_DISPLAY_POWER_CAPABILITY,1,d->capability}};
  risc_provider_dependency_v1 dd[]={{"hardware.device",1,&panel_hw},{"display.output",1,&panel},{"storage.volume",1,&storage},{"display.frontlight",1,&frontlight},{"platform.sync",1,&dsync}};
  assert(!strcmp(p->capability_id,"power.sleep")&&!strcmp(d->capability_id,"display.power"));
  if(which("missing-binding")){assert(!p->start(pd,3)&&!d->start(dd,4));puts("missing typed binding refused PASS");return 0;}
- assert(p->start(pd,4)&&d->start(dd,5));
+ assert(d->start(dd,5)&&p->start(pd,5));
  portable_home_power s={.power=p->capability,.display=d->capability};
  if(which("enrolled-unavailable")){s.enrolled_wake_sources=true;assert(!portable_home_power_supported(&s));assert(p->quiesce()&&d->quiesce());return 0;}
+ if(which("preprepare-pending")){bool pending=true;assert(s.power->sleep_wake_pending(s.power->context,&pending)&&!pending);assert(p->quiesce()&&d->quiesce());puts("Nonacknowledging cancellation before preparation PASS");return 0;}
+ bool light_case=!strncmp(test,"light-entry",11);
  portable_desk_record record={.config={.time_format=1},.displayed_minute=1704067200,.has_image=true};strcpy(record.config.time_zone,"UTC");
- uint8_t bytes[PORTABLE_DESK_CLOCK_RECORD_BYTES];assert(portable_desk_encode(&record,bytes,sizeof(bytes)));staged=true;
+ uint8_t bytes[PORTABLE_DESK_CLOCK_RECORD_BYTES];assert(portable_desk_encode(&record,bytes,sizeof(bytes)));staged=!light_case;
  int rc=portable_home_power_prepare(&s);
- if(rc==1){assert(!panel_held&&!sd_closed&&now>=130);alarm_ready=true;rc=portable_home_power_hold(&s);}
+ if(rc==1){assert(!panel_held&&!sd_closed&&now>=130);alarm_ready=true;
+  if(light_case){risc_light_sleep_result_v1 wake={.struct_size=sizeof(wake)};int result=s.power->light_sleep_for(s.power->context,1000,&wake);
+   if(result==RISC_LIGHT_SLEEP_RETAINED)rc=portable_home_power_fence(&s);else{assert(result==RISC_LIGHT_SLEEP_OK||result==RISC_LIGHT_SLEEP_BUSY);rc=0;}}
+  else rc=portable_home_power_hold(&s);
+ }
  if(rc==1)rc=portable_home_power_enter(&s,1000);
  if(rc!=-2){int restored=portable_home_power_restore(&s);if(restored==-2)rc=-2;else assert(restored==1);}
  if(rc==-2){assert(s.retained);unsigned stopped=calls;assert(portable_home_power_restore(&s)==-2&&calls==stopped);}

@@ -21,6 +21,10 @@
     {
       "capability": "platform.clock",
       "api": 1
+    },
+    {
+      "capability": "display.power",
+      "api": 1
     }
   ],
   "provides": [
