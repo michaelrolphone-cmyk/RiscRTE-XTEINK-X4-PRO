@@ -1,0 +1,143 @@
+name: X4 isolated Wi-Fi native build evidence
+on:
+  push:
+    branches: ['work/native-wifi-*']
+  pull_request:
+    paths:
+      - '.github/workflows/native-wifi-build.yml'
+      - 'profiles/native-wifi*'
+      - 'scripts/native_wifi_build.py'
+      - 'minimal/test/native_wifi*'
+      - 'docs/native-wifi-policy/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: x4-native-wifi-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native-build:
+    if: github.repository == 'michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    container: espressif/idf:v6.1@sha256:81893c71bb5e570088901f21def8684c25cd2a9020281bd01b843a7655edb18c
+    env:
+      PRODUCT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      RUNTIME_SHA: 712ecc3f894dba99d9c9638941778a82f5856b97
+      SDK_SHA: fff9895c82d744c7237be8847347bdd1b07c6643
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      CCACHE_DISABLE: '1'
+      IDF_CCACHE_ENABLE: '0'
+      CMAKE_BUILD_PARALLEL_LEVEL: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Materialize exact clean sources and official pinned SDK
+        run: |
+          set -euo pipefail
+          export NATIVE_ROOT="$RUNNER_TEMP/x4-native-wifi-$PRODUCT_SHA"
+          echo "NATIVE_ROOT=$NATIVE_ROOT" >> "$GITHUB_ENV"
+          test ! -e "$NATIVE_ROOT"
+          mkdir -p "$NATIVE_ROOT"/{sources,logs,metadata}
+          exec > >(tee "$NATIVE_ROOT/logs/setup.log") 2>&1
+          apt-get update
+          apt-get install -y --no-install-recommends git ca-certificates g++
+          clone_source() {
+            local repository="$1" revision="$2" destination="$3"
+            [[ "$revision" =~ ^[0-9a-f]{40}$ ]]
+            git init --quiet "$destination"
+            git -C "$destination" remote add origin "https://github.com/$repository.git"
+            git -C "$destination" fetch --no-tags --depth=1 origin "$revision"
+            git -C "$destination" checkout --quiet --detach FETCH_HEAD
+            test "$(git -C "$destination" rev-parse HEAD)" = "$revision"
+            git -C "$destination" submodule update --init --recursive --depth=1
+          }
+          clone_source "$GITHUB_REPOSITORY" "$PRODUCT_SHA" "$NATIVE_ROOT/sources/product"
+          clone_source michaelrolphone-cmyk/RiscRTE "$RUNTIME_SHA" "$NATIVE_ROOT/sources/runtime"
+          . "$IDF_PATH/export.sh"
+          test "$(git -C "$IDF_PATH" rev-parse HEAD)" = "$SDK_SHA"
+          python -m pip install pyelftools==0.32
+          cp "$IDF_PATH/tools/tools.json" "$NATIVE_ROOT/metadata/sdk-tools.json"
+          cp "$NATIVE_ROOT/sources/product/.github/workflows/native-wifi-build.yml" "$NATIVE_ROOT/metadata/workflow.yml"
+          python - <<'PY'
+          import ast,os
+          from pathlib import Path
+          p=Path(os.environ['NATIVE_ROOT'])/'sources/product/scripts/native_wifi_build.py'
+          ast.parse(p.read_text())
+          PY
+      - name: Exact selected profile host admission controls
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/profile-admission.log") 2>&1
+          python "$NATIVE_ROOT/sources/product/minimal/test/native_wifi_profile_test.py" \
+            --runtime "$NATIVE_ROOT/sources/runtime" --output "$NATIVE_ROOT/profile-admission"
+      - name: Fresh successor native compile link and dependency custody
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/successor-build.log") 2>&1
+          python "$NATIVE_ROOT/sources/product/scripts/native_wifi_build.py" \
+            --profile successor --runtime "$NATIVE_ROOT/sources/runtime" --sdk "$IDF_PATH" \
+            --compiler "$(command -v xtensa-esp-elf-gcc)" \
+            --native-build "$NATIVE_ROOT/build-successor" --output "$NATIVE_ROOT/receipt-successor"
+      - name: Fresh unchanged previous profile at same Runtime for measured delta
+        run: |
+          set -euo pipefail
+          . "$IDF_PATH/export.sh"
+          exec > >(tee "$NATIVE_ROOT/logs/previous-build.log") 2>&1
+          python "$NATIVE_ROOT/sources/product/scripts/native_wifi_build.py" \
+            --profile previous --runtime "$NATIVE_ROOT/sources/runtime" --sdk "$IDF_PATH" \
+            --compiler "$(command -v xtensa-esp-elf-gcc)" \
+            --native-build "$NATIVE_ROOT/build-previous" --output "$NATIVE_ROOT/receipt-previous"
+      - name: Compare measured native allocation sections
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          root=Path(os.environ['NATIVE_ROOT'])
+          a=(root/'receipt-previous/build-receipt.json').read_bytes()
+          b=(root/'receipt-successor/build-receipt.json').read_bytes()
+          old,new=map(json.loads,(a,b))
+          assert old['sources']==new['sources'] and old['runtime_commit']==new['runtime_commit']==os.environ['RUNTIME_SHA']
+          assert old['selected_profile']=='profiles/native-provision-123.cmake'
+          assert new['selected_profile']=='profiles/native-wifi.cmake'
+          x,y=old['resources'],new['resources']
+          r={'scope':'same Runtime and source roots, profile delta only; not released firmware comparison','previous_receipt_sha256':hashlib.sha256(a).hexdigest(),'successor_receipt_sha256':hashlib.sha256(b).hexdigest(),'firmware_bytes_delta':y['firmware_bytes']-x['firmware_bytes'],'allocated_section_bytes_delta':{n:y['allocated_sections'].get(n,0)-x['allocated_sections'].get(n,0) for n in sorted(set(x['allocated_sections'])|set(y['allocated_sections']))},'product_heap_admission':False,'persistent_storage_preservation':'not qualified'}
+          (root/'metadata/resource-delta.json').write_text(json.dumps(r,indent=2)+'\n')
+          print(json.dumps(r,sort_keys=True))
+          PY
+      - name: Preserve source identities on success or failure
+        if: always()
+        run: |
+          set -euo pipefail
+          test -d "$NATIVE_ROOT"
+          mkdir -p "$NATIVE_ROOT/source-evidence"
+          for source in "$NATIVE_ROOT"/sources/* "$IDF_PATH"; do
+            test -d "$source/.git" || continue
+            role=$(basename "$source")
+            git -C "$source" status --porcelain=v1 --untracked-files=all > "$NATIVE_ROOT/source-evidence/$role-status.txt"
+            git -C "$source" show -s --format='%H %T' > "$NATIVE_ROOT/source-evidence/$role-identity.txt"
+            git -C "$source" submodule status --recursive > "$NATIVE_ROOT/source-evidence/$role-submodules.txt"
+          done
+      - name: Retain actual native build logs maps images and source closure
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: x4-native-wifi-build-${{ env.PRODUCT_SHA }}
+          path: |
+            ${{ env.NATIVE_ROOT }}/build-successor/
+            ${{ env.NATIVE_ROOT }}/build-previous/
+            ${{ env.NATIVE_ROOT }}/receipt-successor/
+            ${{ env.NATIVE_ROOT }}/receipt-previous/
+            ${{ env.NATIVE_ROOT }}/profile-admission/
+            ${{ env.NATIVE_ROOT }}/logs/
+            ${{ env.NATIVE_ROOT }}/metadata/
+            ${{ env.NATIVE_ROOT }}/source-evidence/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 1
