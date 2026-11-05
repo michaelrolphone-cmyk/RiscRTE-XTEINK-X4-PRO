@@ -19,12 +19,14 @@ def resources(build,compiler,env,profile,root):
         elf=ELFFile(f)
         require(elf.elfclass==32 and elf.little_endian and elf['e_machine']=='EM_XTENSA','Not actual Xtensa native ELF')
         sections={s.name:int(s['sh_size']) for s in elf.iter_sections() if s['sh_flags']&2}
-        symbols=[{'name':s.name,'bytes':int(s['st_size']),'section':elf.get_section(s['st_shndx']).name} for s in elf.get_section_by_name('.symtab').iter_symbols() if isinstance(s['st_shndx'],int) and s['st_size']]
+        addresses={s.name:{'address':int(s['sh_addr']),'bytes':int(s['sh_size'])} for s in elf.iter_sections() if s['sh_flags']&2}
+        symbols=[{'name':s.name,'address':int(s['st_value']),'bytes':int(s['st_size']),'section':elf.get_section(s['st_shndx']).name} for s in elf.get_section_by_name('.symtab').iter_symbols() if isinstance(s['st_shndx'],int) and s['st_size']]
     usage=[]
     for p in sorted(build.rglob('*.su')):
         usage.append({'path':str(p.relative_to(build)),**file_row(p)})
     require(usage,'Actual stack-usage files absent')
-    return {'firmware_bytes':(build/'riscrte_native.bin').stat().st_size,'allocated_sections':sections,'largest_symbols':sorted(symbols,key=lambda x:(-x['bytes'],x['name']))[:100],'stack_usage_files':usage,'heap_peak':'not measured','task_stack_high_water':'not measured','allocator_overhead':'not measured','fits_product_runtime_budget':'not established'}
+    config=json.loads((build/'config/sdkconfig.json').read_text())
+    return {'firmware_bytes':(build/'riscrte_native.bin').stat().st_size if (build/'riscrte_native.bin').is_file() else None,'allocated_sections':sections,'section_addresses':addresses,'internal_bss_symbols':sorted([x for x in symbols if x['section']=='.dram0.bss'],key=lambda x:(-x['bytes'],x['name'])),'allocator_config':{k:v for k,v in config.items() if any(tag in k for tag in ('SPIRAM','HEAP_POISON','HEAP_TASK_TRACKING','MEMPROT'))},'largest_symbols':sorted(symbols,key=lambda x:(-x['bytes'],x['name']))[:100],'stack_usage_files':usage,'heap_peak':'not measured','task_stack_high_water':'not measured','allocator_overhead':'not measured','fits_product_runtime_budget':'not established'}
 
 
 def main():
@@ -68,15 +70,27 @@ def main():
     selected='native-wifi.cmake' if args.profile=='successor' else 'native-provision-123.cmake'
     commands[0]=[v.replace('/profiles/native-idf61.cmake','/profiles/'+selected) for v in commands[0]]
     build.parent.mkdir(parents=True, exist_ok=True)
-    for command in commands:
-        subprocess.run(command, env=env, check=True)
+    try:
+        for command in commands:
+            subprocess.run(command, env=env, check=True)
+    except subprocess.CalledProcessError:
+        # A post-link guard may reject an existing ELF. Measure it, never certify it.
+        if (build/'riscrte_native.elf').is_file() and (build/'compile_commands.json').is_file():
+            output.mkdir()
+            measured=resources(build,compiler,env,args.profile,root)
+            for role,path in sources.items():
+                require(recipe.clean_source(path,pins[role]['revision'])==pins[role],'Source changed during failed build')
+            rejected={'schema':1,'product':'x4','status':'build_rejected','scope':'diagnostic rejected ELF only','full_firmware_linked':False,'native_qualified':False,'runtime_commit':RUNTIME,'product_commit':pins['product']['revision'],'selected_profile':'profiles/'+selected,'sources':pins,'resources':measured,'artifacts':{n:file_row(build/n) for n in ('riscrte_native.elf','riscrte_native.map') if (build/n).is_file()},'persistent_storage_preservation':'not qualified','resource_budget':'not qualified'}
+            (output/'rejected-build-measurement.json').write_bytes(recipe.encoded(rejected))
+            print('REJECTED NATIVE MEASUREMENT '+json.dumps(rejected,sort_keys=True),flush=True)
+        raise
     subprocess.run([sys.executable,str(sources['runtime']/'test/native_firmware_idf6_test.py'),'--build',str(build)],env=env,check=True)
     proof = collect_build_proof(recipe, sources, build, compiler, pins, commands, env, tools)
 
     validate_build_proof(proof,sources,build,compiler)
     measured=resources(build,compiler,env,args.profile,root)
     output.mkdir()
-    receipt={'schema':1,'product':'x4','scope':'fresh-linked-native-build-measurement','full_firmware_linked':True,'product_commit':pins['product']['revision'],'runtime_commit':RUNTIME,'sdk_commit':pins['sdk']['revision'],'working_tree_dirty':False,'selected_profile':'profiles/'+selected,'sources':pins,'artifacts':proof.artifacts,'resources':measured,'physical_testing':False,'deployment':False,'persistent_storage_preservation':'not qualified','resource_budget':'not qualified','companion_store_admission':'not qualified'}
+    receipt={'schema':1,'product':'x4','status':'linked_boundary_passed','scope':'fresh-linked-native-build-measurement','full_firmware_linked':True,'product_commit':pins['product']['revision'],'runtime_commit':RUNTIME,'sdk_commit':pins['sdk']['revision'],'working_tree_dirty':False,'selected_profile':'profiles/'+selected,'sources':pins,'artifacts':proof.artifacts,'resources':measured,'physical_testing':False,'deployment':False,'persistent_storage_preservation':'not qualified','resource_budget':'not qualified','companion_store_admission':'not qualified'}
     (output/'build-receipt.json').write_bytes(recipe.encoded(receipt))
     (output/'build-closure.json').write_bytes(recipe.encoded(proof.report))
     print(json.dumps(receipt,sort_keys=True))

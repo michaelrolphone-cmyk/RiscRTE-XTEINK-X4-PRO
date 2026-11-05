@@ -10,4 +10,8 @@ Both builds retain actual firmware.bin, ELF, map, compile commands, SDK configur
 
 No heap peak, runtime allocator overhead, task high-water mark, real storage reservation, reboot preservation or companion-store admission is established by this build. Receipts deliberately say these are not qualified and do not satisfy the System-Apps native-cohort success gate. A successful link is an implementation prerequisite, not approval to install or activate the new authority.
 
-The workflow runs on a scoped work/native-wifi-* branch, matching pull-request paths, or explicit dispatch. It retains artifacts on failure and does not continue past a failed assertion. The previous profile build follows the successor, so a previous-profile failure does not erase the already-produced successor evidence.
+The workflow runs on matching pull-request paths or explicit dispatch; push triggers are omitted to avoid duplicate full builds. It retains artifacts on failure and does not continue past a failed assertion. The previous profile build runs independently after source/profile checks, even if the successor fails. If a post-link guard rejects a readable ELF, the producer records diagnostic section addresses, internal BSS symbols and allocator configuration, then rethrows the failure. Rejected measurements never become qualified firmware. The comparison records each build status and cannot turn a guard rejection into a pass.
+
+## First measured rejection
+
+At product7889646e, Runtime712ecc and the pinned SDK, run42008596704/job127181547300 reached final native linking. Runtime's unchanged radio_iq_proof rejected .dram0.bss overlapping the reserved IQ bank0x3FCB0000–0x3FCC0000. Artifact13405184538 (ZIP SHA256e9f48cf1ec42768880136cb7009685eb17cbc5f9cdccc7dbcd7617f264033b1a) preserves the rejected ELF/map. No placement, limits, features or IQ guard is changed by the diagnostic follow-up.

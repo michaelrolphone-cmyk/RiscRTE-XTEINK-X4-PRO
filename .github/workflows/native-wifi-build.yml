@@ -1,7 +1,5 @@
 name: X4 isolated Wi-Fi native build evidence
 on:
-  push:
-    branches: ['work/native-wifi-*']
   pull_request:
     paths:
       - '.github/workflows/native-wifi-build.yml'
@@ -35,6 +33,7 @@ jobs:
         shell: bash
     steps:
       - name: Materialize exact clean sources and official pinned SDK
+        id: sources
         run: |
           set -euo pipefail
           export NATIVE_ROOT="$RUNNER_TEMP/x4-native-wifi-$PRODUCT_SHA"
@@ -68,6 +67,7 @@ jobs:
           ast.parse(p.read_text())
           PY
       - name: Exact selected profile host admission controls
+        id: profile
         run: |
           set -euo pipefail
           . "$IDF_PATH/export.sh"
@@ -84,6 +84,7 @@ jobs:
             --compiler "$(command -v xtensa-esp-elf-gcc)" \
             --native-build "$NATIVE_ROOT/build-successor" --output "$NATIVE_ROOT/receipt-successor"
       - name: Fresh unchanged previous profile at same Runtime for measured delta
+        if: always() && steps.sources.outcome == 'success' && steps.profile.outcome == 'success'
         run: |
           set -euo pipefail
           . "$IDF_PATH/export.sh"
@@ -93,20 +94,26 @@ jobs:
             --compiler "$(command -v xtensa-esp-elf-gcc)" \
             --native-build "$NATIVE_ROOT/build-previous" --output "$NATIVE_ROOT/receipt-previous"
       - name: Compare measured native allocation sections
+        if: always() && steps.sources.outcome == 'success' && steps.profile.outcome == 'success'
         run: |
           set -euo pipefail
           python - <<'PY'
           import hashlib,json,os
           from pathlib import Path
           root=Path(os.environ['NATIVE_ROOT'])
-          a=(root/'receipt-previous/build-receipt.json').read_bytes()
-          b=(root/'receipt-successor/build-receipt.json').read_bytes()
+          def measured(role):
+              directory=root/('receipt-'+role)
+              paths=[p for p in (directory/'build-receipt.json',directory/'rejected-build-measurement.json') if p.is_file()]
+              assert len(paths)==1, 'No unambiguous measurement for '+role
+              return paths[0].read_bytes()
+          a=measured('previous')
+          b=measured('successor')
           old,new=map(json.loads,(a,b))
           assert old['sources']==new['sources'] and old['runtime_commit']==new['runtime_commit']==os.environ['RUNTIME_SHA']
           assert old['selected_profile']=='profiles/native-provision-123.cmake'
           assert new['selected_profile']=='profiles/native-wifi.cmake'
           x,y=old['resources'],new['resources']
-          r={'scope':'same Runtime and source roots, profile delta only; not released firmware comparison','previous_receipt_sha256':hashlib.sha256(a).hexdigest(),'successor_receipt_sha256':hashlib.sha256(b).hexdigest(),'firmware_bytes_delta':y['firmware_bytes']-x['firmware_bytes'],'allocated_section_bytes_delta':{n:y['allocated_sections'].get(n,0)-x['allocated_sections'].get(n,0) for n in sorted(set(x['allocated_sections'])|set(y['allocated_sections']))},'product_heap_admission':False,'persistent_storage_preservation':'not qualified'}
+          r={'scope':'same Runtime and source roots, profile delta only; not released firmware comparison','previous_receipt_sha256':hashlib.sha256(a).hexdigest(),'successor_receipt_sha256':hashlib.sha256(b).hexdigest(),'previous_status':old['status'],'successor_status':new['status'],'firmware_bytes_delta':y['firmware_bytes']-x['firmware_bytes'] if x['firmware_bytes'] is not None and y['firmware_bytes'] is not None else None,'allocated_section_bytes_delta':{n:y['allocated_sections'].get(n,0)-x['allocated_sections'].get(n,0) for n in sorted(set(x['allocated_sections'])|set(y['allocated_sections']))},'product_heap_admission':False,'persistent_storage_preservation':'not qualified'}
           (root/'metadata/resource-delta.json').write_text(json.dumps(r,indent=2)+'\n')
           print(json.dumps(r,sort_keys=True))
           PY
