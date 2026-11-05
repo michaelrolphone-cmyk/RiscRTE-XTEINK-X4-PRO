@@ -1,0 +1,42 @@
+name: Inspect retained X4 native layouts
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/inspect_native_wifi_layout.py'
+      - '.github/workflows/native-wifi-layout.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect-rejected-layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned DWARF reader
+        run: python -m pip install pyelftools==0.32
+      - name: Read retained rejected native artifact
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '13413944176'
+          run-id: '42026962629'
+          github-token: ${{ github.token }}
+          path: retained-native
+          merge-multiple: true
+      - name: Verify exact ELF identities and inspect target member layouts
+        run: |
+          mkdir -p layout-report
+          set -o pipefail
+          python scripts/inspect_native_wifi_layout.py --artifact retained-native --output layout-report 2>&1 | tee layout-report/inspection.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: x4-rejected-target-member-layouts
+          path: layout-report/
+          if-no-files-found: warn
