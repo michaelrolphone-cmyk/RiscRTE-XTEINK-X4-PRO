@@ -71,3 +71,36 @@ predecessor377d67cd05fa61cfda30fd5153583350a624e87b8adbf4d2e70ecb627dacb6d5.
 The separate Runtimeaa60686 host negative tests are qualification-only changes;
 their success does not replace this exact286d7da native receipt or establish a
 different compiled firmware identity.
+
+## Independent backend refusal evidence
+
+Runtime aa60686e0043d3ae72b774915f704b87f55794ca adds only host qualification
+changes after286d7da. [Run42019706349](https://github.com/michaelrolphone-cmyk/RiscRTE/actions/runs/42019706349)
+passes both normal(job127219098351) and ASan/UBSan(job127219097827) campaigns.
+The host fixture SDK uses X4c8004c5c8362b142ebb35a0e1c5d266532a11581 and
+Reader7e91fa4a6819ba45659d9f8975c3e2646122137a, with strict overlapping header equality.
+Those are fixture inputs, not the selected native firmware identity.
+
+Actual pinned LittleFS reports495616/524288 bytes used,28672 free after96
+fixture filler files. Both namespaces1 and6 return NoSpace without changing
+the fixture flash image, NVS records or Core revision. Recreated Core/store views
+reload the selected values. Removing only fixture-owned filler permits retries,
+while ordinary peer bytes and both original legacy NVS namespaces remain unchanged.
+
+First-payload-allocation refusal returns NoMemory for each namespace, with one
+PSRAM allocation request and no fallback. Flash/NVS/revision remain unchanged;
+reload and subsequent retry succeed. Existing adapter tests pass range/alignment,
+overflow, wipe-before-free and2000 concurrent cycles.
+
+Normal artifact13410992438:1377019 bytes, ZIP SHA256
+076231c6435e13ed80276cabf99033a4c1a788fd0d1293b489cffcaf1a1a5b8e.
+Sanitized artifact13410952625:3494606 bytes, ZIP SHA256
+1895c618a15534d0632587c7b1af0664ace023ac34a2a5a2159ae8cc8250bf34.
+
+Selected requested-payload peaks are331593 bytes(atomic),396728(sync),
+and331476(first export), identically reported by both modes.
+They exclude vendor/STL allocations, allocator headers and fragmentation; they
+are not available heap or a product budget. The tests model worker/NVS/Assembly
+boundaries, exercise object reload rather than physical reboot, and prove operation-time
+refusal rather than a durable shared-AppData reservation. Full cohort, cumulative
+stack, coexistence heap and cross-writer/reboot replacement guarantees remain open.
