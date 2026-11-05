@@ -3,7 +3,7 @@
 No packaging, deployment, legacy recipe mutation or storage/capacity approval.
 """
 from native_idf61_build import *
-RUNTIME='4a04f85223d87d54fc6b9defb3ef4453b4fcc690'
+RUNTIME='532c502fb2aad358d46166d5fd1df8358148f20e'
 
 def resources(build,compiler,env,profile,root):
     from elftools.elf.elffile import ELFFile
@@ -21,12 +21,19 @@ def resources(build,compiler,env,profile,root):
         sections={s.name:int(s['sh_size']) for s in elf.iter_sections() if s['sh_flags']&2}
         addresses={s.name:{'address':int(s['sh_addr']),'bytes':int(s['sh_size'])} for s in elf.iter_sections() if s['sh_flags']&2}
         symbols=[{'name':s.name,'address':int(s['st_value']),'bytes':int(s['st_size']),'section':elf.get_section(s['st_shndx']).name} for s in elf.get_section_by_name('.symtab').iter_symbols() if isinstance(s['st_shndx'],int) and s['st_size']]
+    # Diagnostic failure must not replace an existing linker/overlap rejection.
+    # Successful native receipts require complete checked target layouts.
+    try:
+        from native_wifi_layout import inspect
+        layouts=inspect(build/'riscrte_native.elf')
+    except Exception as error:
+        layouts={'error':type(error).__name__+': '+str(error)}
     usage=[]
     for p in sorted(build.rglob('*.su')):
         usage.append({'path':str(p.relative_to(build)),**file_row(p)})
     require(usage,'Actual stack-usage files absent')
     config=json.loads((build/'config/sdkconfig.json').read_text())
-    return {'firmware_bytes':(build/'riscrte_native.bin').stat().st_size if (build/'riscrte_native.bin').is_file() else None,'allocated_sections':sections,'section_addresses':addresses,'internal_bss_symbols':sorted([x for x in symbols if x['section']=='.dram0.bss'],key=lambda x:(-x['bytes'],x['name'])),'allocator_config':{k:v for k,v in config.items() if any(tag in k for tag in ('SPIRAM','HEAP_POISON','HEAP_TASK_TRACKING','MEMPROT'))},'largest_symbols':sorted(symbols,key=lambda x:(-x['bytes'],x['name']))[:100],'stack_usage_files':usage,'heap_peak':'not measured','task_stack_high_water':'not measured','allocator_overhead':'not measured','fits_product_runtime_budget':'not established'}
+    return {'target_member_layouts':layouts,'firmware_bytes':(build/'riscrte_native.bin').stat().st_size if (build/'riscrte_native.bin').is_file() else None,'allocated_sections':sections,'section_addresses':addresses,'internal_bss_symbols':sorted([x for x in symbols if x['section']=='.dram0.bss'],key=lambda x:(-x['bytes'],x['name'])),'allocator_config':{k:v for k,v in config.items() if any(tag in k for tag in ('SPIRAM','HEAP_POISON','HEAP_TASK_TRACKING','MEMPROT'))},'largest_symbols':sorted(symbols,key=lambda x:(-x['bytes'],x['name']))[:100],'stack_usage_files':usage,'heap_peak':'not measured','task_stack_high_water':'not measured','allocator_overhead':'not measured','fits_product_runtime_budget':'not established'}
 
 
 def main():
@@ -89,6 +96,7 @@ def main():
 
     validate_build_proof(proof,sources,build,compiler)
     measured=resources(build,compiler,env,args.profile,root)
+    require('error' not in measured['target_member_layouts'],'Target layout qualification failed: '+str(measured['target_member_layouts']))
     output.mkdir()
     receipt={'schema':1,'product':'x4','status':'linked_boundary_passed','scope':'fresh-linked-native-build-measurement','full_firmware_linked':True,'product_commit':pins['product']['revision'],'runtime_commit':RUNTIME,'sdk_commit':pins['sdk']['revision'],'working_tree_dirty':False,'selected_profile':'profiles/'+selected,'sources':pins,'artifacts':proof.artifacts,'resources':measured,'physical_testing':False,'deployment':False,'persistent_storage_preservation':'not qualified','resource_budget':'not qualified','companion_store_admission':'not qualified'}
     (output/'build-receipt.json').write_bytes(recipe.encoded(receipt))
