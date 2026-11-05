@@ -50,3 +50,24 @@ native firmware and app/provider qualification source set.
 Any combined Runtime successor, including LocalOnly policy work, requires a fresh
 native build and IQ check for both profiles. This receipt must not be relabeled or
 reused for a different Runtime pin. The 16-byte margin is not product heap headroom.
+
+## Fresh Runtime 0.4.22 qualification
+
+A separate build, not a relabeled receipt, qualifies product
+75becdb44a914e749cd64385c3897832c78c3476 with Runtime
+286d7da65d5151dfa3840989ce8917dfa23e6856 (version 0.4.22).
+[Run42018261648](https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/actions/runs/42018261648),
+job127214148223, passes both native profiles, IQ and source/dependency closure.
+State sizes1088/1080 bytes and both BSS endpoints0x3fcafff0 remain unchanged,
+leaving the same16-byte margin. All remaining admission limits above still apply.
+
+Artifact13411775209 is150312107 bytes; ZIP SHA256
+fb2aa6f574912f2ac1d91de3de9d691fe7c9fdfbd61894fa2d879e0ecf7181b0.
+Successor firmware SHA256 bf5882135270f9a4adb3b76ee2ab1da1a000923403c38cf2d65025ee3c61f34b;
+ELF SHA256833244c48217fffc1ea2fd1bc94a35d00ade0493248164741d3dc977c92a6c9b.
+The successor map SHA256 remains3b8cff2983564ec3c542344168af876626662223aea124e75e1e24546755ced9.
+Successor build-receipt SHA256 c425529041f563a0936f6206ff417c345316e066fd685eed32f4f548fad2c89a;
+predecessor377d67cd05fa61cfda30fd5153583350a624e87b8adbf4d2e70ecb627dacb6d5.
+The separate Runtimeaa60686 host negative tests are qualification-only changes;
+their success does not replace this exact286d7da native receipt or establish a
+different compiled firmware identity.
