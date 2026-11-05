@@ -15,3 +15,14 @@ The workflow runs on matching pull-request paths or explicit dispatch; push trig
 ## First measured rejection
 
 At product7889646e, Runtime712ecc and the pinned SDK, run42008596704/job127181547300 reached final native linking. Runtime's unchanged radio_iq_proof rejected .dram0.bss overlapping the reserved IQ bank0x3FCB0000–0x3FCC0000. Artifact13405184538 (ZIP SHA256e9f48cf1ec42768880136cb7009685eb17cbc5f9cdccc7dbcd7617f264033b1a) preserves the rejected ELF/map. No placement, limits, features or IQ guard is changed by the diagnostic follow-up.
+
+## Copied identity successor
+
+Runtime fb6d0323b7ab6fa57af8fd5551ce45fdf52c743d separates permanent copied identities from ordered namespace
+bindings. Only this successor header explicitly selects six identities for seven
+bindings. The focused test derives both counts from the actual product writer table,
+checks both Wi-Fi bindings share the same copied identity and preserves all prior
+binding order. Generic Runtime tests exercise other capacities and identities.
+The frozen .122/.123 profiles and IQ bank boundaries are unchanged. Independent
+same-source predecessor/successor native builds must re-measure State and BSS and
+pass the existing IQ guard. This does not approve persistent-space or heap admission.

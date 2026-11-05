@@ -3,7 +3,7 @@
 import argparse,hashlib,json,os,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-PIN='712ecc3f894dba99d9c9638941778a82f5856b97'
+PIN='fb6d0323b7ab6fa57af8fd5551ce45fdf52c743d'
 def run(cmd,log):
     p=subprocess.run(list(map(str,cmd)),capture_output=True,text=True)
     log.write_text(p.stdout+p.stderr)

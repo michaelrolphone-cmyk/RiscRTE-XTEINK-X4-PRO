@@ -3,7 +3,7 @@
 No packaging, deployment, legacy recipe mutation or storage/capacity approval.
 """
 from native_idf61_build import *
-RUNTIME='712ecc3f894dba99d9c9638941778a82f5856b97'
+RUNTIME='fb6d0323b7ab6fa57af8fd5551ce45fdf52c743d'
 
 def resources(build,compiler,env,profile,root):
     from elftools.elf.elffile import ELFFile

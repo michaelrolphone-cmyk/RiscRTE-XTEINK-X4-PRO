@@ -4,11 +4,13 @@
 #include "atomic_key_value_cohort_test.cpp"
 #undef ATOMIC_COHORT_MAIN
 #include <set>
+#include "ports/esp32s3/NativeSettingsWriterRegistry.h"
 #include <utility>
 struct ProductWriter {const char*id;unsigned ns;};
 static constexpr ProductWriter productWriters[]={RISC_NATIVE_SETTINGS_WRITERS};
 static_assert(sizeof(productWriters)/sizeof(productWriters[0])==7);
 static_assert(RISC_NATIVE_SETTINGS_MAX_WRITERS==7);
+static_assert(RISC_NATIVE_SETTINGS_MAX_IDENTITIES==6);
 static_assert(RISC_RUNTIME_ATOMIC_BINDING_CAPACITY==9);
 static bool includePolicyWriter=true;
 static bool productBind(R&r){
@@ -36,7 +38,13 @@ int main(int argc,char**argv){
  root=base+"/old";std::filesystem::create_directories(root);store();policy(root,false);const auto old=root;
  root=base+"/new";std::filesystem::create_directories(root);store();policy(root,true);const auto next=root;
  std::set<std::pair<std::string,unsigned>> seen;
- for(const auto&w:productWriters)assert(seen.emplace(w.id,w.ns).second);
+ std::set<std::string> identities;
+ RiscCpu::NativeSettingsLifecycle::WriterRegistry<RISC_NATIVE_SETTINGS_MAX_WRITERS,RISC_NATIVE_SETTINGS_MAX_IDENTITIES> copied;
+ for(const auto&w:productWriters){assert(seen.emplace(w.id,w.ns).second);identities.emplace(w.id);assert(copied.add(w.id,w.ns));}
+ assert(identities.size()==RISC_NATIVE_SETTINGS_MAX_IDENTITIES&&copied.identityCount()==identities.size());
+ assert(copied.bindingCount()==sizeof(productWriters)/sizeof(productWriters[0]));
+ for(size_t i=0;i<copied.bindingCount();++i){assert(!strcmp(copied.app(i),productWriters[i].id));assert(copied.nameSpace(i)==productWriters[i].ns);}
+ assert(copied.app(5)==copied.app(6));
  const std::set<std::pair<std::string,unsigned>> expected={{"settings",1},{"paper_clock",1},{"battery",1},{"ble_scanner",1},{"contexts",1},{"wifi_settings",6},{"wifi_settings",1}};
  assert(seen==expected);
  Disk d1,d6;Alloc allocation;C c1(1,d1.backend(),limits(),allocation.api()),c6(6,d6.backend(),limits(),allocation.api());
