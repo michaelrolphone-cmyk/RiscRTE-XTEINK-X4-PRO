@@ -21,7 +21,7 @@ jobs:
     container: espressif/idf:v6.1@sha256:81893c71bb5e570088901f21def8684c25cd2a9020281bd01b843a7655edb18c
     env:
       PRODUCT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-      RUNTIME_SHA: fb6d0323b7ab6fa57af8fd5551ce45fdf52c743d
+      RUNTIME_SHA: 286d7da65d5151dfa3840989ce8917dfa23e6856
       SDK_SHA: fff9895c82d744c7237be8847347bdd1b07c6643
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
