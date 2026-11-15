@@ -1,0 +1,47 @@
+name: X4 shared touch qualification
+on:
+  pull_request:
+    paths:
+      - minimal/**
+      - .github/workflows/shared-touch-qualification.yml
+permissions:
+  contents: read
+jobs:
+  shared-touch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: 8d713b52edca004e1d53bf30a1c584859fe33d14
+          path: .shared/runtime
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: 29276b4e1cff7819af065a77cf64805f6d5a12ce
+          path: .shared/reader
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+          ref: 0651a55513b0aa0dff1b6a9072303def08a97378
+          path: .shared/touch-apps
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Utilities
+          ref: e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d
+          path: .shared/touch-utilities
+      - name: Compose exact ordinary-provider SDK
+        run: python3 minimal/scripts/prepare_sdk.py --runtime .shared/runtime --reader .shared/reader --output build/shared-touch/sdk
+      - name: Qualify shared consumer and rejected ordering mutation
+        run: |
+          set -euo pipefail
+          python3 minimal/test/run_gt911_shared_consumer_test.py --sdk build/shared-touch/sdk --system .shared/touch-apps --output build/shared-touch/normal --check-ordering-mutation
+          python3 minimal/test/run_gt911_shared_consumer_test.py --sdk build/shared-touch/sdk --system .shared/touch-apps --output build/shared-touch/sanitized --sanitize
+      - name: Qualify pinned HID renderer with production GT911
+        run: python3 minimal/test/run_hid_gt911_test.py --sdk build/shared-touch/sdk --system .shared/touch-apps --utilities .shared/touch-utilities --output-dir build/shared-touch/hid
