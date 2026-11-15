@@ -21,10 +21,10 @@ options = record.get('build_options')
 required = {'app_policy_rows', 'app_image_cache'}
 if not isinstance(options, dict) or not required <= set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256', 'native_package_volume'}:
     raise ValueError('Invalid native build options')
-if type(options['app_policy_rows']) is not int or options['app_policy_rows'] not in (16, 17, 18, 24):
-    raise ValueError('App policy rows must be 16, 17, 18 or 24')
-if 'app_requirement_rows' in options and (type(options['app_requirement_rows']) is not int or options['app_requirement_rows'] not in (17, 24)):
-    raise ValueError('App requirement rows must be an explicit 17- or 24-row opt-in')
+if type(options['app_policy_rows']) is not int or options['app_policy_rows'] not in (16, 17, 18, 24, 32):
+    raise ValueError('App policy rows must be 16, 17, 18, 24 or 32')
+if 'app_requirement_rows' in options and (type(options['app_requirement_rows']) is not int or options['app_requirement_rows'] not in (17, 24, 32)):
+    raise ValueError('App requirement rows must be an explicit 17-, 24- or 32-row opt-in')
 if options.get('app_requirement_rows', 16) > options['app_policy_rows']:
     raise ValueError('App requirement rows exceed policy rows')
 if 'provider_capacity' in options and (type(options['provider_capacity']) is not int or options['provider_capacity'] not in (32,40)):

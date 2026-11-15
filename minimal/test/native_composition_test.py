@@ -221,6 +221,16 @@ class CompositionTest(unittest.TestCase):
             with self.subTest(key=key, flags=flags), self.assertRaisesRegex(ValueError, 'only from the composition record'):
                 run({key: flags})
 
+    def test_shared_home_capacity_is_explicit_and_bounded(self):
+        record = self.prepare(app_policy_rows=32, app_requirement_rows=32)
+        self.assertEqual(record['build_options']['app_requirement_rows'], 32)
+        composition.verify_source_custody(self.runtime, record, self.platform)
+        for rows in (0, 25, 28, 31, 33, True, '32', 32.0):
+            with self.subTest(rows=rows), self.assertRaises(ValueError):
+                composition.validate_build_options(dict(app_policy_rows=32, app_requirement_rows=rows, app_image_cache=False))
+        with self.assertRaisesRegex(ValueError, 'exceed'):
+            composition.validate_build_options(dict(app_policy_rows=24, app_requirement_rows=32, app_image_cache=False))
+
     def test_usb_phy_requires_explicit_boolean_opt_in(self):
         for invalid in (0, 1, None, 'yes'):
             with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, 'USB PHY selection'):

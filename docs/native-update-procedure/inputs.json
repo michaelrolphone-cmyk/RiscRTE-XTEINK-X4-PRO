@@ -1,0 +1,511 @@
+{
+  "artifact": {
+    "artifact_id": 12238683883,
+    "bytes": 45732702,
+    "expires_at": "2026-11-19T03:37:21Z",
+    "members": {
+      "X4-0.1.124-Complete-SD-Keep-Existing.zip": {
+        "bytes": 11023620,
+        "sha256": "d4c5598b2d7f7c6022f53bcd0bb5479b90f3dd1fb53a9a8936f55d1f3a09928d"
+      },
+      "factory-candidate-erases-data-0x0.bin": {
+        "bytes": 16777216,
+        "sha256": "f4f7deadb7e6f2e278c0e0af90c3633c48e4f531317f9d513e905fb26f4cc01b"
+      },
+      "pair-admission.json": {
+        "bytes": 18313,
+        "sha256": "1c85235cdc48ca8c64551d10482122e3334bcbb03e9a01e84401b6fde8f5d55f"
+      },
+      "pair-baseline-present/X4-0.1.124-NONINSTALLABLE-candidate-fixture-selected.json": {
+        "bytes": 45592,
+        "sha256": "2311fa10c27381ae6d550044f057a105dff2343e77a9516d916c271f6c50efde"
+      },
+      "pair-baseline-present/X4-0.1.124-NONINSTALLABLE-candidate-fixture-selected.zip": {
+        "bytes": 27839198,
+        "sha256": "fdf75973fe3845818e6a9708de2bc62cf03140acc4fe2f0279955ba414889830"
+      },
+      "payload-transport-normal.json": {
+        "bytes": 59287,
+        "sha256": "0eab94f9331477ea0f6986ad2fdedaf3da3eed0e74dda7bf564720c5c237ea3a"
+      },
+      "payload-transport-sanitized.json": {
+        "bytes": 60463,
+        "sha256": "648c97a0af61aa4c51791d2e6376605337fe2b462fe715c7672b483f325619ef"
+      },
+      "qualification.json": {
+        "bytes": 2054259,
+        "sha256": "f9bb794e3bfb143ec70dcf9483881037117d634365a731de342d9ac73fe42895"
+      }
+    },
+    "name": "x4-native-paired-124-candidate-ee832b0c16c26f76dd15a27e318d61c478d38d3c",
+    "run_id": 39363726868,
+    "run_url": "https://github.com/michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO/actions/runs/39363726868",
+    "sha256": "f6f52763a3c106835449432c40cbd759f63d7ae283a218a6e158b30106788e3e"
+  },
+  "candidate": {
+    "actual_catalog": null,
+    "actual_release": null,
+    "declared_external_volume_effect": "unknown",
+    "declared_settings_effect": "erased",
+    "factory": {
+      "bytes": 16777216,
+      "sha256": "f4f7deadb7e6f2e278c0e0af90c3633c48e4f531317f9d513e905fb26f4cc01b"
+    },
+    "file_count": 78,
+    "fixture_manifest_member": "pair-baseline-present/X4-0.1.124-NONINSTALLABLE-candidate-fixture-selected.json",
+    "flash_method": "esptool-full-0x0",
+    "hardware_results": null,
+    "installed_bootstrap": null,
+    "logical_volume": "application-content",
+    "order": [
+      "firmware",
+      "payload",
+      "verify"
+    ],
+    "payload_bytes": 11006894,
+    "payload_files": {
+      "Apps/ble_buttons/ble_buttons.elf": {
+        "bytes": 159340,
+        "role": "application",
+        "sha256": "2f0e6e69182b9a71a35471a35093ff69b2b26955c87032132650ed7d4895d1fd"
+      },
+      "Apps/ble_buttons/manifest.json": {
+        "bytes": 558,
+        "role": "application-manifest",
+        "sha256": "486d3d5c9cee5868dbfd872c0da56d4b27293f1b76e5049dee4826aa05b3e278"
+      },
+      "Apps/ble_scanner/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c/ble_scanner.elf": {
+        "bytes": 162860,
+        "role": "application",
+        "sha256": "2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c"
+      },
+      "Apps/ble_scanner/image-2fd57fe781737b6203f7d35479152825e8c636705e0284594007c0f260c2754c/manifest.json": {
+        "bytes": 1038,
+        "role": "application-manifest",
+        "sha256": "8ec8e78882a289df5eea24e332dd3c771d8572509ac663656400eae0ce1105e0"
+      },
+      "Apps/ble_touchpad/ble_touchpad.elf": {
+        "bytes": 155212,
+        "role": "application",
+        "sha256": "4138f2364aca210d02a81dc7427c1665fa1ba89af1c76650b39e851b704550ec"
+      },
+      "Apps/ble_touchpad/manifest.json": {
+        "bytes": 830,
+        "role": "application-manifest",
+        "sha256": "b8ac0a6778bcd14dba159eeb11ab91f666b5503d8ae15c6317ff908185351ee3"
+      },
+      "Apps/calculator/calculator.elf": {
+        "bytes": 138876,
+        "role": "application",
+        "sha256": "b18e7746b475ef4fb965b4aeb84ee1d56d52ccf608f7c708adf02a2566fbd2d3"
+      },
+      "Apps/calculator/manifest.json": {
+        "bytes": 761,
+        "role": "application-manifest",
+        "sha256": "77d07d60c4c2aa2295ffebdb72406cab8080709350a892c20079f2f497088038"
+      },
+      "Apps/contexts/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9/contexts.elf": {
+        "bytes": 96896,
+        "role": "application",
+        "sha256": "60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9"
+      },
+      "Apps/contexts/image-60890de25747a929841df28346a21214b4509934261e2a1e21e0f008d37ce7a9/manifest.json": {
+        "bytes": 940,
+        "role": "application-manifest",
+        "sha256": "7ee1d8bd00c8cb5e9a5aad841f91ca89313ef391292587941e31e7441f27057c"
+      },
+      "Apps/countdown/countdown.elf": {
+        "bytes": 146368,
+        "role": "application",
+        "sha256": "3bcc882c7e85c5c45dc54f45fb02fe4f51d972d759e2c13b83c2d07ad58f7e84"
+      },
+      "Apps/countdown/manifest.json": {
+        "bytes": 759,
+        "role": "application-manifest",
+        "sha256": "dbb4cde4fa66e9e8ecc54eda9fd17ea8d5cb2af8f594a9781a7ce66705ca02a1"
+      },
+      "Apps/daily-digest/daily_digest.elf": {
+        "bytes": 27656,
+        "role": "application",
+        "sha256": "72a8ef9d1c7eb087e889bbc717c635cdb59a4dd6e7d97d3500971c6b743381aa"
+      },
+      "Apps/daily-digest/manifest.json": {
+        "bytes": 733,
+        "role": "application-manifest",
+        "sha256": "1f8827a772257e0136ead7de69971867be557e60483f1ae7d530c4e4f31edd21"
+      },
+      "Apps/ebook-reader/ebook_reader.elf": {
+        "bytes": 1918724,
+        "role": "application",
+        "sha256": "395eb0ad04b1c86b26f713b2c82e7d3f2a7a26dd802778bf4d355a5b55b351b2"
+      },
+      "Apps/ebook-reader/manifest.json": {
+        "bytes": 659,
+        "role": "application-manifest",
+        "sha256": "d2b52619e92d974309b6e9eef678cf7570bcc01868b63e5631f0d0d234110250"
+      },
+      "Apps/gameboy/gameboy.elf": {
+        "bytes": 171360,
+        "role": "application",
+        "sha256": "e802dda3a9756a578441e35fdea3a3801bb852875f1a194f0b2318cc65426453"
+      },
+      "Apps/gameboy/manifest.json": {
+        "bytes": 549,
+        "role": "application-manifest",
+        "sha256": "8955c263e6c16e8c4fea630c4edc6957e6b06eda82ac429e00b7d5b6e2048432"
+      },
+      "Apps/hollow_trail/hollow_trail.elf": {
+        "bytes": 449580,
+        "role": "application",
+        "sha256": "465d71581bb7655b9e2ec5de5c94b09a8fb3375f916c148497b15b431bdbfdbb"
+      },
+      "Apps/hollow_trail/manifest.json": {
+        "bytes": 447,
+        "role": "application-manifest",
+        "sha256": "0a708911eb6941fe5a04de0e84d9ddcb01fc0806745519389d76d8f2df461194"
+      },
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/lists.elf": {
+        "bytes": 41524,
+        "role": "application",
+        "sha256": "8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c"
+      },
+      "Apps/lists/image-8bdbc1a3c500a43bb59a115736b0e263d433f840195e5da5b34dd122ab87ba4c/manifest.json": {
+        "bytes": 517,
+        "role": "application-manifest",
+        "sha256": "ff6b7d2ce1e61bde96ec736e23b1313f474fe488211e3d8ba8feb8b37b91f120"
+      },
+      "Apps/model_viewer/manifest.json": {
+        "bytes": 703,
+        "role": "application-manifest",
+        "sha256": "89204d530af77e6323d083093a4a1fff904ecdae573f72252de257394b314dd2"
+      },
+      "Apps/model_viewer/model_viewer.elf": {
+        "bytes": 39284,
+        "role": "application",
+        "sha256": "24b73fff728355ab88e5b34f9eae1caeb9442bbbc36240bd6bc8c29f0708fed0"
+      },
+      "Apps/obd-dashboard/manifest.json": {
+        "bytes": 625,
+        "role": "application-manifest",
+        "sha256": "49204843673f745458102d9f74a60a1a0a155c1db3b133240a93b5b69010831e"
+      },
+      "Apps/obd-dashboard/obd_dashboard.elf": {
+        "bytes": 77504,
+        "role": "application",
+        "sha256": "ecf5c2b7f61bb7de2091c7a2b37c434604dbb640ada51111b8ae9ec19d4e977c"
+      },
+      "Apps/obd-test/manifest.json": {
+        "bytes": 591,
+        "role": "application-manifest",
+        "sha256": "e9128f13ecbfbc34390f9d65ff85d836d37c1ef7e1a6077d6d089a8e00499f83"
+      },
+      "Apps/obd-test/obd_test.elf": {
+        "bytes": 81280,
+        "role": "application",
+        "sha256": "9acdf0593b4b3131f4341dbece0e2b178412df16c94abf17bc4657bfd852ec0e"
+      },
+      "Apps/points_in_time/image-cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d/manifest.json": {
+        "bytes": 902,
+        "role": "application-manifest",
+        "sha256": "d84bb77efe4e008d74b55c6391a9ecdbbcf9c84eaaeaf826ddfbbee3276857a9"
+      },
+      "Apps/points_in_time/image-cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d/points_in_time.elf": {
+        "bytes": 264532,
+        "role": "application",
+        "sha256": "cbc08f8c5846967b7c9cdc5cae4f832e2a0ec7c8a3534d565eebef804ae92a2d"
+      },
+      "Apps/stopwatch/manifest.json": {
+        "bytes": 759,
+        "role": "application-manifest",
+        "sha256": "8122ab1ccd38ed597a593d8d5070cbb9484524aee6237bd0e73442cbd121316a"
+      },
+      "Apps/stopwatch/stopwatch.elf": {
+        "bytes": 142268,
+        "role": "application",
+        "sha256": "38815777c30764737436e806922f80632353c58c4248ea8dfc59b3dc4c4b75aa"
+      },
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/manifest.json": {
+        "bytes": 890,
+        "role": "application-manifest",
+        "sha256": "256902f13b5ef54d56fe35aa2f9d5b71b650a47dc11be4d8c122be38ca5d9dce"
+      },
+      "Apps/timecard/image-9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53/timecard.elf": {
+        "bytes": 175412,
+        "role": "application",
+        "sha256": "9a03a9a97bdcfc90c50f5ef6c5b54e2b0d5e8d810ff2d58ed3d67308e3c17b53"
+      },
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/manifest.json": {
+        "bytes": 1159,
+        "role": "application-manifest",
+        "sha256": "c280c4c111c9ea7899b33dfa6956fd94b25ecffb860c8e8b3b20bd1d9bc477da"
+      },
+      "Apps/waterfall/image-f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1/waterfall.elf": {
+        "bytes": 284800,
+        "role": "application",
+        "sha256": "f670dc7ec2194a80a75057d818f87314d76721f3b0e811af4994568ef0618ac1"
+      },
+      "Drivers/alarm-service/image-f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8.elf": {
+        "bytes": 56516,
+        "role": "driver",
+        "sha256": "f4b68c8aaa61d7518593fb70e5bac99f5c5185689440440b7ea103cd9d015ac8"
+      },
+      "Drivers/ble-hid/image-6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555.elf": {
+        "bytes": 125480,
+        "role": "driver",
+        "sha256": "6290d9cdfae051b9f2f2c83060f1c4000a62f727d47b680c67cd77b0d9e0c555"
+      },
+      "Drivers/ble-sensors/image-cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998.elf": {
+        "bytes": 9820,
+        "role": "driver",
+        "sha256": "cf34fa23f8a6086c7dbeb022a5ddc252088207eb0773251d183873bf1737d998"
+      },
+      "Drivers/ble-serial/image-643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7.elf": {
+        "bytes": 179308,
+        "role": "driver",
+        "sha256": "643000ed431d9d2bf042014f2b51473d3911d733526b2c72f957d8a0f1d26cf7"
+      },
+      "Drivers/ble-session-setup/image-589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842.elf": {
+        "bytes": 264572,
+        "role": "driver",
+        "sha256": "589f7be25aa0523e6e2f66fda0384fccb3ddf86de8c2873daa9cdb0d9966d842"
+      },
+      "Drivers/ble-telemetry/image-86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2.elf": {
+        "bytes": 9824,
+        "role": "driver",
+        "sha256": "86e36ad3ec31ba1e4f639c1110cecfdd07e9bfc7695dcceba42672303f01f4a2"
+      },
+      "Drivers/civil-clock-x4/image-d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d.elf": {
+        "bytes": 38156,
+        "role": "driver",
+        "sha256": "d19f4281f20032f750b8df1676e2bc905ddfed67db6f914f06ffde554ca9362d"
+      },
+      "Drivers/contexts-service/image-124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4.elf": {
+        "bytes": 63284,
+        "role": "driver",
+        "sha256": "124b268da046f59e7bb50af0b2a2695de947a6d928ac2a58944438535012f7a4"
+      },
+      "Drivers/crypto-entropy/image-b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c.elf": {
+        "bytes": 4124,
+        "role": "driver",
+        "sha256": "b51575d470052e9906ff874f5552eb66b67aa51219fa6ddb04d753af9601704c"
+      },
+      "Drivers/installed-apps/image-2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987.elf": {
+        "bytes": 141740,
+        "role": "driver",
+        "sha256": "2bcd4948f7823d89ad8148d09c91d0dad54f5daabd3b6d4385051da897a98987"
+      },
+      "Drivers/installed-apps/image-890fa3f9cf1c38ddf3e025d158789444c81abe5ced4557e8fb9addd7f318cfa6.elf": {
+        "bytes": 179032,
+        "role": "driver",
+        "sha256": "890fa3f9cf1c38ddf3e025d158789444c81abe5ced4557e8fb9addd7f318cfa6"
+      },
+      "Drivers/net-http-client/image-747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507.elf": {
+        "bytes": 5212,
+        "role": "driver",
+        "sha256": "747c1e3ddde9c9218105d12970c8fc9569145f73b8154b23e4723579c8fea507"
+      },
+      "Drivers/network-tcp-listener/image-49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4.elf": {
+        "bytes": 9308,
+        "role": "driver",
+        "sha256": "49e256b42d1a8fcf46ffff4d9e2b05edd12c6dda96ed840d66c7a1c4e8468ed4"
+      },
+      "Drivers/s3-radio-iq-v1/image-448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50.elf": {
+        "bytes": 43692,
+        "role": "driver",
+        "sha256": "448f63fa06f2320b85ea56fcf10b49008a90eacc782729e9a5f28d1f6bf2df50"
+      },
+      "Drivers/scene-host/image-8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122.elf": {
+        "bytes": 471156,
+        "role": "driver",
+        "sha256": "8f841c721085de220e16460e07b2751be3673487838ab4c6915bf7d5405d3122"
+      },
+      "Drivers/scene-profile-portrait-monochrome/image-81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341.elf": {
+        "bytes": 2284,
+        "role": "driver",
+        "sha256": "81793b9d445b495b6e324f03e445d4922abb48101b62ba35482046a3abafd341"
+      },
+      "Drivers/software-update-apps/image-c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a.elf": {
+        "bytes": 29676,
+        "role": "driver",
+        "sha256": "c243053f0b319d99fecdb369a421519a494c840c1d94b13f8a6e1aa1cdca843a"
+      },
+      "Drivers/software-update-firmware/image-8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03.elf": {
+        "bytes": 29800,
+        "role": "driver",
+        "sha256": "8650b6bae3db171bae42f45adf4bbda4beeeeb42b349404fc8d4628351c4bc03"
+      },
+      "Drivers/telemetry-battery/image-f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da.elf": {
+        "bytes": 3048,
+        "role": "driver",
+        "sha256": "f0cab9a3eb32c9f0f351cc4f52ee5a4e9830d7ad26c012fa5c248fd791ac06da"
+      },
+      "Drivers/telemetry-broadcast/image-0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d.elf": {
+        "bytes": 5724,
+        "role": "driver",
+        "sha256": "0080c2a5c2e8affd8d6e4ca974f9a012c47b7f5bd7d7d1b2be730bacde1f6b4d"
+      },
+      "Drivers/text-input-host/image-e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a.elf": {
+        "bytes": 19400,
+        "role": "driver",
+        "sha256": "e0d6259ed441e18471d3ed85a8afc0b9b130f7e0767f61adecb793e514bbfb5a"
+      },
+      "Drivers/twatch-ble/image-fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5.elf": {
+        "bytes": 4320,
+        "role": "driver",
+        "sha256": "fd1366d4a7140988801105900eed85990534ca3c5c0f150090fb54e9c3b002a5"
+      },
+      "Drivers/usb-device-msc-esp32s3/image-9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461.elf": {
+        "bytes": 34892,
+        "role": "driver",
+        "sha256": "9a7cc6f87fc2a9cb5b1d65b7be1795be42cee822a2af722c8a81317a701d8461"
+      },
+      "Drivers/wifi/image-8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9.elf": {
+        "bytes": 7692,
+        "role": "driver",
+        "sha256": "8a46dd3534bd682c1950906de5478c7d4b999189d80ed76fd867907b1b6b54b9"
+      },
+      "Drivers/x4pro-battery/image-937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe.elf": {
+        "bytes": 7172,
+        "role": "driver",
+        "sha256": "937aa4335fe5aa2d25b8026beeec9ee0c04ed042d49583b353f69d46b69b61fe"
+      },
+      "Drivers/x4pro-frontlight/image-c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b.elf": {
+        "bytes": 5816,
+        "role": "driver",
+        "sha256": "c5b0ed5307e67f7493f075fbc18bf949ce13249c300eaa8498cc08d6b7f9457b"
+      },
+      "Drivers/x4pro-gt911/image-0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4.elf": {
+        "bytes": 14068,
+        "role": "driver",
+        "sha256": "0060c1b0d3bf47d362307faf2c7b677a59a5e0ccc9dc3b0a84eada41e1e250e4"
+      },
+      "Drivers/x4pro-i2c/image-bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1.elf": {
+        "bytes": 5356,
+        "role": "driver",
+        "sha256": "bac7fd8b7db7d71c219efdb43dbd259cc8cae1e7bfad66d9fff9ce4d39faabe1"
+      },
+      "Drivers/x4pro-power-buttons/image-8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9.elf": {
+        "bytes": 6120,
+        "role": "driver",
+        "sha256": "8277644e938a16460444d1d6b4b91148662ee8e625ff70a0a037ebc252a9cfa9"
+      },
+      "Drivers/x4pro-power/image-79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b.elf": {
+        "bytes": 5704,
+        "role": "driver",
+        "sha256": "79a1f58e9f0c5921b544989231c59258300b94b168669d8ce13c4227ffb7a71b"
+      },
+      "Drivers/x4pro-rtc/image-47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58.elf": {
+        "bytes": 6752,
+        "role": "driver",
+        "sha256": "47a372b44c897f0d95ff6d96e83b0bd34dcc8b910084fe61cfa99be609889d58"
+      },
+      "Drivers/x4pro-uc8279-fast/image-3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4.elf": {
+        "bytes": 34800,
+        "role": "driver",
+        "sha256": "3fe67b0b8b22b739b4cee6cb5d8e5da9536883ae567b6d61b142de5da50181d4"
+      },
+      "fonts/Noto Sans/NotoSans-Bold.ttf": {
+        "bytes": 630968,
+        "role": "font-resource",
+        "sha256": "13a813c49624ae3ba3c5c6e72c5ebffc4b9e1e6ea32f421c04069b037c6ad431"
+      },
+      "fonts/Noto Sans/NotoSans-BoldItalic.ttf": {
+        "bytes": 644344,
+        "role": "font-resource",
+        "sha256": "7e34616e092593c340449baf9a259075a054c6419511ccf21ff0d83a1c9dd0d0"
+      },
+      "fonts/Noto Sans/NotoSans-Italic.ttf": {
+        "bytes": 642344,
+        "role": "font-resource",
+        "sha256": "feb3e57888ce3acb604f270c278cfb304c674306518771619ddbdefca42a066b"
+      },
+      "fonts/Noto Sans/NotoSans-Regular.ttf": {
+        "bytes": 629024,
+        "role": "font-resource",
+        "sha256": "fe8c022f48d8dd29f17b744d16f9346f4357e16f7d4f7be58b000ae7c291b614"
+      },
+      "fonts/Noto Sans/OFL.txt": {
+        "bytes": 4489,
+        "role": "font-resource",
+        "sha256": "be2f3f8727ac2e18b714ad1c4336d4ddb3f3adbeb9a7f70bfab74d21f4d2b3fb"
+      },
+      "fonts/Noto Serif/NotoSerif-Bold.ttf": {
+        "bytes": 506864,
+        "role": "font-resource",
+        "sha256": "1b941681106aae26ead3a24c6f15b51f994b1b26adce8742a37ce96648f0fe0a"
+      },
+      "fonts/Noto Serif/NotoSerif-BoldItalic.ttf": {
+        "bytes": 534540,
+        "role": "font-resource",
+        "sha256": "2400339667ad2701320aa671e337d1632731e56b397564afe14e981124b899c6"
+      },
+      "fonts/Noto Serif/NotoSerif-Italic.ttf": {
+        "bytes": 534156,
+        "role": "font-resource",
+        "sha256": "15d5f8050fc1f142545e7a26a50bd07a0434eca535d4d98aad9d5e8f03741e43"
+      },
+      "fonts/Noto Serif/NotoSerif-Regular.ttf": {
+        "bytes": 504932,
+        "role": "font-resource",
+        "sha256": "a7e8ea1ab7e7d368b001c892d6148325fffc849a46e030e55e1bdc597bbe939d"
+      },
+      "fonts/Noto Serif/OFL.txt": {
+        "bytes": 4489,
+        "role": "font-resource",
+        "sha256": "be2f3f8727ac2e18b714ad1c4336d4ddb3f3adbeb9a7f70bfab74d21f4d2b3fb"
+      }
+    },
+    "provider": "x4pro-sd",
+    "provider_instance": 9,
+    "qualification": {
+      "bytes": 2054259,
+      "sha256": "f9bb794e3bfb143ec70dcf9483881037117d634365a731de342d9ac73fe42895"
+    },
+    "runtime_revision": "6a3b3d46f5b2857eacc6e9863799dec1f466b036",
+    "sd_archive": {
+      "bytes": 11023620,
+      "sha256": "d4c5598b2d7f7c6022f53bcd0bb5479b90f3dd1fb53a9a8936f55d1f3a09928d"
+    },
+    "source_commit": "ee832b0c16c26f76dd15a27e318d61c478d38d3c",
+    "trusted_board_context": null,
+    "version": "0.1.124",
+    "wire_namespace": "12"
+  },
+  "product": {
+    "files": {
+      ".github/workflows/native-paired-124.yml": "ee18439709333c967cefa43634d3bf9933cdc5c53c39d353c3b0a9b1d3effa82",
+      "docs/native-paired-124/README.md": "d5e462c61e915d250d6f264c8151696a79876881de99a1e9881eaadc13f21b0b",
+      "docs/native-paired-124/payload-contract.json": "4ce99c80daf193b22963fa118f92ca294e583398edd621b8f3ec5d8642077abf",
+      "docs/native-paired-124/released-baseline.json": "4f66c207eaf4b2d479b4dfd2b8b7623340a5362803036481fb29e17cb5c2c24b",
+      "docs/native-paired-124/source-inputs.json": "1e3acff10d4eb213566d8b479f7c6d9de7b2523f81b37f12863ddb675c2f0762",
+      "profiles/native-paired-124.cmake": "7dd99c6de16493afb847a919e9ae703513f96803dff1adc0bfa81d93e4a31f29",
+      "scripts/native_paired_candidate.py": "f0f722cce15caedccc91c1de903e778ff5a4861f7fbd98c12002d4ac68513ca9",
+      "scripts/native_paired_payloads.py": "e2295f3f8201aff57c17bf167147ecba0d137c434fd51e1d2218cd5b6c17ae45",
+      "scripts/native_paired_qualification.py": "813d638077d0ee31c9251874e083bda011e50ca83c6217dfe53a256caf655626",
+      "scripts/native_paired_serial.py": "be186a6404a17e71f1891e2daeaaea7731c8c54e14de12110192c876fd4137ab",
+      "scripts/x4_pair_manifest.py": "f21403641d7f59ac0d09647ab4426024fca14456c4a64317e2753371cb096a7a"
+    },
+    "pr": 48,
+    "repository": "michaelrolphone-cmyk/RiscRTE-XTEINK-X4-PRO",
+    "revision": "ee832b0c16c26f76dd15a27e318d61c478d38d3c"
+  },
+  "purpose": "Source/artifact binding only; no installed device, release, Catalog, trust or hardware admission.",
+  "schema": 1,
+  "shared": {
+    "directory": "docs/catalog-preservation/1.0.0",
+    "files": {
+      "README.md": "864064ebfb8b2539c015e3ccb0c6617c8e8c7d046725131c71d206d7623db9e9",
+      "baselines.json": "f076f4e8435b230c394a5273ae374f3a800dd0f0a46d932c684dff0f3c616eaa",
+      "conformance.json": "63700b351d706edf6b884b899018d1beb6addc6bee370049da2e058effab35f0",
+      "fixtures.py": "e8d705e155d5a4607bfa1a04499ea332cf2a7a56f82477711402b75e950fd447",
+      "inventory.json": "56632bff140bbe934c9fd51d3f98f0143bc44195a3e51fa63e4adb572f08a815",
+      "matrix.json": "1d0d6a7e8188525fe9f9bf8c2a7da89c1390044aa34852b23305b5b009719262",
+      "result-template.json": "3737aebcb5783cc9ee81f24ed99c85deef8d1df48fc04a65335535f7f1b605fa",
+      "review_result.py": "a5c928858e408625c87a7c620de1d6eb71c767413eb0abbfcd94393c6f63f6cb",
+      "test_qualification.py": "e777f60525f5d5fed6170b52286f88de730716f9bc38443c0d7eeafe292208b7"
+    },
+    "pr": 87,
+    "repository": "michaelrolphone-cmyk/RiscRTE",
+    "revision": "b3a846b5252c00a849c560ced936b1ce4baab260"
+  }
+}
