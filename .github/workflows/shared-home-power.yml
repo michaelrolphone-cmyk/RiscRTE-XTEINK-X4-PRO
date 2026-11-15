@@ -1,0 +1,72 @@
+name: Shared Home standard power bridge
+on:
+  pull_request:
+    paths: ['minimal/drivers/x4pro_home_power/**', 'minimal/drivers/x4pro_home_display_power/**', 'minimal/drivers/x4pro_home_power_singleton/**', 'minimal/drivers/x4pro_home_display_power_singleton/**', 'minimal/test/shared_home_power_test.c', 'minimal/drivers/x4pro_power/**', 'minimal/test/power_coordination_test.c', 'minimal/test/run_power_test.sh', 'minimal/scripts/test_shared_home_power.py', '.github/workflows/shared-home-power.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qualify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE
+          ref: a91edf3fada6a559ec107186dd163d0c8da10d29
+          path: deps/runtime
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/T5S3-Reader
+          ref: c98e4222048244b1e729869ed47aa99130025fd3
+          path: deps/reader
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Watch
+          ref: 4c50cf717f6fa5a5fb8a64cd7253cff56d5ab219
+          path: deps/watch
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-System-Apps
+          ref: ab294d9a298514250d2d030070f33617cb6fbe68
+          path: deps/system
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: michaelrolphone-cmyk/RiscRTE-Utilities
+          ref: e80172353fcb9e6519ca9d9b2a4d43c69c1bc91d
+          path: deps/utilities
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact delivered compiler
+        run: |
+          pip install platformio==6.1.19 pyelftools==0.32
+          pio pkg install --global --tool 'espressif/toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5'
+      - name: Owning bridge host and target qualification
+        run: |
+          python minimal/scripts/test_shared_home_power.py --runtime deps/runtime --reader deps/reader --watch deps/watch --system deps/system --utilities deps/utilities --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --output qualification/bridge
+          python minimal/scripts/test_shared_home_power.py --runtime deps/runtime --reader deps/reader --watch deps/watch --system deps/system --utilities deps/utilities --compiler "$HOME/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gcc" --singleton --output qualification/singleton
+          RISCRTE_RUNTIME_ROOT="$PWD/deps/runtime" bash minimal/test/run_power_test.sh
+          SANITIZE=1 RISCRTE_RUNTIME_ROOT="$PWD/deps/runtime" bash minimal/test/run_power_test.sh
+      - name: Exact source archives
+        if: always()
+        run: |
+          mkdir -p qualification/source
+          git archive HEAD | gzip -n > qualification/source/x4.tar.gz
+          for repo in runtime reader watch system utilities; do git -C "deps/$repo" archive HEAD | gzip -n > "qualification/source/$repo.tar.gz"; git -C "deps/$repo" rev-parse HEAD > "qualification/source/$repo.head"; done
+          git rev-parse HEAD > qualification/source/x4.head
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shared-home-power-${{ github.event.pull_request.head.sha || github.sha }}
+          path: qualification/
+          retention-days: 30

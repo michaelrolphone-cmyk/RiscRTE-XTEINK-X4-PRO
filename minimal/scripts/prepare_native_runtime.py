@@ -79,11 +79,11 @@ def validate_build_options(options):
     require(isinstance(options, dict) and required <= set(options) and
             set(options) <= required | {'usb_phy', 'retained_wake_bytes', 'failure_evidence', 'app_requirement_rows', 'installed_app_capacity', 'provider_capacity', 'shared_files_transport', 'export_migration_header_sha256', 'native_package_volume'},
             'Invalid native build options')
-    require(type(options['app_policy_rows']) is int and options['app_policy_rows'] in (16, 17, 18, 24),
-            'App policy rows must be 16, 17, 18 or 24')
+    require(type(options['app_policy_rows']) is int and options['app_policy_rows'] in (16, 17, 18, 24, 32),
+            'App policy rows must be 16, 17, 18, 24 or 32')
     require('app_requirement_rows' not in options or
-            (type(options['app_requirement_rows']) is int and options['app_requirement_rows'] in (17, 24)),
-            'App requirement rows must be an explicit 17- or 24-row opt-in')
+            (type(options['app_requirement_rows']) is int and options['app_requirement_rows'] in (17, 24, 32)),
+            'App requirement rows must be an explicit 17-, 24- or 32-row opt-in')
     require(options.get('app_requirement_rows', 16) <= options['app_policy_rows'],
             'App requirement rows exceed policy rows')
     require('installed_app_capacity' not in options or (type(options['installed_app_capacity']) is int and options['installed_app_capacity']==64), 'Installed application capacity must be an explicit 64-slot opt-in')
@@ -728,9 +728,9 @@ def main():
     prepare.add_argument('--native-package-volume', action='store_true', help='Select mounted internal package storage and the .111 native settings backend')
     prepare.add_argument('--export-migration-header', type=Path)
     prepare.add_argument('--installed-app-capacity', type=int, choices=(64,))
-    prepare.add_argument('--app-policy-rows', type=int, choices=(16, 17, 18, 24), default=16,
+    prepare.add_argument('--app-policy-rows', type=int, choices=(16, 17, 18, 24, 32), default=16,
                          help='Immutable app policy rows; live grants remain 16')
-    prepare.add_argument('--app-requirement-rows', type=int, choices=(17, 24),
+    prepare.add_argument('--app-requirement-rows', type=int, choices=(17, 24, 32),
                          help='Explicitly enable 17 or 24 manifest requirements; absent selection remains 16')
     prepare.add_argument('--app-image-cache', action='store_true',
                          help='Explicitly enable the Runtime app image cache and qualified pressure retry paths')
